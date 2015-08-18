@@ -14,7 +14,7 @@ struct NtNode
 template <typename T>
 struct NtNNode : public NtNode<T>
 {
-	NtIndex m_level;
+	ntIndex m_level;
 	NtNNode* m_nextNode;
 	NtNNode* m_siblingNode;
 };

@@ -10,22 +10,22 @@ template <typename T>
 class NtArray
 {
 public:
-    explicit NtArray(NtSize maxSize);
+    explicit NtArray(ntSize maxSize);
     NtArray(const NtArray& rhsArray);
     ~NtArray();
 
     void Push_back(T value);
-    void Insert(NtIndex index, T value);
+    void Insert(ntIndex index, T value);
 
-    void Erase(NtIndex index);
+    void Erase(ntIndex index);
     void Clear();
 
-    T& operator[](NtIndex index);
-	const T& operator[](NtIndex index) const;
-    T& At(NtIndex index);
+    T& operator[](ntIndex index);
+	const T& operator[](ntIndex index) const;
+    T& At(ntIndex index);
 
-    NtSize	Size() const;
-	NtSize	MaxSize() const;
+    ntSize	Size() const;
+	ntSize	MaxSize() const;
 
     NtArray& operator =(const NtArray& rhsArray);
 
@@ -33,8 +33,8 @@ private:
     void Resize();
 
 private:
-    NtSize m_arraySize;
-    NtSize m_maxArraySize;
+    ntSize m_arraySize;
+    ntSize m_maxArraySize;
     T*  m_array;
 };
 

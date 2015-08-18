@@ -41,7 +41,7 @@ bool NtApplication::Initialize(bool fullscreen)
 	m_appName = L"NorthWind";
 
 	//
-	NtWChar* path = nullptr;
+	ntWchar* path = nullptr;
 	/*NtErrorCode res = Crt::AllocEnvVariable(L"NT_PATH", &path);
 	if (res != NtERROR_SUCCESS)
 	{
@@ -86,8 +86,8 @@ bool NtApplication::Initialize(bool fullscreen)
 	{
 		Crt::MemSet(&screenSetting, sizeof(screenSetting));
 		screenSetting.dmSize = sizeof(screenSetting);
-		screenSetting.dmPelsWidth = static_cast<NtUInt>(width);
-		screenSetting.dmPelsHeight = static_cast<NtUInt>(height);
+		screenSetting.dmPelsWidth = static_cast<ntUint>(width);
+		screenSetting.dmPelsHeight = static_cast<ntUint>(height);
 		screenSetting.dmBitsPerPel = 32;
 		screenSetting.dmFields = DM_BITSPERPEL | DM_PELSWIDTH | DM_PELSHEIGHT;
 
@@ -222,13 +222,13 @@ LRESULT CALLBACK NtApplication::MessageHandler(HWND hwnd, UINT message, WPARAM w
 	{
 	case WM_KEYDOWN:
 		{
-			m_inputManager->KeyDown((NtUInt)wParam);
+			m_inputManager->KeyDown((ntUint)wParam);
 		}
 		return 0;
 
 	case WM_KEYUP:
 		{
-			m_inputManager->KeyUp((NtUInt)wParam);
+			m_inputManager->KeyUp((ntUint)wParam);
 		}
 		return 0;
 	}

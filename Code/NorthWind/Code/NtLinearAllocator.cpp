@@ -25,14 +25,14 @@ NtLinearAllocator::~NtLinearAllocator()
 	SAFE_DELETE(m_initialPosition);
 }
 
-bool NtLinearAllocator::Initialize(NtSize baseAllocSize)
+bool NtLinearAllocator::Initialize(ntSize baseAllocSize)
 {
 	if (baseAllocSize < 1)
 	{
 		return false;
 	}
 
-	m_initialPosition = new NtUChar*[MAKE_MEGA2BYTES(2)];
+	m_initialPosition = new ntUchar*[MAKE_MEGA2BYTES(2)];
 	m_currentPosition = m_initialPosition;
 	m_totalSize = MAKE_MEGA2BYTES(2);
 
@@ -40,17 +40,17 @@ bool NtLinearAllocator::Initialize(NtSize baseAllocSize)
 }
 
 
-void* NtLinearAllocator::Allocate(NtSize size, NtUChar alignment)
+void* NtLinearAllocator::Allocate(ntSize size, ntUchar alignment)
 {
 	NtAsserte(size != 0);
 
-	NtUChar adjustment = AlignAdjustment(m_currentPosition, alignment);
+	ntUchar adjustment = AlignAdjustment(m_currentPosition, alignment);
 	if ( (m_usedMemory + adjustment + size) > m_totalSize )
 	{
 		return nullptr;
 	}
 
-	NtUInt alignedAddress = (NtUInt)((NtUInt)m_currentPosition + adjustment);
+	ntUint alignedAddress = (ntUint)((ntUint)m_currentPosition + adjustment);
 
 	m_currentPosition = reinterpret_cast<void*>(alignedAddress + size);
 

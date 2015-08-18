@@ -16,7 +16,7 @@ public:
 	bool Initialize(HINSTANCE hInst, HWND hwnd);
 	bool Release();
 
-	void Process(const NtFloat& delta);
+	void Process(const ntFloat& delta);
 
 	bool GetKey(int key);
 	bool GetLeftDown();

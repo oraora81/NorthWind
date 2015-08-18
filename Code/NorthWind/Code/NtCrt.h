@@ -6,74 +6,74 @@ namespace NT
 
 namespace Crt
 {
-	const NtChar*	MakeString(const NtChar* expr, ...);
-	const NtWChar*	MakeString(const NtWChar* expr, ...);
+	const ntChar*	MakeString(const ntChar* expr, ...);
+	const ntWchar*	MakeString(const ntWchar* expr, ...);
 
-	NtChar*			MakeBuffer();
-	NtWChar*		MakeWBuffer();
+	ntChar*			MakeBuffer();
+	ntWchar*		MakeWBuffer();
 
-	NtSize		StrLen(const NtChar* buf);
-	NtSize		StrLen(const NtWChar* buf);
+	ntSize		StrLen(const ntChar* buf);
+	ntSize		StrLen(const ntWchar* buf);
 
-	NtInt		StrCpy( NtChar* dest, const NtChar* source, NtSize destSize);
-	NtInt		StrCpy( NtWChar* dest, const NtWChar* source, NtSize destSize);
+	ntInt		StrCpy( ntChar* dest, const ntChar* source, ntSize destSize);
+	ntInt		StrCpy( ntWchar* dest, const ntWchar* source, ntSize destSize);
 	
-	NtInt		StrNCpy(NtChar* dest, const NtChar* source, NtSize destSize, NtSize maxSize = _TRUNCATE);
-	NtInt		StrNCpy(NtWChar* dest, const NtWChar* source, NtSize destSize, NtSize maxSize = _TRUNCATE);
+	ntInt		StrNCpy(ntChar* dest, const ntChar* source, ntSize destSize, ntSize maxSize = _TRUNCATE);
+	ntInt		StrNCpy(ntWchar* dest, const ntWchar* source, ntSize destSize, ntSize maxSize = _TRUNCATE);
 	
-	NtInt		StrCmp(const NtChar* compare1, const NtChar*compare2);
-	NtInt		StrCmp(const NtWChar* compare1, const NtWChar* compare2);
+	ntInt		StrCmp(const ntChar* compare1, const ntChar*compare2);
+	ntInt		StrCmp(const ntWchar* compare1, const ntWchar* compare2);
 
-	NtInt		StrCat(NtChar* dest, NtSize dstSize, const NtChar* source);
-	NtInt		StrNCat(NtChar* dest, NtSize dstSize, const NtChar* source, NtSize srcSize);
+	ntInt		StrCat(ntChar* dest, ntSize dstSize, const ntChar* source);
+	ntInt		StrNCat(ntChar* dest, ntSize dstSize, const ntChar* source, ntSize srcSize);
 
-	NtInt		StrCat(NtWChar* dest, NtSize dstSize, const NtWChar* source);
-	NtInt		StrNCat(NtWChar* dest, NtSize dstSize, const NtWChar* source, NtSize cpySize);
+	ntInt		StrCat(ntWchar* dest, ntSize dstSize, const ntWchar* source);
+	ntInt		StrNCat(ntWchar* dest, ntSize dstSize, const ntWchar* source, ntSize cpySize);
 
-	const NtChar*	StrStr(const NtChar* src, const NtChar* strSearch);
-	const NtWChar*	StrStr(const NtWChar* src, const NtWChar* strSearch);
+	const ntChar*	StrStr(const ntChar* src, const ntChar* strSearch);
+	const ntWchar*	StrStr(const ntWchar* src, const ntWchar* strSearch);
 
-	const NtChar*	StrChr(const NtChar* src, NtInt c);
-	const NtWChar*	StrChr(const NtWChar* src, NtWChar c);
+	const ntChar*	StrChr(const ntChar* src, ntInt c);
+	const ntWchar*	StrChr(const ntWchar* src, ntWchar c);
 
-	NtFloat		Atof(const NtChar* src);
-	NtFloat		Atof(const NtWChar* src);
+	ntFloat		Atof(const ntChar* src);
+	ntFloat		Atof(const ntWchar* src);
 
-	NtInt		ToLower(NtWChar* src, NtSize length);
+	ntInt		ToLower(ntWchar* src, ntSize length);
 
-	void		MemCpy(void* dest, void* src, NtUInt length);
-	void		MemSet(void* target, NtUInt length);
+	void		MemCpy(void* dest, void* src, ntUint length);
+	void		MemSet(void* target, ntUint length);
 	
 
 	// file process
-	ERROR_CODE	FOpen(const NtWChar* fileName, const NtWChar* option, FILE*& fp);
-	NtLong		FTell(FILE* fp);
-	ERROR_CODE	FSeek(FILE* fp, NtLong offset, NtInt origin);
+	ERROR_CODE	FOpen(const ntWchar* fileName, const ntWchar* option, FILE*& fp);
+	ntLong		FTell(FILE* fp);
+	ERROR_CODE	FSeek(FILE* fp, ntLong offset, ntInt origin);
 
-	void WideStrToMultiStr(NtChar* dest, NtSize dstSize, const NtWChar* src);
+	void WideStrToMultiStr(ntChar* dest, ntSize dstSize, const ntWchar* src);
 
 	template <int RADIX>
-	void	NumberToString(NtInt number, NtChar* inBuffer, NtInt bufferSize)
+	void	NumberToString(ntInt number, ntChar* inBuffer, ntInt bufferSize)
 	{
 		_itoa_s(number, inBuffer, bufferSize, RADIX);
 	}
 
 	template <int RADIX>
-	void	NumberToString(NtInt number, NtWChar* inBuffer, NtInt bufferSize)
+	void	NumberToString(ntInt number, ntWchar* inBuffer, ntInt bufferSize)
 	{
 		_itow_s(number, inBuffer, bufferSize, RADIX);
 	}
 
-	NtInt StringToNumber(const NtWChar* buffer);
-	NtInt64 StringToNumber64(const NtWChar* buffer);
+	ntInt StringToNumber(const ntWchar* buffer);
+	ntInt64 StringToNumber64(const ntWchar* buffer);
 
-	NtInt StringToNumber(const NtChar* buffer);
-	NtInt64 StringToNumber64(const NtChar* buffer);
+	ntInt StringToNumber(const ntChar* buffer);
+	ntInt64 StringToNumber64(const ntChar* buffer);
 
 	// win api
-	NtWChar*	GetCmdLine();
-	NtErrorCode	AllocEnvVariable(const NtWChar* envName, NtWChar** envValue);
-	void	FreeEnvVariable(NtWChar* envValue);
+	ntWchar*	GetCmdLine();
+	NtErrorCode	AllocEnvVariable(const ntWchar* envName, ntWchar** envValue);
+	void	FreeEnvVariable(ntWchar* envValue);
 	
 }	// namespace Crt
 

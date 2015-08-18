@@ -13,7 +13,7 @@ ePSShaderModel NtShader::m_psModel = ePSShaderModel::NT_MAX_PSSHADER_MODEL;
 namespace
 {
 
-static NtChar* g_vsShaderModel[eVSShaderModel::NT_MAX_VSSHADER_MODEL] = 
+static ntChar* g_vsShaderModel[eVSShaderModel::NT_MAX_VSSHADER_MODEL] = 
 {
 	"vs_1_1",
 	"vs_2_0",
@@ -23,7 +23,7 @@ static NtChar* g_vsShaderModel[eVSShaderModel::NT_MAX_VSSHADER_MODEL] =
 };
 
 
-static NtChar* g_psShaderModel[ePSShaderModel::NT_MAX_PSSHADER_MODEL] = 
+static ntChar* g_psShaderModel[ePSShaderModel::NT_MAX_PSSHADER_MODEL] = 
 {
 	"ps_1_1",
 	"ps_2_0",
@@ -36,12 +36,12 @@ static NtChar* g_psShaderModel[ePSShaderModel::NT_MAX_PSSHADER_MODEL] =
 }
 
 
-const NtChar* NtShader::GetVSModel()
+const ntChar* NtShader::GetVSModel()
 {
 	return g_vsShaderModel[NtShader::m_vsModel];
 }
 
-const NtChar* NtShader::GetPSModel()
+const ntChar* NtShader::GetPSModel()
 {
 	return g_psShaderModel[NtShader::m_psModel];
 }

@@ -5,11 +5,11 @@ namespace NT
 {
 
 template <typename T>
-NtIndex BinarySearch(const T& dataSet, NtSize size, const T target)
+ntIndex BinarySearch(const T& dataSet, ntSize size, const T target)
 {
-	NtIndex left = 0;
-	NtIndex right = size - 1;
-	NtIndex mid = 0;
+	ntIndex left = 0;
+	ntIndex right = size - 1;
+	ntIndex mid = 0;
 
 	while(left <= right)
 	{

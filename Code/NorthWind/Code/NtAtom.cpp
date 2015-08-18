@@ -5,22 +5,22 @@ namespace NT
 {
 namespace Atom
 {
-	NtLong Inc(volatile NtLong& target)
+	ntLong Inc(volatile ntLong& target)
 	{
 		return InterlockedIncrement(&target);
 	}
 
-	NtLong Dec(volatile NtLong& target)
+	ntLong Dec(volatile ntLong& target)
 	{
 		return InterlockedDecrement(&target);
 	}
 
-	NtLong Add(volatile NtLong& target,NtLong val)
+	ntLong Add(volatile ntLong& target,ntLong val)
 	{
 		return InterlockedExchangeAdd(&target, val);
 	}
 
-	NtLong Sub(volatile NtLong& target,NtLong val)
+	ntLong Sub(volatile ntLong& target,ntLong val)
 	{
 		return InterlockedExchangeAdd(&target, -val);
 	}

@@ -27,34 +27,34 @@ public:
 	NtFile();
 	virtual ~NtFile();
 
-	bool Execute(const NtWChar* fileName, IO_MODE mode = IO_READ);
+	bool Execute(const ntWchar* fileName, IO_MODE mode = IO_READ);
 
-	void Write4Byte(NtWChar* buffer);
+	void Write4Byte(ntWchar* buffer);
 	void Read1Byte();
 	void Read4Byte();
-	void ReadBuffer(NtSize length = READ_BUF_SIZE);
+	void ReadBuffer(ntSize length = READ_BUF_SIZE);
 
 	bool	ReadLine();
 	bool	ReadTag();
-	NtInt	ReadInt();
-	NtFloat ReadFloat();
+	ntInt	ReadInt();
+	ntFloat ReadFloat();
 
 	bool IsEOF();
 	bool IsOpen();
 	void ClearData();
-	const NtWChar* GetData()	{ return m_readBuffer; }
+	const ntWchar* GetData()	{ return m_readBuffer; }
 	NtBuffer* GetBuffer()		{ return m_buffer; }
 
 	enum { READ_BUF_SIZE = 256 };
 
 private:
 	IO_MODE			m_mode;
-	NtSize			m_size;
+	ntSize			m_size;
 	NtFileBuffer*	m_buffer;
 	NtString		m_fileName;
 
 	FILE*			m_fp;
-	NtWChar			m_readBuffer[READ_BUF_SIZE];
+	ntWchar			m_readBuffer[READ_BUF_SIZE];
 };
 
 

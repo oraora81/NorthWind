@@ -1,6 +1,6 @@
 ﻿
 template <typename T>
-NtArray<T>::NtArray(NtSize maxSize)
+NtArray<T>::NtArray(ntSize maxSize)
 {
     NtAsserte(maxSize >= 0);
 
@@ -36,7 +36,7 @@ NtArray<T>& NtArray<T>::operator=(const NtArray& rhsArray)
     m_arraySize     = rhsArray.Size();
     m_array         = m_maxArraySize ? new T [m_maxArraySize] : nullptr;
 
-    for (NtIndex i = 0; i < m_arraySize; ++i)
+    for (ntIndex i = 0; i < m_arraySize; ++i)
     {
         m_array[i] = rhsArray.m_array[i];
     }
@@ -45,7 +45,7 @@ NtArray<T>& NtArray<T>::operator=(const NtArray& rhsArray)
 }
 
 template <typename T>
-T& NtArray<T>::operator [](NtIndex index)
+T& NtArray<T>::operator [](ntIndex index)
 {
     NtAsserte(0 <= index && m_arraySize > index);
 
@@ -53,7 +53,7 @@ T& NtArray<T>::operator [](NtIndex index)
 }
 
 template <typename T>
-const T& NtArray::operator[](NtIndex index) const
+const T& NtArray::operator[](ntIndex index) const
 {
 	NtAsserte(0 <= index && m_arraySize > index);
 
@@ -61,7 +61,7 @@ const T& NtArray::operator[](NtIndex index) const
 }
 
 template <typename T>
-T& NtArray<T>::At(NtIndex index)
+T& NtArray<T>::At(ntIndex index)
 {
     NtAsserte(0 <= index && m_arraySize > index);
 
@@ -87,7 +87,7 @@ void NtArray<T>::Resize()
     m_maxArraySize *= 2;
     T* tempArray = new T [m_maxArraySize];
 
-    for (NtInt i = 0; i < m_arraySize; ++i)
+    for (ntInt i = 0; i < m_arraySize; ++i)
     {
         tempArray[i] = m_array[i];
     }
@@ -106,13 +106,13 @@ void NtArray<T>::Push_back(T value)
 }
 
 template <typename T>
-void NtArray<T>::Insert(NtIndex index, T value)
+void NtArray<T>::Insert(ntIndex index, T value)
 {
     Resize();
 
     NtAsserte(index >= 0 && index < m_arraySize);
     // 하나씩 뒤로 밀어준다.
-    for (NtIndex end = m_arraySize; end > index; --end)
+    for (ntIndex end = m_arraySize; end > index; --end)
     {
         m_array[end] = m_array[end-1];
     }
@@ -121,12 +121,12 @@ void NtArray<T>::Insert(NtIndex index, T value)
 }
 
 template <typename T>
-void NtArray<T>::Erase(NtIndex index)
+void NtArray<T>::Erase(ntIndex index)
 {
 	NtAsserte(index >= 0 && index < m_arraySize);
 
     // 하나씩 당겨준다.
-    for (NtIndex i = index; i < m_arraySize-1; ++i)
+    for (ntIndex i = index; i < m_arraySize-1; ++i)
     {
         m_array[i] = m_array[i+1];
     }

@@ -31,10 +31,10 @@ NtTexture::~NtTexture()
 }
 
 
-bool NtTexture::Initialize(const NtWChar* fileName)
+bool NtTexture::Initialize(const ntWchar* fileName)
 {
 	// load the texture
-	NtWChar ext[_MAX_EXT];
+	ntWchar ext[_MAX_EXT];
 	_wsplitpath_s(fileName, nullptr, 0, nullptr, 0, nullptr, 0, ext, _MAX_EXT);
 
 	if (Crt::StrCmp(ext, L".dds") == 0)
@@ -66,20 +66,20 @@ ID3D11ShaderResourceView* NtTexture::GetTexture()
 }
 
 
-bool NtTexture::CreateTextureFromDDSFile(const NtWChar* fileName)
+bool NtTexture::CreateTextureFromDDSFile(const ntWchar* fileName)
 {
 	DDS_HEADER* header = nullptr;
-	NtUChar* textureBuffer = nullptr;
-	NtUInt bitSize = 0;
+	ntUchar* textureBuffer = nullptr;
+	ntUint bitSize = 0;
 
-	std::unique_ptr<NtUChar[]> ddsBuffer;
+	std::unique_ptr<ntUchar[]> ddsBuffer;
 	bool res = NtDDSLoader::LoadTextureDataFromFile(fileName, ddsBuffer, &header, &textureBuffer, &bitSize);
 	if (false == res)
 	{
 		return false;
 	}
 
-	NtUInt maxSize = 0;
+	ntUint maxSize = 0;
 
 	res = NtDDSLoader::CreateTextureFromDDS(header, textureBuffer, bitSize, maxSize, D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0, false, &m_texResource, &m_textureView);
 	if (false == res)
@@ -94,9 +94,9 @@ bool NtTexture::CreateTextureFromDDSFile(const NtWChar* fileName)
 	return true;
 }
 
-bool NtTexture::CreateTextureFromResourceFile(const NtWChar* fileName)
+bool NtTexture::CreateTextureFromResourceFile(const ntWchar* fileName)
 {
-	const NtWChar* fullPath = g_resManager->GetWholePath(fileName);
+	const ntWchar* fullPath = g_resManager->GetWholePath(fileName);
 	if (nullptr == fullPath)
 	{
 		return false;
@@ -114,10 +114,10 @@ bool NtTexture::CreateTextureFromResourceFile(const NtWChar* fileName)
 	}
 
 
-	//NtUChar* jpgBuffer = nullptr;
-	//NtUInt jpgBufferSize = 0;
-	//NtUInt bpp = 0;
-	//std::unique_ptr<NtUChar[]> loadingBuffer;
+	//ntUchar* jpgBuffer = nullptr;
+	//ntUint jpgBufferSize = 0;
+	//ntUint bpp = 0;
+	//std::unique_ptr<ntUchar[]> loadingBuffer;
 	//bool res = NtJPGLoader::LoadTextureDataFromFile(fileName, loadingBuffer, &jpgBuffer, jpgBufferSize, m_width, m_height, m_size, bpp);
 	//if (false == res)
 	//{
@@ -137,7 +137,7 @@ bool NtTexture::CreateTextureFromResourceFile(const NtWChar* fileName)
 
 
 
-bool NtTexHandle::operator ==(NtUInt handle)
+bool NtTexHandle::operator ==(ntUint handle)
 {
 	return GetHandle() == handle ? true : false;
 }

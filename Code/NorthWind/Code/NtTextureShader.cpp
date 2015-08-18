@@ -26,7 +26,7 @@ NtTextureShader::~NtTextureShader()
 	Release();
 }
 
-bool NtTextureShader::Initialize(const NtWChar* vs, const NtWChar* ps)
+bool NtTextureShader::Initialize(const ntWchar* vs, const ntWchar* ps)
 {
 	// init the vertex and pixel shader
 	bool res = InitializeShader(vs, ps);
@@ -45,7 +45,7 @@ void NtTextureShader::Release()
 }
 
 
-bool NtTextureShader::Render(NtInt indexCount, const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj, NtUInt handle)
+bool NtTextureShader::Render(ntInt indexCount, const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj, ntUint handle)
 {
 	// set the shader parameter that it will use for rendering
 	bool res = SetShaderParameter(world, view, proj, handle);
@@ -61,7 +61,7 @@ bool NtTextureShader::Render(NtInt indexCount, const XMMATRIX& world, const XMMA
 }
 
 
-bool NtTextureShader::InitializeShader(const NtWChar* vs, const NtWChar* ps)
+bool NtTextureShader::InitializeShader(const ntWchar* vs, const ntWchar* ps)
 {
 	ID3D10Blob* errMsg = nullptr;
 	ID3D10Blob* vertexShaderBuffer = nullptr;
@@ -135,7 +135,7 @@ bool NtTextureShader::InitializeShader(const NtWChar* vs, const NtWChar* ps)
 	polyLayout[1].InstanceDataStepRate = 0;
 
 	// get a count of the elements in the layout
-	NtInt elementsNum = _countof(polyLayout);
+	ntInt elementsNum = _countof(polyLayout);
 
 	// create the vertex input layout
 	res = g_renderer->Device()->CreateInputLayout(polyLayout, elementsNum, vertexShaderBuffer->GetBufferPointer(), vertexShaderBuffer->GetBufferSize(), &m_layout);
@@ -199,7 +199,7 @@ void NtTextureShader::ReleaseShader()
 }
 
 
-bool NtTextureShader::SetShaderParameter(const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj, NtUInt handle)
+bool NtTextureShader::SetShaderParameter(const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj, ntUint handle)
 {
 	XMMATRIX w;
 	XMMATRIX v;
@@ -250,7 +250,7 @@ bool NtTextureShader::SetShaderParameter(const XMMATRIX& world, const XMMATRIX& 
 	return true;
 }
 
-void NtTextureShader::RenderShader(NtInt indexCount)
+void NtTextureShader::RenderShader(ntInt indexCount)
 {
 	// set the vertex input layout.
 	g_renderer->DeviceContext()->IASetInputLayout(m_layout);

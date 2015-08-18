@@ -9,8 +9,8 @@ namespace LOG
 
 // http://msdn.microsoft.com/en-us/library/yt0c3wdh.aspx
 #ifdef _DEBUG
-int DebugTrace(const NtWChar* msg, ...);
-int DebugTrace(const NtChar* msg, ...);
+int DebugTrace(const ntWchar* msg, ...);
+int DebugTrace(const ntChar* msg, ...);
 #endif
 
 
@@ -61,8 +61,8 @@ public:
 		m_writer->Write();
 	}
 
-	NtInline	void			WriteName(NtWChar* name)	{	NtAsserte(name != nullptr);		m_writeName = name; }
-	NtInline	const NtWChar*	WriteName() const			{	return m_writeName.c_str();		}
+	NtInline	void			WriteName(ntWchar* name)	{	NtAsserte(name != nullptr);		m_writeName = name; }
+	NtInline	const ntWchar*	WriteName() const			{	return m_writeName.c_str();		}
 	NtInline	void			Writer(NtRealWriter* writer){	NtAsserte(writer != nullptr);	m_writer = writer;	}
 
 private:
@@ -82,8 +82,8 @@ public:
 	~NtLOGConsole();
 
 private:
-	const NtWChar*	m_textBuffer[MAX_BUFFER];
-	NtInt			m_bufferIndex;
+	const ntWchar*	m_textBuffer[MAX_BUFFER];
+	ntInt			m_bufferIndex;
 };
 
 

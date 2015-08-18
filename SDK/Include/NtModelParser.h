@@ -24,10 +24,10 @@ class FS::NtBuffer;
 class NtParseModeBinder
 {
 public:
-	explicit NtParseModeBinder(const NtWChar* str);
+	explicit NtParseModeBinder(const ntWchar* str);
 	~NtParseModeBinder() {}
 	
-	NtInt FindParseKey();
+	ntInt FindParseKey();
 
 private:
 	NtString m_target;
@@ -45,7 +45,7 @@ public:
 	explicit NtModelParser();
 	~NtModelParser();
 
-	bool	Execute(const NtWChar* fileName);
+	bool	Execute(const ntWchar* fileName);
 
 	void	SetPuppet(RENDERER::NtPuppet* puppet);
 
@@ -58,7 +58,7 @@ private:
 private:
 	bool	FindKeyword();
 	bool	FindKeyword(PARSE_KEYWORD parseKey);
-	bool	DetermineParseMode(const NtWChar* src);
+	bool	DetermineParseMode(const ntWchar* src);
 	bool	ReadVertexType();
 	bool	ReadVertexInfo();
 

@@ -16,12 +16,12 @@ public:
 
 	bool Initialize();
 
-	void KeyDown(NtUInt key);
-	void KeyUp(NtUInt key);
-	bool IsKeyDown(NtUInt key);
+	void KeyDown(ntUint key);
+	void KeyUp(ntUint key);
+	bool IsKeyDown(ntUint key);
 
 private:
-	NtChar m_keystate[MAX_KEY_STATE];
+	ntChar m_keystate[MAX_KEY_STATE];
 };
 
 }	// namespace INPUT

@@ -40,28 +40,28 @@ void NtD3DRenderer::GetOrthoMatrix(XMMATRIX& ortho)
 	ortho = m_ortho;
 }
 
-void NtD3DRenderer::GetDeviceCardInfo(NtString& cardName, NtInt& memory)
+void NtD3DRenderer::GetDeviceCardInfo(NtString& cardName, ntInt& memory)
 {
 	cardName = m_videoCardDescription;
 	memory = m_videoCardMemory;
 }
 
-const NtChar* NtD3DRenderer::GetVShaderModel() const
+const ntChar* NtD3DRenderer::GetVShaderModel() const
 {
 	return m_shaderModel[0];
 }
 
-const NtChar* NtD3DRenderer::GetPShaderModel() const
+const ntChar* NtD3DRenderer::GetPShaderModel() const
 {
 	return m_shaderModel[1];
 }
 
-void NtD3DRenderer::OutputShaderErrorMessage(ID3D10Blob* errMsg, const NtWChar* fileName)
+void NtD3DRenderer::OutputShaderErrorMessage(ID3D10Blob* errMsg, const ntWchar* fileName)
 {
-	NtChar* msg = reinterpret_cast<NtChar*>(errMsg->GetBufferPointer());
+	ntChar* msg = reinterpret_cast<ntChar*>(errMsg->GetBufferPointer());
 
 	// get the length of the msg
-	NtInt bufferSize = errMsg->GetBufferSize();
+	ntInt bufferSize = errMsg->GetBufferSize();
 
 	std::ofstream fout;
 

@@ -17,64 +17,64 @@ public:
 	NtTexture();
 	~NtTexture();
 
-	bool Initialize(const NtWChar* fileName);
+	bool Initialize(const ntWchar* fileName);
 	void Release();
 
 	// get
 	ID3D11ShaderResourceView* GetTexture();
-	inline NtUInt		Width() const;
-	inline NtUInt		Height() const;
-	inline NtUShort		UseCount() const;
-	inline NtSize		Size() const;
-	inline NtUInt		TexHandle() const;
+	inline ntUint		Width() const;
+	inline ntUint		Height() const;
+	inline ntUshort		UseCount() const;
+	inline ntSize		Size() const;
+	inline ntUint		TexHandle() const;
 
 	// set
-	inline void SetTexHandle(NtUInt handle);
+	inline void SetTexHandle(ntUint handle);
 	inline void IncreaseUseCount();
 	inline void DecreaseUseCount();
 
 private:
-	bool CreateTextureFromDDSFile(const NtWChar* fileName);
-	bool CreateTextureFromResourceFile(const NtWChar* fileName);
+	bool CreateTextureFromDDSFile(const ntWchar* fileName);
+	bool CreateTextureFromResourceFile(const ntWchar* fileName);
 
 private:
 	ID3D11ShaderResourceView* m_textureView;
 	ID3D11Resource*	m_texResource;
-	NtUInt		m_width;
-	NtUInt		m_height;
-	NtUShort	m_useCount;
-	NtSize		m_size;
-	NtUInt		m_handle;
+	ntUint		m_width;
+	ntUint		m_height;
+	ntUshort	m_useCount;
+	ntSize		m_size;
+	ntUint		m_handle;
 };
 
 
 
-NtUInt NtTexture::Width() const
+ntUint NtTexture::Width() const
 {
 	return m_width;
 }
 
-NtUInt NtTexture::Height() const
+ntUint NtTexture::Height() const
 {
 	return m_height;
 }
 
-NtUShort NtTexture::UseCount() const
+ntUshort NtTexture::UseCount() const
 {
 	return m_useCount;
 }
 
-NtSize NtTexture::Size() const
+ntSize NtTexture::Size() const
 {
 	return m_size;
 }
 
-NtUInt NtTexture::TexHandle() const
+ntUint NtTexture::TexHandle() const
 {
 	return m_handle;
 }
 
-void NtTexture::SetTexHandle(NtUInt handle)
+void NtTexture::SetTexHandle(ntUint handle)
 {
 	m_handle = handle;
 }
@@ -100,12 +100,12 @@ public:
 		: m_linkTexture(nullptr), m_texHandle(0), m_usable(true)
 	{}
 
-	bool operator ==(NtUInt handle);
+	bool operator ==(ntUint handle);
 
 	inline void			SetTexture(NtTexture* texture);
 	inline NtTexture*	GetTexture() const;
-	inline NtUInt		GetHandle() const;
-	inline void			SetHandle(NtUInt handle);
+	inline ntUint		GetHandle() const;
+	inline void			SetHandle(ntUint handle);
 	inline void			SetUsable(bool flag);
 	inline bool			IsUsable() const;
 
@@ -115,7 +115,7 @@ private:
 
 private:
 	NtTexture*	m_linkTexture;
-	NtUInt		m_texHandle;
+	ntUint		m_texHandle;
 	bool		m_usable;
 };
 
@@ -131,12 +131,12 @@ private:
 	return m_linkTexture;
 }
 
-/*inline*/ NtUInt NtTexHandle::GetHandle() const
+/*inline*/ ntUint NtTexHandle::GetHandle() const
 {
 	return m_texHandle;
 }
 
-/*inline*/ void NtTexHandle::SetHandle(NtUInt handle)
+/*inline*/ void NtTexHandle::SetHandle(ntUint handle)
 {
 	m_texHandle = handle;
 }

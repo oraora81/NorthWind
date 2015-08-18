@@ -29,26 +29,26 @@ void NtTimer::StartTimer()
 	LARGE_INTEGER frequencyCount;
 	::QueryPerformanceFrequency(&frequencyCount);
 
-	m_countsPerSecond = static_cast<NtDouble>(frequencyCount.QuadPart);
+	m_countsPerSecond = static_cast<ntDouble>(frequencyCount.QuadPart);
 
 	::QueryPerformanceCounter(&frequencyCount);
 	m_counterStart = frequencyCount.QuadPart;
 }
 
-NtFloat NtTimer::GetTime()
+ntFloat NtTimer::GetTime()
 {
 	NtAsserte(m_countsPerSecond != 0.0f);
 
 	LARGE_INTEGER currentTime;
 	::QueryPerformanceCounter(&currentTime);
-	return static_cast<NtFloat>((currentTime.QuadPart - m_counterStart) / m_countsPerSecond);
+	return static_cast<ntFloat>((currentTime.QuadPart - m_counterStart) / m_countsPerSecond);
 }
 
 
-NtFloat NtTimer::GetFrameTime()
+ntFloat NtTimer::GetFrameTime()
 {
 	LARGE_INTEGER currentTime;
-	NtInt64 tickCount;
+	ntInt64 tickCount;
 	::QueryPerformanceCounter(&currentTime);
 
 	tickCount = currentTime.QuadPart - m_frameTimeOld;
@@ -61,7 +61,7 @@ NtFloat NtTimer::GetFrameTime()
 
 	NtAsserte(m_countsPerSecond != 0.0f);
 
-	return static_cast<NtFloat>(tickCount / m_countsPerSecond);
+	return static_cast<ntFloat>(tickCount / m_countsPerSecond);
 }
 
 

@@ -25,17 +25,17 @@ public:
 
 
 	//
-	void GetDeviceCardInfo(NtString& cardName, NtInt& memory);
+	void GetDeviceCardInfo(NtString& cardName, ntInt& memory);
 
 	//
-	const NtChar* GetVShaderModel() const;
-	const NtChar* GetPShaderModel() const;
+	const ntChar* GetVShaderModel() const;
+	const ntChar* GetPShaderModel() const;
 
 	// 
-	void SetMultiSamples(NtUInt sampleCount);
+	void SetMultiSamples(ntUint sampleCount);
 
 	// error Report
-	void OutputShaderErrorMessage(ID3D10Blob* errMsg, const NtWChar* fileName);
+	void OutputShaderErrorMessage(ID3D10Blob* errMsg, const ntWchar* fileName);
 
 private:
 	// prevent obj copy
@@ -43,18 +43,18 @@ private:
 	NtD3DRenderer& operator = (NtD3DRenderer&);
 
 protected:
-	NtInt		m_videoCardMemory;
+	ntInt		m_videoCardMemory;
 	NtString	m_videoCardDescription;
-	NtChar*		m_shaderModel[2];
+	ntChar*		m_shaderModel[2];
 
 	XMMATRIX	m_world;
 	XMMATRIX	m_proj;
 	XMMATRIX	m_ortho;
 
-	NtUInt		m_width;
-	NtUInt		m_height;
-	NtUInt		m_refreshRate;
-	NtUInt		m_multiSamples;
+	ntUint		m_width;
+	ntUint		m_height;
+	ntUint		m_refreshRate;
+	ntUint		m_multiSamples;
 
 	bool		m_vsync;
 	bool		m_windowMode;

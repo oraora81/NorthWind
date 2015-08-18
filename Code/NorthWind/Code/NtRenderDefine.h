@@ -14,7 +14,7 @@
 
 		// http://msdn.microsoft.com/en-us/library/windows/desktop/bb172625(v=vs.85).aspx
 		typedef D3DPOOL				NtResourceUsage;
-		typedef NtUInt				NtBindFlag;
+		typedef ntUint				NtBindFlag;
 		typedef D3DFORMAT			NTCOLORFMT;
 	#endif
 

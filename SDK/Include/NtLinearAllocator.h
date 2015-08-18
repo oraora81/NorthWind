@@ -17,9 +17,9 @@ protected:
 public:
 	virtual ~NtLinearAllocator();
 
-	bool Initialize(NtSize baseAllocSize);
+	bool Initialize(ntSize baseAllocSize);
 
-	void* Allocate(NtSize size, NtUChar alignment);
+	void* Allocate(ntSize size, ntUchar alignment);
 	
 	void DeAllocate(void* ptr);
 
@@ -29,7 +29,7 @@ public:
 private:
 	void*	m_initialPosition;
 	void*	m_currentPosition;
-	NtSize	m_totalSize;
+	ntSize	m_totalSize;
 };
 
 }

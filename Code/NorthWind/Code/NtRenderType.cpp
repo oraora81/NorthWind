@@ -7,7 +7,7 @@ NtPoint::NtPoint()
 	: x(0.0f), y(0.0f)
 {}
 
-NtPoint::NtPoint(NtFloat pX, NtFloat pY)
+NtPoint::NtPoint(ntFloat pX, ntFloat pY)
 	: x(pX), y(pY)
 {}
 
@@ -50,7 +50,7 @@ NtPoint& NtPoint::operator /= (const NtPoint& point)
 	return *this;
 }
 
-NtPoint& NtPoint::operator *= (NtFloat s)
+NtPoint& NtPoint::operator *= (ntFloat s)
 {
 	x *= s;
 	y *= s;

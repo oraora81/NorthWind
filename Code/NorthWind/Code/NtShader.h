@@ -14,10 +14,10 @@ class NtShader
 public:
 	virtual ~NtShader() {}
 
-	virtual bool Initialize(const NtWChar* vs, const NtWChar* ps) = 0;
+	virtual bool Initialize(const ntWchar* vs, const ntWchar* ps) = 0;
 
-	const NtChar* GetVSModel();
-	const NtChar* GetPSModel();
+	const ntChar* GetVSModel();
+	const ntChar* GetPSModel();
 
 	static void SetVSShaderModel(eVSShaderModel vs);
 	static void SetPSShaderModel(ePSShaderModel ps);

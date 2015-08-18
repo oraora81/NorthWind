@@ -151,8 +151,8 @@ namespace NT
  *	@brief		NtTextureLoader :
  */
 
-bool NtTextureLoader::CreateD3DResources(NtUInt resDim, NtUInt width, NtUInt height, NtUInt depth, NtUInt mipCount, NtUInt arraySize, DXGI_FORMAT format, D3D11_USAGE usage,
-	NtUInt bindFlags, NtUInt cpuAccessFlags, NtUInt miscFlags, bool forceSRGB, bool isCubeMap, D3D11_SUBRESOURCE_DATA* initData, ID3D11Resource** texture, ID3D11ShaderResourceView** textureView)
+bool NtTextureLoader::CreateD3DResources(ntUint resDim, ntUint width, ntUint height, ntUint depth, ntUint mipCount, ntUint arraySize, DXGI_FORMAT format, D3D11_USAGE usage,
+	ntUint bindFlags, ntUint cpuAccessFlags, ntUint miscFlags, bool forceSRGB, bool isCubeMap, D3D11_SUBRESOURCE_DATA* initData, ID3D11Resource** texture, ID3D11ShaderResourceView** textureView)
 {
 	if (forceSRGB)
 	{
@@ -164,9 +164,9 @@ bool NtTextureLoader::CreateD3DResources(NtUInt resDim, NtUInt width, NtUInt hei
 	case D3D11_RESOURCE_DIMENSION_TEXTURE1D:
 		{
 			D3D11_TEXTURE1D_DESC desc;
-			desc.Width = static_cast<NtUInt>(width);
-			desc.MipLevels = static_cast<NtUInt>(mipCount);
-			desc.ArraySize = static_cast<NtUInt>(arraySize);
+			desc.Width = static_cast<ntUint>(width);
+			desc.MipLevels = static_cast<ntUint>(mipCount);
+			desc.ArraySize = static_cast<ntUint>(arraySize);
 			desc.Format = format;
 			desc.Usage = usage;
 			desc.BindFlags = bindFlags;
@@ -193,7 +193,7 @@ bool NtTextureLoader::CreateD3DResources(NtUInt resDim, NtUInt width, NtUInt hei
 			{
 				SRVDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE1DARRAY;
 				SRVDesc.Texture1DArray.MipLevels = desc.MipLevels;
-				SRVDesc.Texture1DArray.ArraySize = static_cast<NtUInt>(arraySize);
+				SRVDesc.Texture1DArray.ArraySize = static_cast<ntUint>(arraySize);
 			}
 			else
 			{
@@ -221,10 +221,10 @@ bool NtTextureLoader::CreateD3DResources(NtUInt resDim, NtUInt width, NtUInt hei
 	case D3D11_RESOURCE_DIMENSION_TEXTURE2D:
 		{
 			D3D11_TEXTURE2D_DESC desc;
-			desc.Width = static_cast<NtUInt>( width );
-			desc.Height = static_cast<NtUInt>( height );
-			desc.MipLevels = static_cast<NtUInt>( mipCount );
-			desc.ArraySize = static_cast<NtUInt>( arraySize );
+			desc.Width = static_cast<ntUint>( width );
+			desc.Height = static_cast<ntUint>( height );
+			desc.MipLevels = static_cast<ntUint>( mipCount );
+			desc.ArraySize = static_cast<ntUint>( arraySize );
 			desc.Format = format;
 			desc.SampleDesc.Count = 1;
 			desc.SampleDesc.Quality = 0;
@@ -262,7 +262,7 @@ bool NtTextureLoader::CreateD3DResources(NtUInt resDim, NtUInt width, NtUInt hei
 					SRVDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURECUBEARRAY;
 					SRVDesc.TextureCubeArray.MipLevels = desc.MipLevels;
 
-					SRVDesc.TextureCubeArray.NumCubes = static_cast<NtUInt>(arraySize / 6);
+					SRVDesc.TextureCubeArray.NumCubes = static_cast<ntUint>(arraySize / 6);
 				}
 				else
 				{
@@ -276,7 +276,7 @@ bool NtTextureLoader::CreateD3DResources(NtUInt resDim, NtUInt width, NtUInt hei
 				{
 					SRVDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2DARRAY;
 					SRVDesc.Texture2DArray.MipLevels = desc.MipLevels;
-					SRVDesc.Texture2DArray.ArraySize = static_cast<NtUInt>(arraySize);
+					SRVDesc.Texture2DArray.ArraySize = static_cast<ntUint>(arraySize);
 				}
 				else
 				{
@@ -305,10 +305,10 @@ bool NtTextureLoader::CreateD3DResources(NtUInt resDim, NtUInt width, NtUInt hei
 	case D3D11_RESOURCE_DIMENSION_TEXTURE3D:
 		{
 			D3D11_TEXTURE3D_DESC desc;
-			desc.Width = static_cast<NtUInt>( width );
-			desc.Height = static_cast<NtUInt>( height );
-			desc.Depth = static_cast<NtUInt>( depth );
-			desc.MipLevels = static_cast<NtUInt>( mipCount );
+			desc.Width = static_cast<ntUint>( width );
+			desc.Height = static_cast<ntUint>( height );
+			desc.Depth = static_cast<ntUint>( depth );
+			desc.MipLevels = static_cast<ntUint>( mipCount );
 			desc.Format = format;
 			desc.Usage = usage;
 			desc.BindFlags = bindFlags;
@@ -484,10 +484,10 @@ static size_t _WICBitsPerPixel( REFGUID targetGuid )
 	return bpp;
 }
 
-static HRESULT CreateTextureFromWIC(IWICBitmapFrameDecode* frame, NtSize maxSize, D3D11_USAGE usage, NtUInt bindFlags, NtUInt cpuAccess, NtUInt misc, ID3D11Resource** texture,ID3D11ShaderResourceView** textureView)
+static HRESULT CreateTextureFromWIC(IWICBitmapFrameDecode* frame, ntSize maxSize, D3D11_USAGE usage, ntUint bindFlags, ntUint cpuAccess, ntUint misc, ID3D11Resource** texture,ID3D11ShaderResourceView** textureView)
 {
-	NtUInt width = 0;
-	NtUInt height = 0;
+	ntUint width = 0;
+	ntUint height = 0;
 
 	HRESULT res = frame->GetSize(&width, &height);
 	if (FAILED(res))
@@ -526,23 +526,23 @@ static HRESULT CreateTextureFromWIC(IWICBitmapFrameDecode* frame, NtSize maxSize
 
 	NtAsserte(maxSize > 0);
 
-	NtUInt tempWidth = 0;
-	NtUInt tempHeight = 0;
+	ntUint tempWidth = 0;
+	ntUint tempHeight = 0;
 	if (width > maxSize || height > maxSize)
 	{
-		NtFloat ar = static_cast<NtFloat>(height) / static_cast<NtFloat>(width);
+		ntFloat ar = static_cast<ntFloat>(height) / static_cast<ntFloat>(width);
 		if (width > height)
 		{
-			tempWidth = static_cast<NtUInt>(maxSize);
-			tempHeight = static_cast<NtUInt>(static_cast<NtFloat>(maxSize) * ar);
+			tempWidth = static_cast<ntUint>(maxSize);
+			tempHeight = static_cast<ntUint>(static_cast<ntFloat>(maxSize) * ar);
 		}
 		else
 		{
-			tempHeight = static_cast<NtUInt>(maxSize);
-			tempWidth = static_cast<NtUInt>(static_cast<NtFloat>(maxSize) * ar);
+			tempHeight = static_cast<ntUint>(maxSize);
+			tempWidth = static_cast<ntUint>(static_cast<ntFloat>(maxSize) * ar);
 		}
 
-		NtAsserte((NtSize)tempWidth <= maxSize && (NtSize)tempHeight <= maxSize);
+		NtAsserte((ntSize)tempWidth <= maxSize && (ntSize)tempHeight <= maxSize);
 	}
 	else
 	{
@@ -561,7 +561,7 @@ static HRESULT CreateTextureFromWIC(IWICBitmapFrameDecode* frame, NtSize maxSize
 	WICPixelFormatGUID convertGUID;
 	Crt::MemCpy(&convertGUID, &pixelFormat, sizeof(WICPixelFormatGUID));
 
-	NtSize bpp = 0;
+	ntSize bpp = 0;
 	DXGI_FORMAT format = _WICToDXGI(pixelFormat);
 	if (format == DXGI_FORMAT_UNKNOWN)
 	{
@@ -628,7 +628,7 @@ static HRESULT CreateTextureFromWIC(IWICBitmapFrameDecode* frame, NtSize maxSize
 		return E_FAIL;
 	}
 
-	NtUInt support = 0;
+	ntUint support = 0;
 	res = g_renderer->Device()->CheckFormatSupport(format, &support);
 	if (FAILED(res) || !(support &  D3D11_FORMAT_SUPPORT_TEXTURE2D))
 	{
@@ -641,10 +641,10 @@ static HRESULT CreateTextureFromWIC(IWICBitmapFrameDecode* frame, NtSize maxSize
 
 
 	// Allocate temporary memory for image
-	NtSize rowPitch = (tempWidth * bpp + 7) / 8;
-	NtSize imageSize = rowPitch * tempHeight;
+	ntSize rowPitch = (tempWidth * bpp + 7) / 8;
+	ntSize imageSize = rowPitch * tempHeight;
 
-	std::unique_ptr<NtUChar[]> imageBuffer( new (std::nothrow) NtUChar[imageSize] );
+	std::unique_ptr<ntUchar[]> imageBuffer( new (std::nothrow) ntUchar[imageSize] );
 	if (!imageBuffer)
 	{
 		return E_OUTOFMEMORY;
@@ -655,7 +655,7 @@ static HRESULT CreateTextureFromWIC(IWICBitmapFrameDecode* frame, NtSize maxSize
 		&& tempWidth == width
 		&& tempHeight == height)
 	{
-		res = frame->CopyPixels(0, static_cast<NtUInt>(rowPitch), static_cast<NtUInt>(imageSize), imageBuffer.get());
+		res = frame->CopyPixels(0, static_cast<ntUint>(rowPitch), static_cast<ntUint>(imageSize), imageBuffer.get());
 		if (FAILED(res))
 		{
 			return E_FAIL;
@@ -692,7 +692,7 @@ static HRESULT CreateTextureFromWIC(IWICBitmapFrameDecode* frame, NtSize maxSize
 
 		if (memcmp(&convertGUID, &pfScaler, sizeof(GUID)) == 0)
 		{
-			res = scaler->CopyPixels(0, static_cast<NtUInt>(rowPitch), static_cast<NtUInt>(imageSize), imageBuffer.get());
+			res = scaler->CopyPixels(0, static_cast<ntUint>(rowPitch), static_cast<ntUint>(imageSize), imageBuffer.get());
 			if (FAILED(res))
 			{
 				return res;
@@ -713,7 +713,7 @@ static HRESULT CreateTextureFromWIC(IWICBitmapFrameDecode* frame, NtSize maxSize
 				return res;
 			}
 
-			res = FC->CopyPixels(0, static_cast<NtUInt>(rowPitch), static_cast<NtUInt>(imageSize), imageBuffer.get());
+			res = FC->CopyPixels(0, static_cast<ntUint>(rowPitch), static_cast<ntUint>(imageSize), imageBuffer.get());
 			if (FAILED(res))
 			{
 				return res;
@@ -741,7 +741,7 @@ static HRESULT CreateTextureFromWIC(IWICBitmapFrameDecode* frame, NtSize maxSize
 			return res;
 		}
 
-		res = FC->CopyPixels( 0, static_cast<NtUInt>( rowPitch ), static_cast<NtUInt>( imageSize ), imageBuffer.get() );  
+		res = FC->CopyPixels( 0, static_cast<ntUint>( rowPitch ), static_cast<ntUint>( imageSize ), imageBuffer.get() );  
 		if (FAILED(res))
 		{
 			return res;
@@ -752,7 +752,7 @@ static HRESULT CreateTextureFromWIC(IWICBitmapFrameDecode* frame, NtSize maxSize
 	bool autogen = false;
 	//if (textureView != 0)
 	//{
-	//	NtUInt fmtSupport = 0;
+	//	ntUint fmtSupport = 0;
 	//	res = renderer->GetD3DRenderer()->Device()->CheckFormatSupport(format, &fmtSupport);
 	//	if (SUCCEEDED(res) && (fmtSupport & D3D11_FORMAT_SUPPORT_MIP_AUTOGEN))
 	//	{
@@ -784,8 +784,8 @@ static HRESULT CreateTextureFromWIC(IWICBitmapFrameDecode* frame, NtSize maxSize
 
 	D3D11_SUBRESOURCE_DATA initData;
 	initData.pSysMem = imageBuffer.get();
-	initData.SysMemPitch = static_cast<NtUInt>(rowPitch);
-	initData.SysMemSlicePitch = static_cast<NtUInt>(imageSize);
+	initData.SysMemPitch = static_cast<ntUint>(rowPitch);
+	initData.SysMemSlicePitch = static_cast<ntUint>(imageSize);
 
 	ID3D11Texture2D* tex = nullptr;
 	bool sccflag = g_renderInterface->CreateTexture2D(&desc, (autogen) ? nullptr : &initData, &tex);
@@ -809,7 +809,7 @@ static HRESULT CreateTextureFromWIC(IWICBitmapFrameDecode* frame, NtSize maxSize
 
 			if (autogen)
 			{
-				g_renderer->DeviceContext()->UpdateSubresource(tex, 0, nullptr, imageBuffer.get(), static_cast<NtUInt>(rowPitch), static_cast<NtUInt>(imageSize));
+				g_renderer->DeviceContext()->UpdateSubresource(tex, 0, nullptr, imageBuffer.get(), static_cast<ntUint>(rowPitch), static_cast<ntUint>(imageSize));
 				g_renderer->DeviceContext()->GenerateMips(*textureView);
 			}
 		}
@@ -828,7 +828,7 @@ static HRESULT CreateTextureFromWIC(IWICBitmapFrameDecode* frame, NtSize maxSize
 }
 
 
-/*static*/ bool NtTextureLoader::CreateWICTexture(const NtWChar* fileName, NtUInt size, ID3D11Resource** texture,ID3D11ShaderResourceView** textureView)
+/*static*/ bool NtTextureLoader::CreateWICTexture(const ntWchar* fileName, ntUint size, ID3D11Resource** texture,ID3D11ShaderResourceView** textureView)
 {
 	if (texture)
 	{
@@ -875,7 +875,7 @@ static HRESULT CreateTextureFromWIC(IWICBitmapFrameDecode* frame, NtSize maxSize
  *	@brief		NtDDSLoader :
  */
 
-NtUInt NtDDSLoader::BitsPerPixel( DXGI_FORMAT fmt )
+ntUint NtDDSLoader::BitsPerPixel( DXGI_FORMAT fmt )
 {
 	switch( fmt )
 	{
@@ -1005,15 +1005,15 @@ NtUInt NtDDSLoader::BitsPerPixel( DXGI_FORMAT fmt )
 	}
 }
 
-void NtDDSLoader::GetSurfaceInfo( NtUInt width, NtUInt height, DXGI_FORMAT fmt, NtUInt* outNumBytes, NtUInt* outRowBytes, NtUInt* outNumRows )
+void NtDDSLoader::GetSurfaceInfo( ntUint width, ntUint height, DXGI_FORMAT fmt, ntUint* outNumBytes, ntUint* outRowBytes, ntUint* outNumRows )
 {
-	NtUInt numBytes = 0;
-	NtUInt rowBytes = 0;
-	NtUInt numRows = 0;
+	ntUint numBytes = 0;
+	ntUint rowBytes = 0;
+	ntUint numRows = 0;
 
 	bool bc = false;
 	bool packed  = false;
-	NtUInt bcnumBytesPerBlock = 0;
+	ntUint bcnumBytesPerBlock = 0;
 	switch (fmt)
 	{
 	case DXGI_FORMAT_BC1_TYPELESS:
@@ -1053,15 +1053,15 @@ void NtDDSLoader::GetSurfaceInfo( NtUInt width, NtUInt height, DXGI_FORMAT fmt, 
 
 	if (bc)
 	{
-		NtUInt numBlocksWide = 0;
+		ntUint numBlocksWide = 0;
 		if (width > 0)
 		{
-			numBlocksWide = std::max<NtUInt>( 1, (width + 3) / 4 );
+			numBlocksWide = std::max<ntUint>( 1, (width + 3) / 4 );
 		}
-		NtUInt numBlocksHigh = 0;
+		ntUint numBlocksHigh = 0;
 		if (height > 0)
 		{
-			numBlocksHigh = std::max<NtUInt>( 1, (height + 3) / 4 );
+			numBlocksHigh = std::max<ntUint>( 1, (height + 3) / 4 );
 		}
 		rowBytes = numBlocksWide * bcnumBytesPerBlock;
 		numRows = numBlocksHigh;
@@ -1097,7 +1097,7 @@ void NtDDSLoader::GetSurfaceInfo( NtUInt width, NtUInt height, DXGI_FORMAT fmt, 
 //--------------------------------------------------------------------------------------
 #define ISBITMASK( r,g,b,a ) ( ddpf.RBitMask == r && ddpf.GBitMask == g && ddpf.BBitMask == b && ddpf.ABitMask == a )
 
-bool NtDDSLoader::FillInitData(const sDDSInitHeader& initHeader, NtUInt& width, NtUInt& height, NtUInt& depth, NtUInt& skipMip, D3D11_SUBRESOURCE_DATA* initData)
+bool NtDDSLoader::FillInitData(const sDDSInitHeader& initHeader, ntUint& width, ntUint& height, ntUint& depth, ntUint& skipMip, D3D11_SUBRESOURCE_DATA* initData)
 {
 	if (!initHeader.m_bitData || !initData)
 	{
@@ -1109,19 +1109,19 @@ bool NtDDSLoader::FillInitData(const sDDSInitHeader& initHeader, NtUInt& width, 
 	height = 0;
 	depth = 0;
 
-	NtUInt numBytes = 0;
-	NtUInt rowBytes = 0;
-	NtUInt numRow = 0;
-	const NtUChar* srcBits = initHeader.m_bitData;
-	const NtUChar* endBits = initHeader.m_bitData + initHeader.m_bitSize;
+	ntUint numBytes = 0;
+	ntUint rowBytes = 0;
+	ntUint numRow = 0;
+	const ntUchar* srcBits = initHeader.m_bitData;
+	const ntUchar* endBits = initHeader.m_bitData + initHeader.m_bitSize;
 
-	NtUInt index = 0;
-	for (NtUInt j = 0; j < initHeader.m_arraySize; ++j)
+	ntUint index = 0;
+	for (ntUint j = 0; j < initHeader.m_arraySize; ++j)
 	{
-		NtUInt w = initHeader.m_width;
-		NtUInt h = initHeader.m_height;
-		NtUInt d = initHeader.m_depth;
-		for (NtUInt i = 0; i < initHeader.m_mipCount; ++i)
+		ntUint w = initHeader.m_width;
+		ntUint h = initHeader.m_height;
+		ntUint d = initHeader.m_depth;
+		for (ntUint i = 0; i < initHeader.m_mipCount; ++i)
 		{
 			GetSurfaceInfo(w, h, initHeader.m_format, &numBytes, &rowBytes, &numRow);
 
@@ -1136,8 +1136,8 @@ bool NtDDSLoader::FillInitData(const sDDSInitHeader& initHeader, NtUInt& width, 
 
 				NtAsserte(index < initHeader.m_mipCount * initHeader.m_arraySize);
 				initData[index].pSysMem = (const void*)srcBits;
-				initData[index].SysMemPitch = static_cast<NtUInt>(rowBytes);
-				initData[index].SysMemSlicePitch = static_cast<NtUInt>(numBytes);
+				initData[index].SysMemPitch = static_cast<ntUint>(rowBytes);
+				initData[index].SysMemSlicePitch = static_cast<ntUint>(numBytes);
 				++index;
 			}
 			else
@@ -1382,14 +1382,14 @@ DXGI_FORMAT NtDDSLoader::GetDXGIFormat( const DDS_PIXELFORMAT& ddpf )
 }
 
 
-bool NtDDSLoader::LoadTextureDataFromFile(const NtWChar* fileName, std::unique_ptr<NtUChar[]>& ddsBuffer, DDS_HEADER** header, NtUChar** bitData, NtUInt* bitSize)
+bool NtDDSLoader::LoadTextureDataFromFile(const ntWchar* fileName, std::unique_ptr<ntUchar[]>& ddsBuffer, DDS_HEADER** header, ntUchar** bitData, ntUint* bitSize)
 {
 	if (!header || !bitData || !bitSize)
 	{
 		return false;
 	}
 
-	const NtWChar* fullPath = g_resManager->GetWholePath(fileName);
+	const ntWchar* fullPath = g_resManager->GetWholePath(fileName);
 	if (nullptr == fullPath)
 	{
 		return false;
@@ -1434,7 +1434,7 @@ bool NtDDSLoader::LoadTextureDataFromFile(const NtWChar* fileName, std::unique_p
 		return false;
 	}
 
-	ddsBuffer.reset(new NtUChar [fileSize.LowPart]);
+	ddsBuffer.reset(new ntUchar [fileSize.LowPart]);
 	if (!ddsBuffer)
 	{
 		return false;
@@ -1452,13 +1452,13 @@ bool NtDDSLoader::LoadTextureDataFromFile(const NtWChar* fileName, std::unique_p
 	}
 
 	// DDS files always start with the same magic number ("DDS ")
-	NtUInt magicNumber = *(const NtUInt*)(ddsBuffer.get());
+	ntUint magicNumber = *(const ntUint*)(ddsBuffer.get());
 	if (magicNumber != DDS_MAGIC)
 	{
 		return false;
 	}
 
-	DDS_HEADER* hdr = reinterpret_cast<DDS_HEADER*>(ddsBuffer.get() + sizeof(NtUInt));
+	DDS_HEADER* hdr = reinterpret_cast<DDS_HEADER*>(ddsBuffer.get() + sizeof(ntUint));
 
 	// verify header to validate dds file
 	if (hdr->size != sizeof(DDS_HEADER) || hdr->ddspf.size != sizeof(DDS_PIXELFORMAT))
@@ -1472,7 +1472,7 @@ bool NtDDSLoader::LoadTextureDataFromFile(const NtWChar* fileName, std::unique_p
 		(MAKEFOURCC('D', 'X', '1', '0') == hdr->ddspf.fourCC))
 	{
 		// must be long enough for both headers and magic value
-		if (fileSize.LowPart < (sizeof(DDS_HEADER) + sizeof(NtUInt) + sizeof(DDS_HEADER_DXT10)))
+		if (fileSize.LowPart < (sizeof(DDS_HEADER) + sizeof(ntUint) + sizeof(DDS_HEADER_DXT10)))
 		{
 			return false;
 		}
@@ -1481,26 +1481,26 @@ bool NtDDSLoader::LoadTextureDataFromFile(const NtWChar* fileName, std::unique_p
 	}
 
 	*header = hdr;
-	ptrdiff_t offset = sizeof(NtUInt) + sizeof(DDS_HEADER) + (dxt10Header ? sizeof(DDS_HEADER_DXT10) : 0);
+	ptrdiff_t offset = sizeof(ntUint) + sizeof(DDS_HEADER) + (dxt10Header ? sizeof(DDS_HEADER_DXT10) : 0);
 	*bitData = ddsBuffer.get() + offset;
 	*bitSize = fileSize.LowPart - offset;
 
 	return true;
 }
 
-bool NtDDSLoader::CreateTextureFromDDS(const DirectX::DDS_HEADER* header, const NtUChar* bitData, NtUInt bitSize, NtUInt maxSize, 
-	D3D11_USAGE usage, NtUInt bindFlags, NtUInt cpuAccessFlags, NtUInt miscFlags, bool forceSRGB, ID3D11Resource** texture, ID3D11ShaderResourceView** textureView)
+bool NtDDSLoader::CreateTextureFromDDS(const DirectX::DDS_HEADER* header, const ntUchar* bitData, ntUint bitSize, ntUint maxSize, 
+	D3D11_USAGE usage, ntUint bindFlags, ntUint cpuAccessFlags, ntUint miscFlags, bool forceSRGB, ID3D11Resource** texture, ID3D11ShaderResourceView** textureView)
 {
-	NtUInt width = header->width;
-	NtUInt height = header->height;
-	NtUInt depth = header->depth;
+	ntUint width = header->width;
+	ntUint height = header->height;
+	ntUint depth = header->depth;
 
-	NtUInt resDim = D3D11_RESOURCE_DIMENSION_UNKNOWN;
-	NtUInt arraySize = 1;
+	ntUint resDim = D3D11_RESOURCE_DIMENSION_UNKNOWN;
+	ntUint arraySize = 1;
 	DXGI_FORMAT format = DXGI_FORMAT_UNKNOWN;
 	bool isCubeMap = false;
 
-	NtUInt mipCount = header->mipMapCount;
+	ntUint mipCount = header->mipMapCount;
 	if (0 == mipCount)
 	{
 		mipCount = 1;
@@ -1508,7 +1508,7 @@ bool NtDDSLoader::CreateTextureFromDDS(const DirectX::DDS_HEADER* header, const 
 
 	if ((header->ddspf.flags & DDS_FOURCC) && (MAKEFOURCC('D', 'X', '1', '0') == header->ddspf.fourCC))
 	{
-		const DDS_HEADER_DXT10* d3d10ext = reinterpret_cast<const DDS_HEADER_DXT10*>((const NtChar*)header + sizeof(DDS_HEADER));
+		const DDS_HEADER_DXT10* d3d10ext = reinterpret_cast<const DDS_HEADER_DXT10*>((const ntChar*)header + sizeof(DDS_HEADER));
 
 		arraySize = d3d10ext->arraySize;
 		if (arraySize == 0)
@@ -1660,10 +1660,10 @@ bool NtDDSLoader::CreateTextureFromDDS(const DirectX::DDS_HEADER* header, const 
 		return false;
 	}
 
-	NtUInt skipMip = 0;
-	NtUInt twidth = 0;
-	NtUInt theight = 0;
-	NtUInt tdepth = 0;
+	ntUint skipMip = 0;
+	ntUint twidth = 0;
+	ntUint theight = 0;
+	ntUint tdepth = 0;
 
 	sDDSInitHeader initHeader;
 	initHeader.m_width = width;
@@ -1766,7 +1766,7 @@ void my_error_exit (j_common_ptr cinfo)
 	longjmp(myerr->setjmp_buffer, 1);
 }
 
-/*static*/ bool NtJPGLoader::LoadTextureDataFromFile(const NtWChar* fileName, std::unique_ptr<NtUChar[]>& outBuffer, NtUChar** bitData, NtUInt& maxSize, NtUInt& width, NtUInt& height, NtSize& textureSize, NtUInt& bpp)
+/*static*/ bool NtJPGLoader::LoadTextureDataFromFile(const ntWchar* fileName, std::unique_ptr<ntUchar[]>& outBuffer, ntUchar** bitData, ntUint& maxSize, ntUint& width, ntUint& height, ntSize& textureSize, ntUint& bpp)
 {
 	/* This struct contains the JPEG decompression parameters and pointers to
 	 * working space (which is allocated as needed by the JPEG library).
@@ -1784,7 +1784,7 @@ void my_error_exit (j_common_ptr cinfo)
 	 * requires it in order to read binary files.
 	 */
 	
-	const NtWChar* fullPath = g_resManager->GetWholePath(fileName);
+	const ntWchar* fullPath = g_resManager->GetWholePath(fileName);
 	if (nullptr == fullPath)
 	{
 		return false;
@@ -1849,8 +1849,8 @@ void my_error_exit (j_common_ptr cinfo)
 	textureSize = maxSize;
 	bpp = cinfo.output_components * 8;
 
-	*bitData = new NtUChar[width * height * cinfo.output_components];
-	NtUChar* readbuffer = new NtUChar[width * cinfo.output_components];
+	*bitData = new ntUchar[width * height * cinfo.output_components];
+	ntUchar* readbuffer = new ntUchar[width * cinfo.output_components];
 
 	/* Step 6: while (scan lines remain to be read) */
 	/*           jpeg_read_scanlines(...); */
@@ -1901,14 +1901,14 @@ void my_error_exit (j_common_ptr cinfo)
 	return true;
 }
 
-/*static*/ bool NtJPGLoader::CreateTextureFromJPG(const NtUChar* buffer,const NtUInt& width,const NtUInt& height, const NtUInt bpp, D3D11_USAGE usage,NtUInt bindFlags,NtUInt cpuAccessFlags,NtUInt miscFlags,ID3D11Resource** texture,ID3D11ShaderResourceView** textureView)
+/*static*/ bool NtJPGLoader::CreateTextureFromJPG(const ntUchar* buffer,const ntUint& width,const ntUint& height, const ntUint bpp, D3D11_USAGE usage,ntUint bindFlags,ntUint cpuAccessFlags,ntUint miscFlags,ID3D11Resource** texture,ID3D11ShaderResourceView** textureView)
  {
 	DXGI_FORMAT format = DXGI_FORMAT_R8G8B8A8_UNORM;
 
 	// Allocate temporary memory for image
-	//NtUInt rowPitch = (width * bpp + 7) / 8;
-	NtUInt rowPitch = (width * bpp) / 8;
-	NtUInt imageSize = rowPitch * height;
+	//ntUint rowPitch = (width * bpp + 7) / 8;
+	ntUint rowPitch = (width * bpp) / 8;
+	ntUint imageSize = rowPitch * height;
 
 	D3D11_TEXTURE2D_DESC desc;
 	desc.Width = width;

@@ -9,9 +9,9 @@ namespace LOG
 {
 
 #ifdef _DEBUG
-int DebugTrace(const NtWChar* msg, ...)
+int DebugTrace(const ntWchar* msg, ...)
 {
-	NtWChar buff[1024];
+	ntWchar buff[1024];
 	va_list argptr;
 	va_start(argptr, msg);
 	int ret = _vsnwprintf_s(buff, _countof(buff), _TRUNCATE, msg, argptr);
@@ -23,9 +23,9 @@ int DebugTrace(const NtWChar* msg, ...)
 	return ret;
 }
 
-int DebugTrace( const NtChar* msg, ... )
+int DebugTrace( const ntChar* msg, ... )
 {
-	NtChar buff[1024];
+	ntChar buff[1024];
 
 	va_list argptr;
 	va_start(argptr, msg);
@@ -47,7 +47,7 @@ int DebugTrace( const NtChar* msg, ... )
 NtLOGConsole::NtLOGConsole()
 : m_bufferIndex(0)
 {
-	Crt::MemSet(m_textBuffer, sizeof(NtWChar*) * MAX_BUFFER);
+	Crt::MemSet(m_textBuffer, sizeof(ntWchar*) * MAX_BUFFER);
 }
 
 NtLOGConsole::~NtLOGConsole()

@@ -11,7 +11,7 @@ bool NtString::InitEmptyBuffer()
 {
 	if (NULL == NtString::m_emptyBuffer.m_str)
 	{
-		NtString::m_emptyBuffer.m_str = new NtWChar [1];
+		NtString::m_emptyBuffer.m_str = new ntWchar [1];
 		Crt::StrCpy(m_emptyBuffer.m_str, L"", 1);
 		return true;
 	}
@@ -20,7 +20,7 @@ bool NtString::InitEmptyBuffer()
 }
 
 // NtString::NtCharProxy Implement
-NtString::NtCharProxy::NtCharProxy(NtString& str, NtInt index)
+NtString::NtCharProxy::NtCharProxy(NtString& str, ntInt index)
 	: refString(str)
 	, charIndex(index)
 {
@@ -29,7 +29,7 @@ NtString::NtCharProxy::NtCharProxy(NtString& str, NtInt index)
 
 NtString::NtCharProxy& NtString::NtCharProxy::operator =(const NtString::NtCharProxy& proxy)
 {
-	NtWChar* tempBuffer = new NtWChar[refString.Size() + 1];
+	ntWchar* tempBuffer = new ntWchar[refString.Size() + 1];
 	Crt::StrCpy(tempBuffer, refString.Buffer(), refString.Size() + 1);
 
 	tempBuffer[charIndex] = proxy.refString.Buffer()[proxy.charIndex];
@@ -41,9 +41,9 @@ NtString::NtCharProxy& NtString::NtCharProxy::operator =(const NtString::NtCharP
 	return *this;
 }
 
-NtString::NtCharProxy& NtString::NtCharProxy::operator =(NtWChar ch)
+NtString::NtCharProxy& NtString::NtCharProxy::operator =(ntWchar ch)
 {
-	NtWChar* tempBuffer = new NtWChar[refString.Size() + 1];
+	ntWchar* tempBuffer = new ntWchar[refString.Size() + 1];
 	Crt::StrCpy(tempBuffer, refString.Buffer(), refString.Size() + 1);
 
 	tempBuffer[charIndex] = ch;
@@ -55,7 +55,7 @@ NtString::NtCharProxy& NtString::NtCharProxy::operator =(NtWChar ch)
 	return *this;
 }
 
-NtString::NtCharProxy::operator NtWChar() const
+NtString::NtCharProxy::operator ntWchar() const
 {
 	return refString.Buffer()[charIndex];
 }
@@ -73,19 +73,19 @@ NtString::NtString(const NtString& str)
 	*this = str;
 }
 
-NtString::NtString(const NtWChar* str)
+NtString::NtString(const ntWchar* str)
 : m_buffer(&m_emptyBuffer)
 {
 	*this = str;
 }
 
-NtString::NtString(const NtChar* str)
+NtString::NtString(const ntChar* str)
 : m_buffer(&m_emptyBuffer)
 {
 	*this = str;
 }
 
-NtString::NtString(const NtWChar* str, NtInt s, NtInt e)
+NtString::NtString(const ntWchar* str, ntInt s, ntInt e)
 : m_buffer(&m_emptyBuffer)
 {
 	AssignSubString(str, s, e);
@@ -97,7 +97,7 @@ NtString::~NtString()
 }
 
 // Operator
-bool NtString::operator ==(const NtWChar* str)
+bool NtString::operator ==(const ntWchar* str)
 {
 	if (Crt::StrCmp(Buffer(), str) == 0)
 	{
@@ -167,11 +167,11 @@ bool NtString::operator >=(const NtString& str)
 	return false;
 }
 
-NtString& NtString::operator +=(const NtWChar* str)
+NtString& NtString::operator +=(const ntWchar* str)
 {
-	NtSize passedSize = Crt::StrLen(str);
-	NtSize size = Size() + passedSize + 1;
-	NtWChar* tempBuffer = new NtWChar[size];
+	ntSize passedSize = Crt::StrLen(str);
+	ntSize size = Size() + passedSize + 1;
+	ntWchar* tempBuffer = new ntWchar[size];
 	Crt::StrCpy(tempBuffer, Buffer(), Size() + 1);
 	Crt::StrNCat(tempBuffer, size, str, passedSize + 1);
 
@@ -184,8 +184,8 @@ NtString& NtString::operator +=(const NtWChar* str)
 
 NtString& NtString::operator +=(const NtString& str)
 {
-	NtSize size = Size() + str.m_buffer->m_size + 1;
-	NtWChar* tempBuffer = new NtWChar[size];
+	ntSize size = Size() + str.m_buffer->m_size + 1;
+	ntWchar* tempBuffer = new ntWchar[size];
 	Crt::StrCpy(tempBuffer, Buffer(), Size() + 1);
 	Crt::StrNCat(tempBuffer, size, str.m_buffer->m_str, str.m_buffer->m_size + 1);
 
@@ -196,7 +196,7 @@ NtString& NtString::operator +=(const NtString& str)
 	return *this;
 }
 
-NtString& NtString::operator =(const NtWChar* str)
+NtString& NtString::operator =(const ntWchar* str)
 {
 	NtAsserte(NULL != str);
 
@@ -210,7 +210,7 @@ NtString& NtString::operator =(const NtWChar* str)
 
 	Size(Crt::StrLen(str));
 
-	NtWChar* tempBuffer = new NtWChar[Size() + 1];
+	ntWchar* tempBuffer = new ntWchar[Size() + 1];
 	Crt::StrCpy(tempBuffer, str, Size() + 1);
 
 	AssignString(tempBuffer);
@@ -218,16 +218,16 @@ NtString& NtString::operator =(const NtWChar* str)
 	return *this;
 }
 
-NtString& NtString::operator =(const NtChar* str)
+NtString& NtString::operator =(const ntChar* str)
 {
 	NtAsserte(NULL != str);
 
-	NtSize strSize = Crt::StrLen(str);
-	NtWChar* tempBuffer = new NtWChar[strSize + 1];
+	ntSize strSize = Crt::StrLen(str);
+	ntWchar* tempBuffer = new ntWchar[strSize + 1];
 
 	MultiByteToWideChar(CP_ACP, 0, str, strSize + 1, tempBuffer, strSize + 1);
 
-	if (*this == (const NtWChar*)tempBuffer)
+	if (*this == (const ntWchar*)tempBuffer)
 	{
 		SAFE_DELETE_ARRAY(tempBuffer);
 		return *this;
@@ -257,13 +257,13 @@ NtString& NtString::operator =(const NtString& str)
 	return *this;
 }
 
-NtString& NtString::operator =(NtInt integer)
+NtString& NtString::operator =(ntInt integer)
 {
 	// Convert From integer to string
 	ReleaseBuffer();
 	InitBuffer();
 
-	NtWChar* tempBuffer = new NtWChar[NTSTRING_BUFFER_SIZE + 1];
+	ntWchar* tempBuffer = new ntWchar[NTSTRING_BUFFER_SIZE + 1];
 	Crt::MemSet(tempBuffer, NTSTRING_BUFFER_SIZE + 1);
 	Crt::NumberToString<10>(integer, tempBuffer, NTSTRING_BUFFER_SIZE + 1);
 
@@ -272,22 +272,22 @@ NtString& NtString::operator =(NtInt integer)
 	return *this;
 }
 
-const NtString::NtCharProxy NtString::operator [](NtInt index) const
+const NtString::NtCharProxy NtString::operator [](ntInt index) const
 {
-	NtAsserte(index < (NtInt)Size());
+	NtAsserte(index < (ntInt)Size());
 
 	return NtString::NtCharProxy(const_cast<NtString&>(*this), index);
 }
 
-NtString::NtCharProxy NtString::operator [](NtInt index)
+NtString::NtCharProxy NtString::operator [](ntInt index)
 {
-	NtAsserte(index < (NtInt)Size());
+	NtAsserte(index < (ntInt)Size());
 
 	return NtString::NtCharProxy(*this, index);
 }
 
 
-NtString::operator NtWChar* ()
+NtString::operator ntWchar* ()
 {
 	return m_buffer->m_str;
 }
@@ -303,7 +303,7 @@ void NtString::Clear()
 	InitBuffer();
 }
 
-void NtString::AssignSubString(const NtWChar* str, NtInt s, NtInt e)
+void NtString::AssignSubString(const ntWchar* str, ntInt s, ntInt e)
 {
 	if (str == nullptr)
 	{
@@ -316,13 +316,13 @@ void NtString::AssignSubString(const NtWChar* str, NtInt s, NtInt e)
 	}
 
 	// self ch + null
-	NtSize size = (e - s) + 2;
-	NtWChar* newStr = new NtWChar[size];
+	ntSize size = (e - s) + 2;
+	ntWchar* newStr = new ntWchar[size];
 	NtAsserte(newStr != nullptr);
 
-	Crt::MemSet(newStr, sizeof(NtWChar) * size);
+	Crt::MemSet(newStr, sizeof(ntWchar) * size);
 
-	NtWChar* target = newStr;
+	ntWchar* target = newStr;
 	while (s != e)
 	{
 		(*target) = str[s++];
@@ -337,7 +337,7 @@ void NtString::AssignSubString(const NtWChar* str, NtInt s, NtInt e)
 }
 
 
-void NtString::AssignSubString(const NtWChar* s, const NtWChar* e)
+void NtString::AssignSubString(const ntWchar* s, const ntWchar* e)
 {
 	if ((e - s) <= 0)
 	{
@@ -345,17 +345,17 @@ void NtString::AssignSubString(const NtWChar* s, const NtWChar* e)
 	}
 
 	// null + [s, e)
-	NtSize size = 2;
+	ntSize size = 2;
 
-	const NtWChar* idx = s;
+	const ntWchar* idx = s;
 	while(idx++ != e)	++size;
 
-	NtWChar* newStr = new NtWChar[size];
+	ntWchar* newStr = new ntWchar[size];
 	NtAsserte(newStr != nullptr);
 
-	Crt::MemSet(newStr, sizeof(NtWChar) * size);
+	Crt::MemSet(newStr, sizeof(ntWchar) * size);
 
-	NtWChar* target = newStr;
+	ntWchar* target = newStr;
 	idx = s;
 	while (idx != e)
 	{
@@ -371,12 +371,12 @@ void NtString::AssignSubString(const NtWChar* s, const NtWChar* e)
 }
 
 
-bool NtString::Remove(NtWChar ch)
+bool NtString::Remove(ntWchar ch)
 {
-	NtWChar* src = Buffer();
-	NtWChar* temp = src;
+	ntWchar* src = Buffer();
+	ntWchar* temp = src;
 	
-	NtInt targetCount = 0;
+	ntInt targetCount = 0;
 	while(*temp)
 	{
 		if (*temp == ch)
@@ -391,8 +391,8 @@ bool NtString::Remove(NtWChar ch)
 		return false;
 	}
 
-	NtWChar* buf = new NtWChar[Size() - targetCount + 1];
-	Crt::MemSet(buf, sizeof(NtWChar) * (Size() - targetCount + 1));
+	ntWchar* buf = new ntWchar[Size() - targetCount + 1];
+	Crt::MemSet(buf, sizeof(ntWchar) * (Size() - targetCount + 1));
 
 	while(*src)
 	{
@@ -414,19 +414,19 @@ bool NtString::Remove(NtWChar ch)
 }
 
 
-void NtString::Replace(NtWChar src, NtWChar dst)
+void NtString::Replace(ntWchar src, ntWchar dst)
 {
-	NtInt res = FindFirst(src);
+	ntInt res = FindFirst(src);
 	if (res == -1)
 	{
 		return;
 	}
 
-	NtWChar* srcStr = Buffer();
-	NtWChar* buf = new NtWChar[Size() + 1];
-	Crt::MemSet(buf, sizeof(NtWChar) * (Size() + 1));
+	ntWchar* srcStr = Buffer();
+	ntWchar* buf = new ntWchar[Size() + 1];
+	Crt::MemSet(buf, sizeof(ntWchar) * (Size() + 1));
 
-	NtWChar* target = buf;
+	ntWchar* target = buf;
 	while(*srcStr)
 	{
 		if ((*srcStr) != src)
@@ -450,17 +450,17 @@ void NtString::Replace(NtWChar src, NtWChar dst)
 }
 
 
-void NtString::Replace(NtWChar* src, NtWChar* dst)
+void NtString::Replace(ntWchar* src, ntWchar* dst)
 {
 	//
-	NtWChar* srcStr = Buffer();
-	NtWChar* cpStr = src;
+	ntWchar* srcStr = Buffer();
+	ntWchar* cpStr = src;
 	while (*srcStr)
 	{
 		if ((*srcStr) == (*cpStr))
 		{
 			bool isSameStr = true;
-			NtWChar* temp = srcStr;
+			ntWchar* temp = srcStr;
 			// 계속 찾아본다.
 			while (*cpStr)
 			{
@@ -475,22 +475,22 @@ void NtString::Replace(NtWChar* src, NtWChar* dst)
 
 			if (isSameStr)
 			{
-				NtSize srcLength = Crt::StrLen(src);
-				NtSize dstLength = Crt::StrLen(dst);
-				NtSize newSize = Size() - srcLength + dstLength + 1;
+				ntSize srcLength = Crt::StrLen(src);
+				ntSize dstLength = Crt::StrLen(dst);
+				ntSize newSize = Size() - srcLength + dstLength + 1;
 
-				NtWChar* buf = new NtWChar[newSize];
-				Crt::MemSet(buf, sizeof(NtWChar) * newSize);
+				ntWchar* buf = new ntWchar[newSize];
+				Crt::MemSet(buf, sizeof(ntWchar) * newSize);
 
-				NtWChar* tempSrc = Buffer();
-				NtInt i = 0;
+				ntWchar* tempSrc = Buffer();
+				ntInt i = 0;
 				for (; tempSrc != srcStr; ++tempSrc)
 				{
 					buf[i] = *tempSrc;
 					++i;
 				}
 
-				for (NtUInt j = 0; j < dstLength; ++j)
+				for (ntUint j = 0; j < dstLength; ++j)
 				{
 					buf[i] = dst[j];
 					++i;
@@ -514,21 +514,21 @@ void NtString::Replace(NtWChar* src, NtWChar* dst)
 }
 
 
-NtInt NtString::FindFirst(NtWChar ch)
+ntInt NtString::FindFirst(ntWchar ch)
 {
-	NtWChar* buffer = Buffer();
+	ntWchar* buffer = Buffer();
 	while ((*buffer) && (*buffer) != ch)
 	{
 		++buffer;
 	}
 
-	return	(NtUInt)(buffer - Buffer()) >= Size() ? -1 : (buffer - Buffer());
+	return	(ntUint)(buffer - Buffer()) >= Size() ? -1 : (buffer - Buffer());
 }
 
 
-NtInt NtString::FindLast(NtWChar ch)
+ntInt NtString::FindLast(ntWchar ch)
 {
-	NtWChar* buffer = Buffer() + Size()-1;
+	ntWchar* buffer = Buffer() + Size()-1;
 	while ((buffer >= Buffer()) && (*buffer) != ch)
 	{
 		--buffer;
@@ -538,11 +538,11 @@ NtInt NtString::FindLast(NtWChar ch)
 }
 
 
-NtIndex NtString::Find(NtWChar* str)
+ntIndex NtString::Find(ntWchar* str)
 {
-	const NtWChar* dst = nullptr;
-	const NtWChar* src = nullptr;
-	for (NtUInt i = 0; i < Size(); ++i)
+	const ntWchar* dst = nullptr;
+	const ntWchar* src = nullptr;
+	for (ntUint i = 0; i < Size(); ++i)
 	{
 		src = &(Buffer()[i]);
 		dst = str;
@@ -575,7 +575,7 @@ void NtString::Uppercase()
 		return;
 	}
 
-	NtWChar* dupStr = new NtWChar[Size() + 1];
+	ntWchar* dupStr = new ntWchar[Size() + 1];
 	Crt::StrCpy(dupStr, Buffer(), Size() + 1);
 	if (0 != _wcsupr_s(dupStr, Size() + 1))
 	{
@@ -596,7 +596,7 @@ void NtString::Lowercase()
 		return;
 	}
 
-	NtWChar* dupStr = new NtWChar[Size() + 1];
+	ntWchar* dupStr = new ntWchar[Size() + 1];
 	Crt::StrCpy(dupStr, Buffer(), Size() + 1);
 	if (0 != _wcslwr_s(dupStr, Size() + 1))
 	{
@@ -641,7 +641,7 @@ void NtString::ReleaseBuffer()
 	}
 }
 
-void NtString::AssignString(NtWChar* str)
+void NtString::AssignString(ntWchar* str)
 {
 	Size(Crt::StrLen(str));
 	m_buffer->m_str = str;
@@ -713,7 +713,7 @@ bool operator >=(const NtString& str1, const NtString& str2)
 
 std::ostream& operator << (std::ostream& os, const NtString& str)
 {
-	NtChar* outStr = new NtChar[str.m_buffer->m_size + 1];
+	ntChar* outStr = new ntChar[str.m_buffer->m_size + 1];
 	WideCharToMultiByte( CP_ACP, 0, str.m_buffer->m_str, -1, outStr, str.m_buffer->m_size + 1, NULL, NULL );
 
 	os << outStr;

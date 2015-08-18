@@ -18,8 +18,8 @@ using namespace RENDERER;
 
 struct NtResource
 {
-	NtWChar	wholePath[1024];
-	NtSize	fileNum;
+	ntWchar	wholePath[1024];
+	ntSize	fileNum;
 	NtResource* next;
 };
 
@@ -33,21 +33,21 @@ public:
 	~NtResourceManager();
 
 	bool Initialize(const NtString& str);
-	void UpdateWholeDirectoryFiles(const NtWChar* directory);
-	void AddMappingInfo(const NtWChar* fileName, NtWChar* wholePath);
+	void UpdateWholeDirectoryFiles(const ntWchar* directory);
+	void AddMappingInfo(const ntWchar* fileName, ntWchar* wholePath);
 	void SetEnvDirectory(const NtString& str);
 
-	NtUInt		LoadTexture(const NtWChar* fileName);
-	NtTexture*	AcquireTexture(NtUInt handle);
-	void		ReleaseTexture(NtUInt handle);
+	ntUint		LoadTexture(const ntWchar* fileName);
+	NtTexture*	AcquireTexture(ntUint handle);
+	void		ReleaseTexture(ntUint handle);
 
 
-	NtFile*			GetFile(const NtWChar* fileName);
-	const NtWChar*	GetWholePath(const NtWChar* fileName);
+	NtFile*			GetFile(const ntWchar* fileName);
+	const ntWchar*	GetWholePath(const ntWchar* fileName);
 	
 
 private:
-	const NtResource* FindResource(const NtWChar* fileName);
+	const NtResource* FindResource(const ntWchar* fileName);
 	NtTexHandle*	FindUsableHandle();
 	void		AddTexHandleObj();
 

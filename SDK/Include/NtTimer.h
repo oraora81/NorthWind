@@ -14,18 +14,18 @@ public:
 	~NtTimer();
 
 	void	StartTimer();
-	NtFloat GetTime();
-	NtFloat	GetFrameTime();
+	ntFloat GetTime();
+	ntFloat	GetFrameTime();
 
 private:
-	NtDouble	m_countsPerSecond;
-	NtInt64		m_counterStart;
-	NtInt64		m_frameTimeOld;
-	NtFloat		m_frameTime;
+	ntDouble	m_countsPerSecond;
+	ntInt64		m_counterStart;
+	ntInt64		m_frameTimeOld;
+	ntFloat		m_frameTime;
 
 public:
-	NtInt		m_frameCount;
-	NtInt		m_fps;
+	ntInt		m_frameCount;
+	ntInt		m_fps;
 };
 
 }

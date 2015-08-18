@@ -15,7 +15,7 @@ class NtAse : public NT::FS::NtFile
 	};
 
 public:
-	explicit NtAse(const NtWChar* fileName);
+	explicit NtAse(const ntWchar* fileName);
 	~NtAse();
 
 	// 상위 키워드 탐색 > 키워드에 맞는 파싱 모드 진입
@@ -24,7 +24,7 @@ public:
 	const std::map<NtString, NtMesh*>& GetMeshMap();
 
 private:
-	bool FindKeyword(NtWChar* keyword);
+	bool FindKeyword(ntWchar* keyword);
 	
 	bool ParseGeomObject();
 	bool ParseMaterial();
@@ -41,18 +41,18 @@ private:
 	void ParseTexVertex();
 	void ParseTexFace();
 	void ParsePhysiqueVertex();
-	void ParseBlendWeight(NtInt index);
+	void ParseBlendWeight(ntInt index);
 
 	void ParseMaterialElement(NtMaterial* material);
 	void ParseMapDiffuse(NtMaterial* material);
 	void ParseMapOpacity();
 
 	void SetKeyword();
-	bool CompareKeyword(const NtWChar* keyword);
+	bool CompareKeyword(const ntWchar* keyword);
 
 	void MakeHierarchy();
 
-	void OutputErrorMsg(const NtWChar* msg);
+	void OutputErrorMsg(const ntWchar* msg);
 
 private:
 	eParseMODE m_mode;

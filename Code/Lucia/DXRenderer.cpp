@@ -960,7 +960,7 @@ void DXRenderer::RenderText(const std::wstring text)
 	m_d3dDeviceContext->DrawIndexed(6, 0, 0);
 }
 
-void DXRenderer::Process(const NtFloat& delta)
+void DXRenderer::Process(const ntFloat& delta)
 {
 	m_rot += 1.0f * delta;
 	if (m_rot > 6.26f)

@@ -7,13 +7,13 @@ namespace NT
 class NtRTTI
 {
 public:
-	NtRTTI(const NtWChar* rtti_name, const NtRTTI* parent);
+	NtRTTI(const ntWchar* rtti_name, const NtRTTI* parent);
 	virtual ~NtRTTI();
 
 	const NtString&		GetObjName() const;
 	void				SetObjName(NtString& name);
 
-	NtBool				SetParent(const NtRTTI* rtti);
+	bool				SetParent(const NtRTTI* rtti);
 	const NtRTTI*		GetParent() const;
 
 	bool				IsExactly(const NtRTTI* rtti) const;

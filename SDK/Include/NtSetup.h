@@ -10,7 +10,7 @@ public:
 	static void	Setup();
 
 public:
-	static NtBool volatile m_systemInitialize;
+	static bool volatile m_systemInitialize;
 };
 
 }

@@ -7,10 +7,10 @@ namespace NT
 namespace Crt
 {
 
-const NtChar* MakeString(const NtChar* expr,...)
+const ntChar* MakeString(const ntChar* expr,...)
 {
-	static _declspec(thread) NtChar buff[256][1024];
-	static _declspec(thread) NtInt index = 0;
+	static _declspec(thread) ntChar buff[256][1024];
+	static _declspec(thread) ntInt index = 0;
 
 	int ret;
 	va_list argptr;
@@ -23,10 +23,10 @@ const NtChar* MakeString(const NtChar* expr,...)
 	return buff[index++ & 255];
 }
 
-const NtWChar* MakeString(const NtWChar* expr,...)
+const ntWchar* MakeString(const ntWchar* expr,...)
 {
-	static _declspec(thread) NtWChar buff[256][1024];
-	static _declspec(thread) NtInt index = 0;
+	static _declspec(thread) ntWchar buff[256][1024];
+	static _declspec(thread) ntInt index = 0;
 
 	int ret;
 	va_list argptr;
@@ -38,137 +38,137 @@ const NtWChar* MakeString(const NtWChar* expr,...)
 	return buff[index++ & 255];
 }
 
-NtChar* MakeBuffer()
+ntChar* MakeBuffer()
 {
-	static _declspec(thread) NtChar buff[256][1024];
-	static _declspec(thread) NtUInt index = 0;
-	NtChar* result = buff[index++ & 255];
+	static _declspec(thread) ntChar buff[256][1024];
+	static _declspec(thread) ntUint index = 0;
+	ntChar* result = buff[index++ & 255];
 	*result = '\0';
 	return result;
 }
 
-NtWChar* MakeWBuffer()
+ntWchar* MakeWBuffer()
 {
-	static _declspec(thread) NtWChar buff[256][1024];
-	static _declspec(thread) NtUInt index = 0;
-	NtWChar* result = buff[index++ & 255];
+	static _declspec(thread) ntWchar buff[256][1024];
+	static _declspec(thread) ntUint index = 0;
+	ntWchar* result = buff[index++ & 255];
 	*result = L'\0';
 	return result;
 }
 
 // String Function
-NtSize StrLen(const NtChar* buf)
+ntSize StrLen(const ntChar* buf)
 {
 	return strlen(buf);
 }
 
-NtSize StrLen(const NtWChar* buf)
+ntSize StrLen(const ntWchar* buf)
 {
 	return wcslen(buf);
 }
 
-NtInt StrCpy( NtChar* dest, const NtChar* source, NtSize destSize)
+ntInt StrCpy( ntChar* dest, const ntChar* source, ntSize destSize)
 {
 	return strcpy_s(dest, destSize, source);
 }
 
-NtInt StrCpy( NtWChar* dest, const NtWChar* source, NtSize destSize)
+ntInt StrCpy( ntWchar* dest, const ntWchar* source, ntSize destSize)
 {
 	return wcscpy_s(dest, destSize, source);
 }
 
-NtInt StrNCpy(NtChar* dest, const NtChar* source, NtSize destSize, NtSize maxSize)
+ntInt StrNCpy(ntChar* dest, const ntChar* source, ntSize destSize, ntSize maxSize)
 {
 	return strncpy_s(dest, destSize, source, maxSize);
 }
 
-NtInt StrNCpy( NtWChar* dest, const NtWChar* source, NtSize destSize, NtSize maxSize )
+ntInt StrNCpy( ntWchar* dest, const ntWchar* source, ntSize destSize, ntSize maxSize )
 {
 	return wcsncpy_s(dest, destSize, source, maxSize);
 }
 
-NtInt StrCmp( const NtChar* compare1, const NtChar* compare2 )
+ntInt StrCmp( const ntChar* compare1, const ntChar* compare2 )
 {
 	return strcmp(compare1, compare2);
 }
 
-NtInt StrCmp( const NtWChar* compare1, const NtWChar* compare2 )
+ntInt StrCmp( const ntWchar* compare1, const ntWchar* compare2 )
 {
 	return wcscmp(compare1, compare2);
 }
 
-NtInt StrCat(NtChar* dest,NtSize dstSize,const NtChar* source)
+ntInt StrCat(ntChar* dest,ntSize dstSize,const ntChar* source)
 {
 	return strcat_s(dest, dstSize, source);
 }
 
-NtInt StrNCat(NtChar* dest,NtSize dstSize,const NtChar* source,NtSize srcSize)
+ntInt StrNCat(ntChar* dest,ntSize dstSize,const ntChar* source,ntSize srcSize)
 {
 	return strncat_s(dest, dstSize, source, srcSize);
 }
 
 
-NtInt StrCat(NtWChar* dest,NtSize dstSize,const NtWChar* source)
+ntInt StrCat(ntWchar* dest,ntSize dstSize,const ntWchar* source)
 {
 	return wcscat_s(dest, dstSize, source);
 }
 
-NtInt StrNCat(NtWChar* dest,NtSize dstSize,const NtWChar* source,NtSize cpySize)
+ntInt StrNCat(ntWchar* dest,ntSize dstSize,const ntWchar* source,ntSize cpySize)
 {
 	return wcsncat_s(dest, dstSize, source, cpySize);
 }
 
-const NtChar* StrStr(const NtChar* src, const NtChar* strSearch )
+const ntChar* StrStr(const ntChar* src, const ntChar* strSearch )
 {
 	return strstr(src, strSearch);
 }
 
-const NtWChar* StrStr(const NtWChar* src, const NtWChar* strSearch )
+const ntWchar* StrStr(const ntWchar* src, const ntWchar* strSearch )
 {
 	return wcsstr(src, strSearch);
 }
 
 
-const NtChar* StrChr(const NtChar* src,NtInt c)
+const ntChar* StrChr(const ntChar* src,ntInt c)
 {
 	return strchr(src, c);
 }
 
 
-const NtWChar* StrChr(const NtWChar* src,NtWChar c)
+const ntWchar* StrChr(const ntWchar* src,ntWchar c)
 {
 	return wcschr(src, c);
 }
 
 
-NtFloat Atof(const NtChar* src)
+ntFloat Atof(const ntChar* src)
 {
-	return static_cast<NtFloat>(atof(src));
+	return static_cast<ntFloat>(atof(src));
 }
 
 
-NtFloat Atof(const NtWChar* src)
+ntFloat Atof(const ntWchar* src)
 {
-	return static_cast<NtFloat>(_wtof(src));
+	return static_cast<ntFloat>(_wtof(src));
 }
 
 
-NtInt ToLower(NtWChar* src, NtSize length)
+ntInt ToLower(ntWchar* src, ntSize length)
 {
 	return _wcslwr_s(src, length + 1);
 }
 
-void MemCpy(void* dest,void* src,NtUInt length)
+void MemCpy(void* dest,void* src,ntUint length)
 {
 	::memcpy(dest, src, length);
 }
 
-void MemSet(void* target,NtUInt length)
+void MemSet(void* target,ntUint length)
 {
 	::memset(target, 0, length);
 }
 
-ERROR_CODE	FOpen(const NtWChar* fileName, const NtWChar* option, FILE*& fp)
+ERROR_CODE	FOpen(const ntWchar* fileName, const ntWchar* option, FILE*& fp)
 {
 	FILE* res = NULL;
 	errno_t err = _wfopen_s(&res, fileName, option);
@@ -187,14 +187,14 @@ ERROR_CODE	FOpen(const NtWChar* fileName, const NtWChar* option, FILE*& fp)
 	return ERR_SUCCESS;
 }
 
-NtLong	FTell(FILE* fp)
+ntLong	FTell(FILE* fp)
 {
 	return ftell(fp);
 }
 
-ERROR_CODE	FSeek(FILE* fp, NtLong offset, NtInt origin)
+ERROR_CODE	FSeek(FILE* fp, ntLong offset, ntInt origin)
 {
-	NtInt res = fseek(fp, offset, origin);
+	ntInt res = fseek(fp, offset, origin);
 	if (0 != res)
 	{
 		return ERR_FILE_SEEK_FAIL;
@@ -203,53 +203,53 @@ ERROR_CODE	FSeek(FILE* fp, NtLong offset, NtInt origin)
 	return ERR_SUCCESS;
 }
 
-void WideStrToMultiStr(NtChar* dest, NtSize dstSize, const NtWChar* src)
+void WideStrToMultiStr(ntChar* dest, ntSize dstSize, const ntWchar* src)
 {
 	WideCharToMultiByte(CP_ACP, 0, src, -1, dest, dstSize, NULL, NULL);
 
 	NtAsserte(dest[0] != NULL);
 }
 
-NT::NtInt StringToNumber( const NtWChar* buffer )
+NT::ntInt StringToNumber( const ntWchar* buffer )
 {
 	return _wtoi(buffer);
 }
 
-NT::NtInt64 StringToNumber64( const NtWChar* buffer )
+NT::ntInt64 StringToNumber64( const ntWchar* buffer )
 {
 	return _wtoi64(buffer);
 }
 
-NT::NtInt StringToNumber( const NtChar* buffer )
+NT::ntInt StringToNumber( const ntChar* buffer )
 {
 	return atoi(buffer);
 }
 
-NT::NtInt64 StringToNumber64( const NtChar* buffer )
+NT::ntInt64 StringToNumber64( const ntChar* buffer )
 {
 	return _atoi64(buffer);
 }
 
 
-NtWChar* GetCmdLine()
+ntWchar* GetCmdLine()
 {
 	return ::GetCommandLine();
 }
 
 
-NtErrorCode AllocEnvVariable(const NtWChar* envName, NtWChar** envValue)
+NtErrorCode AllocEnvVariable(const ntWchar* envName, ntWchar** envValue)
 {
-	NtUInt reqSize = 0;
+	ntUint reqSize = 0;
 	_wgetenv_s(&reqSize, NULL, 0, envName);
 
-	*envValue = new NtWChar[reqSize];
+	*envValue = new ntWchar[reqSize];
 
-	NtUInt res = _wgetenv_s(&reqSize, *envValue, reqSize, envName);
+	ntUint res = _wgetenv_s(&reqSize, *envValue, reqSize, envName);
 
 	return res == 0 ? NtERROR_SUCCESS : NtERROR_FAIL;
 }
 
-void FreeEnvVariable(NtWChar* envValue)
+void FreeEnvVariable(ntWchar* envValue)
 {
 	SAFE_DELETE_ARRAY(envValue);
 }

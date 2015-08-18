@@ -7,18 +7,18 @@
 namespace NT
 {
 
-void SystemAbort(NtInt exitCode)
+void SystemAbort(ntInt exitCode)
 {
 	::exit(exitCode);
 }
 
-void SystemExit(NtInt exitCode)
+void SystemExit(ntInt exitCode)
 {
 	::PostQuitMessage(exitCode);
 }
 
 
-bool NtSystem::ReadFileSize(const NtWChar* fileName,NtUInt& size)
+bool NtSystem::ReadFileSize(const ntWchar* fileName,ntUint& size)
 {
 	struct _stat64i32 fileStat;
 	if (_wstat(fileName, &fileStat) != 0)
@@ -33,7 +33,7 @@ bool NtSystem::ReadFileSize(const NtWChar* fileName,NtUInt& size)
 }
 
 
-bool NtSystem::LoadFile(const NtWChar* fileName, std::unique_ptr<NtUChar[]>& buffer, NtUInt& size)
+bool NtSystem::LoadFile(const ntWchar* fileName, std::unique_ptr<ntUchar[]>& buffer, ntUint& size)
 {
 	struct _stat64i32 fileStat;
 	if (_wstat(fileName, &fileStat) != 0)
@@ -57,10 +57,10 @@ bool NtSystem::LoadFile(const NtWChar* fileName, std::unique_ptr<NtUChar[]>& buf
 	}
 
 	size = fileStat.st_size;
-	buffer.reset(new NtUChar[size]);
-	NT::Crt::MemSet(buffer.get(), sizeof(NtUChar) * size);
+	buffer.reset(new ntUchar[size]);
+	NT::Crt::MemSet(buffer.get(), sizeof(ntUchar) * size);
 
-	NtUInt readSize = (NtUInt)fread(buffer.get(), sizeof(NtUChar), size, fp);
+	ntUint readSize = (ntUint)fread(buffer.get(), sizeof(ntUchar), size, fp);
 	if (fclose(fp) != NULL || readSize != size)
 	{
 		buffer.reset(nullptr);
@@ -71,7 +71,7 @@ bool NtSystem::LoadFile(const NtWChar* fileName, std::unique_ptr<NtUChar[]>& buf
 	return true;
 }
 
-bool NtSystem::SaveFile(const NtWChar* fileName, const NtUChar* buffer, NtUInt size)
+bool NtSystem::SaveFile(const ntWchar* fileName, const ntUchar* buffer, ntUint size)
 {
     if (buffer == 0 || size <= 0)
     {
@@ -86,7 +86,7 @@ bool NtSystem::SaveFile(const NtWChar* fileName, const NtUChar* buffer, NtUInt s
 		return false;
 	}
 
-    size_t writeSize = fwrite(buffer, sizeof(NtUChar), size, fp);
+    size_t writeSize = fwrite(buffer, sizeof(ntUchar), size, fp);
     if (fclose(fp) != 0 || writeSize != size)
     {
         return false;
@@ -95,7 +95,7 @@ bool NtSystem::SaveFile(const NtWChar* fileName, const NtUChar* buffer, NtUInt s
     return true;
 }
 
-bool NtSystem::AppendFile(const NtWChar* fileName, NtUChar* buffer, NtUInt size)
+bool NtSystem::AppendFile(const ntWchar* fileName, ntUchar* buffer, ntUint size)
 {
     if (buffer == NULL || size <= 0)
     {
@@ -109,7 +109,7 @@ bool NtSystem::AppendFile(const NtWChar* fileName, NtUChar* buffer, NtUInt size)
         return false;
     }
 
-    size_t writeSize = fwrite(buffer, sizeof(NtUChar), size, fp);
+    size_t writeSize = fwrite(buffer, sizeof(ntUchar), size, fp);
     if (fclose(fp) != 0 || writeSize != size)
     {
         return false;
@@ -118,21 +118,21 @@ bool NtSystem::AppendFile(const NtWChar* fileName, NtUChar* buffer, NtUInt size)
     return true;
 }
 
-int NtSystem::Read1Byte(const NtChar* buffer, int byteSize, void* getData)
+int NtSystem::Read1Byte(const ntChar* buffer, int byteSize, void* getData)
 {
     _ASSERT(buffer && byteSize > 0 && getData);
     memcpy(getData, buffer, byteSize);
     return byteSize;
 }
 
-int NtSystem::Write1Byte(NtChar *buffer, int byteSize, void *setData)
+int NtSystem::Write1Byte(ntChar *buffer, int byteSize, void *setData)
 {
     _ASSERT(buffer && byteSize > 0 && setData);
     memcpy(buffer, setData, byteSize);
     return byteSize;
 }
 
-int NtSystem::Read2Byte(const NtChar* buffer, int byteSize, void* getData)
+int NtSystem::Read2Byte(const ntChar* buffer, int byteSize, void* getData)
 {
     _ASSERT(buffer && byteSize > 0 && getData);
     int cpySize = 2 * byteSize;
@@ -140,7 +140,7 @@ int NtSystem::Read2Byte(const NtChar* buffer, int byteSize, void* getData)
     return cpySize;
 }
 
-int NtSystem::Write2Byte(NtChar *buffer, int byteSize, void *setData)
+int NtSystem::Write2Byte(ntChar *buffer, int byteSize, void *setData)
 {
     _ASSERT(buffer && byteSize > 0 && setData);
     int cpySize = 2 * byteSize;
@@ -148,7 +148,7 @@ int NtSystem::Write2Byte(NtChar *buffer, int byteSize, void *setData)
     return cpySize;
 }
 
-int NtSystem::Read4Byte(const NtChar* buffer, int byteSize, void* getData)
+int NtSystem::Read4Byte(const ntChar* buffer, int byteSize, void* getData)
 {
     _ASSERT(buffer && byteSize > 0 && getData);
     int cpySize = 4 * byteSize;
@@ -156,7 +156,7 @@ int NtSystem::Read4Byte(const NtChar* buffer, int byteSize, void* getData)
     return cpySize;
 }
 
-int NtSystem::Write4Byte(NtChar *buffer, int byteSize, void *setData)
+int NtSystem::Write4Byte(ntChar *buffer, int byteSize, void *setData)
 {
     _ASSERT(buffer && byteSize > 0 && setData);
     int cpySize = 4 * byteSize;
@@ -164,7 +164,7 @@ int NtSystem::Write4Byte(NtChar *buffer, int byteSize, void *setData)
     return cpySize;
 }
 
-int NtSystem::Read8Byte(const NtChar* buffer, int byteSize, void* getData)
+int NtSystem::Read8Byte(const ntChar* buffer, int byteSize, void* getData)
 {
     _ASSERT(buffer && byteSize > 0 && getData);
     int cpySize = 8 * byteSize;
@@ -172,7 +172,7 @@ int NtSystem::Read8Byte(const NtChar* buffer, int byteSize, void* getData)
     return cpySize;
 }
 
-int NtSystem::Write8Byte(NtChar *buffer, int byteSize, void *setData)
+int NtSystem::Write8Byte(ntChar *buffer, int byteSize, void *setData)
 {
 	_ASSERT(buffer && byteSize > 0 && setData);
 	int cpySize = 8 * byteSize;

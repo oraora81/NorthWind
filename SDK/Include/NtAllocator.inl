@@ -23,15 +23,15 @@ void NtAllocator::DeAllocateDelete(T* obj)
 }
 
 template <typename T>
-T* NtAllocator::AllocateArray(NtSize length)
+T* NtAllocator::AllocateArray(ntSize length)
 {
 	if (length == 0)
 	{
 		return nullptr;
 	}
 
-	NtSize headerSize = sizeof(NtSize) / sizeof(T);
-	if ( (sizeof(NtSize) % sizeof(T)) > 0 )
+	ntSize headerSize = sizeof(ntSize) / sizeof(T);
+	if ( (sizeof(ntSize) % sizeof(T)) > 0 )
 	{
 		headerSize += 1;
 	}
@@ -39,9 +39,9 @@ T* NtAllocator::AllocateArray(NtSize length)
 	// allocate extra space to store array length in the bytes before the array
 	T* ptr = ( (T*)Allocate(sizeof(T) * (length + headerSize), __alignof(T)) ) + headerSize;
 
-	*( ((NtUInt*)ptr) - 1 ) = length;
+	*( ((ntUint*)ptr) - 1 ) = length;
 
-	for (NtSize i = 0; i < length; ++i)
+	for (ntSize i = 0; i < length; ++i)
 	{
 		new (&ptr[i]) T;
 	}
@@ -57,16 +57,16 @@ void NtAllocator::DeAllocateArray(void* ptr)
 		return;
 	}
 
-	NtSize length = *( ((NtUInt*)ptr) - 1 );
+	ntSize length = *( ((ntUint*)ptr) - 1 );
 
-	for (NtSize i = 0; i < size; ++i)
+	for (ntSize i = 0; i < size; ++i)
 	{
 		ptr[i].~T();
 	}
 
 	// calcuate how much extra memory was allocated to store the length before the array
-	NtSize headerSize = sizeof(NtSize) / sizeof(T);
-	if ( (sizeof(NtSize) % sizeof(T)) > 0 )
+	ntSize headerSize = sizeof(ntSize) / sizeof(T);
+	if ( (sizeof(ntSize) % sizeof(T)) > 0 )
 	{
 		headerSize += 1;
 	}

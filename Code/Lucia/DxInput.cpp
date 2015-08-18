@@ -65,7 +65,7 @@ bool DxInput::Release()
 	return true;
 }
 
-void DxInput::Process(const NtFloat& delta)
+void DxInput::Process(const ntFloat& delta)
 {
 	m_directKeyboard->Acquire();
 	m_directMouse->Acquire();

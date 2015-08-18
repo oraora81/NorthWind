@@ -14,21 +14,21 @@ bool NtInputManager::Initialize()
 	return true;
 }
 
-void NtInputManager::KeyDown(NtUInt key)
+void NtInputManager::KeyDown(ntUint key)
 {
 	NtAsserte(key < MAX_KEY_STATE);
 
 	m_keystate[key] = TRUE;
 }
 
-void NtInputManager::KeyUp(NtUInt key)
+void NtInputManager::KeyUp(ntUint key)
 {
 	NtAsserte(key < MAX_KEY_STATE);
 
 	m_keystate[key] = FALSE;
 }
 
-bool NtInputManager::IsKeyDown(NtUInt key)
+bool NtInputManager::IsKeyDown(ntUint key)
 {
 	NtAsserte(key < MAX_KEY_STATE);
 

@@ -8,14 +8,14 @@ namespace NT
 namespace Memory
 {
 	
-inline void* NextAlignedAddress(void* address, NtUChar alignment)
+inline void* NextAlignedAddress(void* address, ntUchar alignment)
 {
-	return (void*)( ((NtUInt)address + (alignment - 1)) & ~(alignment - 1) );
+	return (void*)( ((ntUint)address + (alignment - 1)) & ~(alignment - 1) );
 }
 
-inline NtUChar AlignAdjustment(void* address, NtUChar alignment)
+inline ntUchar AlignAdjustment(void* address, ntUchar alignment)
 {
-	NtUChar adjustment = alignment - ( (NtUInt)address & (alignment - 1) );
+	ntUchar adjustment = alignment - ( (ntUint)address & (alignment - 1) );
 
 	if (adjustment == alignment)
 	{
@@ -25,16 +25,16 @@ inline NtUChar AlignAdjustment(void* address, NtUChar alignment)
 	return adjustment;
 }
 
-inline NtUChar AlignAdjustmentWithHeader(void* address, NtUChar alignment, NtUChar headerSize)
+inline ntUchar AlignAdjustmentWithHeader(void* address, ntUchar alignment, ntUchar headerSize)
 {
-	NtUChar adjustment = alignment - ((NtUInt)address & (alignment - 1));
+	ntUchar adjustment = alignment - ((ntUint)address & (alignment - 1));
 
 	if (adjustment == alignment)
 	{
 		return 0;
 	}
 
-	NtUChar needSize = headerSize;
+	ntUchar needSize = headerSize;
 	if (adjustment < needSize)
 	{
 		needSize -= adjustment;
@@ -74,7 +74,7 @@ public:
 		NtAsserte( m_usedMemory == 0 && m_allocatedCount == 0 );
 	}
 
-	virtual void* Allocate(NtSize size, NtUChar alignment) = 0;
+	virtual void* Allocate(ntSize size, ntUchar alignment) = 0;
 	virtual void DeAllocate(void* ptr) = 0;
 
 	template <typename T>
@@ -87,18 +87,18 @@ public:
 	void DeAllocateDelete(T* obj);
 
 	template <typename T>
-	T* AllocateArray(NtSize length);
+	T* AllocateArray(ntSize length);
 
 	template <typename T>
 	void DeAllocateArray(void* ptr);
 
 
-	NtSize		GetUsedMemory() const;
-	NtSize		GetAllocatedCount() const;
+	ntSize		GetUsedMemory() const;
+	ntSize		GetAllocatedCount() const;
 
 protected:
-	NtSize		m_usedMemory;
-	NtSize		m_allocatedCount;
+	ntSize		m_usedMemory;
+	ntSize		m_allocatedCount;
 };
 
 	

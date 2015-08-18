@@ -10,8 +10,8 @@ namespace RENDERER
 
 struct VertexFormatUsage
 {
-	NtWChar*	keyword;
-	NtInt		usage;
+	ntWchar*	keyword;
+	ntInt		usage;
 };
 
 const static VertexFormatUsage g_vertexUsageList[] = 
@@ -30,9 +30,9 @@ const static VertexFormatUsage g_vertexUsageList[] =
 
 struct sVertexFormatType
 {
-	NtWChar*	keyword;
-	NtInt		size;
-	NtInt		offset;
+	ntWchar*	keyword;
+	ntInt		size;
+	ntInt		offset;
 };
 
 const static sVertexFormatType g_vertexFormatType[] =
@@ -67,11 +67,11 @@ NtVertexFormat::~NtVertexFormat()
 }
 
 
-bool NtVertexFormat::SetFormatType( const NtWChar* usage, const NtWChar* type )
+bool NtVertexFormat::SetFormatType( const ntWchar* usage, const ntWchar* type )
 {
-	NtInt size = _countof(g_vertexUsageList);
-	NtInt usageIndex = -1;
-	for (NtInt i = 0; i < size; ++i)
+	ntInt size = _countof(g_vertexUsageList);
+	ntInt usageIndex = -1;
+	for (ntInt i = 0; i < size; ++i)
 	{
 		if (Crt::StrCmp(usage, g_vertexUsageList[i].keyword) == 0)
 		{
@@ -87,7 +87,7 @@ bool NtVertexFormat::SetFormatType( const NtWChar* usage, const NtWChar* type )
 	}
 
 	size = _countof(g_vertexFormatType);
-	for (NtInt i = 0; i < size; ++i)
+	for (ntInt i = 0; i < size; ++i)
 	{
 		if (Crt::StrCmp(type, g_vertexFormatType[i].keyword) == 0)
 		{
@@ -100,11 +100,11 @@ bool NtVertexFormat::SetFormatType( const NtWChar* usage, const NtWChar* type )
 	return true;
 }
 
-NT::NtInt NtVertexFormat::GetSumOffset()
+NT::ntInt NtVertexFormat::GetSumOffset()
 {
-	NtInt sum = 0;
-	NtInt size = _countof(m_element);
-	for (NtInt i = 0; i < size; ++i)
+	ntInt sum = 0;
+	ntInt size = _countof(m_element);
+	for (ntInt i = 0; i < size; ++i)
 	{
 		if (m_element[i].formatType == 0)
 		{

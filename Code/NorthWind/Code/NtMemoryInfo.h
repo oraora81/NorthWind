@@ -9,14 +9,14 @@ class NtMemoryInfo
 public:
 	struct ntAllocUnit
 	{
-		NtSize		m_bytes;
-		NtUInt		m_pool;
-		NtUInt		m_line;
+		ntSize		m_bytes;
+		ntUint		m_pool;
+		ntUint		m_line;
 		NtString	m_fileName;
 		NtString	m_function;
 
 		ntAllocUnit() : m_bytes(0), m_line(0) {}
-		ntAllocUnit(NtSize size, NtUInt pool, const NtWChar* fileName, NtUInt line, const NtWChar* func)
+		ntAllocUnit(ntSize size, ntUint pool, const ntWchar* fileName, ntUint line, const ntWchar* func)
 			: m_bytes(size)
 			, m_pool(pool)
 			, m_line(line)

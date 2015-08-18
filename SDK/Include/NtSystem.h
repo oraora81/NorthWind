@@ -5,28 +5,28 @@
 
 namespace NT
 {
-	void SystemAbort(NtInt exitCode);
-	void SystemExit(NtInt exitCode);
+	void SystemAbort(ntInt exitCode);
+	void SystemExit(ntInt exitCode);
 
 class NtSystem
 {
 public:
-	static bool ReadFileSize(const NtWChar* fileName, NtUInt& size);
-    static bool LoadFile(const NtWChar* fileName, std::unique_ptr<NtUChar[]>& buffer, NtUInt& size);
-    static bool SaveFile(const NtWChar* fileName, const NtUChar* buffer, NtUInt size);
-    static bool AppendFile(const NtWChar* fileName, NtUChar* buffer, NtUInt size);
+	static bool ReadFileSize(const ntWchar* fileName, ntUint& size);
+    static bool LoadFile(const ntWchar* fileName, std::unique_ptr<ntUchar[]>& buffer, ntUint& size);
+    static bool SaveFile(const ntWchar* fileName, const ntUchar* buffer, ntUint size);
+    static bool AppendFile(const ntWchar* fileName, ntUchar* buffer, ntUint size);
     
-    static int Read1Byte(const NtChar* buffer, int byteSize, void* getData);
-    static int Write1Byte(NtChar* buffer, int byteSize, void* setData);
+    static int Read1Byte(const ntChar* buffer, int byteSize, void* getData);
+    static int Write1Byte(ntChar* buffer, int byteSize, void* setData);
 
-    static int Read2Byte(const NtChar* buffer, int byteSize, void* getData);
-    static int Write2Byte(NtChar* buffer, int byteSize, void* setData);
+    static int Read2Byte(const ntChar* buffer, int byteSize, void* getData);
+    static int Write2Byte(ntChar* buffer, int byteSize, void* setData);
 
-    static int Read4Byte(const NtChar* buffer, int byteSize, void* getData);
-    static int Write4Byte(NtChar* buffer, int byteSize, void* setData);
+    static int Read4Byte(const ntChar* buffer, int byteSize, void* getData);
+    static int Write4Byte(ntChar* buffer, int byteSize, void* setData);
 
-    static int Read8Byte(const NtChar* buffer, int byteSize, void* getData);
-    static int Write8Byte(NtChar* buffer, int byteSize, void* setData);
+    static int Read8Byte(const ntChar* buffer, int byteSize, void* getData);
+    static int Write8Byte(ntChar* buffer, int byteSize, void* setData);
 
 	
 private:

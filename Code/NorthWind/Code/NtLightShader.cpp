@@ -25,7 +25,7 @@ NtLightShader::~NtLightShader()
 	Release();
 }
 
-bool NtLightShader::Initialize(const NtWChar* vs, const NtWChar* ps)
+bool NtLightShader::Initialize(const ntWchar* vs, const ntWchar* ps)
 {
 	// init the vertex and pixel shader
 	bool res = InitializeShader(vs, ps);
@@ -60,7 +60,7 @@ bool NtLightShader::Render(int indexCount, const XMMATRIX& world, const XMMATRIX
 }
 
 
-bool NtLightShader::InitializeShader(const NtWChar* vs, const NtWChar* ps)
+bool NtLightShader::InitializeShader(const ntWchar* vs, const ntWchar* ps)
 {
 	ID3D10Blob* errMsg = nullptr;
 	ID3D10Blob* vertexShaderBuffer = nullptr;
@@ -254,7 +254,7 @@ bool NtLightShader::SetShaderParameter(const XMMATRIX& world, const XMMATRIX& vi
 	g_renderer->DeviceContext()->Unmap(m_matrixBuffer, 0);
 
 	// set the position of the constant buffer in the vertex shader
-	NtUInt bufferNum = 0;
+	ntUint bufferNum = 0;
 
 	// now set the constant buffer in the vertex shader with the updated values.
 	g_renderer->DeviceContext()->VSSetConstantBuffers(bufferNum, 1, &m_matrixBuffer);

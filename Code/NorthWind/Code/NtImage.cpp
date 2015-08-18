@@ -26,7 +26,7 @@ NtImage::~NtImage()
 
 }
 
-bool NtImage::Initialize(const NtWChar* fileName, NtInt screenWidth, NtInt screenHeight)
+bool NtImage::Initialize(const ntWchar* fileName, ntInt screenWidth, ntInt screenHeight)
 {
 	m_texHandle = g_resManager->LoadTexture(fileName);
 	if (m_texHandle == INVALID_TEXTURE_HANDLE)

@@ -4,10 +4,10 @@
 
 namespace NT
 {
-//NtLong NtProfiler::m_callingCount = 0;
-//NtLong NtProfiler::m_callingIndex = 0;
+//ntLong NtProfiler::m_callingCount = 0;
+//ntLong NtProfiler::m_callingIndex = 0;
 
-NtProfiler::NtProfiler(NtWChar* currentFunc)
+NtProfiler::NtProfiler(ntWchar* currentFunc)
 {
 	sProfileItem item;
 
@@ -75,7 +75,7 @@ void NtProfiler::FlushProfile()
 
 	//PROFILE_INFO_ITOR itor = infoMap.begin();
 
-	//NtDouble sumDoration = 0.0;
+	//ntDouble sumDoration = 0.0;
 	//for (; itor != infoMap.end(); ++itor)
 	//{
 	//	sProfileItem& item = (*itor).second;
@@ -89,7 +89,7 @@ void NtProfiler::FlushProfile()
 	//std::wcout << L"All doration : " << sumDoration << L"\n";
 }
 
-///*static*/ NtLong NtProfiler::GetCallingCount()
+///*static*/ ntLong NtProfiler::GetCallingCount()
 //{
 //	return NtProfiler::m_callingCount;
 //}
@@ -104,7 +104,7 @@ void NtProfiler::FlushProfile()
 //	NT::Atom::Dec(m_callingCount);
 //}
 //
-///*static*/ NtLong NtProfiler::GetCallingIndex()
+///*static*/ ntLong NtProfiler::GetCallingIndex()
 //{
 //	return NtProfiler::m_callingIndex;
 //}

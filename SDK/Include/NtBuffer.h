@@ -35,13 +35,13 @@ public:
 	void ReleaseData();
 
 	inline eUsage GetUsage() const;
-	inline NtUInt GetBytes() const;
-	inline const NtUChar* GetData() const;
-	inline NtUChar* GetData();
+	inline ntUint GetBytes() const;
+	inline const ntUchar* GetData() const;
+	inline ntUchar* GetData();
 
 protected:
 	NtBuffer();
-	NtBuffer(NtInt num, NtSize size, eUsage usage);
+	NtBuffer(ntInt num, ntSize size, eUsage usage);
 	
 
 private:
@@ -51,8 +51,8 @@ private:
 
 protected:
 	eUsage	m_usage;
-	NtUInt	m_bytes;
-	std::unique_ptr<NtUChar[]> m_data;
+	ntUint	m_bytes;
+	std::unique_ptr<ntUchar[]> m_data;
 };
 
 

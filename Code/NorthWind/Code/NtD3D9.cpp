@@ -79,22 +79,22 @@ bool NtDirectX9Renderer::EnumAdapterModes()
 	{
 		g_colorFormat[eColorFormat::NT_FMT_A8R8G8B8];
 	}
-	NtUInt numAllowedColorFormat = _countof(allowedColorFormatArray);
+	ntUint numAllowedColorFormat = _countof(allowedColorFormatArray);
 
 	std::vector<D3DDISPLAYMODE> displayModeVector;
 
-	NtUInt adapterCount = m_driver->GetAdapterCount();
-	for (NtUInt i = 0; i < adapterCount; ++i)
+	ntUint adapterCount = m_driver->GetAdapterCount();
+	for (ntUint i = 0; i < adapterCount; ++i)
 	{
 		D3DADAPTER_IDENTIFIER9 adapterId;
 		m_driver->GetAdapterIdentifier(i, 0, &adapterId);
 
 		displayModeVector.clear();
-		for( NtUInt formatIdx = 0; formatIdx < numAllowedColorFormat; ++formatIdx )
+		for( ntUint formatIdx = 0; formatIdx < numAllowedColorFormat; ++formatIdx )
 		{
 			NTCOLORFMT colorFormat = allowedColorFormatArray[formatIdx];
-			NtUInt adapterMode = m_driver->GetAdapterModeCount(i, colorFormat);
-			for (NtUInt mode = 0; mode < adapterMode; ++mode)
+			ntUint adapterMode = m_driver->GetAdapterModeCount(i, colorFormat);
+			for (ntUint mode = 0; mode < adapterMode; ++mode)
 			{
 				D3DDISPLAYMODE displayMode;
 				m_driver->EnumAdapterModes( i, colorFormat, mode, &displayMode );
@@ -218,7 +218,7 @@ bool NtDirectX9Renderer::CreateDevice()
 	}
 
 	// Set Shader Model
-	NtUInt vsModel = deviceCaps.VertexShaderVersion;
+	ntUint vsModel = deviceCaps.VertexShaderVersion;
 	if (vsModel < D3DVS_VERSION(1,1))
 	{
 		NtAsserte("Vertex Shader Model must be at least 1.1.\n");
@@ -239,7 +239,7 @@ bool NtDirectX9Renderer::CreateDevice()
 		vsModel = D3DVS_VERSION(1,1);
 	}
 
-	NtUInt psModel = deviceCaps.PixelShaderVersion;
+	ntUint psModel = deviceCaps.PixelShaderVersion;
 	if (psModel < D3DPS_VERSION(1,1))
 	{
 		NtAsserte("Pixel Shader Model must be at least 1.1.\n");

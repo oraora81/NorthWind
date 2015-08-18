@@ -6,9 +6,9 @@ namespace NT
 
 #define NT_2D_VERTEX_Z (1e-3f)
 #define NT_RGBA(r,g,b,a) \
-	(NtULong)(((NtUChar)(r))|((NtUChar)(g)<<8)|((NtUChar)(b)<<16)|((NtUChar)(a)<<24))
+	(ntUlong)(((ntUchar)(r))|((ntUchar)(g)<<8)|((ntUchar)(b)<<16)|((ntUchar)(a)<<24))
 
-const NtUInt INVALID_TEXTURE_HANDLE = 0xffffffff;
+const ntUint INVALID_TEXTURE_HANDLE = 0xffffffff;
 
 struct NtColorVertex
 {
@@ -24,38 +24,38 @@ struct NtTexVertex
 
 struct NtPos
 {
-	NtFloat x;
-	NtFloat y;
-	NtFloat z;
+	ntFloat x;
+	ntFloat y;
+	ntFloat z;
 };
 
 struct NtTris
 {
-	NtUInt a;
-	NtUInt b;
-	NtUInt c;
+	ntUint a;
+	ntUint b;
+	ntUint c;
 };
 
 struct NtFace : public NtTris
 {
-	NtUInt	m_subMaterialID;
-	NtUInt	m_texHandle;
-	NtULong	m_diffuse;
-	NtInt	m_texType;
-	NtInt	m_drawFlags;
+	ntUint	m_subMaterialID;
+	ntUint	m_texHandle;
+	ntUlong	m_diffuse;
+	ntInt	m_texType;
+	ntInt	m_drawFlags;
 };
 
 struct NtNormal
 {
-	NtFloat x;
-	NtFloat y;
-	NtFloat z;
+	ntFloat x;
+	ntFloat y;
+	ntFloat z;
 };
 
 struct NtUV
 {
-	NtFloat tu;
-	NtFloat tv;
+	ntFloat tu;
+	ntFloat tv;
 };
 
 
@@ -63,8 +63,8 @@ struct NtMesh;
 struct NtRigid
 {
 	NtString m_objName;
-	NtFloat m_blendWeight;
-	NtSize	m_rigidSize;
+	ntFloat m_blendWeight;
+	ntSize	m_rigidSize;
 	NtMesh*	m_meshObj;
 
 	NtRigid() : m_blendWeight(0.0f)
@@ -95,9 +95,9 @@ struct NtVertex
 {
 	NtPos		m_p;
 	NtNormal	m_n;
-	NtSize		m_rigidNum;
+	ntSize		m_rigidNum;
 	NtRigid*	m_rigid;
-	NtFloat		m_weight;
+	ntFloat		m_weight;
 	NtString	m_objName;
 
 	~NtVertex()
@@ -111,9 +111,9 @@ struct NtMesh
 {
 	NtString m_name;
 	NtString m_parentName;
-	NtSize	m_vertexNum;
-	NtSize	m_faceNum;
-	NtSize m_tvertexNum;
+	ntSize	m_vertexNum;
+	ntSize	m_faceNum;
+	ntSize m_tvertexNum;
 
 	NtVertex* m_vertex;
 	NtUV*	m_tv;
@@ -123,9 +123,9 @@ struct NtMesh
 	NtMesh*	m_linkParent;
 	NtMesh* m_linkChild;
 
-	NtFloat rot[9];
-	NtFloat pos[3];
-	NtFloat scl [3];
+	ntFloat rot[9];
+	ntFloat pos[3];
+	ntFloat scl [3];
 
 	NtMesh()
 	{
@@ -172,14 +172,14 @@ struct NtMaterial
 	NtString m_materialName;
 	NtString m_bitmapName;
 	eMaterialClass m_materialClass;
-	NtULong m_diffuse;
-	NtFloat	m_specular[3];
-	NtUInt m_texHandle;
-	NtInt m_texType;
-	NtFloat m_scaleU;
-	NtFloat m_scaleV;
-	NtUInt	m_drawFlag;
-	NtInt m_subMaterialNum;
+	ntUlong m_diffuse;
+	ntFloat	m_specular[3];
+	ntUint m_texHandle;
+	ntInt m_texType;
+	ntFloat m_scaleU;
+	ntFloat m_scaleV;
+	ntUint	m_drawFlag;
+	ntInt m_subMaterialNum;
 	NtMaterial* m_subMaterial;
 
 	NtMaterial()
@@ -213,9 +213,9 @@ struct NtMeshObj
 {
 	NtVertexBuffer* vtxBuffer;
 	NtIndexBuffer* idxBuffer;
-	NtInt		  idxCount;
+	ntInt		  idxCount;
 	D3D11_BUFFER_DESC desc;
-	NtUInt		texHandle;
+	ntUint		texHandle;
 };
 #endif
 
@@ -226,14 +226,14 @@ struct NtMeshObj
 
 struct sDDSInitHeader
 {
-	NtUInt m_width;
-	NtUInt m_height;
-	NtUInt m_depth;
-	NtUInt m_mipCount;
-	NtUInt m_arraySize;
-	NtUInt m_bitSize;
-	NtUInt m_maxSize;
-	const NtUChar* m_bitData;
+	ntUint m_width;
+	ntUint m_height;
+	ntUint m_depth;
+	ntUint m_mipCount;
+	ntUint m_arraySize;
+	ntUint m_bitSize;
+	ntUint m_maxSize;
+	const ntUchar* m_bitData;
 	DXGI_FORMAT m_format;
 };
 
@@ -245,7 +245,7 @@ struct sDDSInitHeader
 struct NtPoint
 {
 	NtPoint();
-	NtPoint(NtFloat pX, NtFloat pY);
+	NtPoint(ntFloat pX, ntFloat pY);
 	NtPoint(const NtPoint& point);
 
 	NtPoint& operator=(const NtPoint& point);
@@ -253,7 +253,7 @@ struct NtPoint
 	NtPoint& operator -= (const NtPoint& point);
 	NtPoint& operator *= (const NtPoint& point);
 	NtPoint& operator /= (const NtPoint& point);
-	NtPoint& operator *= (NtFloat s);
+	NtPoint& operator *= (ntFloat s);
 
 	const NtPoint operator+(const NtPoint& point);
 	const NtPoint operator-(const NtPoint& point);
@@ -264,15 +264,15 @@ struct NtPoint
 	bool operator==(const NtPoint& point);
 	bool operator!=(const NtPoint& point);
 
-	NtFloat x, y;
+	ntFloat x, y;
 };
 
 
 // for demonstrate screen coordinate
 struct NtPosition
 {
-	NtInt	x;
-	NtInt	y;
+	ntInt	x;
+	ntInt	y;
 };
 
 

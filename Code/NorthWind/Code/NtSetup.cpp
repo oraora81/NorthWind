@@ -4,7 +4,7 @@
 namespace NT
 {
 
-NtBool volatile NtSetup::m_systemInitialize = false;
+bool volatile NtSetup::m_systemInitialize = false;
 
 void NtSetup::Setup()
 {

@@ -9,7 +9,7 @@
 namespace NT
 {
 
-const NtWChar* m_keywordList[MAX_PARSE_KEY] = 
+const ntWchar* m_keywordList[MAX_PARSE_KEY] = 
 {
 	L"",
 
@@ -24,18 +24,18 @@ const NtWChar* m_keywordList[MAX_PARSE_KEY] =
 
 
 
-NtParseModeBinder::NtParseModeBinder( const NtWChar* str )
+NtParseModeBinder::NtParseModeBinder( const ntWchar* str )
 	: m_target(str)
 {
 
 }
 
-NT::NtInt NtParseModeBinder::FindParseKey()
+NT::ntInt NtParseModeBinder::FindParseKey()
 {
-	NtInt index = -1;
+	ntInt index = -1;
 
 	NtString& src = m_target;
-	auto findRes = std::find_if(std::begin(m_keywordList), std::end(m_keywordList), [&src, &index](const NtWChar* keyword) -> bool
+	auto findRes = std::find_if(std::begin(m_keywordList), std::end(m_keywordList), [&src, &index](const ntWchar* keyword) -> bool
 	{
 		++index;
 		if (src == keyword)
@@ -64,7 +64,7 @@ NtModelParser::~NtModelParser()
 
 }
 
-bool NtModelParser::Execute(const NtWChar* fileName)
+bool NtModelParser::Execute(const ntWchar* fileName)
 {
 	bool res = m_file.Execute(fileName, FS::IO_READ);
 	if (false == res)
@@ -119,7 +119,7 @@ bool NtModelParser::ProcessVertexNum()
 			return false;
 		}
 
-		NtInt vertexCount = Crt::StringToNumber(m_file.GetData());
+		ntInt vertexCount = Crt::StringToNumber(m_file.GetData());
 		if (vertexCount == 0)
 		{
 			return false;
@@ -219,11 +219,11 @@ bool NtModelParser::FindKeyword( PARSE_KEYWORD parseKey )
 	return false;
 }
 
-bool NtModelParser::DetermineParseMode(const NtWChar* src)
+bool NtModelParser::DetermineParseMode(const ntWchar* src)
 {
 	NtParseModeBinder binder(src);
 
-	NtInt index = binder.FindParseKey();
+	ntInt index = binder.FindParseKey();
 	if (index == -1)
 	{
 		return false;
@@ -237,8 +237,8 @@ bool NtModelParser::DetermineParseMode(const NtWChar* src)
 
 bool NtModelParser::ReadVertexType()
 {
-	NtWChar usage[64] = {0, };
-	NtWChar type[64] = {0, };
+	ntWchar usage[64] = {0, };
+	ntWchar type[64] = {0, };
 
 	while(!m_file.IsEOF())
 	{
@@ -256,7 +256,7 @@ bool NtModelParser::ReadVertexType()
 			continue;
 		}
 
-		NtInt scanfCount = swscanf_s(m_file.GetData(), L"%s %s", usage, _countof(usage), type, _countof(type));
+		ntInt scanfCount = swscanf_s(m_file.GetData(), L"%s %s", usage, _countof(usage), type, _countof(type));
 		if (scanfCount == 2)
 		{
 			m_linkPuppet->SetFormatType(usage, type);
@@ -283,11 +283,11 @@ bool NtModelParser::ReadVertexType()
 
 bool NtModelParser::ReadVertexInfo()
 {
-	NtInt elemNum = m_linkPuppet->GetSumOffset();
-	NtInt vtxCount = m_linkPuppet->GetVertexCount();
-	NtInt loopCounter = 0;
+	ntInt elemNum = m_linkPuppet->GetSumOffset();
+	ntInt vtxCount = m_linkPuppet->GetVertexCount();
+	ntInt loopCounter = 0;
 
-	NtFloat* vtxBuf = new NtFloat[elemNum * vtxCount];
+	ntFloat* vtxBuf = new ntFloat[elemNum * vtxCount];
 
 	float a, b, c, d, e, f, g, i;
 	while(!m_file.IsEOF() && (loopCounter < vtxCount))
@@ -300,7 +300,7 @@ bool NtModelParser::ReadVertexInfo()
 		}
 
 		// 차후 이 부분을 파라미터화 하여 함수로 변경하자.
-		NtInt scanfCount = swscanf_s(m_file.GetData(), L"%f %f %f %f %f %f %f %f",
+		ntInt scanfCount = swscanf_s(m_file.GetData(), L"%f %f %f %f %f %f %f %f",
 			&a,
 			&b,
 			&c,

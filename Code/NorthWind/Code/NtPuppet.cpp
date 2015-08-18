@@ -34,7 +34,7 @@ NtPuppet::~NtPuppet()
 
 }
 
-bool NtPuppet::Initialize(NtWChar* puppetName)
+bool NtPuppet::Initialize(ntWchar* puppetName)
 {
 	// load the puppet Data from txt file.
 	bool res = InitializeAse(puppetName);
@@ -62,8 +62,8 @@ void NtPuppet::Release()
 
 void NtPuppet::Render(const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj, const NtLight* light)
 {
-	NtUInt stride = sizeof(NtTexVertex);
-	NtUInt offset = 0;
+	ntUint stride = sizeof(NtTexVertex);
+	ntUint offset = 0;
 
 	/*
 	// set the vertex buffer to active in the input assembler so it can be rendered.
@@ -89,8 +89,8 @@ void NtPuppet::Render(const XMMATRIX& world, const XMMATRIX& view, const XMMATRI
 
 	g_renderer->DeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	NtSize size = (NtSize)m_meshVector.size();
-	for (NtSize i = 0; i < size; ++i)
+	ntSize size = (ntSize)m_meshVector.size();
+	for (ntSize i = 0; i < size; ++i)
 	{
 		NtMeshObj& mesh = m_meshVector[i];
 		g_renderInterface->SetVertexBuffers(0, 1, &mesh.vtxBuffer, &stride, &offset);
@@ -117,7 +117,7 @@ int NtPuppet::GetIndexCount()
 }
 
 
-bool NtPuppet::InitializeAse(NtWChar* puppetName)
+bool NtPuppet::InitializeAse(ntWchar* puppetName)
 {
 	// load the raw data from ase file
 	NtAse puppetLoader(puppetName);
@@ -131,7 +131,7 @@ bool NtPuppet::InitializeAse(NtWChar* puppetName)
 
 	/*
 	NtTexVertex vt[3];
-	NtUInt indices[3];
+	ntUint indices[3];
 
 	vt[0].pos = D3DXVECTOR3(-1.0f, -1.0f, 0.0f);  // Bottom left.
 	vt[0].uv = D3DXVECTOR2(0.0f, 1.0f);
@@ -206,12 +206,12 @@ bool NtPuppet::InitializeAse(NtWChar* puppetName)
 		}
 
 		// Bone 메시는 아직 그리지 않는다.
-		if (Crt::StrStr(const_cast<NtWChar*>(mesh.m_name.Buffer()), L"Bone") != NULL)
+		if (Crt::StrStr(const_cast<ntWchar*>(mesh.m_name.Buffer()), L"Bone") != NULL)
 		{
 			continue;
 		}
 
-		if (Crt::StrStr(const_cast<NtWChar*>(mesh.m_name.Buffer()), L"Bip") != NULL)
+		if (Crt::StrStr(const_cast<ntWchar*>(mesh.m_name.Buffer()), L"Bip") != NULL)
 		{
 			continue;
 		}
@@ -225,12 +225,12 @@ bool NtPuppet::InitializeAse(NtWChar* puppetName)
 		bufferDesc.StructureByteStride = 0;
 
 		NtTexVertex* vt = new NtTexVertex[mesh.m_vertexNum];
-		NtUInt* indices = new NtUInt[mesh.m_faceNum * 3];
+		ntUint* indices = new ntUint[mesh.m_faceNum * 3];
 
 		Crt::MemSet(vt, sizeof(NtTexVertex) * mesh.m_vertexNum);
 
 		// Set Position and Normal
-		for (NtUInt i = 0; i < mesh.m_vertexNum; ++i)
+		for (ntUint i = 0; i < mesh.m_vertexNum; ++i)
 		{
 			vt[i].pos.x = mesh.m_vertex[i].m_p.x;
 			vt[i].pos.y = mesh.m_vertex[i].m_p.y;
@@ -244,7 +244,7 @@ bool NtPuppet::InitializeAse(NtWChar* puppetName)
 
 		// 삼각형 개수만큼 루프
 		// Set Texture Coord
-		for (NtUInt i = 0; i < mesh.m_faceNum; ++i)
+		for (ntUint i = 0; i < mesh.m_faceNum; ++i)
 		{
 			const NtTris& uvFace = mesh.m_rawTFace[i];
 			const NtTris& vtFace = mesh.m_rawIndex[i];
@@ -269,7 +269,7 @@ bool NtPuppet::InitializeAse(NtWChar* puppetName)
 
 
 
-		for (NtUInt i = 0; i < mesh.m_faceNum; ++i)
+		for (ntUint i = 0; i < mesh.m_faceNum; ++i)
 		{
 			indices[i*3] = mesh.m_rawIndex[i].a;
 			indices[i*3+1] = mesh.m_rawIndex[i].b;
@@ -346,7 +346,7 @@ void NtPuppet::ReleaseBuffer()
 }
 
 
-void NtPuppet::SetVertexCount( NtInt count )
+void NtPuppet::SetVertexCount( ntInt count )
 {
 	NtAsserte(count > 0);
 
@@ -354,22 +354,22 @@ void NtPuppet::SetVertexCount( NtInt count )
 }
 
 
-NT::NtInt NtPuppet::GetVertexCount() const
+NT::ntInt NtPuppet::GetVertexCount() const
 {
 	return m_vertexCount;
 }
 
-bool NtPuppet::SetFormatType( const NtWChar* usage, const NtWChar* type )
+bool NtPuppet::SetFormatType( const ntWchar* usage, const ntWchar* type )
 {
 	return m_vertexFormat.SetFormatType(usage, type);
 }
 
-NT::NtInt NtPuppet::GetSumOffset()
+NT::ntInt NtPuppet::GetSumOffset()
 {
 	return m_vertexFormat.GetSumOffset();
 }
 
-void NtPuppet::SetVertexInfo( NtFloat* vtxInfo )
+void NtPuppet::SetVertexInfo( ntFloat* vtxInfo )
 {
 	NtAsserte(vtxInfo != NULL);
 

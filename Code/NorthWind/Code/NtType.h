@@ -7,25 +7,25 @@ namespace NT
 
 // Fundamental Type
 // Integral
-typedef bool			NtBool;
-typedef char			NtChar;
-typedef unsigned char	NtUChar;
-typedef short			NtShort;
-typedef unsigned short	NtUShort;
-typedef int				NtInt;
-typedef unsigned int	NtUInt;
-typedef long			NtLong;
-typedef unsigned long	NtULong;
-typedef __int64			NtInt64;
-typedef wchar_t			NtWChar;
+typedef char			ntChar;
+typedef wchar_t			ntWchar;
+typedef unsigned char	ntUchar;
+typedef short			ntShort;
+typedef unsigned short	ntUshort;
+typedef int				ntInt;
+typedef unsigned int	ntUint;
+typedef long			ntLong;
+typedef unsigned long	ntUlong;
+typedef __int64			ntInt64;
+
 // Floating
-typedef float			NtFloat;
-typedef double			NtDouble;
+typedef float			ntFloat;
+typedef double			ntDouble;
 
 
 // Custom Type
-typedef long			NtIndex;
-typedef unsigned int	NtSize;
+typedef long			ntIndex;
+typedef unsigned int	ntSize;
 
 
 // Nt Defined Type
@@ -37,6 +37,6 @@ enum NtErrorCode
 
 
 
-//const NtInt
+//const ntInt
 
 }	// namespace NT

@@ -23,7 +23,7 @@ void NtInitDelegator::AddInitDelegator(InitDelegator func)
 
 void NtInitDelegator::ExecuteInitDelegator()
 {
-	NtInt index = 0;
+	ntInt index = 0;
 	for (; index < m_initCount; ++index)
 	{
 		m_initDelegatorList[index]();
@@ -44,7 +44,7 @@ void NtInitDelegator::AddReleaseDelegator(ReleaseDelegator func)
 
 void NtInitDelegator::ExecuteReleaseDelegator()
 {
-	NtInt index = 0;
+	ntInt index = 0;
 	for (; index < m_releaseCount; ++index)
 	{
 		m_releaseDelegatorList[index]();

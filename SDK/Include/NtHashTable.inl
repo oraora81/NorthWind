@@ -1,6 +1,6 @@
 
 template <typename NKEY, typename NVALUE>
-NtHashTable<NKEY, NVALUE>::NtHashTable(int tableSize)
+NtHashTable<NKEY, NVALUE>::NtHashTable(ntInt tableSize)
 {
     assert(tableSize > 0);
 
@@ -21,7 +21,7 @@ NtHashTable<NKEY, NVALUE>::~NtHashTable()
 template <typename NKEY, typename NVALUE>
 bool NtHashTable<NKEY, NVALUE>::Insert(const NKEY& key, const NVALUE& value)
 {
-    int index = HashCode(key);
+    ntInt index = HashCode(key);
     NtHashNode* node = m_hashTable[index];
 
     while (node)
@@ -48,7 +48,7 @@ bool NtHashTable<NKEY, NVALUE>::Insert(const NKEY& key, const NVALUE& value)
 template <typename NKEY, typename NVALUE>
 bool NtHashTable<NKEY, NVALUE>::Erase(const NKEY& key)
 {
-    int index = HashCode(key);
+    ntInt index = HashCode(key);
     NtHashNode* currNode = m_hashTable[index];
     if (!currNode)
     {
@@ -94,7 +94,7 @@ void NtHashTable<NKEY, NVALUE>::Clear()
 
     NtHashNode* tempNode;
     NtHashNode* currNode;
-    for (int i = 0; i < m_tableSize; ++i)
+    for (ntInt i = 0; i < m_tableSize; ++i)
     {
         currNode = m_hashTable[i];
 
@@ -113,7 +113,7 @@ void NtHashTable<NKEY, NVALUE>::Clear()
 template <typename NKEY, typename NVALUE>
 NVALUE* NtHashTable<NKEY, NVALUE>::Find(const NKEY& key)
 {
-    int index = HashCode(key);
+    ntInt index = HashCode(key);
     NtHashNode* currNode = m_hashTable[index];
 
     while (currNode)
@@ -165,7 +165,7 @@ NVALUE* NtHashTable<NKEY, NVALUE>::GetNext(NKEY* key)
 }
 
 template <typename NKEY, typename NVALUE>
-int NtHashTable<NKEY, NVALUE>::Size()
+ntInt NtHashTable<NKEY, NVALUE>::Size()
 {
     return m_currSize;
 }
@@ -177,13 +177,13 @@ bool NtHashTable<NKEY, NVALUE>::Empty()
 }
 
 template <typename NKEY, typename NVALUE>
-int NtHashTable<NKEY, NVALUE>::HashCode(const NKEY& key)
+ntInt NtHashTable<NKEY, NVALUE>::HashCode(const NKEY& key)
 {
     // default hash function
     static double s_dHashMultiplier = 0.5*(sqrt(5.0)-1.0);
-    unsigned int uiKey;
-    memcpy(&uiKey,&key,sizeof(unsigned int));
+    unsigned ntInt uiKey;
+	memcpy(&uiKey, &key, sizeof(ntUint));
     uiKey %= m_tableSize;
     double dFraction = fmod(s_dHashMultiplier*uiKey,1.0);
-    return (int)floor(m_tableSize*dFraction);
+    return (ntInt)floor(m_tableSize*dFraction);
 }

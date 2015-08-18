@@ -24,9 +24,9 @@ NtFile::~NtFile()
 	}
 }
 
-bool NtFile::Execute(const NtWChar* fileName, IO_MODE mode /*= IO_READ*/)
+bool NtFile::Execute(const ntWchar* fileName, IO_MODE mode /*= IO_READ*/)
 {
-	const NtWChar* fullPath = g_resManager->GetWholePath(fileName);
+	const ntWchar* fullPath = g_resManager->GetWholePath(fileName);
 	if (nullptr == fullPath)
 	{
 		return false;
@@ -35,7 +35,7 @@ bool NtFile::Execute(const NtWChar* fileName, IO_MODE mode /*= IO_READ*/)
 	m_fileName = fullPath;
 	m_mode = mode;
 
-	const NtWChar* option = NULL;
+	const ntWchar* option = NULL;
 	if (IO_READ == m_mode)
 	{
 		option = L"r";
@@ -76,9 +76,9 @@ bool NtFile::Execute(const NtWChar* fileName, IO_MODE mode /*= IO_READ*/)
 }
 
 
-void NtFile::Write4Byte( NtWChar* buffer )
+void NtFile::Write4Byte( ntWchar* buffer )
 {
-	fwrite(buffer, sizeof(NtWChar) * 4, 1, m_fp);
+	fwrite(buffer, sizeof(ntWchar) * 4, 1, m_fp);
 }
 
 
@@ -86,7 +86,7 @@ void NtFile::Read1Byte()
 {
 	Crt::MemSet(m_readBuffer, sizeof(m_readBuffer));
 
-	fread_s(m_readBuffer, sizeof(m_readBuffer), sizeof(NtWChar) * 1, 1, m_fp);
+	fread_s(m_readBuffer, sizeof(m_readBuffer), sizeof(ntWchar) * 1, 1, m_fp);
 }
 
 
@@ -94,10 +94,10 @@ void NtFile::Read4Byte()
 {
 	Crt::MemSet(m_readBuffer, sizeof(m_readBuffer));
 
-	fread_s(m_readBuffer, sizeof(m_readBuffer), sizeof(NtWChar) * 4, 1, m_fp);
+	fread_s(m_readBuffer, sizeof(m_readBuffer), sizeof(ntWchar) * 4, 1, m_fp);
 }
 
-void NtFile::ReadBuffer( NtSize length /*= READ_BUF_SIZE*/ )
+void NtFile::ReadBuffer( ntSize length /*= READ_BUF_SIZE*/ )
 {
 	if (length >= READ_BUF_SIZE)
 	{
@@ -106,14 +106,14 @@ void NtFile::ReadBuffer( NtSize length /*= READ_BUF_SIZE*/ )
 
 	Crt::MemSet(m_readBuffer, sizeof(m_readBuffer));
 
-	fread_s(m_readBuffer, sizeof(m_readBuffer), sizeof(NtWChar) * length, 1, m_fp);
+	fread_s(m_readBuffer, sizeof(m_readBuffer), sizeof(ntWchar) * length, 1, m_fp);
 }
 
 bool NtFile::ReadLine()
 {
 	Crt::MemSet(m_readBuffer, sizeof(m_readBuffer));
 
-	NtWChar* res = fgetws(m_readBuffer, _countof(m_readBuffer), m_fp);
+	ntWchar* res = fgetws(m_readBuffer, _countof(m_readBuffer), m_fp);
 	if (res == NULL)
 	{
 		// End of File
@@ -127,7 +127,7 @@ bool NtFile::ReadTag()
 {
 	Crt::MemSet(m_readBuffer, sizeof(m_readBuffer));
 
-	NtInt res = fwscanf_s(m_fp, L"%s", m_readBuffer, _countof(m_readBuffer));
+	ntInt res = fwscanf_s(m_fp, L"%s", m_readBuffer, _countof(m_readBuffer));
 	if (res == EOF)
 	{
 		return false;
@@ -137,10 +137,10 @@ bool NtFile::ReadTag()
 	return true;
 }
 
-NT::NtInt NtFile::ReadInt()
+NT::ntInt NtFile::ReadInt()
 {
-	NtInt target = 0;
-	NtInt res = fwscanf_s(m_fp, L"%d", &target, sizeof(target));
+	ntInt target = 0;
+	ntInt res = fwscanf_s(m_fp, L"%d", &target, sizeof(target));
 	if (res == EOF)
 	{
 		return false;
@@ -150,10 +150,10 @@ NT::NtInt NtFile::ReadInt()
 	return target;
 }
 
-NT::NtFloat NtFile::ReadFloat()
+NT::ntFloat NtFile::ReadFloat()
 {
-	NtFloat target = 0.0f;
-	NtInt res = fwscanf_s(m_fp, L"%f", &target, sizeof(target));
+	ntFloat target = 0.0f;
+	ntInt res = fwscanf_s(m_fp, L"%f", &target, sizeof(target));
 	if (res == EOF)
 	{
 		return false;

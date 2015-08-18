@@ -5,10 +5,10 @@ namespace NT
 {
 namespace Atom
 {
-	NtLong Inc(volatile NtLong& target);
-	NtLong Dec(volatile NtLong& target);
-	NtLong Add(volatile NtLong& target, NtLong val);
-	NtLong Sub(volatile NtLong& target, NtLong val);
+	ntLong Inc(volatile ntLong& target);
+	ntLong Dec(volatile ntLong& target);
+	ntLong Add(volatile ntLong& target, ntLong val);
+	ntLong Sub(volatile ntLong& target, ntLong val);
 }	// namespace Atom
 
 

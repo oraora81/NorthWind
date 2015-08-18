@@ -28,11 +28,11 @@ public:
 	NtLightShader();
 	~NtLightShader();
 
-	bool Initialize(const NtWChar* vs, const NtWChar* ps);
+	bool Initialize(const ntWchar* vs, const ntWchar* ps);
 	void Release();
 	bool Render(int indexCount, const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj, NtTexture* texture, const XMFLOAT3A& lightDir, const XMFLOAT4A& diffuse);
 private:
-	bool InitializeShader(const NtWChar* vs, const NtWChar* ps);
+	bool InitializeShader(const ntWchar* vs, const ntWchar* ps);
 	void ReleaseShader();
 
 	bool SetShaderParameter(const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj, NtTexture* texture, const XMFLOAT3A& lightDir, const XMFLOAT4A& diffuse);

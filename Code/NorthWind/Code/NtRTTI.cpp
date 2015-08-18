@@ -4,7 +4,7 @@
 namespace NT
 {
 
-NtRTTI::NtRTTI(const NtWChar* rtti_name, const NtRTTI* parent)
+NtRTTI::NtRTTI(const ntWchar* rtti_name, const NtRTTI* parent)
 {
 	NtSetup::Setup();
 
@@ -27,7 +27,7 @@ void NtRTTI::SetObjName(NtString& name)
 	m_objectName = name;
 }
 
-NtBool NtRTTI::SetParent(const NtRTTI* rtti)
+bool NtRTTI::SetParent(const NtRTTI* rtti)
 {
 	m_parent = rtti;
 	return true;

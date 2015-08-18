@@ -69,9 +69,9 @@ void NtCamera::Render()
 	look.m128_f32[3] = 0.0f;
 
 	// set the yaw(Y axis), pitch(X), and roll(Z) rotations in radians.
-	NtFloat pitch = m_rot[0] * NtMath<float>::DEG_TO_RAD;
-	NtFloat yaw = m_rot[1] * NtMath<float>::DEG_TO_RAD;
-	NtFloat roll = m_rot[2] * NtMath<float>::DEG_TO_RAD;
+	ntFloat pitch = m_rot[0] * NtMath<float>::DEG_TO_RAD;
+	ntFloat yaw = m_rot[1] * NtMath<float>::DEG_TO_RAD;
+	ntFloat roll = m_rot[2] * NtMath<float>::DEG_TO_RAD;
 
 	// create the rotation matrix from the yaw, pitch and roll values
 	XMMATRIX rotationMatrix;

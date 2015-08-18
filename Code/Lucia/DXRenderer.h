@@ -69,7 +69,7 @@ public:
 
 	void Render();
 	void RenderText(const std::wstring text);
-	void Process(const NtFloat& delta);
+	void Process(const ntFloat& delta);
 
 	// Manage Vertex Data
 	bool SetVertexBuffer(unsigned int byteWidth, 
@@ -184,7 +184,7 @@ private:
 	sLight					m_light;
 
 public:
-	NtInt					m_fps;
+	ntInt					m_fps;
 };
 
 // Normal Function

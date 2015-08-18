@@ -21,13 +21,13 @@ public:
 	NtColorShader();
 	~NtColorShader();
 
-	bool Initialize(const NtWChar* vs, const NtWChar* ps);
+	bool Initialize(const ntWchar* vs, const ntWchar* ps);
 	void Release();
-	bool Render(NtInt indexCount, const XMMATRIX& worldMatrix, const XMMATRIX& viewMatrix, const XMMATRIX& projMatrix);
+	bool Render(ntInt indexCount, const XMMATRIX& worldMatrix, const XMMATRIX& viewMatrix, const XMMATRIX& projMatrix);
 	bool RenderLine(const XMMATRIX& worldMatrix, const XMMATRIX& viewMatrix, const XMMATRIX& projMatrix);
 
 private:
-	bool InitializeShader(const NtWChar* vs, const NtWChar* ps);
+	bool InitializeShader(const ntWchar* vs, const ntWchar* ps);
 	void ReleaseShader();
 	bool SetShaderParameters(const XMMATRIX& worldMatrix, const XMMATRIX& viewMatrix, const XMMATRIX& projMatrix);
 	void RenderShader(int indexCount);

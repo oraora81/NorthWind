@@ -22,7 +22,7 @@ public:
 	NtRenderer();
 	~NtRenderer();
 
-	bool Initialize(HWND hwnd, NtInt width, NtInt height);
+	bool Initialize(HWND hwnd, ntInt width, ntInt height);
 	void Release();
 	bool Process();
 
@@ -39,12 +39,12 @@ public:
 	std::shared_ptr<NtDirectX11Renderer>& GetD3DRenderer();
 	bool CreateBuffer(NtRenderBufferParam& param);
 	//bool CreateBuffer(const D3D11_BUFFER_DESC& desc, D3D11_SUBRESOURCE_DATA* resData, ID3D11Buffer** buffer);
-	void SetPrimitiveTopology(NtInt topology);
-	void SetVertexBuffers(NtUInt startSlot, NtUInt numBuffers, NtVertexBuffer** buffer, NtUInt* stride, NtUInt* offset);
-	void SetIndexBuffers(NtIndexBuffer* buffer, NTCOLORFMT format, NtUInt offset);
+	void SetPrimitiveTopology(ntInt topology);
+	void SetVertexBuffers(ntUint startSlot, ntUint numBuffers, NtVertexBuffer** buffer, ntUint* stride, ntUint* offset);
+	void SetIndexBuffers(NtIndexBuffer* buffer, NTCOLORFMT format, ntUint offset);
 
 private:
-	bool Render(NtFloat rot);
+	bool Render(ntFloat rot);
 
 private:
 #if _NT_DX11

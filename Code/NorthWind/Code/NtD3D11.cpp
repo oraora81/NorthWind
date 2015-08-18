@@ -61,7 +61,7 @@ NtDirectX11Renderer::~NtDirectX11Renderer()
 
 	// get the number of modes that fis the DXGI_FORMAT_R8G8B8A8_UNORM display
 	// format for the adapter output (moniter)
-	NtUInt numMode = 0;
+	ntUint numMode = 0;
 	res = adapterOutput->GetDisplayModeList(g_colorFormat[eColorFormat::NT_FMT_A8R8G8B8], DXGI_ENUM_MODES_INTERLACED, &numMode, NULL);
 	if (FAILED(res))
 	{
@@ -83,10 +83,10 @@ NtDirectX11Renderer::~NtDirectX11Renderer()
 	// When a match is found store the numerate and denominator of the refresh rate for that monitor
 	int numerate = 0;
 	int denominator = 0;
-	for (NtUInt i = 0; i < numMode; ++i)
+	for (ntUint i = 0; i < numMode; ++i)
 	{
-		if ((displayModeList[i].Width == (NtUInt)width) &&
-			displayModeList[i].Height == (NtUInt)height)
+		if ((displayModeList[i].Width == (ntUint)width) &&
+			displayModeList[i].Height == (ntUint)height)
 		{
 			numerate = displayModeList[i].RefreshRate.Numerator;
 			denominator = displayModeList[i].RefreshRate.Denominator;
@@ -104,10 +104,10 @@ NtDirectX11Renderer::~NtDirectX11Renderer()
 	}
 
 	// store the dedicated video card memory in megabytes;
-	m_videoCardMemory = (NtInt)(adapterDesc.DedicatedVideoMemory / 1024 / 1024);
+	m_videoCardMemory = (ntInt)(adapterDesc.DedicatedVideoMemory / 1024 / 1024);
 
 	// convert the name of the video card to a character array and store it
-	NtChar videoDesc[128] = {0, };
+	ntChar videoDesc[128] = {0, };
 	size_t strLength = 0;
 	errno_t err = wcstombs_s(&strLength, videoDesc, 128, adapterDesc.Description, 128);
 	if (err != 0)
@@ -353,8 +353,8 @@ NtDirectX11Renderer::~NtDirectX11Renderer()
 	D3D11_VIEWPORT viewport;
 	Crt::MemSet(&viewport, sizeof(viewport));
 
-	viewport.Width = (NtFloat)width;
-	viewport.Height = (NtFloat)height;
+	viewport.Width = (ntFloat)width;
+	viewport.Height = (ntFloat)height;
 	viewport.MinDepth = 0.0f;
 	viewport.MaxDepth = 1.0f;
 	viewport.TopLeftX = 0.0f;
@@ -364,8 +364,8 @@ NtDirectX11Renderer::~NtDirectX11Renderer()
 	m_deviceContext->RSSetViewports(1, &viewport);
 
 	// setup the projection matrix
-	float fieldOfView = (NtFloat)NtMath<float>::PI / 4.0f;
-	float screenAspect = (NtFloat)width / (NtFloat)height;
+	float fieldOfView = (ntFloat)NtMath<float>::PI / 4.0f;
+	float screenAspect = (ntFloat)width / (ntFloat)height;
 
 	// create the projection matrix for 3D rendering
 	m_proj = XMMatrixPerspectiveFovLH(fieldOfView, screenAspect, screenNear, screenDepth);
@@ -376,8 +376,8 @@ NtDirectX11Renderer::~NtDirectX11Renderer()
 	//D3DXMatrixIdentity(&m_world);
 
 	// create an orthogonal graphic projection matrix for 2D rendering
-	XMMatrixOrthographicLH((NtFloat)width, (NtFloat)height, screenNear, screenDepth);
-	//D3DXMatrixOrthoLH(&m_ortho, (NtFloat)width, (NtFloat)height, screenNear, screenDepth);
+	XMMatrixOrthographicLH((ntFloat)width, (ntFloat)height, screenNear, screenDepth);
+	//D3DXMatrixOrthoLH(&m_ortho, (ntFloat)width, (ntFloat)height, screenNear, screenDepth);
 
 	return true;
 }
@@ -404,7 +404,7 @@ NtDirectX11Renderer::~NtDirectX11Renderer()
 /*virtual*/ void NtDirectX11Renderer::BeginScene(float r, float g, float b, float a)
 {
 	// setup the color to clear the buffer to
-	NtFloat color[4] = {r, g, b, a};
+	ntFloat color[4] = {r, g, b, a};
 
 	// clear the back buffer
 	m_deviceContext->ClearRenderTargetView(m_renderTargetView, color);

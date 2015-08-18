@@ -22,7 +22,7 @@ NtColorShader::~NtColorShader()
 
 }
 
-bool NtColorShader::Initialize(const NtWChar* vs, const NtWChar* ps)
+bool NtColorShader::Initialize(const ntWchar* vs, const ntWchar* ps)
 {
 	// initialize the vertex and pixel shaders;
 	bool res = InitializeShader(vs, ps);
@@ -40,7 +40,7 @@ void NtColorShader::Release()
 	ReleaseShader();
 }
 
-bool NtColorShader::Render(NtInt indexCount, const XMMATRIX& worldMatrix, const XMMATRIX& viewMatrix, const XMMATRIX& projMatrix)
+bool NtColorShader::Render(ntInt indexCount, const XMMATRIX& worldMatrix, const XMMATRIX& viewMatrix, const XMMATRIX& projMatrix)
 {
 	// set the shader parameters that it will use for rendering.
 	bool res = SetShaderParameters(worldMatrix, viewMatrix, projMatrix);
@@ -79,7 +79,7 @@ bool NtColorShader::RenderLine(const XMMATRIX& worldMatrix,const XMMATRIX& viewM
 }
 
 
-bool NtColorShader::InitializeShader(const NtWChar* vs, const NtWChar* ps)
+bool NtColorShader::InitializeShader(const ntWchar* vs, const ntWchar* ps)
 {
 	// Initialize the pointers this function will use to null
 	ID3D10Blob* errMsg = nullptr;
@@ -157,7 +157,7 @@ bool NtColorShader::InitializeShader(const NtWChar* vs, const NtWChar* ps)
 	elementLayout[1].InstanceDataStepRate = 0;
 
 	// get a count of the elements in the layout
-	NtInt elementCount = _countof(elementLayout);
+	ntInt elementCount = _countof(elementLayout);
 
 	// create the vertex input layout
 	res = g_renderer->Device()->CreateInputLayout(elementLayout, elementCount, vertexShaderBuffer->GetBufferPointer(),
@@ -232,7 +232,7 @@ bool NtColorShader::SetShaderParameters(const XMMATRIX& worldMatrix, const XMMAT
 	g_renderer->DeviceContext()->Unmap(m_matrixBuffer, 0);
 
 	// set the position of the constant buffer in the vertex shader
-	NtInt bufferNum = 0;
+	ntInt bufferNum = 0;
 
 	// finally set the constant buffer in the vertex shader with the updated values.
 	g_renderer->DeviceContext()->VSSetConstantBuffers(bufferNum, 1, &m_matrixBuffer);

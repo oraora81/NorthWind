@@ -6,15 +6,15 @@ using namespace NT;
 #define NtAssert_BODY(x, title, out, info) \
 do \
 { \
-	static NtBool foreverIgnore = false; \
+	static bool foreverIgnore = false; \
 	if((false == foreverIgnore) || (x)) \
 		break; \
-	NtWChar buff[1024]; \
+	ntWchar buff[1024]; \
 	if(info == true) \
 		swprintf_s(buff, L"%s%s", out, NtWNextLine); \
 	else \
 		wcscpy_s(buff, 1024, out); \
-	NtInt result = NT::NtDebug::Assert(buff, __WFILE__, __LINE__, title); \
+	ntInt result = NT::NtDebug::Assert(buff, __WFILE__, __LINE__, title); \
 	if (result == IDRETRY) \
 		__debugbreak(); \
 	else if (result == IDABORT) \
@@ -24,15 +24,15 @@ do \
 #define NtError_BODY(x, title, out, info) \
 do \
 { \
-	static NtBool foreverIgnore = false; \
+	static bool foreverIgnore = false; \
 	if (foreverIgnore || (x)) \
 		break; \
-	NtWChar buff[1024]; \
+	ntWchar buff[1024]; \
 	if (info == true) \
 		swprintf_s(buff, "%s%s", out, NtWNextLine); \
 	else \
 		wcscpy_s(buff, 1024, out); \
-	NtInt result = NT::NtDebug::Assert(buff, __WFILE__, __LINE__, title); \
+	ntInt result = NT::NtDebug::Assert(buff, __WFILE__, __LINE__, title); \
 	if (result == IDRETRY) \
 		__debugbreak(); \
 	else if (result == IDABORT) \
@@ -45,27 +45,27 @@ namespace NT
 
 	namespace NtDebug
 	{
-		NtInt Assert(const NtWChar* expr, const NtWChar* filename, NtUInt line, const NtWChar* title = NULL);
-		NtBool IsAssertBox();
+		ntInt Assert(const ntWchar* expr, const ntWchar* filename, ntUint line, const ntWchar* title = NULL);
+		bool IsAssertBox();
 
 		typedef void (*PostAssert)();
 		void SetPostAssert(PostAssert func);
 	}
 
-	inline void NtAssert_FUNCTION(NtBool expr, const NtWChar* file, NtUInt line, const NtWChar* format, ...)
+	inline void NtAssert_FUNCTION(bool expr, const ntWchar* file, ntUint line, const ntWchar* format, ...)
 	{
 		if (expr)
 		{
 			return;
 		}
 
-		NtWChar message[MAX_BUFFER_LENGTH] = {0, };
+		ntWchar message[MAX_BUFFER_LENGTH] = {0, };
 		va_list args;
 		va_start(args, format);
 		_vsnwprintf_s(message, _countof(message), _countof(message)-1, format, args);
 		va_end(args);
 
-		NtInt result = NT::NtDebug::Assert(message, file, line, L"Assertion Failed!");
+		ntInt result = NT::NtDebug::Assert(message, file, line, L"Assertion Failed!");
 		switch(result)
 		{
 		case IDABORT:

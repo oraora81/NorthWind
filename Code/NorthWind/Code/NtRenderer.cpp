@@ -48,7 +48,7 @@ NtRenderer::~NtRenderer()
 }
 
 
-bool NtRenderer::Initialize(HWND hwnd, NtInt width, NtInt height)
+bool NtRenderer::Initialize(HWND hwnd, ntInt width, ntInt height)
 {
 #ifdef _NT_DX11
 	//m_renderEngine = new NtDirectX11Renderer;
@@ -158,10 +158,10 @@ void NtRenderer::Release()
 
 bool NtRenderer::Process()
 {
-	static NtFloat rot = 0.0f;
+	static ntFloat rot = 0.0f;
 
 	// update the rotation variable each frame
-	rot += NtMath<NtFloat>::PI * 0.005f;
+	rot += NtMath<ntFloat>::PI * 0.005f;
 	if (rot > 360.0f)
 	{
 		rot = 0.0f;
@@ -176,7 +176,7 @@ bool NtRenderer::Process()
 	return true;
 }
 
-bool NtRenderer::Render(NtFloat rot)
+bool NtRenderer::Render(ntFloat rot)
 {
 	XMMATRIX worldMatrix;
 	XMMATRIX viewMatrix;
@@ -259,18 +259,18 @@ bool NtRenderer::CreateBuffer(NtRenderBufferParam& param)
 }
 
 
-void NtRenderer::SetPrimitiveTopology(NtInt topology)
+void NtRenderer::SetPrimitiveTopology(ntInt topology)
 {
 	m_renderEngine->DeviceContext()->IASetPrimitiveTopology((D3D11_PRIMITIVE_TOPOLOGY)topology);
 }
 
 
-void NtRenderer::SetVertexBuffers(NtUInt startSlot, NtUInt numBuffers, NtVertexBuffer** buffer, NtUInt* stride, NtUInt* offset)
+void NtRenderer::SetVertexBuffers(ntUint startSlot, ntUint numBuffers, NtVertexBuffer** buffer, ntUint* stride, ntUint* offset)
 {
 	m_renderEngine->DeviceContext()->IASetVertexBuffers(startSlot, numBuffers, buffer, stride, offset);
 }
 
-void NtRenderer::SetIndexBuffers(NtIndexBuffer* buffer, NTCOLORFMT format, NtUInt offset)
+void NtRenderer::SetIndexBuffers(NtIndexBuffer* buffer, NTCOLORFMT format, ntUint offset)
 {
 	m_renderEngine->DeviceContext()->IASetIndexBuffer(buffer, format, offset);
 }

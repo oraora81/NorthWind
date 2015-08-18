@@ -589,12 +589,12 @@ public:
 	NtFlag() : m_flags(0) {}
 	~NtFlag() {}
 
-	void TurnOn(NtInt flag)		{ m_flags |= flag; }
-	void TurnOff(NtInt flag)	{ m_flags &= ~flag;}
+	void TurnOn(ntInt flag)		{ m_flags |= flag; }
+	void TurnOff(ntInt flag)	{ m_flags &= ~flag;}
 
-	bool IsEnable(NtInt flag) const	{ return (m_flags & flag) != 0 ? true : false; }
-	void Set(NtInt flag)		{ m_flags = flag; }
+	bool IsEnable(ntInt flag) const	{ return (m_flags & flag) != 0 ? true : false; }
+	void Set(ntInt flag)		{ m_flags = flag; }
 
 private:
-	NtInt m_flags;
+	ntInt m_flags;
 };

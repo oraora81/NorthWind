@@ -21,14 +21,14 @@ public:
 	NtTextureShader();
 	~NtTextureShader();
 
-	virtual bool Initialize(const NtWChar* vs, const NtWChar* ps);
+	virtual bool Initialize(const ntWchar* vs, const ntWchar* ps);
 	void Release();
-	bool Render(int indexCount, const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj, NtUInt handle);
+	bool Render(int indexCount, const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj, ntUint handle);
 
 private:
-	bool InitializeShader(const NtWChar* vs, const NtWChar* ps);
+	bool InitializeShader(const ntWchar* vs, const ntWchar* ps);
 	void ReleaseShader();
-	bool SetShaderParameter(const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj, NtUInt handle);
+	bool SetShaderParameter(const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj, ntUint handle);
 	void RenderShader(int indexCount);
 
 private:

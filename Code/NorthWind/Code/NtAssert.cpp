@@ -6,19 +6,19 @@ namespace NT
 	namespace NtDebug
 	{
 		static PostAssert	callbackFunc = NULL;
-		__declspec(thread) static NtUInt countAssertCall = 0;
+		__declspec(thread) static ntUint countAssertCall = 0;
 
 		void SetPostAssert(PostAssert func)
 		{
 			callbackFunc = func;
 		}
 
-		const NtWChar* NtMakeAssertMessage(const NtWChar* expr, const NtWChar* filename, const NtUInt line)
+		const ntWchar* NtMakeAssertMessage(const ntWchar* expr, const ntWchar* filename, const ntUint line)
 		{
-			const NtUInt bufferSize = sizeof(NtWChar) * MAX_BUFFER_LENGTH;
+			const ntUint bufferSize = sizeof(ntWchar) * MAX_BUFFER_LENGTH;
 
-			NtWChar* buffPtr = Crt::MakeWBuffer();
-			NtWChar buff[MAX_BUFFER_LENGTH] = {0, };
+			ntWchar* buffPtr = Crt::MakeWBuffer();
+			ntWchar buff[MAX_BUFFER_LENGTH] = {0, };
 
 			Crt::MemSet(buffPtr, bufferSize);
 
@@ -34,11 +34,11 @@ namespace NT
 			return buffPtr;
 		}
 		
-		NtInt Assert(const NtWChar* expr, const NtWChar* filename, NtUInt line, const NtWChar* title /* = NULL */)
+		ntInt Assert(const ntWchar* expr, const ntWchar* filename, ntUint line, const ntWchar* title /* = NULL */)
 		{
 			struct sAssertBoxCounter
 			{
-				sAssertBoxCounter() { Atom::Inc((NtLong&)countAssertCall); }
+				sAssertBoxCounter() { Atom::Inc((ntLong&)countAssertCall); }
 			};
 
 			// for client log
@@ -51,16 +51,16 @@ namespace NT
 			}
 
 			MSG msg;
-			NtInt isQuit = ::PeekMessage(&msg, NULL, WM_QUIT, WM_QUIT, PM_REMOVE);
+			ntInt isQuit = ::PeekMessage(&msg, NULL, WM_QUIT, WM_QUIT, PM_REMOVE);
 
-			const NtWChar * message = NtMakeAssertMessage(expr, filename, line);
-			NtUInt windowType = MB_TASKMODAL
+			const ntWchar * message = NtMakeAssertMessage(expr, filename, line);
+			ntUint windowType = MB_TASKMODAL
 						| MB_ICONHAND
 						| MB_ABORTRETRYIGNORE
 						| MB_SETFOREGROUND
 						| MB_TOPMOST;
 
-			NtInt code = ::MessageBox(parent, message, title ? title : L"Assertion Failed!", windowType);
+			ntInt code = ::MessageBox(parent, message, title ? title : L"Assertion Failed!", windowType);
 			if (callbackFunc)
 			{
 				(*callbackFunc)();
@@ -68,13 +68,13 @@ namespace NT
 
 			if (isQuit)
 			{
-				NT::SystemAbort((NtInt)msg.wParam);
+				NT::SystemAbort((ntInt)msg.wParam);
 			}
 
 			return code;
 		}
 
-		NtBool IsAssertBox()
+		bool IsAssertBox()
 		{
 			return countAssertCall > 0;
 		}

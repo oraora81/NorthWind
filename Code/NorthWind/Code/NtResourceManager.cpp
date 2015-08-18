@@ -50,14 +50,14 @@ bool NtResourceManager::Initialize(const NtString& str)
 }
 
 
-void NtResourceManager::UpdateWholeDirectoryFiles(const NtWChar* directory)
+void NtResourceManager::UpdateWholeDirectoryFiles(const ntWchar* directory)
 {
 	if (m_env.Empty())
 	{
 		return;
 	}
 
-	NtWChar filter[256], name[256];
+	ntWchar filter[256], name[256];
 	WIN32_FIND_DATA fd;
 	HANDLE find;
 
@@ -94,7 +94,7 @@ void NtResourceManager::UpdateWholeDirectoryFiles(const NtWChar* directory)
 }
 
 // ex : [abc.txt], [c:\target\abc.txt]
-void NtResourceManager::AddMappingInfo(const NtWChar* fileName, NtWChar* wholePath)
+void NtResourceManager::AddMappingInfo(const ntWchar* fileName, ntWchar* wholePath)
 {
 	Crt::ToLower(wholePath, Crt::StrLen(wholePath));	
 
@@ -131,7 +131,7 @@ void NtResourceManager::SetEnvDirectory(const NtString& str)
 }
 
 
-NtUInt NtResourceManager::LoadTexture(const NtWChar* fileName)
+ntUint NtResourceManager::LoadTexture(const ntWchar* fileName)
 {
 	NtString texName(fileName);
 	auto findRes = m_texTable.find(texName);
@@ -163,10 +163,10 @@ NtUInt NtResourceManager::LoadTexture(const NtWChar* fileName)
 }
 
 
-NtTexture* NtResourceManager::AcquireTexture(NtUInt handle)
+NtTexture* NtResourceManager::AcquireTexture(ntUint handle)
 {
 	if (handle == INVALID_TEXTURE_HANDLE ||
-		(NtUInt)m_texReferenceArray.size() <= handle)
+		(ntUint)m_texReferenceArray.size() <= handle)
 	{
 		return nullptr;
 	}
@@ -175,7 +175,7 @@ NtTexture* NtResourceManager::AcquireTexture(NtUInt handle)
 }
 
 
-void NtResourceManager::ReleaseTexture(NtUInt handle)
+void NtResourceManager::ReleaseTexture(ntUint handle)
 {
 	NtTexture* texture = AcquireTexture(handle);
 	if (texture == nullptr)
@@ -195,7 +195,7 @@ void NtResourceManager::ReleaseTexture(NtUInt handle)
 }
 
 
-NtFile* NtResourceManager::GetFile(const NtWChar* fileName)
+NtFile* NtResourceManager::GetFile(const ntWchar* fileName)
 {
 	const NtResource* resource = FindResource(fileName);
 	if (resource == nullptr)
@@ -213,14 +213,14 @@ NtFile* NtResourceManager::GetFile(const NtWChar* fileName)
 }
 
 
-const NtWChar* NtResourceManager::GetWholePath(const NtWChar* fileName)
+const ntWchar* NtResourceManager::GetWholePath(const ntWchar* fileName)
 {
 	const NtResource* resource = FindResource(fileName);
 	return resource != nullptr ? resource->wholePath : nullptr;
 }
 
 
-const NtResource* NtResourceManager::FindResource(const NtWChar* fileName)
+const NtResource* NtResourceManager::FindResource(const ntWchar* fileName)
 {
 	NtString name(fileName);
 	auto res = m_resourceTable.find(name);
@@ -261,8 +261,8 @@ void NtResourceManager::AddTexHandleObj()
 {
 	NtTexHandle* handleList = new NtTexHandle[INIT_TEX_HANDLE_SIZE];
 	
-	NtInt size = static_cast<NtInt>(m_texHandleSource.size());
-	for (NtInt i = 0; i < INIT_TEX_HANDLE_SIZE; ++i)
+	ntInt size = static_cast<ntInt>(m_texHandleSource.size());
+	for (ntInt i = 0; i < INIT_TEX_HANDLE_SIZE; ++i)
 	{
 		handleList[i].SetHandle(size * INIT_TEX_HANDLE_SIZE + i);
 		m_texReferenceArray.push_back(&handleList[i]);

@@ -45,18 +45,18 @@ public:
 	NtVertexFormat();
 	~NtVertexFormat();
 
-	void SetStride(NtInt stride);
-	bool SetFormatType(const NtWChar* usage, const NtWChar* type);
-	NtInt GetSumOffset();
+	void SetStride(ntInt stride);
+	bool SetFormatType(const ntWchar* usage, const ntWchar* type);
+	ntInt GetSumOffset();
 
 protected:
 	struct NtElement
 	{
-		//NtUInt			streamIndex;
-		NtUInt			offset;
+		//ntUint			streamIndex;
+		ntUint			offset;
 		eFormatType		formatType;
 		eFormatUsage	formatUsage;
-		NtUInt			usageIndex;
+		ntUint			usageIndex;
 	};
 
 	NtElement	m_element[USAGE_QUANTITY];
