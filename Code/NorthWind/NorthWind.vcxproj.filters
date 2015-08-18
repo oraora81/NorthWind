@@ -1,0 +1,472 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Code\NtMatrix2.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtVector2.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtVector3.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtMath.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtSystem.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtAssert.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtSearch.cpp">
+      <Filter>Container</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtProfiler.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtCrt.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtAtom.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtString.cpp">
+      <Filter>String</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtLog.cpp">
+      <Filter>Log</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtInitDelegator.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtCoreLib.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtThreadObject.cpp">
+      <Filter>Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtFactory.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtTimer.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtSetup.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtObject.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtRTTI.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtInputManager.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtRenderer.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtApplication.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtPuppet.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtColorShader.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtCamera.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtTexture.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtTextureShader.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtLightShader.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtLight.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtFile.cpp">
+      <Filter>FileSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtBuffer.cpp">
+      <Filter>FileSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtModelParser.cpp">
+      <Filter>String</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtVertexFormat.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtAse.cpp">
+      <Filter>Renderer\ASE</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtRenderType.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtResourceManager.cpp">
+      <Filter>FileSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtTextureHelper.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtAllocator.cpp">
+      <Filter>Allocator</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtLinearAllocator.cpp">
+      <Filter>Allocator</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtImage.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtD3D9.cpp">
+      <Filter>Renderer\Directx</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtD3DRenderer.cpp">
+      <Filter>Renderer\Directx</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtD3D11.cpp">
+      <Filter>Renderer\Directx</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtD3DMapping.cpp">
+      <Filter>Renderer\Directx</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtShader.cpp">
+      <Filter>Renderer\Directx</Filter>
+    </ClCompile>
+    <ClCompile Include="Code\NtMemoryInfo.cpp">
+      <Filter>Allocator</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Code\NtMatrix2.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtVector2.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtVector3.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtMath.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtGlobal.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtSystem.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtTree.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtNode.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtHashTable.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtList.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtArray.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtAssert.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtCoreLib.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtSearch.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtProfiler.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtUtility.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtType.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtTypeManip.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtCrt.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtAtom.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtString.h">
+      <Filter>String</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtLog.h">
+      <Filter>Log</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtObject.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtInitDelegator.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtThreadObject.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtException.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtTypeTrait.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtFactory.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtSingleton.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtTimer.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtSetup.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtRTTI.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtRenderer.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtInputManager.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtApplication.h">
+      <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtPuppet.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtColorShader.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtCamera.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtTexture.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtTextureShader.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtLightShader.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtLight.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtFile.h">
+      <Filter>FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtBuffer.h">
+      <Filter>FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtModelParser.h">
+      <Filter>String</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtErrorHandling.h">
+      <Filter>ErrorHandle</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtVertexFormat.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtAse.h">
+      <Filter>Renderer\ASE</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtRenderType.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtResourceManager.h">
+      <Filter>FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\dds.h">
+      <Filter>Renderer\external</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\jpeg\jconfig.h">
+      <Filter>Renderer\external</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\jpeg\jerror.h">
+      <Filter>Renderer\external</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\jpeg\jmorecfg.h">
+      <Filter>Renderer\external</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\jpeg\jpeglib.h">
+      <Filter>Renderer\external</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\jpeg\turbojpeg.h">
+      <Filter>Renderer\external</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtTextureHelper.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtAllocator.h">
+      <Filter>Allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtLinearAllocator.h">
+      <Filter>Allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtImage.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtD3DRenderer.h">
+      <Filter>Renderer\Directx</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtD3D9.h">
+      <Filter>Renderer\Directx</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtD3D11.h">
+      <Filter>Renderer\Directx</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtRenderDefine.h">
+      <Filter>Renderer\Directx</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtD3DMapping.h">
+      <Filter>Renderer\Directx</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtShader.h">
+      <Filter>Renderer\Directx</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtMemoryInfo.h">
+      <Filter>Allocator</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtD3D11Headers.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Code\NtMatrix2.inl">
+      <Filter>Math</Filter>
+    </None>
+    <None Include="Code\NtVector2.inl">
+      <Filter>Math</Filter>
+    </None>
+    <None Include="Code\NtVector3.inl">
+      <Filter>Math</Filter>
+    </None>
+    <None Include="Code\NtMath.inl">
+      <Filter>Math</Filter>
+    </None>
+    <None Include="Code\NtSystem.inl">
+      <Filter>Core</Filter>
+    </None>
+    <None Include="Code\NtTree.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="Code\NtHashTable.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="Code\NtList.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="Code\NtArray.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="Code\NtSearch.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="Code\example.txt">
+      <Filter>EXT</Filter>
+    </None>
+    <None Include="Code\script1.lua">
+      <Filter>Script</Filter>
+    </None>
+    <None Include="Code\NtObject.inl">
+      <Filter>Object</Filter>
+    </None>
+    <None Include="Code\NtBuffer.inl">
+      <Filter>FileSystem</Filter>
+    </None>
+    <None Include="Code\NtErrorHandling.inl">
+      <Filter>ErrorHandle</Filter>
+    </None>
+    <None Include="Code\NtRenderType.inl">
+      <Filter>Renderer</Filter>
+    </None>
+    <None Include="Code\NtAllocator.inl">
+      <Filter>Allocator</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Math">
+      <UniqueIdentifier>{defd5d9d-86c4-4e56-9aed-6ac37235154a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{58e25f62-4ef4-4d94-84c8-8095e805c101}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Container">
+      <UniqueIdentifier>{d2d5482b-4241-4354-a855-6daab5b37d91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility">
+      <UniqueIdentifier>{cf8cf1f0-205e-40ff-a677-363133134326}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="String">
+      <UniqueIdentifier>{fe4dc4d3-e4f7-4fbe-9767-7cd947d1409d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Log">
+      <UniqueIdentifier>{f767c402-8f6b-4403-be32-8cd05dbd6be8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{e82f0a6b-1ebb-4b13-82c8-e52014720b69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Thread">
+      <UniqueIdentifier>{c2460199-1dcf-4638-82bd-260ae8d2dbbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EXT">
+      <UniqueIdentifier>{a093bd7d-d7f7-4be8-9f32-866ca8a91c79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Script">
+      <UniqueIdentifier>{d357800e-50e9-483f-a5d6-f2f0ff10d64b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application">
+      <UniqueIdentifier>{82edc524-87db-4d03-a95d-36ab70681cdc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer">
+      <UniqueIdentifier>{a8620468-8faf-49c3-ae82-6726c86429bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{76ad9154-a205-4c00-b95a-6c29fa2d7aa0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FileSystem">
+      <UniqueIdentifier>{7bd86589-0d9b-4b8a-b742-bfcd3a4b7e89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ErrorHandle">
+      <UniqueIdentifier>{a05fff5f-adc5-4599-89e0-2ca7df59152c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\ASE">
+      <UniqueIdentifier>{1f17dcea-4116-47db-ac0f-633fadf7caec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\external">
+      <UniqueIdentifier>{c1c9ba8b-18dd-40e7-ac92-7e8e068a748c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JPG">
+      <UniqueIdentifier>{0797b1a5-ae0d-4aa0-80d8-16a238e7ca8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Allocator">
+      <UniqueIdentifier>{8b4fdc03-d4bd-4982-ae21-4e74488fbdfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\Directx">
+      <UniqueIdentifier>{551b6bd1-1459-4922-b241-418c98e63dc8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="Code\jpeg\jpeg-static.lib">
+      <Filter>Renderer\external</Filter>
+    </Library>
+  </ItemGroup>
+</Project>
