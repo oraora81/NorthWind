@@ -5,9 +5,9 @@
 #include "NtD3DRenderer.h"
 #include "NtTexture.h"
 
-namespace NT
+namespace nt
 {
-namespace RENDERER
+namespace renderer
 {
 
 NtTextureShader::NtTextureShader()

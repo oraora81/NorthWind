@@ -1,7 +1,7 @@
 
 #pragma once
 
-namespace NT
+namespace nt
 {
 
 #define NT_2D_VERTEX_Z (1e-3f)

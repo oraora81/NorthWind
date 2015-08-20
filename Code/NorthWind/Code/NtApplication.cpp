@@ -2,25 +2,64 @@
 #include "NtCoreLib.h"
 #pragma hdrstop
 
-NT::APP::NtApplication* g_app = nullptr;
-NT::FS::NtResourceManager* g_resManager = nullptr;
-NT::Memory::NtLinearAllocator* g_linearAllocator = nullptr;
+// c++ importer interface
+#include "importer.hpp"
+#include "scene.h"
+#include "postprocess.h"
+
+#pragma comment (lib, "assimp-vc120-mtd.lib")
+
+// 
+//----------------------------------------------------------------------------
+nt::APP::NtApplication* g_app = nullptr;
+nt::FS::NtResourceManager* g_resManager = nullptr;
+nt::Memory::NtLinearAllocator* g_linearAllocator = nullptr;
 
 #if _NT_DX11
-//NT::RENDERER::NtDirectX11Renderer* g_renderer = nullptr;
-NtRenderer* g_renderInterface;
-std::shared_ptr<NT::RENDERER::NtDirectX11Renderer> g_renderer;
+nt::renderer::NtRenderer* g_renderInterface;
+std::shared_ptr<nt::renderer::NtDirectX11Renderer> g_renderer;
 #endif
 
-namespace NT
+// 
+//----------------------------------------------------------------------------
+
+namespace nt
 {
 
-using namespace RENDERER;
+using namespace renderer;
 using namespace INPUT;
 
 namespace APP
 {
 
+
+	void DoImport(const ntChar* fileName)
+	{
+		// Create an instance of the Importer class
+		Assimp::Importer importer;
+		// And have it read the given file with some example postprocessing
+		// Usually - if speed is not the most important aspect for you - you'll 
+		// propably to request more postprocessing than we do in this example.
+
+		std::string pFile = fileName;
+
+		const aiScene* scene = importer.ReadFile(pFile,
+			aiProcess_CalcTangentSpace |
+			aiProcess_Triangulate |
+			aiProcess_JoinIdenticalVertices |
+			aiProcess_SortByPType);
+
+		// If the import failed, report it
+		if (!scene)
+		{
+			//DoTheErrorLogging(importer.GetErrorString());
+			return ;
+		}
+		// Now we can access the file's contents. 
+		//DoTheSceneProcessing(scene);
+		// We're done. Everything will be cleaned up by the importer destructor
+		return ;
+	}
 
 bool NtApplication::Initialize(bool fullscreen)
 {
@@ -120,7 +159,7 @@ bool NtApplication::Initialize(bool fullscreen)
 	//}
 	
 	// 
-	m_resManager = new NT::FS::NtResourceManager;
+	m_resManager = new nt::FS::NtResourceManager;
 	if (false == m_resManager->Initialize(m_globalPath.Buffer()))
 	{
 		return false;
@@ -129,14 +168,22 @@ bool NtApplication::Initialize(bool fullscreen)
 	g_resManager = m_resManager;
 
 	// 
-	m_inputManager = new NT::INPUT::NtInputManager;
+	m_inputManager = new nt::INPUT::NtInputManager;
 	if (false == m_inputManager->Initialize())
 	{
 		return false;
 	}
 
+	const ntWchar* fname = g_resManager->GetWholePath(L"test_cube.ase");
+
+	ntChar buf[256];
+
+	Crt::WideStrToMultiStr(buf, Crt::StrLen(buf), fname);
+
+	DoImport(buf);
+
 	//
-	m_renderer = new NT::RENDERER::NtRenderer;
+	m_renderer = new nt::renderer::NtRenderer;
 	g_renderInterface = m_renderer;
 	if (false == m_renderer->Initialize(m_hwnd, width, height))
 	{
@@ -145,6 +192,8 @@ bool NtApplication::Initialize(bool fullscreen)
 	
 	return true;
 }
+
+
 
 void NtApplication::Shutdown()
 {
@@ -244,7 +293,7 @@ const HWND NtApplication::Handle()
 
 }	// namespace APP
 
-}	// namespace NT
+}	// namespace nt
 
 
 

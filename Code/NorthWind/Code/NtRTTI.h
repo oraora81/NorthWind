@@ -1,7 +1,7 @@
 
 #pragma once
 
-namespace NT
+namespace nt
 {
 
 class NtRTTI

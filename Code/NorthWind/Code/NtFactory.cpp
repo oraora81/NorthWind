@@ -4,7 +4,7 @@
 
 #include "NtFactory.h"
 
-namespace NT
+namespace nt
 {
 
-}	// namespace NT
+}	// namespace nt

@@ -4,7 +4,7 @@
 #include <crtdbg.h>
 
 
-namespace NT
+namespace nt
 {
 
 void SystemAbort(ntInt exitCode)
@@ -58,7 +58,7 @@ bool NtSystem::LoadFile(const ntWchar* fileName, std::unique_ptr<ntUchar[]>& buf
 
 	size = fileStat.st_size;
 	buffer.reset(new ntUchar[size]);
-	NT::Crt::MemSet(buffer.get(), sizeof(ntUchar) * size);
+	nt::Crt::MemSet(buffer.get(), sizeof(ntUchar) * size);
 
 	ntUint readSize = (ntUint)fread(buffer.get(), sizeof(ntUchar), size, fp);
 	if (fclose(fp) != NULL || readSize != size)

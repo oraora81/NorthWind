@@ -1,10 +1,10 @@
 
 #pragma once
 
-namespace NT
+namespace nt
 {
 
-namespace RENDERER
+namespace renderer
 {
 	class NtRenderer;
 	class NtTexture;
@@ -14,7 +14,7 @@ namespace RENDERER
 namespace FS
 {
 
-using namespace RENDERER;
+using namespace renderer;
 
 struct NtResource
 {
@@ -67,4 +67,4 @@ private:
 
 
 }	// namespace FS
-}	// namespace NT
+}	// namespace nt

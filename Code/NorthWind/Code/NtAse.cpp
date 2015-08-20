@@ -6,9 +6,9 @@
 #include "NtAse.h"
 #include "NtTexture.h"
 
-namespace NT
+namespace nt
 {
-namespace RENDERER
+namespace renderer
 {
 
 static const ntWchar* g_unit_materialClass[NtMaterial::MAX_MC] = 
@@ -1010,5 +1010,5 @@ void NtAse::OutputErrorMsg(const ntWchar* msg)
 }
 
 
-}	// namespace RENDERER
-}	// namespace NT
+}	// namespace renderer
+}	// namespace nt

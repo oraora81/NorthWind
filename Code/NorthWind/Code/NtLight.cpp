@@ -2,9 +2,9 @@
 #include "NtCoreLib.h"
 #include "NtLight.h"
 
-namespace NT
+namespace nt
 {
-namespace RENDERER
+namespace renderer
 {
 
 
@@ -39,5 +39,5 @@ const XMFLOAT3A& NtLight::GetDirection() const
 }
 
 
-}	// namespace RENDERER
-}	// namespace NT
+}	// namespace renderer
+}	// namespace nt

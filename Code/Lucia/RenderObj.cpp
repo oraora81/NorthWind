@@ -4,7 +4,7 @@
 
 #include "RenderObj.h"
 
-namespace NT
+namespace nt
 {
 namespace _dx11
 {

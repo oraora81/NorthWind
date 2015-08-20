@@ -6,7 +6,7 @@
 #include "NtVertexFormat.h"
 #include "NtPuppet.h"
 
-namespace NT
+namespace nt
 {
 
 const ntWchar* m_keywordList[MAX_PARSE_KEY] = 
@@ -30,7 +30,7 @@ NtParseModeBinder::NtParseModeBinder( const ntWchar* str )
 
 }
 
-NT::ntInt NtParseModeBinder::FindParseKey()
+nt::ntInt NtParseModeBinder::FindParseKey()
 {
 	ntInt index = -1;
 
@@ -333,10 +333,10 @@ bool NtModelParser::ReadVertexInfo()
 	return true;
 }
 
-void NtModelParser::SetPuppet( RENDERER::NtPuppet* puppet )
+void NtModelParser::SetPuppet(renderer::NtPuppet* puppet)
 {
 	m_linkPuppet = puppet;
 }
 
 
-}	// namespace NT
+}	// namespace nt

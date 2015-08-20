@@ -2,7 +2,7 @@
 #include "NtCoreLib.h"
 #include "NtThreadObject.h"
 
-namespace NT
+namespace nt
 {
 
 

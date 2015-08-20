@@ -2,7 +2,7 @@
 #include "NtCoreLib.h"
 #include "NtInitDelegator.h"
 
-namespace NT
+namespace nt
 {
 int NtInitDelegator::m_initCount = 0;
 int NtInitDelegator::m_releaseCount = 0;
@@ -51,4 +51,4 @@ void NtInitDelegator::ExecuteReleaseDelegator()
 	}
 }
 
-}	// namespace NT
+}	// namespace nt

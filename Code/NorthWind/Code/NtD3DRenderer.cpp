@@ -4,8 +4,8 @@
 
 #include <fstream>
 
-using namespace NT;
-using namespace RENDERER;
+using namespace nt;
+using namespace renderer;
 
 
 NtD3DRenderer::NtD3DRenderer()

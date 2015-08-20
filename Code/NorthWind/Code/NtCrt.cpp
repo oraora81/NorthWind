@@ -1,7 +1,7 @@
 
 #include "NtCoreLib.h"
 
-namespace NT
+namespace nt
 {
 
 namespace Crt
@@ -210,22 +210,22 @@ void WideStrToMultiStr(ntChar* dest, ntSize dstSize, const ntWchar* src)
 	NtAsserte(dest[0] != NULL);
 }
 
-NT::ntInt StringToNumber( const ntWchar* buffer )
+nt::ntInt StringToNumber( const ntWchar* buffer )
 {
 	return _wtoi(buffer);
 }
 
-NT::ntInt64 StringToNumber64( const ntWchar* buffer )
+nt::ntInt64 StringToNumber64( const ntWchar* buffer )
 {
 	return _wtoi64(buffer);
 }
 
-NT::ntInt StringToNumber( const ntChar* buffer )
+nt::ntInt StringToNumber( const ntChar* buffer )
 {
 	return atoi(buffer);
 }
 
-NT::ntInt64 StringToNumber64( const ntChar* buffer )
+nt::ntInt64 StringToNumber64( const ntChar* buffer )
 {
 	return _atoi64(buffer);
 }
@@ -258,4 +258,4 @@ void FreeEnvVariable(ntWchar* envValue)
 
 }	// namespace Crt
 
-}	// namespace NT
+}	// namespace nt

@@ -1,7 +1,7 @@
 
 #pragma once
 
-namespace NT
+namespace nt
 {
 
 // 
@@ -35,4 +35,4 @@ inline NtDuet<T1, T2> make_duet(const T1& type1, const T2& type2)
 	return NtDuet<T1, T2>(type1, type2);
 }
 
-} // namespace NT
+} // namespace nt

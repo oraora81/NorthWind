@@ -3,7 +3,7 @@
 
 #include <memory>
 
-namespace NT
+namespace nt
 {
 	void SystemAbort(ntInt exitCode);
 	void SystemExit(ntInt exitCode);
@@ -41,4 +41,4 @@ static void DeAllocateMem(T**& allArray);
 
 #include "NtSystem.inl"
 
-}
+} // namespace nt

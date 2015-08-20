@@ -1,9 +1,9 @@
 
 #pragma once
 
-namespace NT
+namespace nt
 {
-namespace RENDERER
+namespace renderer
 {
 
 class NtLight
@@ -23,5 +23,5 @@ private:
 	XMFLOAT3A m_direction;
 };
 
-}	// namespace RENDERER
-}	// namespace NT
+}	// namespace renderer
+}	// namespace nt

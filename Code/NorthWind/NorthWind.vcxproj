@@ -63,13 +63,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">./../../bin/Intermediate/$(ProjectName)/$(Configuration)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='DebugDx11|Win32'">./../../bin/Intermediate/$(ProjectName)/$(Configuration)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='DebugDx9|Win32'">./../../bin/Intermediate/$(ProjectName)/$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">./../../bin</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='DebugDx11|Win32'">./../../bin</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='DebugDx9|Win32'">./../../bin</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">./../../bin/Intermediate/$(ProjectName)/$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='DebugDx11|Win32'">./../../bin/Intermediate/$(ProjectName)/$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='DebugDx9|Win32'">./../../bin/Intermediate/$(ProjectName)/$(Configuration)\</IntDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">./../../bin/Intermediate/$(ProjectName)/$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">./../../bin</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">./../../bin/Intermediate/$(ProjectName)/$(Configuration)\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectName)_$(Configuration)</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='DebugDx11|Win32'">$(ProjectName)_$(Configuration)</TargetName>
@@ -112,7 +112,7 @@
     <PostBuildEvent>
       <Command>copy /y Code\Nt*.h ..\..\SDK\Include
 copy /y Code\Nt*.inl ..\..\SDK\Include
-copy /y ..\..\bin\intermediate\$(ProjectName)\$(ConfigurationName)\$(TargetFileName) ..\..\SDK\Lib</Command>
+copy /y ..\..\bin ..\..\SDK\Lib</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDx11|Win32'">
@@ -128,16 +128,16 @@ copy /y ..\..\bin\intermediate\$(ProjectName)\$(ConfigurationName)\$(TargetFileN
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <PrecompiledHeaderFile>NtCoreLib.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\import\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\import\include;..\import\assimp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Lib>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>..\import\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\import\lib\x86;..\import\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
       <Command>copy /y Code\Nt*.h ..\..\SDK\Include
 copy /y Code\Nt*.inl ..\..\SDK\Include
-copy /y ..\..\bin\intermediate\$(ProjectName)\$(ConfigurationName)\$(TargetFileName) ..\..\SDK\Lib</Command>
+copy /y ..\..\bin ..\..\SDK\Lib</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDx9|Win32'">
@@ -162,7 +162,7 @@ copy /y ..\..\bin\intermediate\$(ProjectName)\$(ConfigurationName)\$(TargetFileN
     <PostBuildEvent>
       <Command>copy /y Code\Nt*.h ..\..\SDK\Include
 copy /y Code\Nt*.inl ..\..\SDK\Include
-copy /y ..\..\bin\intermediate\$(ProjectName)\$(ConfigurationName)\$(TargetFileName) ..\..\SDK\Lib</Command>
+copy /y ..\..\bin ..\..\SDK\Lib</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -182,7 +182,7 @@ copy /y ..\..\bin\intermediate\$(ProjectName)\$(ConfigurationName)\$(TargetFileN
     <PostBuildEvent>
       <Command>copy /y Code\Nt*.h ..\..\SDK\Include
 copy /y Code\Nt*.inl ..\..\SDK\Include
-copy /y ..\..\bin\intermediate\$(ProjectName)\$(ConfigurationName)\$(TargetFileName) ..\..\SDK\Lib</Command>
+copy /y ..\..\bin ..\..\SDK\Lib</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

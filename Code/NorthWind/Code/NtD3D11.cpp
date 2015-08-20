@@ -4,10 +4,10 @@
 
 #include "NtD3DMapping.h"
 
-namespace NT
+namespace nt
 {
 
-namespace RENDERER
+namespace renderer
 {
 
 NtDirectX11Renderer::NtDirectX11Renderer()
@@ -31,11 +31,11 @@ NtDirectX11Renderer::~NtDirectX11Renderer()
 
 /*virtual*/ bool NtDirectX11Renderer::Initialize(int width, int height, HWND hwnd, bool vsync, bool fullscreen, float screenDepth, float screenNear)
 {
-	// vsync setting
+	// vsync 설정
 	m_vsync = vsync;
 
 
-	// create a DirectX Graphics Infrastructure factory
+	// DirectX Graphics Infrastructure factory 생성
 	IDXGIFactory* factory = nullptr;
 	HRESULT res = CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)&factory);
 	if (FAILED(res))
@@ -43,7 +43,7 @@ NtDirectX11Renderer::~NtDirectX11Renderer()
 		return false;
 	}
 
-	// use the factory to create an adapter for the promary graphics interface(video card)
+	// 팩토리를 이용해 메인 그래픽스 인터페이스(비디오 카드) 어댑터 생성
 	IDXGIAdapter* adapter = nullptr;
 	res = factory->EnumAdapters(0, &adapter);
 	if (FAILED(res))
@@ -51,7 +51,7 @@ NtDirectX11Renderer::~NtDirectX11Renderer()
 		return false;
 	}
 
-	// enumerate the primary adapter output (moniter)
+	// 메인 output어댑터 enumerate (moniter)
 	IDXGIOutput* adapterOutput = nullptr;
 	res = adapter->EnumOutputs(0, &adapterOutput);
 	if (FAILED(res))
@@ -59,8 +59,7 @@ NtDirectX11Renderer::~NtDirectX11Renderer()
 		return false;
 	}
 
-	// get the number of modes that fis the DXGI_FORMAT_R8G8B8A8_UNORM display
-	// format for the adapter output (moniter)
+	// DXGI_FORMAT_R8G8B8A8_UNORM 표시에 맞는 모드들 가져오기
 	ntUint numMode = 0;
 	res = adapterOutput->GetDisplayModeList(g_colorFormat[eColorFormat::NT_FMT_A8R8G8B8], DXGI_ENUM_MODES_INTERLACED, &numMode, NULL);
 	if (FAILED(res))
@@ -68,19 +67,18 @@ NtDirectX11Renderer::~NtDirectX11Renderer()
 		return false;
 	}
 
-	// create a list to hole all the possible display modes for this moniter / video card combination
+	// 비디오와 모니터 조합에 의한 디스플레이 설정수 만큼 생성
 	DXGI_MODE_DESC* displayModeList = new DXGI_MODE_DESC[numMode];
 	NtAsserte(displayModeList != nullptr);
 
-	// not fill the display mode list structures
+	// displayModeList 다시 채우기
 	res = adapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &numMode, displayModeList);
 	if (FAILED(res))
 	{
 		return false;
 	}
 
-	// now go through all the display modes and find the one that matches the screen width and height
-	// When a match is found store the numerate and denominator of the refresh rate for that monitor
+	// 화면 너비, 높이에 맞는 해상도 찾기
 	int numerate = 0;
 	int denominator = 0;
 	for (ntUint i = 0; i < numMode; ++i)
@@ -94,7 +92,7 @@ NtDirectX11Renderer::~NtDirectX11Renderer()
 		}
 	}
 
-	// get the adapter (video card) description
+	// 비디오 카드 description 찾기
 	DXGI_ADAPTER_DESC adapterDesc;
 	Crt::MemSet(&adapterDesc, sizeof(adapterDesc));
 	res = adapter->GetDesc(&adapterDesc);
@@ -103,10 +101,10 @@ NtDirectX11Renderer::~NtDirectX11Renderer()
 		return false;
 	}
 
-	// store the dedicated video card memory in megabytes;
+	// 할당된 비디오 메모리를 mb로 변환
 	m_videoCardMemory = (ntInt)(adapterDesc.DedicatedVideoMemory / 1024 / 1024);
 
-	// convert the name of the video card to a character array and store it
+	// 
 	ntChar videoDesc[128] = {0, };
 	size_t strLength = 0;
 	errno_t err = wcstombs_s(&strLength, videoDesc, 128, adapterDesc.Description, 128);
@@ -115,21 +113,21 @@ NtDirectX11Renderer::~NtDirectX11Renderer()
 		return false;
 	}
 
-	// Initialze the swap chain desc
+	// swap chain desc 초기화
 	DXGI_SWAP_CHAIN_DESC swapChainDesc;
 	Crt::MemSet(&swapChainDesc, sizeof(swapChainDesc));
 
-	// set to a single back buffer
+	// single back buffer
 	swapChainDesc.BufferCount = 1;
 
-	// set the width and height of the back buffer
+	// back buffer 너비/높이 설정
 	swapChainDesc.BufferDesc.Width = width;
 	swapChainDesc.BufferDesc.Height = height;
 
-	// set regular 32bit surface for the back buffer
+	// back buffer 포맷은 정규 32비트로 설정
 	swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 
-	// set the refresh rate of the back buffer
+	// back buffer 리프레시율 설정
 	if (m_vsync == true)
 	{
 		swapChainDesc.BufferDesc.RefreshRate.Numerator = numerate;
@@ -141,39 +139,33 @@ NtDirectX11Renderer::~NtDirectX11Renderer()
 		swapChainDesc.BufferDesc.RefreshRate.Denominator = 1;
 	}
 
-	// set the usage of the back buffer
+	// back buffer usage 설정
 	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 
-	// set the handle for the window to render to
+	// handle 셋팅
 	swapChainDesc.OutputWindow = hwnd;
 
-	// turn multisampling off
+	// 멀티 샘플링은 끔
 	swapChainDesc.SampleDesc.Count = 1;
 	swapChainDesc.SampleDesc.Quality = 0;
 
-	if (fullscreen)
-	{
-		swapChainDesc.Windowed = false;
-	}
-	else
-	{
-		swapChainDesc.Windowed = true;
-	}
+	// 윈도우 모드 설정
+	swapChainDesc.Windowed = fullscreen ? false : true;
 
-	// set the scan line ordering and scaling to unspecified
+	// scan line ordering ,scaling 은 unspecified로
 	swapChainDesc.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
 	swapChainDesc.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
 
-	// discard the back buffer contents after presenting
+	// 
 	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 
-	// dont set the advanced flags
+	// 
 	swapChainDesc.Flags = 0;
 
-	// set the feture level to DX 11
+	// DX 11용 feture level 설정
 	D3D_FEATURE_LEVEL featureLevel = D3D_FEATURE_LEVEL_11_0;
 
-	// create the swap chain, Direct3d Device, and Direct3D device context,
+	// swap chain, Direct3d Device, Direct3D device context 생성
 	res = D3D11CreateDeviceAndSwapChain(
 		adapter, 
 		D3D_DRIVER_TYPE_UNKNOWN, 
@@ -230,7 +222,7 @@ NtDirectX11Renderer::~NtDirectX11Renderer()
 	//	NULL, 
 	//	&m_d3dDeviceContext)
 
-	// get the pointer to the back buffer
+	// back buffer 포인터 얻어오기
 	ID3D11Texture2D* backBuffer = nullptr;
 	res = m_swapchain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&backBuffer);
 	if (FAILED(res))
@@ -238,19 +230,20 @@ NtDirectX11Renderer::~NtDirectX11Renderer()
 		return false;
 	}
 
-	// create the render target view with the backbuffer pointer
+	// backbuffer pointer로 렌더타겟뷰 생성
 	res = m_device->CreateRenderTargetView(backBuffer, nullptr, &m_renderTargetView);
 	if (FAILED(res))
 	{
 		return false;
 	}
 
-	// release pointer to the backbuffer as we no longer need it
+	// 얻어온 백버퍼 해제
 	SAFE_RELEASE(backBuffer);
 
-	// initialize the descriptor of the depth buffer
+	// 깊이버퍼 desc 초기화
 	D3D11_TEXTURE2D_DESC depthBufferDesc;
 	Crt::MemSet(&depthBufferDesc, sizeof(depthBufferDesc));
+
 	depthBufferDesc.Width = width;
 	depthBufferDesc.Height = height;
 	depthBufferDesc.MipLevels = 1;
@@ -263,68 +256,65 @@ NtDirectX11Renderer::~NtDirectX11Renderer()
 	depthBufferDesc.CPUAccessFlags = 0;
 	depthBufferDesc.MiscFlags = 0;
 
-	// create the texture for the depth buffer using the filled out description
+	// 깊이 버퍼를 위한 텍스쳐 생성
 	res = m_device->CreateTexture2D(&depthBufferDesc, NULL, &m_depthStencilBuffer);
 	if (FAILED(res))
 	{
 		return false;
 	}
 
-	// initialize the description of the stencil state
+	// 스텐실 desc 설정
 	D3D11_DEPTH_STENCIL_DESC depthStencilDesc;
 	Crt::MemSet(&depthStencilDesc, sizeof(depthStencilDesc));
 
-	// set up the desc of the stencil state
 	depthStencilDesc.DepthEnable = true;
 	depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
 	depthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS;
-
 	depthStencilDesc.StencilEnable = true;
 	depthStencilDesc.StencilReadMask = 0xff;
 	depthStencilDesc.StencilWriteMask = 0xff;
 
-	// stencil operation if pixel is front-facing
+	// 스텐실 op - frontface
 	depthStencilDesc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
 	depthStencilDesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_INCR;
 	depthStencilDesc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
 	depthStencilDesc.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
 
-	// stencil operation if pixel if back_-facing
+	// backface
 	depthStencilDesc.BackFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
 	depthStencilDesc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_DECR;
 	depthStencilDesc.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
 	depthStencilDesc.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
 
-	// create the depth stencil state
+	// 
 	res = m_device->CreateDepthStencilState(&depthStencilDesc, &m_depthStencilState);
 	if (FAILED(res))
 	{
 		return false;
 	}
 
-	// set the depth stencil state
+	// 스텐실상태 설정
 	m_deviceContext->OMSetDepthStencilState(m_depthStencilState, 1);
 
-	// initialize the depth stencil view
+	// 
 	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
 	Crt::MemSet(&depthStencilViewDesc, sizeof(depthStencilViewDesc));
 
-	// set up the depth stencil view desc
 	depthStencilViewDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
 	depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
 	depthStencilViewDesc.Texture2D.MipSlice = 0;
 
-	// create the depth stencil view
+	// 깊이 스텐실 뷰 생성
 	res = m_device->CreateDepthStencilView(m_depthStencilBuffer, &depthStencilViewDesc, &m_depthStencilView);
 	if (FAILED(res))
 	{
 		return false;
 	}
 
-	// bind the render target view and depth stencil buffer to the output render pipeline
+	// 렌더타겟뷰랑 깊이 스텐실 버퍼를 렌더파이프라인(output merger)에 바인딩
 	m_deviceContext->OMSetRenderTargets(1, &m_renderTargetView, m_depthStencilView);
 
-	// setup the raster description which will determine how and what polygons will be drawn
+	// 어떻게 폴리곤을 그릴지 raster desc 설정
 	D3D11_RASTERIZER_DESC rasterDesc;
 	Crt::MemSet(&rasterDesc, sizeof(rasterDesc));
 
@@ -339,17 +329,17 @@ NtDirectX11Renderer::~NtDirectX11Renderer()
 	rasterDesc.ScissorEnable = false;
 	rasterDesc.SlopeScaledDepthBias = 0.0f;
 
-	// create the rasterize state from the description we just filled out
+	//
 	res = m_device->CreateRasterizerState(&rasterDesc, &m_rasterState);
 	if (FAILED(res))
 	{
 		return false;
 	}
 
-	// now set the rasterizer state
+	// rasterizer state 설정
 	m_deviceContext->RSSetState(m_rasterState);
 
-	// setup the viewport for rendering
+	// 렌더링 뷰포트 설정
 	D3D11_VIEWPORT viewport;
 	Crt::MemSet(&viewport, sizeof(viewport));
 
@@ -360,24 +350,22 @@ NtDirectX11Renderer::~NtDirectX11Renderer()
 	viewport.TopLeftX = 0.0f;
 	viewport.TopLeftY = 0.0f;
 
-	// create viewport
+	// 
 	m_deviceContext->RSSetViewports(1, &viewport);
 
-	// setup the projection matrix
+	// 프로젝션 행렬 생성
 	float fieldOfView = (ntFloat)NtMath<float>::PI / 4.0f;
 	float screenAspect = (ntFloat)width / (ntFloat)height;
 
-	// create the projection matrix for 3D rendering
+	// 
 	m_proj = XMMatrixPerspectiveFovLH(fieldOfView, screenAspect, screenNear, screenDepth);
-	//D3DXMatrixPerspectiveFovLH(&m_proj, fieldOfView, screenAspect, screenNear, screenDepth);
-
-	// initialize the world matrix to the identity matrix
+	
+	// 월드를 단위행렬로 초기화
 	m_world = XMMatrixIdentity();
-	//D3DXMatrixIdentity(&m_world);
-
+	
+	// 2d 렌더링에 사용할 정사영 행렬 생성
 	// create an orthogonal graphic projection matrix for 2D rendering
 	XMMatrixOrthographicLH((ntFloat)width, (ntFloat)height, screenNear, screenDepth);
-	//D3DXMatrixOrthoLH(&m_ortho, (ntFloat)width, (ntFloat)height, screenNear, screenDepth);
 
 	return true;
 }
@@ -385,7 +373,7 @@ NtDirectX11Renderer::~NtDirectX11Renderer()
 
 /*virtual*/ void NtDirectX11Renderer::Release()
 {
-	// before shutting down set to windowed mode or when you release the swap chain it will throw an exception
+	// 
 	if (m_swapchain)
 	{
 		m_swapchain->SetFullscreenState(FALSE, nullptr);
@@ -403,28 +391,28 @@ NtDirectX11Renderer::~NtDirectX11Renderer()
 
 /*virtual*/ void NtDirectX11Renderer::BeginScene(float r, float g, float b, float a)
 {
-	// setup the color to clear the buffer to
+	// 
 	ntFloat color[4] = {r, g, b, a};
 
-	// clear the back buffer
+	// back buffer 클리어
 	m_deviceContext->ClearRenderTargetView(m_renderTargetView, color);
 
-	// clear the depth buffer
+	// depth buffer 클리어
 	m_deviceContext->ClearDepthStencilView(m_depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
 
 
 /*virtual*/ void NtDirectX11Renderer::EndScene()
 {
-	// present the back buffer to the screen since rendering is complete
+	// 렌더링이 완료되었으므로 백버퍼를 표시한다
 	if (m_vsync)
 	{
-		// lock to screen refresh rate
+		// 화면 리프레시율 고정 (60hz)
 		m_swapchain->Present(1, 0);
 	}
 	else
 	{
-		// present as fast as possible
+		// 가능한한 많이 빠르게
 		m_swapchain->Present(0, 0);
 	}
 }
@@ -462,5 +450,5 @@ bool NtDirectX11Renderer::CreateShaderResourceView(ID3D11Texture3D* tex,D3D11_SH
 	return FAILED(res) ? false : true;
 }
 
-}	// namespace RENDERER
-}	// namespace NT
+}	// namespace renderer
+}	// namespace nt

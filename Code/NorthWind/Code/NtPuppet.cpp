@@ -12,9 +12,9 @@
 #include "NtLightShader.h"
 #include "NtLight.h"
 
-namespace NT
+namespace nt
 {
-namespace RENDERER
+namespace renderer
 {
 
 NtPuppet::NtPuppet()
@@ -354,7 +354,7 @@ void NtPuppet::SetVertexCount( ntInt count )
 }
 
 
-NT::ntInt NtPuppet::GetVertexCount() const
+nt::ntInt NtPuppet::GetVertexCount() const
 {
 	return m_vertexCount;
 }
@@ -364,7 +364,7 @@ bool NtPuppet::SetFormatType( const ntWchar* usage, const ntWchar* type )
 	return m_vertexFormat.SetFormatType(usage, type);
 }
 
-NT::ntInt NtPuppet::GetSumOffset()
+nt::ntInt NtPuppet::GetSumOffset()
 {
 	return m_vertexFormat.GetSumOffset();
 }
@@ -393,5 +393,5 @@ void NtPuppet::SetLightShader(NtLightShader* shader)
 }
 
 
-}	// namespace RENDERER
-}	// namespace NT
+}	// namespace renderer
+}	// namespace nt

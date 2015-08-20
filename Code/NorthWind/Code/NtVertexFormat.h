@@ -1,9 +1,9 @@
 
 #pragma once
 
-namespace NT
+namespace nt
 {
-namespace RENDERER
+namespace renderer
 {
 
 class NtVertexFormat
@@ -63,5 +63,5 @@ protected:
 	NtFlag		m_formatUsage;
 };
 
-} // namespace RENDERER
-} // namespace NT
+} // namespace renderer
+} // namespace nt

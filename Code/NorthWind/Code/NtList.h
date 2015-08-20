@@ -1,7 +1,7 @@
 
 #pragma once
 
-namespace NT
+namespace nt
 {
 
 template <typename T>
@@ -32,4 +32,4 @@ private:
 
 #include "NtList.inl"
 
-} // namespace NT
+} // namespace nt

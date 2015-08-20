@@ -5,7 +5,7 @@
 #include <map>
 #include <Windows.h>
 
-namespace NT
+namespace nt
 {
 
 // 트리 구조로 바꾸지 않으면 그냥 찍어봐야 전체 시간 체크 밖에 유용한 정보가 없을듯.
@@ -68,4 +68,4 @@ public:
 private:
 
 };
-}	// namespace NT
+}	// namespace nt

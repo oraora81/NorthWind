@@ -3,7 +3,7 @@
 #include "NtMath.h"
 #include <float.h>
 
-using namespace NT;
+using namespace nt;
 
 template <> const ntFloat NtMath<ntFloat>::EPSILON  = FLT_EPSILON;
 template <> const ntFloat NtMath<ntFloat>::TOLERANCE = 1e-06f;

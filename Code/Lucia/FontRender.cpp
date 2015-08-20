@@ -4,7 +4,7 @@
 
 #include "FontRender.h"
 
-namespace NT
+namespace nt
 {
 
 namespace _d2d
@@ -131,4 +131,4 @@ void CFontRenderer::Render()
 
 }	// namespace _d2d
 
-}	// namespace NT
+}	// namespace nt

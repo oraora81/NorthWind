@@ -4,7 +4,7 @@
 
 #include "NtMath.h"
 
-namespace NT
+namespace nt
 {
 
     template <typename T>

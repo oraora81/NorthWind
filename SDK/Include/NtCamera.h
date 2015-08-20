@@ -1,9 +1,9 @@
 
 #pragma once
 
-namespace NT
+namespace nt
 {
-namespace RENDERER
+namespace renderer
 {
 
 class NtCamera
@@ -28,4 +28,4 @@ private:
 };
 
 }	// RENDERER
-}	// namespace NT
+}	// namespace nt

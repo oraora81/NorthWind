@@ -1,9 +1,9 @@
 
 #pragma once
 
-namespace NT
+namespace nt
 {
-namespace RENDERER
+namespace renderer
 {
 
 

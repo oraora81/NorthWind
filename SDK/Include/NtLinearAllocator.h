@@ -1,7 +1,7 @@
 
 #pragma once
 
-namespace NT
+namespace nt
 {
 namespace Memory
 {
@@ -33,4 +33,4 @@ private:
 };
 
 }
-}	// namespace NT
+}	// namespace nt

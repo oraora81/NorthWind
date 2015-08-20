@@ -4,7 +4,7 @@
 
 #include "NtMemoryInfo.h"
 
-namespace NT
+namespace nt
 {
 
 }

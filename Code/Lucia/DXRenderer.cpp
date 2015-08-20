@@ -4,7 +4,7 @@
 
 #include "DXRenderer.h"
 
-namespace NT
+namespace nt
 {
 namespace _dx11
 {
@@ -1054,4 +1054,4 @@ HRESULT CompileShader(LPCWSTR fileName, char* entryPoint, char* shaderVersion, I
 }
 
 }	// namespace _dx11
-}	// namespace NT
+}	// namespace nt

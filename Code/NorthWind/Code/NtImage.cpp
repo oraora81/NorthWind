@@ -4,9 +4,9 @@
 
 #include "NtImage.h"
 
-namespace NT
+namespace nt
 {
-namespace RENDERER
+namespace renderer
 {
 
 NtImage::NtImage()
@@ -65,5 +65,5 @@ bool NtImage::InitializeBuffer()
 	return true;
 }
 
-}	// namespace RENDERER
-}	// namespace NT
+}	// namespace renderer
+}	// namespace nt

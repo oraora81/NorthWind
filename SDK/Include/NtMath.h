@@ -3,7 +3,7 @@
 
 #include <cmath>
 
-namespace NT
+namespace nt
 {
     
 template <typename real>

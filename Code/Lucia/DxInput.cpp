@@ -4,7 +4,7 @@
 
 #include "DxInput.h"
 
-namespace NT
+namespace nt
 {
 
 namespace _dx8

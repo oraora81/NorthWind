@@ -1,10 +1,10 @@
 
 #pragma once
 
-namespace NT
+namespace nt
 {
 
-namespace RENDERER
+namespace renderer
 {
 
 class NtDirectX11Renderer : public NtD3DRenderer
@@ -37,5 +37,5 @@ private:
 	ID3D11RasterizerState*		m_rasterState;
 };
 
-}	// namespace RENDERER
-}	// namespace NT
+}	// namespace renderer
+}	// namespace nt

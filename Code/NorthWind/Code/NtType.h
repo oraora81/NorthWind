@@ -1,7 +1,7 @@
 
 #pragma once
 
-namespace NT
+namespace nt
 {
 
 
@@ -36,7 +36,4 @@ enum NtErrorCode
 };
 
 
-
-//const ntInt
-
-}	// namespace NT
+}	// namespace nt

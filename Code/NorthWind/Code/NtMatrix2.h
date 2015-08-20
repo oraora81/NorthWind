@@ -4,7 +4,7 @@
 
 #include "NtVector2.h"
 
-namespace NT
+namespace nt
 {
     template <typename T>
     class NtMatrix2

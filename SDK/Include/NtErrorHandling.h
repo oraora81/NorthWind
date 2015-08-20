@@ -1,7 +1,7 @@
 
 #pragma once
 
-namespace NT
+namespace nt
 {
 
 enum eErrorCode
@@ -19,6 +19,6 @@ enum eErrorCode
 typedef eErrorCode ERROR_CODE;
 
 
-}	// namespace NT
+}	// namespace nt
 
 #include "NtErrorHandling.inl"

@@ -1,7 +1,7 @@
 
 #pragma once
 
-namespace NT
+namespace nt
 {
 
 template <typename NKEY, typename NVALUE>
@@ -50,4 +50,4 @@ private:
 
 #include "NtHashTable.inl"
 
-} // namespace NT
+} // namespace nt

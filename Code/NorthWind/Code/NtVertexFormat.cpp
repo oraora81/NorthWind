@@ -3,9 +3,9 @@
 
 #include "NtVertexFormat.h"
 
-namespace NT
+namespace nt
 {
-namespace RENDERER
+namespace renderer
 {
 
 struct VertexFormatUsage
@@ -100,7 +100,7 @@ bool NtVertexFormat::SetFormatType( const ntWchar* usage, const ntWchar* type )
 	return true;
 }
 
-NT::ntInt NtVertexFormat::GetSumOffset()
+nt::ntInt NtVertexFormat::GetSumOffset()
 {
 	ntInt sum = 0;
 	ntInt size = _countof(m_element);
@@ -118,5 +118,5 @@ NT::ntInt NtVertexFormat::GetSumOffset()
 }
 
 
-}	// namespace RENDERER
-}	// namespace NT
+}	// namespace renderer
+}	// namespace nt

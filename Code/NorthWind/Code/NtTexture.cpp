@@ -8,9 +8,9 @@
 using namespace DirectX;
 
 
-namespace NT
+namespace nt
 {
-namespace RENDERER
+namespace renderer
 {
 
 NtTexture::NtTexture()

@@ -1,7 +1,7 @@
 
 #pragma once
 
-namespace NT
+namespace nt
 {
 	template <typename T>
 	class NtSingleton
@@ -23,7 +23,7 @@ namespace NT
 
 	template <typename T>
 	T* NtSingleton<T>::m_pInstance = NULL;
-}	// namespace NT
+}	// namespace nt
 
-#define SINGLETON_NEW(OBJ)		NT::NtSingleton<OBJ>::Instance() =  new OBJ
-#define SINGLETON_DELETE(OBJ)	delete NT::NtSingleton<OBJ>::Instance()
+#define SINGLETON_NEW(OBJ)		nt::NtSingleton<OBJ>::Instance() =  new OBJ
+#define SINGLETON_DELETE(OBJ)	delete nt::NtSingleton<OBJ>::Instance()

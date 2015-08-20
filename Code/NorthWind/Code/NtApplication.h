@@ -5,10 +5,10 @@
 #include "NtInputManager.h"
 
 
-namespace NT
+namespace nt
 {
 
-using namespace RENDERER;
+using namespace renderer;
 using namespace INPUT;
 using namespace FS;
 
@@ -49,10 +49,10 @@ private:
 
 }	// namespace APP
 
-}	// namespace NT
+}	// namespace nt
 
 
-namespace NT
+namespace nt
 {
 namespace APP
 {
@@ -67,11 +67,11 @@ namespace FS
 
 
 
-extern NT::APP::NtApplication* g_app;
-extern NT::FS::NtResourceManager* g_resManager;
-extern NT::Memory::NtLinearAllocator* g_linearAllocator;
-extern NT::RENDERER::NtRenderer* g_renderInterface;
-extern std::shared_ptr<NtDirectX11Renderer> g_renderer;
+extern nt::APP::NtApplication* g_app;
+extern nt::FS::NtResourceManager* g_resManager;
+extern nt::Memory::NtLinearAllocator* g_linearAllocator;
+extern nt::renderer::NtRenderer* g_renderInterface;
+extern std::shared_ptr<nt::renderer::NtDirectX11Renderer> g_renderer;
 
 
 static LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)

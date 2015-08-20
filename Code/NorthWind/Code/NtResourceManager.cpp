@@ -7,7 +7,7 @@
 #include "NtTexture.h"
 #include "NtRenderer.h"
 
-namespace NT
+namespace nt
 {
 
 namespace FS
@@ -272,4 +272,4 @@ void NtResourceManager::AddTexHandleObj()
 }
 
 }	//namespace FS
-}	// namespace NT
+}	// namespace nt

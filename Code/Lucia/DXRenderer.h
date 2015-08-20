@@ -5,7 +5,7 @@
 
 #include "RenderObj.h"
 
-namespace NT
+namespace nt
 {
 namespace _dx11
 {
@@ -191,4 +191,4 @@ public:
 HRESULT CompileShader(LPCWSTR fileName, char* entryPoint, char* shaderVersion, ID3DBlob** blobPtr);
 
 }	// namespace _dx11
-}	// namespace NT
+}	// namespace nt

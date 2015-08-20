@@ -14,7 +14,7 @@
 
 using namespace DirectX;
 
-namespace NT
+namespace nt
 {
 
 	struct scopeGuard

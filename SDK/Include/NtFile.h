@@ -1,7 +1,7 @@
 
 #pragma once
 
-namespace NT
+namespace nt
 {
 
 namespace FS
@@ -59,4 +59,4 @@ private:
 
 
 }	// namespace FS
-}	// namespace NT
+}	// namespace nt

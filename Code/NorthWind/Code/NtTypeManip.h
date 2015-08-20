@@ -3,7 +3,7 @@
 
 #include <cassert>
 
-namespace NT
+namespace nt
 {
 
 // Test T is Pointer Type
@@ -418,11 +418,6 @@ private:
 };
 
 
-}	// namespace NT
-
-
-
-
 class none_type
 {
 
@@ -472,7 +467,7 @@ public:
 	typedef typename PRT::return_type return_type;
 	typedef typename PRT::param_type1 param_type1;
 	typedef typename PRT::param_type2 param_type2;
-	
+
 	IFunctorSub(FUNC func)
 		: m_func(func)
 	{
@@ -543,7 +538,7 @@ public:
 	typedef RETURN return_type;
 	typedef PARAM1 param_type1;
 	typedef PARAM2 param_type2;
-	
+
 	template <typename FUNC>
 	NFunctor(FUNC func)
 		: m_impl(nullptr)
@@ -590,7 +585,7 @@ public:
 	~NtFlag() {}
 
 	void TurnOn(ntInt flag)		{ m_flags |= flag; }
-	void TurnOff(ntInt flag)	{ m_flags &= ~flag;}
+	void TurnOff(ntInt flag)	{ m_flags &= ~flag; }
 
 	bool IsEnable(ntInt flag) const	{ return (m_flags & flag) != 0 ? true : false; }
 	void Set(ntInt flag)		{ m_flags = flag; }
@@ -598,3 +593,6 @@ public:
 private:
 	ntInt m_flags;
 };
+
+}	// namespace nt
+

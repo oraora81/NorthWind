@@ -7,10 +7,10 @@
 
 #ifdef _NT_DX9
 
-namespace NT
+namespace nt
 {
 
-namespace RENDERER
+namespace renderer
 {
 
 
@@ -263,29 +263,29 @@ bool NtDirectX9Renderer::CreateDevice()
 	// set vs shader model
 	if (vsModel == D3DVS_VERSION(1,1))
 	{
-		NtShader::SetVSShaderModel(NT::NT_VS_1_1);
+		NtShader::SetVSShaderModel(nt::NT_VS_1_1);
 	}
 	else if (vsModel == D3DVS_VERSION(2,0))
 	{
-		NtShader::SetVSShaderModel(NT::NT_VS_2_0);
+		NtShader::SetVSShaderModel(nt::NT_VS_2_0);
 	}
 	else
 	{
-		NtShader::SetVSShaderModel(NT::NT_VS_3_0);
+		NtShader::SetVSShaderModel(nt::NT_VS_3_0);
 	}
 
 	// set ps shader model
 	if (psModel == D3DPS_VERSION(1,1))
 	{
-		NtShader::SetPSShaderModel(NT::NT_PS_1_1);
+		NtShader::SetPSShaderModel(nt::NT_PS_1_1);
 	}
 	else if (vsModel == D3DVS_VERSION(2,0))
 	{
-		NtShader::SetVSShaderModel(NT::NT_VS_2_0);
+		NtShader::SetVSShaderModel(nt::NT_VS_2_0);
 	}
 	else
 	{
-		NtShader::SetVSShaderModel(NT::NT_VS_3_0);
+		NtShader::SetVSShaderModel(nt::NT_VS_3_0);
 	}
 
 
@@ -319,7 +319,7 @@ bool NtDirectX9Renderer::CreateSystemFont()
 }
 
 
-}	// namespace RENDERER
-}	// namespace NT
+}	// namespace renderer
+}	// namespace nt
 
 #endif

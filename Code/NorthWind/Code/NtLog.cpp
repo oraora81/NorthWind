@@ -2,7 +2,7 @@
 #include "NtCoreLib.h"
 #pragma hdrstop
 
-namespace NT
+namespace nt
 {
 
 namespace LOG
@@ -82,4 +82,4 @@ NtLOG::~NtLOG()
 
 }	// namespace LOG
 
-}	// namespace NT
+}	// namespace nt

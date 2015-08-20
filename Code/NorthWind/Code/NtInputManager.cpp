@@ -2,14 +2,14 @@
 #include "NtCoreLib.h"
 #include "NtInputManager.h"
 
-namespace NT
+namespace nt
 {
 namespace INPUT
 {
 
 bool NtInputManager::Initialize()
 {
-	NT::Crt::MemSet(m_keystate, sizeof(m_keystate));
+	nt::Crt::MemSet(m_keystate, sizeof(m_keystate));
 
 	return true;
 }

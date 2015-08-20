@@ -2,7 +2,7 @@
 #include "NtCoreLib.h"
 #include "NtString.h"
 
-namespace NT
+namespace nt
 {
 
 NtString::sBuffer NtString::m_emptyBuffer;
@@ -727,4 +727,4 @@ std::wostream& operator << (std::wostream& os, const NtString& str)
 	return os;
 }
 
-} // namespace NT
+} // namespace nt

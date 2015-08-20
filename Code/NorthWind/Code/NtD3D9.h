@@ -3,10 +3,10 @@
 
 #ifdef _NT_DX9
 
-namespace NT
+namespace nt
 {
 
-namespace RENDERER
+namespace renderer
 {
 
 class NtDirectX9Renderer : public NtD3DRenderer
@@ -40,7 +40,7 @@ private:
 	bool				m_deviceLost;
 };
 
-}	// namespace RENDERER
-}	// namespace NT
+}	// namespace renderer
+}	// namespace nt
 
 #endif

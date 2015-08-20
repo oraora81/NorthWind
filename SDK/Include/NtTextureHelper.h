@@ -3,7 +3,7 @@
 
 #include "dds.h"
 
-namespace NT
+namespace nt
 {
 
 class NtTextureLoader
@@ -47,4 +47,4 @@ public:
 	static bool CreateTextureFromJPG(const ntUchar* buffer, const ntUint& width, const ntUint& height, const ntUint bpp, D3D11_USAGE usage, ntUint bindFlags, ntUint cpuAccessFlags, ntUint miscFlags, ID3D11Resource** texture, ID3D11ShaderResourceView** textureView);
 };
 
-}	// namespace NT
+}	// namespace nt

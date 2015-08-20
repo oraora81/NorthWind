@@ -3,11 +3,11 @@
 
 #include "NtVertexFormat.h"
 
-namespace NT
+namespace nt
 {
 class NtModelParser;
 
-namespace RENDERER
+namespace renderer
 {
 class NtRenderer;
 class NtTexture;
@@ -73,5 +73,5 @@ private:
 };
 
 
-}	// namespace RENDERER
-}	// namespace NT
+}	// namespace renderer
+}	// namespace nt

@@ -2,7 +2,7 @@
 #include "NtCoreLib.h"
 #include "NtSearch.h"
 
-namespace NT
+namespace nt
 {
 
-}	// namespace NT
+}	// namespace nt

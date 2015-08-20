@@ -1,7 +1,7 @@
 
 #pragma once
 
-namespace NT
+namespace nt
 {
 
 namespace LOG
@@ -107,11 +107,11 @@ private:
 
 }	// namespace LOG
 
-}	// namespace NT
+}	// namespace nt
 
 #ifdef _DEBUG
 #define  NTRACE(msg, ...) \
-	NT::LOG::DebugTrace(msg, __VA_ARGS__)
+	nt::LOG::DebugTrace(msg, __VA_ARGS__)
 #else
 __noop
 #endif

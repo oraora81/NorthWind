@@ -1,10 +1,10 @@
 
 #pragma once
 
-namespace NT
+namespace nt
 {
 
-namespace RENDERER
+namespace renderer
 {
 
 class NtD3DRenderer
@@ -60,6 +60,6 @@ protected:
 	bool		m_windowMode;
 };
 
-}	// namespace RENDERER
+}	// namespace renderer
 
-}	// namespace NT
+}	// namespace nt

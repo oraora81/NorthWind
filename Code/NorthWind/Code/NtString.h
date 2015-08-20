@@ -5,7 +5,7 @@
 //			TLS Àû¿ë
 
 
-namespace NT
+namespace nt
 {
 
 class NtString// : public Memory::NtHeapAlloc
@@ -111,4 +111,4 @@ private:
 	sBuffer*	m_buffer;
 };
 
-} // namespace NT
+} // namespace nt

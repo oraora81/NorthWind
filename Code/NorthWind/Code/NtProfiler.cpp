@@ -2,7 +2,7 @@
 #include "NtCoreLib.h"
 #include "NtProfiler.h"
 
-namespace NT
+namespace nt
 {
 //ntLong NtProfiler::m_callingCount = 0;
 //ntLong NtProfiler::m_callingIndex = 0;
@@ -96,12 +96,12 @@ void NtProfiler::FlushProfile()
 //
 ///*static*/ void NtProfiler::IncCallingCount()
 //{
-//	NT::Atom::Inc(m_callingCount);
+//	nt::Atom::Inc(m_callingCount);
 //}
 //
 ///*static*/ void NtProfiler::DecCallingCount()
 //{
-//	NT::Atom::Dec(m_callingCount);
+//	nt::Atom::Dec(m_callingCount);
 //}
 //
 ///*static*/ ntLong NtProfiler::GetCallingIndex()
@@ -111,7 +111,7 @@ void NtProfiler::FlushProfile()
 //
 ///*static*/ void NtProfiler::IncCallingIndex()
 //{
-//	NT::Atom::Inc(m_callingIndex);
+//	nt::Atom::Inc(m_callingIndex);
 //}
 //
 ///*static*/ void NtProfiler::ClearInfo()
@@ -119,4 +119,4 @@ void NtProfiler::FlushProfile()
 //	NtProfiler::GetInfo().clear();
 //}
 
-}	// namespace NT
+}	// namespace nt

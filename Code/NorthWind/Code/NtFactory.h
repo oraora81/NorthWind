@@ -1,7 +1,7 @@
 
 #pragma once
 
-namespace NT
+namespace nt
 {
 
 template <typename OBJECT_TYPE>
@@ -46,4 +46,4 @@ private:
 
 	OBJECT_CALLBACK_MAP m_factory;
 };	
-}	// namespace NT
+}	// namespace nt

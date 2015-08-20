@@ -3,7 +3,7 @@
 
 #include "NtNode.h"
 
-namespace NT
+namespace nt
 {
 
 /*
@@ -111,4 +111,4 @@ private:
 
 #include "NtTree.inl"
 
-}	// namespace NT
+}	// namespace nt

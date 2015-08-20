@@ -1,5 +1,5 @@
 
-namespace NT
+namespace nt
 {
 
 }	

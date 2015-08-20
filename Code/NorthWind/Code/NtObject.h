@@ -3,7 +3,7 @@
 
 #include "NtRTTI.h"
 
-namespace NT
+namespace nt
 {
 	
 class NtObject
@@ -41,7 +41,7 @@ public:
 
 #include "NtObject.inl"
 
-}	// namespace NT
+}	// namespace nt
 
 //--------------------------------------------------------------
 /**

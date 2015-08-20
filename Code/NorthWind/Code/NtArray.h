@@ -3,7 +3,7 @@
 
 #include "NtAssert.h"
 
-namespace NT
+namespace nt
 {
 
 template <typename T>
@@ -40,4 +40,4 @@ private:
 
 #include "NtArray.inl"
 
-} // namespace NT
+} // namespace nt

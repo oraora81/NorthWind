@@ -1,12 +1,12 @@
 
 #pragma once
 
-namespace NT
+namespace nt
 {
-namespace RENDERER
+namespace renderer
 {
 
-class NtAse : public NT::FS::NtFile
+class NtAse : public nt::FS::NtFile
 {
 	enum eParseMODE
 	{

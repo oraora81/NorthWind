@@ -1,7 +1,7 @@
 
 #pragma once
 
-namespace NT
+namespace nt
 {
 
 namespace _d2d
@@ -38,4 +38,4 @@ private:
 
 }	// namespace _d2d
 
-}	// namespace NT
+}	// namespace nt

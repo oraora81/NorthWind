@@ -1,7 +1,7 @@
 
 #pragma once
 
-namespace NT
+namespace nt
 {
 
 template <typename T>
@@ -113,4 +113,4 @@ struct NtTypeList<T, NtNullType>
 };
 
 
-}	// namespace NT
+}	// namespace nt

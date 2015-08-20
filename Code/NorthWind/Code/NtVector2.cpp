@@ -2,7 +2,7 @@
 #include "NtCoreLib.h"
 #include "NtVector2.h"
 
-using namespace NT;
+using namespace nt;
 
 template<> const NtVector2<float> NtVector2<float>::ZERO(0.0f, 0.0f);
 template<> const NtVector2<float> NtVector2<float>::UNIT_X(1.0f, 0.0f);

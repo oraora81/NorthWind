@@ -14,10 +14,10 @@
 #include "NtAse.h"
 
 
-namespace NT
+namespace nt
 {
 
-namespace RENDERER
+namespace renderer
 {
 
 
@@ -276,6 +276,6 @@ void NtRenderer::SetIndexBuffers(NtIndexBuffer* buffer, NTCOLORFMT format, ntUin
 }
 
 
-} // namespace RENDERER
+} // namespace renderer
 
-} // namespace NT
+} // namespace nt

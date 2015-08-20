@@ -4,8 +4,8 @@
 
 #include "NtD3DRenderer.h"
 
-using namespace NT;
-using namespace RENDERER;
+using namespace nt;
+using namespace renderer;
 
 
 NtColorShader::NtColorShader()

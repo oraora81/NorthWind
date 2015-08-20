@@ -3,7 +3,9 @@
 
 #define _WIN32_WINNT 0x0600
 
+// 
 // Common Library
+//----------------------------------------------------------------------------
 #include <cstdarg>
 #include <cstdio>
 #include <cstdlib>
@@ -21,12 +23,17 @@
 #include <map>
 #include <limits>
 
+
+// 
 // Need for WIN32 macro Check.
+//----------------------------------------------------------------------------
 #include <Windows.h>
 
-// d3d
-#include <D3Dcompiler.h>
 
+// 
+// d3d
+//----------------------------------------------------------------------------
+#include <D3Dcompiler.h>
 #ifdef _NT_DX11
 #include "NtD3D11Headers.h"
 #include <xnamath.h>
@@ -37,11 +44,11 @@
 #include <d3dx9math.h>
 #endif
 
-// NT Library
-
 #pragma warning( disable : 4127 )
 
-
+// 
+// NT Library
+//----------------------------------------------------------------------------
 #include "NtType.h"
 #include "NtErrorHandling.h"
 #include "NtGlobal.h"
@@ -70,8 +77,6 @@
 #include "NtRenderDefine.h"
 #include "NtRenderType.h"
 #include "NtShader.h"
-
-// 
 #include "NtResourceManager.h"
 #include "NtApplication.h"
 

@@ -4,7 +4,7 @@
 
 #include "NtTimer.h"
 
-namespace NT
+namespace nt
 {
 
 NtTimer::NtTimer()

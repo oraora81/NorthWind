@@ -2,7 +2,7 @@
 #include "NtCoreLib.h"
 #include "NtMatrix2.h"
 
-using namespace NT;
+using namespace nt;
 
 template<> const NtMatrix2<float> NtMatrix2<float>::ZERO(0.0f, 0.0f, 0.0f, 0.0f);
 

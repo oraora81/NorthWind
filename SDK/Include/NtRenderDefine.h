@@ -21,7 +21,7 @@
 
 #ifdef USE_DIRECTX
 	#include "NtD3DRenderer.h"
-	//typedef NT::RENDERER::NtD3DRenderer	NtRenderEngine;
+	//typedef nt::RENDERER::NtD3DRenderer	NtRenderEngine;
 	#ifdef _NT_DX11
 		#include "NtD3D11.h"
 		struct NtRenderBufferParam

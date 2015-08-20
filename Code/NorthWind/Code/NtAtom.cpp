@@ -1,8 +1,9 @@
 
 #include "NtCoreLib.h"
 
-namespace NT
+namespace nt
 {
+
 namespace Atom
 {
 	ntLong Inc(volatile ntLong& target)

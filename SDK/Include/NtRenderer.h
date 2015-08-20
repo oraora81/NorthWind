@@ -1,10 +1,10 @@
 
 #pragma once
 
-namespace NT
+namespace nt
 {
 
-namespace RENDERER
+namespace renderer
 {
 
 class NtD3DRenderer;
@@ -61,6 +61,6 @@ private:
 	NtLight*			m_light;
 };
 
-}	// namespace RENDERER
+}	// namespace renderer
 
-}	// namespace NT
+}	// namespace nt

@@ -1,7 +1,7 @@
 
 #pragma once
 
-namespace NT
+namespace nt
 {
 
 class NtInitDelegator
@@ -26,7 +26,7 @@ private:
 	static ReleaseDelegator m_releaseDelegatorList[MAX_DELEGATOR_COUNT];
 };
 
-}	// namespace NT
+}	// namespace nt
 
 // Init
 #define NT_DECLARE_INIT_DELEGATE \

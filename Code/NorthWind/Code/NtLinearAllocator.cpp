@@ -2,7 +2,7 @@
 #include "NtCoreLib.h"
 #pragma hdrstop
 
-namespace NT
+namespace nt
 {
 namespace Memory
 {
@@ -74,4 +74,4 @@ void NtLinearAllocator::Reset()
 }
 
 }	// namespace Memory
-}	// namespace NT
+}	// namespace nt

@@ -2,7 +2,7 @@
 #include "NtCoreLib.h"
 #include "NtBuffer.h"
 
-namespace NT
+namespace nt
 {
 namespace FS
 {
@@ -19,7 +19,7 @@ NtBuffer::NtBuffer(ntInt num, ntSize size, eUsage usage)
 	, m_bytes(num * size)
 	, m_data(new ntUchar [m_bytes])
 {
-	NT::Crt::MemSet(m_data.get(), sizeof(ntUchar) * m_bytes);
+	nt::Crt::MemSet(m_data.get(), sizeof(ntUchar) * m_bytes);
 }
 
 NtBuffer::NtBuffer( const NtBuffer& buf )
@@ -55,7 +55,7 @@ NtBuffer& NtBuffer::operator=( const NtBuffer& buf )
 NtFileBuffer::NtFileBuffer( const NtString& fileName )
 	: NtBuffer()
 {
-	NT::NtSystem::LoadFile(fileName.Buffer(), m_data, m_bytes);
+	nt::NtSystem::LoadFile(fileName.Buffer(), m_data, m_bytes);
 	m_usage = BUFFER_DYNAMIC;
 }
 
@@ -68,4 +68,4 @@ NtFileBuffer::~NtFileBuffer()
 
 }	// namespace FS
 
-}	// namespace NT
+}	// namespace nt

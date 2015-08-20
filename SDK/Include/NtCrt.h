@@ -1,7 +1,7 @@
 // header
 #pragma once
 
-namespace NT
+namespace nt
 {
 
 namespace Crt
@@ -77,4 +77,4 @@ namespace Crt
 	
 }	// namespace Crt
 
-}	// namespace NT
+}	// namespace nt

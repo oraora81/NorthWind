@@ -1,7 +1,7 @@
 
 #pragma once
 
-namespace NT
+namespace nt
 {
 namespace INPUT
 {
@@ -25,4 +25,4 @@ private:
 };
 
 }	// namespace INPUT
-}	// namespace NT
+}	// namespace nt

@@ -1,7 +1,7 @@
 
 #pragma once
 
-namespace NT
+namespace nt
 {
 
 template <typename T>
@@ -81,4 +81,4 @@ private:
 
 #include "NtSearch.inl"
 
-}	// namespace NT
+}	// namespace nt

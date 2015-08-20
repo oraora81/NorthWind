@@ -1,9 +1,9 @@
 
 #pragma once
 
-namespace NT
+namespace nt
 {
-namespace RENDERER
+namespace renderer
 {
 
 class NtD3DRenderer;
@@ -40,5 +40,5 @@ private:
 	ID3D11Buffer*		m_matrixBuffer;
 };
 
-}	// namespace RENDERER
-}	// namespace NT
+}	// namespace renderer
+}	// namespace nt

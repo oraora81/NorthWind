@@ -1,5 +1,5 @@
 
-inline NT::FS::NtBuffer::eUsage NtBuffer::GetUsage() const
+inline nt::FS::NtBuffer::eUsage NtBuffer::GetUsage() const
 {
 	return m_usage;
 }

@@ -1,7 +1,7 @@
 
 #pragma once
 
-namespace NT
+namespace nt
 {
 
 template <typename T>
@@ -26,4 +26,4 @@ struct NtBiNode : public NtNode<T>
 	NtBiNode*	m_right;
 };
 
-}	// namespace NT
+}	// namespace nt

@@ -3,9 +3,11 @@
 
 #include "stdafx.h"
 #include "Lucia.h"
+
 #include "NtApplication.h"
 
-using namespace NT;
+
+using namespace nt;
 
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;

@@ -1,7 +1,7 @@
 
 #pragma once
 
-namespace NT
+namespace nt
 {
 	class IRenderer
 	{
@@ -21,4 +21,4 @@ namespace NT
 		int		m_screenWidth;
 		int		m_screenHeight;
 	};
-}	// namespace NT
+}	// namespace nt

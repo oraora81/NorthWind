@@ -1,12 +1,12 @@
 #include "NtCoreLib.h"
 
 
-namespace NT
+namespace nt
 {
 
 const NtRTTI NtObject::m_RTTI(L"NtObject", nullptr);
 
-NT::NtObjectFactory<NtObject>* NtObject::m_factory = nullptr;
+nt::NtObjectFactory<NtObject>* NtObject::m_factory = nullptr;
 bool NtObject::m_setup = false;
 
 NtObject::NtObject()

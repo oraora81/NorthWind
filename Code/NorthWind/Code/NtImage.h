@@ -1,9 +1,9 @@
 
 #pragma once
 
-namespace NT
+namespace nt
 {
-namespace RENDERER
+namespace renderer
 {
 
 class NtImage
@@ -39,5 +39,5 @@ ntInt NtImage::GetIndexCount() const
 	return m_indexCount;
 }
 
-}	// namespace RENDERER
-}	// namespace NT
+}	// namespace renderer
+}	// namespace nt

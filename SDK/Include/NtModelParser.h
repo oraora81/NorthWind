@@ -1,7 +1,7 @@
 
 #pragma once
 
-namespace NT
+namespace nt
 {
 
 enum eParseKeyword
@@ -34,7 +34,7 @@ private:
 };
 
 
-namespace RENDERER
+namespace renderer
 {
 class NtPuppet;
 }
@@ -47,7 +47,7 @@ public:
 
 	bool	Execute(const ntWchar* fileName);
 
-	void	SetPuppet(RENDERER::NtPuppet* puppet);
+	void	SetPuppet(renderer::NtPuppet* puppet);
 
 private:
 	bool	ProcessParse();
@@ -65,7 +65,7 @@ private:
 private:
 	FS::NtFile		m_file;
 	PARSE_KEYWORD	m_parseMode;
-	RENDERER::NtPuppet* m_linkPuppet;
+	renderer::NtPuppet* m_linkPuppet;
 };
 
-}	// namespace NT
+}	// namespace nt

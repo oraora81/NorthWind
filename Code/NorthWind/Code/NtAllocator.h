@@ -2,7 +2,7 @@
 #pragma once
 
 
-namespace NT
+namespace nt
 {
 
 namespace Memory
@@ -118,4 +118,4 @@ bool isHeap(T& obj)
 
 }	// namespace Memory
 
-}	// namespace NT
+}	// namespace nt

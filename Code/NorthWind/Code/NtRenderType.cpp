@@ -2,6 +2,8 @@
 #include "NtCoreLib.h"
 #pragma hdrstop
 
+namespace nt
+{
 
 NtPoint::NtPoint()
 	: x(0.0f), y(0.0f)
@@ -91,3 +93,6 @@ bool NtPoint::operator!=(const NtPoint& point)
 {
 	return (x != point.x || y != point.y) ? true : false;
 }
+
+
+} // namespace nt

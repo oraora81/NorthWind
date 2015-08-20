@@ -3,9 +3,9 @@
 #include "NtLightShader.h"
 #include "NtTexture.h"
 
-namespace NT
+namespace nt
 {
-namespace RENDERER
+namespace renderer
 {
 
 NtLightShader::NtLightShader()
@@ -310,5 +310,5 @@ void NtLightShader::RenderShader(int indexCount)
 
 
 
-}	// namespace RENDERER
-}	// namespace NT
+}	// namespace renderer
+}	// namespace nt

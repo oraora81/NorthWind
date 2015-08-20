@@ -4,7 +4,7 @@
 
 #include "NtD3DMapping.h"
 
-namespace NT
+namespace nt
 {
 #ifdef _NT_DX11
 	NTCOLORFMT	g_colorFormat[eColorFormat::NT_FMT_MAX] =

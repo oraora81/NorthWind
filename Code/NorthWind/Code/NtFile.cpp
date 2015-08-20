@@ -2,7 +2,7 @@
 #include "NtCoreLib.h"
 #pragma hdrstop
 
-namespace NT
+namespace nt
 {
 namespace FS
 {
@@ -137,7 +137,7 @@ bool NtFile::ReadTag()
 	return true;
 }
 
-NT::ntInt NtFile::ReadInt()
+nt::ntInt NtFile::ReadInt()
 {
 	ntInt target = 0;
 	ntInt res = fwscanf_s(m_fp, L"%d", &target, sizeof(target));
@@ -150,7 +150,7 @@ NT::ntInt NtFile::ReadInt()
 	return target;
 }
 
-NT::ntFloat NtFile::ReadFloat()
+nt::ntFloat NtFile::ReadFloat()
 {
 	ntFloat target = 0.0f;
 	ntInt res = fwscanf_s(m_fp, L"%f", &target, sizeof(target));
@@ -182,4 +182,4 @@ void NtFile::ClearData()
 }
 
 }	// namespace FS
-}	// namespace NT
+}	// namespace nt

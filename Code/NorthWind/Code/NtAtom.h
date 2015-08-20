@@ -1,8 +1,9 @@
 
 #pragma once
 
-namespace NT
+namespace nt
 {
+
 namespace Atom
 {
 	ntLong Inc(volatile ntLong& target);
@@ -32,4 +33,4 @@ private:
 	MUTEX_HANDLE m_handle;
 };
 
-}	// namespace NT
+}	// namespace nt
