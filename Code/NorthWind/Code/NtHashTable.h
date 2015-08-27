@@ -1,8 +1,7 @@
 
 #pragma once
 
-namespace nt
-{
+namespace nt {
 
 template <typename NKEY, typename NVALUE>
 class NtHashTable
@@ -15,9 +14,9 @@ public:
 	bool	Erase(const NKEY& key);
     void    Clear();
 
-    NVALUE* Find(const NKEY& key);
-    NVALUE* GetFirst(NKEY* key);
-    NVALUE* GetNext(NKEY* key);
+    NVALUE*	Find(const NKEY& key);
+    NVALUE*	GetFirst(const NKEY& key);
+    NVALUE*	GetNext(const NKEY& key);
 
     ntInt	Size();
     bool	Empty();

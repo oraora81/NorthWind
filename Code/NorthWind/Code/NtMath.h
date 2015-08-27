@@ -3,8 +3,7 @@
 
 #include <cmath>
 
-namespace nt
-{
+namespace nt {
     
 template <typename real>
 class NtMath

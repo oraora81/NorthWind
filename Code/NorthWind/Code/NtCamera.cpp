@@ -2,8 +2,7 @@
 #include "NtCoreLib.h"
 #include "NtCamera.h"
 
-using namespace nt;
-using namespace renderer;
+namespace nt { namespace renderer {
 
 NtCamera::NtCamera()
 {
@@ -78,4 +77,7 @@ void NtCamera::Render()
 void NtCamera::GetViewMatrix(XMMATRIX& view)
 {
 	view = m_viewMatrix;
+}
+
+}
 }

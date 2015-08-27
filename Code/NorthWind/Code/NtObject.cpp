@@ -1,8 +1,7 @@
 #include "NtCoreLib.h"
 
 
-namespace nt
-{
+namespace nt {
 
 const NtRTTI NtObject::m_RTTI(L"NtObject", nullptr);
 

@@ -1,15 +1,18 @@
 
 #pragma once
 
-namespace nt
-{
-namespace Memory
-{
+// 
+// NtLinearAllocator
+//----------------------------------------------------------------------------
+
+namespace nt { namespace Memory {
 
 class NtLinearAllocator : public NtAllocator
 {
 	NT_DECLARE_OBJECT
 	NT_PREVENT_OBJECT_COPY(NtLinearAllocator)
+
+	enum { DEFAULT_ALIGN_SIZE = 8 };
 
 protected:
 	NtLinearAllocator();
@@ -19,7 +22,7 @@ public:
 
 	bool Initialize(ntSize baseAllocSize);
 
-	void* Allocate(ntSize size, ntUchar alignment);
+	void* Allocate(ntSize size, ntUchar alignment = DEFAULT_ALIGN_SIZE);
 	
 	void DeAllocate(void* ptr);
 

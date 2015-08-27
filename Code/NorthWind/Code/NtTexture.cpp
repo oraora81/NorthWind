@@ -8,10 +8,7 @@
 using namespace DirectX;
 
 
-namespace nt
-{
-namespace renderer
-{
+namespace nt { namespace renderer {
 
 NtTexture::NtTexture()
 	: m_textureView(nullptr)

@@ -142,6 +142,9 @@
     <ClCompile Include="Code\NtMemoryInfo.cpp">
       <Filter>Allocator</Filter>
     </ClCompile>
+    <ClCompile Include="Code\NtConsole.cpp">
+      <Filter>Log</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\NtMatrix2.h">
@@ -346,6 +349,12 @@
       <Filter>Allocator</Filter>
     </ClInclude>
     <ClInclude Include="Code\NtD3D11Headers.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtConsole.h">
+      <Filter>Log</Filter>
+    </ClInclude>
+    <ClInclude Include="Code\NtContainer.h">
       <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,8 +4,7 @@
 
 #include <fstream>
 
-using namespace nt;
-using namespace renderer;
+namespace nt { namespace renderer {
 
 
 NtD3DRenderer::NtD3DRenderer()
@@ -77,4 +76,7 @@ void NtD3DRenderer::OutputShaderErrorMessage(ID3D10Blob* errMsg, const ntWchar* 
 
 	// pop a message up on the screen to notify the user to check the text file for compile err
 	MessageBox(nullptr, L"Error compiling shader. Check shader_err.txt for message", fileName, MB_OK);
+}
+
+}
 }

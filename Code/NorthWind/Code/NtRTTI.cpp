@@ -1,8 +1,7 @@
 
 #include "NtCoreLib.h"
 
-namespace nt
-{
+namespace nt {
 
 NtRTTI::NtRTTI(const ntWchar* rtti_name, const NtRTTI* parent)
 {

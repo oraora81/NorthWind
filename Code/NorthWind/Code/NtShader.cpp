@@ -2,10 +2,7 @@
 #include "NtCoreLib.h"
 #pragma hdrstop
 
-namespace nt
-{
-namespace renderer
-{
+namespace nt { namespace renderer {
 
 eVSShaderModel NtShader::m_vsModel = eVSShaderModel::NT_MAX_VSSHADER_MODEL;
 ePSShaderModel NtShader::m_psModel = ePSShaderModel::NT_MAX_PSSHADER_MODEL;

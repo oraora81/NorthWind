@@ -3,10 +3,7 @@
 
 #include "NtVertexFormat.h"
 
-namespace nt
-{
-namespace renderer
-{
+namespace nt { namespace renderer {
 
 struct VertexFormatUsage
 {

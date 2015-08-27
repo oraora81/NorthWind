@@ -37,9 +37,11 @@ do \
 		foreverIgnore = true; \
 } while(0)
 
-namespace nt
-{
+namespace nt {
+
+
 enum { MAX_BUFFER_LENGTH = 1024 };
+
 
 namespace ntDebug
 {
@@ -49,6 +51,7 @@ namespace ntDebug
 	typedef void (*PostAssert)();
 	void SetPostAssert(PostAssert func);
 }	// namespace ntDebug
+
 
 inline void NtAssert_FUNCTION(bool expr, const ntWchar* file, ntUint line, const ntWchar* format, ...)
 {

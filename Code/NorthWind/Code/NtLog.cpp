@@ -2,16 +2,14 @@
 #include "NtCoreLib.h"
 #pragma hdrstop
 
-namespace nt
-{
-
-namespace LOG
-{
+namespace nt { namespace LOG {
 
 #ifdef _DEBUG
 int DebugTrace(const ntWchar* msg, ...)
 {
-	ntWchar buff[1024];
+	static ntWchar buff[1024];
+	Crt::MemSet(buff, sizeof(buff));
+
 	va_list argptr;
 	va_start(argptr, msg);
 	int ret = _vsnwprintf_s(buff, _countof(buff), _TRUNCATE, msg, argptr);
@@ -25,7 +23,8 @@ int DebugTrace(const ntWchar* msg, ...)
 
 int DebugTrace( const ntChar* msg, ... )
 {
-	ntChar buff[1024];
+	static ntChar buff[1024];
+	Crt::MemSet(buff, sizeof(buff));
 
 	va_list argptr;
 	va_start(argptr, msg);
@@ -41,44 +40,47 @@ int DebugTrace( const ntChar* msg, ... )
 #endif
 
 
-/*
-
- */
-NtLOGConsole::NtLOGConsole()
-: m_bufferIndex(0)
-{
-	Crt::MemSet(m_textBuffer, sizeof(ntWchar*) * MAX_BUFFER);
-}
-
-NtLOGConsole::~NtLOGConsole()
-{
-
-}
 
 //
 //
-NtLOGFile::NtLOGFile()
+//----------------------------------------------------------------------------
+NtLog::NtLog()
+	: m_hashTable(DEFAULT_SUBJECT_COUNT)
+	, m_supportThread(false)
 {
-
+	
 }
 
-NtLOGFile::~NtLOGFile()
+void NtLog::AddSubject(ntWchar* subject, LogType flag)
 {
+	if (Crt::IsNullOrEmpty(subject) == true)
+	{
+		return;
+	}
 
+	sLogItem** item = m_hashTable.Find(subject);
+	if (*item == nullptr)
+	{
+		sLogItem* unit = (sLogItem*)g_liAllocator->Allocate(sizeof(sLogItem));
+		unit->subject = subject;
+		unit->logType = flag;
+	}
+	else
+	{
+		*item->logType = flag;
+	}
 }
 
-
-//
-//
-NtLOG::NtLOG()
+void NtLog::Print(const ntWchar* subject, const ntWchar* format, ...)
 {
+	if (m_supportThread)
+	{
+		// making the log string
 
+		// output
+	}
 }
 
-NtLOG::~NtLOG()
-{
-
-}
 
 }	// namespace LOG
 

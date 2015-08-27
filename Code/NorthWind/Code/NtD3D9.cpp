@@ -7,11 +7,7 @@
 
 #ifdef _NT_DX9
 
-namespace nt
-{
-
-namespace renderer
-{
+namespace nt { namespace renderer {
 
 
 NtDirectX9Renderer::NtDirectX9Renderer()

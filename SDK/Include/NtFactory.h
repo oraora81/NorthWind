@@ -4,6 +4,10 @@
 namespace nt
 {
 
+//
+// NtObjectFactory - OJBECT_TYPE을 받아 이름으로 생성
+//----------------------------------------------------------------------------
+
 template <typename OBJECT_TYPE>
 class NtObjectFactory
 {
@@ -46,4 +50,5 @@ private:
 
 	OBJECT_CALLBACK_MAP m_factory;
 };	
+
 }	// namespace nt

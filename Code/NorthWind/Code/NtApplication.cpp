@@ -13,7 +13,7 @@
 //----------------------------------------------------------------------------
 nt::APP::NtApplication* g_app = nullptr;
 nt::FS::NtResourceManager* g_resManager = nullptr;
-nt::Memory::NtLinearAllocator* g_linearAllocator = nullptr;
+nt::Memory::NtLinearAllocator* g_liAllocator = nullptr;
 
 #if _NT_DX11
 nt::renderer::NtRenderer* g_renderInterface;
@@ -23,14 +23,12 @@ std::shared_ptr<nt::renderer::NtDirectX11Renderer> g_renderer;
 // 
 //----------------------------------------------------------------------------
 
-namespace nt
-{
+namespace nt { 
 
 using namespace renderer;
 using namespace INPUT;
 
-namespace APP
-{
+namespace APP {
 
 
 	void DoImport(const ntChar* fileName)
@@ -152,11 +150,17 @@ bool NtApplication::Initialize(bool fullscreen)
 	// Hide the mouse cursor
 	ShowCursor(FALSE);
 
-	//g_linearAllocator = static_cast<Memory::NtLinearAllocator*>(NtObject::CreateObject(Memory::NtLinearAllocator::m_RTTI.GetObjName()));
-	//if (false == g_linearAllocator->Initialize(MAKE_MEGA2BYTES(2)))
-	//{
-	//	return false;
-	//}
+	// create memory Allocator
+	NtObject* allocator = NtObject::CreateObject(Memory::NtLinearAllocator::m_RTTI.GetObjName());
+	if (allocator != nullptr)
+	{
+		g_liAllocator = static_cast<Memory::NtLinearAllocator*>(allocator);
+		if (false == g_liAllocator->Initialize(MAKE_MEGA2BYTES(2)))
+		{
+			return false;
+		}
+	}
+	
 	
 	// 
 	m_resManager = new nt::FS::NtResourceManager;
@@ -200,7 +204,7 @@ void NtApplication::Shutdown()
 	SAFE_DELETE(m_renderer);
 	SAFE_DELETE(m_inputManager);
 	SAFE_DELETE(m_resManager);
-	SAFE_DELETE(g_linearAllocator);
+	SAFE_DELETE(g_liAllocator);
 	NtInitDelegator::ExecuteReleaseDelegator();
 
 	ShowCursor(TRUE);

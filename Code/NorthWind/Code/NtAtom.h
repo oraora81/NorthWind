@@ -1,15 +1,13 @@
 
 #pragma once
 
-namespace nt
-{
+namespace nt { namespace Atom {
 
-namespace Atom
-{
-	ntLong Inc(volatile ntLong& target);
-	ntLong Dec(volatile ntLong& target);
-	ntLong Add(volatile ntLong& target, ntLong val);
-	ntLong Sub(volatile ntLong& target, ntLong val);
+ntLong Inc(volatile ntLong& target);
+ntLong Dec(volatile ntLong& target);
+ntLong Add(volatile ntLong& target, ntLong val);
+ntLong Sub(volatile ntLong& target, ntLong val);
+
 }	// namespace Atom
 
 

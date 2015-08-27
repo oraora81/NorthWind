@@ -2,11 +2,8 @@
 #pragma once
 
 
-namespace nt
-{
+namespace nt { namespace Memory {
 
-namespace Memory
-{
 	
 inline void* NextAlignedAddress(void* address, ntUchar alignment)
 {

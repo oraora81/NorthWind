@@ -2,8 +2,7 @@
 #include "NtCoreLib.h"
 #include "NtString.h"
 
-namespace nt
-{
+namespace nt {
 
 NtString::sBuffer NtString::m_emptyBuffer;
 

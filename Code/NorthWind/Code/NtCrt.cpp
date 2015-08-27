@@ -1,11 +1,8 @@
 
 #include "NtCoreLib.h"
 
-namespace nt
-{
+namespace nt { namespace Crt {
 
-namespace Crt
-{
 
 const ntChar* MakeString(const ntChar* expr,...)
 {
@@ -140,6 +137,25 @@ const ntWchar* StrChr(const ntWchar* src,ntWchar c)
 	return wcschr(src, c);
 }
 
+bool IsNullOrEmpty(const ntChar* src)
+{
+	if (src == nullptr)
+	{
+		return true;
+	}
+
+	return Crt::StrLen(src) == 0 ? true : false;
+}
+
+bool IsNullOrEmpty(const ntWchar* src)
+{
+	if (src == nullptr)
+	{
+		return true;
+	}
+
+	return Crt::StrLen(src) == 0 ? true : false;
+}
 
 ntFloat Atof(const ntChar* src)
 {

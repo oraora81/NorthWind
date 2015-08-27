@@ -3,10 +3,7 @@
 #include "NtLightShader.h"
 #include "NtTexture.h"
 
-namespace nt
-{
-namespace renderer
-{
+namespace nt { namespace renderer {
 
 NtLightShader::NtLightShader()
 	: m_vertexShader(nullptr)

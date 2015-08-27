@@ -2,8 +2,7 @@
 #include "NtCoreLib.h"
 #pragma hdrstop
 
-namespace nt
-{
+namespace nt {
 
 NtPoint::NtPoint()
 	: x(0.0f), y(0.0f)

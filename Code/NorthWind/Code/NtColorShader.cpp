@@ -4,8 +4,7 @@
 
 #include "NtD3DRenderer.h"
 
-using namespace nt;
-using namespace renderer;
+namespace nt { namespace renderer {
 
 
 NtColorShader::NtColorShader()
@@ -252,4 +251,7 @@ void NtColorShader::RenderShader(int indexCount)
 
 	// render the triangle
 	g_renderer->DeviceContext()->DrawIndexed(indexCount, 0, 0);
+}
+
+}
 }

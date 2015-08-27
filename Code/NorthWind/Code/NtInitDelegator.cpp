@@ -2,8 +2,8 @@
 #include "NtCoreLib.h"
 #include "NtInitDelegator.h"
 
-namespace nt
-{
+namespace nt {
+
 int NtInitDelegator::m_initCount = 0;
 int NtInitDelegator::m_releaseCount = 0;
 NtInitDelegator::InitDelegator NtInitDelegator::m_initDelegatorList[MAX_DELEGATOR_COUNT];

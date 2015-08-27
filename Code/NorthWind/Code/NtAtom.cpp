@@ -1,30 +1,28 @@
 
 #include "NtCoreLib.h"
 
-namespace nt
+namespace nt { namespace Atom {
+
+ntLong Inc(volatile ntLong& target)
 {
+	return InterlockedIncrement(&target);
+}
 
-namespace Atom
+ntLong Dec(volatile ntLong& target)
 {
-	ntLong Inc(volatile ntLong& target)
-	{
-		return InterlockedIncrement(&target);
-	}
+	return InterlockedDecrement(&target);
+}
 
-	ntLong Dec(volatile ntLong& target)
-	{
-		return InterlockedDecrement(&target);
-	}
+ntLong Add(volatile ntLong& target,ntLong val)
+{
+	return InterlockedExchangeAdd(&target, val);
+}
 
-	ntLong Add(volatile ntLong& target,ntLong val)
-	{
-		return InterlockedExchangeAdd(&target, val);
-	}
+ntLong Sub(volatile ntLong& target,ntLong val)
+{
+	return InterlockedExchangeAdd(&target, -val);
+}
 
-	ntLong Sub(volatile ntLong& target,ntLong val)
-	{
-		return InterlockedExchangeAdd(&target, -val);
-	}
 }
 
 //----------------------------------------------------------------------------

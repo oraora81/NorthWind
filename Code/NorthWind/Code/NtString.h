@@ -5,8 +5,7 @@
 //			TLS Àû¿ë
 
 
-namespace nt
-{
+namespace nt {
 
 class NtString// : public Memory::NtHeapAlloc
 {

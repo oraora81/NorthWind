@@ -125,11 +125,11 @@ NVALUE* NtHashTable<NKEY, NVALUE>::Find(const NKEY& key)
         m_currNode = m_currNode->m_nextNode;
     }
 
-    return NULL;
+    return nullptr;
 }
 
 template <typename NKEY, typename NVALUE>
-NVALUE* NtHashTable<NKEY, NVALUE>::GetFirst(NKEY* key)
+NVALUE* NtHashTable<NKEY, NVALUE>::GetFirst(const NKEY& key)
 {
     if (!Empty())
     {
@@ -138,30 +138,30 @@ NVALUE* NtHashTable<NKEY, NVALUE>::GetFirst(NKEY* key)
             if (m_hashTable[m_currIndex])
             {
                 m_currNode = m_hashTable[m_currIndex];
-                key = &m_currNode->m_key;
+                key = m_currNode->m_key;
 
                 return &m_currNode->m_value;
             }
         }
     }
 
-    return NULL;
+    return nullptr;
 }
 
 template <typename NKEY, typename NVALUE>
-NVALUE* NtHashTable<NKEY, NVALUE>::GetNext(NKEY* key)
+NVALUE* NtHashTable<NKEY, NVALUE>::GetNext(const NKEY& key)
 {
     for (; m_currIndex < m_tableSize; ++m_currIndex)
     {
         if (m_hashTable[m_currNode])
         {
             m_currNode = m_hashTable[m_currIndex];
-            key = &m_currNode->m_key;
+            key = m_currNode->m_key;
 
             return &m_currNode->m_value;
         }
     }
-    return NULL;
+    return nullptr;
 }
 
 template <typename NKEY, typename NVALUE>
@@ -181,9 +181,9 @@ ntInt NtHashTable<NKEY, NVALUE>::HashCode(const NKEY& key)
 {
     // default hash function
     static double s_dHashMultiplier = 0.5*(sqrt(5.0)-1.0);
-    unsigned ntInt uiKey;
-	memcpy(&uiKey, &key, sizeof(ntUint));
+    unsigned int uiKey;
+	memcpy(&uiKey, &key, sizeof(unsigned int));
     uiKey %= m_tableSize;
     double dFraction = fmod(s_dHashMultiplier*uiKey,1.0);
-    return (ntInt)floor(m_tableSize*dFraction);
+    return (int)floor(m_tableSize*dFraction);
 }

@@ -1,11 +1,7 @@
 
 #pragma once
 
-namespace nt
-{
-
-namespace LOG
-{
+namespace nt { namespace LOG {
 
 // http://msdn.microsoft.com/en-us/library/yt0c3wdh.aspx
 #ifdef _DEBUG
@@ -13,96 +9,49 @@ int DebugTrace(const ntWchar* msg, ...);
 int DebugTrace(const ntChar* msg, ...);
 #endif
 
-
-enum NtLogType
-{
-	TYPE_CONSOLE,
-	TYPE_FILE,
-	TYPE_WINDOW,
-	TYPE_MAX,
-};
-
-enum NtLogLevel
-{
-	LEVEL_WARNING,		// 경고			> 콘솔
-	LEVEL_ERROR,		// 오류			> 파일 + 콘솔
-	LEVEL_CRITICAL,		// 치명적오류	> 파일 + 콘솔 + 종료
-};
-
-typedef NtLogType LOG_TYPE;
-
-
-/*
-	
- */
-class NtRealWriter
+// 
+// Common Library
+//----------------------------------------------------------------------------
+class NtLog
 {
 public:
-	NtRealWriter() {}
-	~NtRealWriter() {}
 
-	virtual void Write() = 0;
-};
-
-class NtLogWriter
-{
-protected:
-	NtLogWriter()
-		: m_writer(nullptr)
+	enum LogType
 	{
+		TYPE_NONE = 0x00,
+		TYPE_DBGSTR = 0x01,
+		TYPE_CONSOLE = 0x02,
+		TYPE_FILE = 0x04,
+		//TYPE_WINDOW = 0x04,
+		TYPE_MAX,
+	};
 
-	}
-	virtual	~NtLogWriter() {}
-
-public:
-	void Textout()
+	enum LogLevel
 	{
-		NtAsserte(m_writer != nullptr);
-		m_writer->Write();
-	}
+		LEVEL_WARNING,		// 경고			> 콘솔
+		LEVEL_ERROR,		// 오류			> 파일 + 콘솔
+		LEVEL_CRITICAL,		// 치명적오류	> 파일 + 콘솔 + 종료
+	};
 
-	NtInline	void			WriteName(ntWchar* name)	{	NtAsserte(name != nullptr);		m_writeName = name; }
-	NtInline	const ntWchar*	WriteName() const			{	return m_writeName.c_str();		}
-	NtInline	void			Writer(NtRealWriter* writer){	NtAsserte(writer != nullptr);	m_writer = writer;	}
+	enum { DEFAULT_SUBJECT_COUNT = 4 };
+
+	struct sLogItem
+	{
+		LogType logType;
+		ntWchar* subject;
+	};
+
+public:
+	NtLog();
+
+	void AddSubject(ntWchar* subject, LogType flag);
+	void Print(const ntWchar* subject, const ntWchar* format, ...);
 
 private:
-	std::wstring	m_writeName;
-	NtRealWriter*	m_writer;
-};
+	//LogType m_outputType;
+	nt::NtHashTable<ntWchar*, sLogItem*> m_hashTable;
 
-
-/*
-	
- */
-class NtLOGConsole : public NtLogWriter
-{
-	enum { MAX_BUFFER = 100 };
-public:
-	NtLOGConsole();
-	~NtLOGConsole();
-
-private:
-	const ntWchar*	m_textBuffer[MAX_BUFFER];
-	ntInt			m_bufferIndex;
-};
-
-
-class NtLOGFile : public NtLogWriter
-{
-public:
-	NtLOGFile();
-	~NtLOGFile();
-};
-//
-//
-class NtLOG
-{
-public:
-	NtLOG();
-	~NtLOG();
-
-	void	WriteLog();
-private:
+	bool m_supportThread;
 };
 
 }	// namespace LOG

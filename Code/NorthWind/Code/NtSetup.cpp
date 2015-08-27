@@ -1,8 +1,7 @@
 
 #include "NtCoreLib.h"
 
-namespace nt
-{
+namespace nt {
 
 bool volatile NtSetup::m_systemInitialize = false;
 

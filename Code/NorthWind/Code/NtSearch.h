@@ -1,8 +1,7 @@
 
 #pragma once
 
-namespace nt
-{
+namespace nt {
 
 template <typename T>
 ntIndex BinarySearch(const T& dataSet, ntSize size, const T target)

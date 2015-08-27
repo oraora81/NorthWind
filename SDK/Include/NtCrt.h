@@ -36,6 +36,9 @@ namespace Crt
 	const ntChar*	StrChr(const ntChar* src, ntInt c);
 	const ntWchar*	StrChr(const ntWchar* src, ntWchar c);
 
+	bool		IsNullOrEmpty(const ntChar* src);
+	bool		IsNullOrEmpty(const ntWchar* src);
+
 	ntFloat		Atof(const ntChar* src);
 	ntFloat		Atof(const ntWchar* src);
 

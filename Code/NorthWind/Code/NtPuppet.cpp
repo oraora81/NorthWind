@@ -12,10 +12,7 @@
 #include "NtLightShader.h"
 #include "NtLight.h"
 
-namespace nt
-{
-namespace renderer
-{
+namespace nt { namespace renderer {
 
 NtPuppet::NtPuppet()
 	: m_vertexBuffer(nullptr)

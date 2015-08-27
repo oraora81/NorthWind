@@ -4,10 +4,7 @@
 
 #include "NtImage.h"
 
-namespace nt
-{
-namespace renderer
-{
+namespace nt { namespace renderer {
 
 NtImage::NtImage()
 : m_texHandle(INVALID_TEXTURE_HANDLE)

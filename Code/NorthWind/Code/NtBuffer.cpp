@@ -2,10 +2,7 @@
 #include "NtCoreLib.h"
 #include "NtBuffer.h"
 
-namespace nt
-{
-namespace FS
-{
+namespace nt { namespace FS {
 
 NtBuffer::NtBuffer()
 	: m_usage(NtBuffer::BUFFER_QUANTITY)

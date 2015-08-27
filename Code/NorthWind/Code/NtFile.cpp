@@ -2,10 +2,7 @@
 #include "NtCoreLib.h"
 #pragma hdrstop
 
-namespace nt
-{
-namespace FS
-{
+namespace nt { namespace FS {
 
 NtFile::NtFile()
 	: m_mode(IO_READ)

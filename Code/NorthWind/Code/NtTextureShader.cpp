@@ -5,10 +5,7 @@
 #include "NtD3DRenderer.h"
 #include "NtTexture.h"
 
-namespace nt
-{
-namespace renderer
-{
+namespace nt { namespace renderer {
 
 NtTextureShader::NtTextureShader()
 	: m_vertexShader(nullptr)

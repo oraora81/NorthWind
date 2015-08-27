@@ -4,11 +4,7 @@
 
 #include "NtD3DMapping.h"
 
-namespace nt
-{
-
-namespace renderer
-{
+namespace nt { namespace renderer {
 
 NtDirectX11Renderer::NtDirectX11Renderer()
 : NtD3DRenderer()

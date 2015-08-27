@@ -61,6 +61,9 @@
 #include "NtMath.h"
 
 #include "NtSetup.h"
+
+#include "NtContainer.h"
+
 #include "NtLog.h"
 #include "NtException.h"
 #include "NtInitDelegator.h"

@@ -14,11 +14,7 @@
 #include "NtAse.h"
 
 
-namespace nt
-{
-
-namespace renderer
-{
+namespace nt { namespace renderer {
 
 
 bool VSYNC_ENABLED = true;

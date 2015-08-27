@@ -69,7 +69,7 @@ namespace FS
 
 extern nt::APP::NtApplication* g_app;
 extern nt::FS::NtResourceManager* g_resManager;
-extern nt::Memory::NtLinearAllocator* g_linearAllocator;
+extern nt::Memory::NtLinearAllocator* g_liAllocator;
 extern nt::renderer::NtRenderer* g_renderInterface;
 extern std::shared_ptr<nt::renderer::NtDirectX11Renderer> g_renderer;
 

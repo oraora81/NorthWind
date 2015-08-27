@@ -1,11 +1,7 @@
 
 #pragma once
 
-namespace nt
-{
-
-namespace renderer
-{
+namespace nt { namespace renderer {
 
 class NtDirectX11Renderer : public NtD3DRenderer
 {

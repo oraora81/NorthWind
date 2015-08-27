@@ -6,8 +6,7 @@
 #include "NtVertexFormat.h"
 #include "NtPuppet.h"
 
-namespace nt
-{
+namespace nt {
 
 const ntWchar* m_keywordList[MAX_PARSE_KEY] = 
 {

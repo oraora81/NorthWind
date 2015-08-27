@@ -2,10 +2,7 @@
 #include "NtCoreLib.h"
 #pragma hdrstop
 
-namespace nt
-{
-namespace Memory
-{
+namespace nt { namespace Memory {
 
 NT_IMPLEMENT_OBJECT(NtLinearAllocator, NtAllocator)
 NT_IMPLEMENT_FACTORY(NtLinearAllocator)
@@ -32,9 +29,10 @@ bool NtLinearAllocator::Initialize(ntSize baseAllocSize)
 		return false;
 	}
 
-	m_initialPosition = new ntUchar*[MAKE_MEGA2BYTES(2)];
+	m_initialPosition = new ntUchar*[baseAllocSize];
 	m_currentPosition = m_initialPosition;
-	m_totalSize = MAKE_MEGA2BYTES(2);
+	m_totalSize = baseAllocSize;
+	//m_totalSize = MAKE_MEGA2BYTES(baseAllocSize);
 
 	return true;
 }

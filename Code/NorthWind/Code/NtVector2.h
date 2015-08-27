@@ -4,8 +4,7 @@
 
 #include "NtMath.h"
 
-namespace nt
-{
+namespace nt {
 
 template <typename T>
 class NtVector2

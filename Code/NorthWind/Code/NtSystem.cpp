@@ -3,9 +3,7 @@
 #include <sys/stat.h>
 #include <crtdbg.h>
 
-
-namespace nt
-{
+namespace nt {
 
 void SystemAbort(ntInt exitCode)
 {

@@ -192,6 +192,7 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <ClCompile Include="Code\NtBuffer.cpp" />
     <ClCompile Include="Code\NtCamera.cpp" />
     <ClCompile Include="Code\NtColorShader.cpp" />
+    <ClCompile Include="Code\NtConsole.cpp" />
     <ClCompile Include="Code\NtCoreLib.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugDx11|Win32'">Create</PrecompiledHeader>
@@ -252,6 +253,8 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <ClInclude Include="Code\NtBuffer.h" />
     <ClInclude Include="Code\NtCamera.h" />
     <ClInclude Include="Code\NtColorShader.h" />
+    <ClInclude Include="Code\NtConsole.h" />
+    <ClInclude Include="Code\NtContainer.h" />
     <ClInclude Include="Code\NtD3D11.h" />
     <ClInclude Include="Code\NtD3D11Headers.h" />
     <ClInclude Include="Code\NtD3D9.h" />

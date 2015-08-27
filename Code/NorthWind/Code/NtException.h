@@ -1,13 +1,12 @@
 
 #pragma once
 
-namespace nt
+namespace nt { struct ntExceptionBoundary {
+
+struct ntException : public std::exception
 {
-	struct ntExceptionBoundary
-	{
-		struct ntException : public std::exception
-		{
-			const char* what() const throw() { return "unknown exception"; }
-		};
-	};
+	const char* what() const throw() { return "unknown exception"; }
+};
+
+}
 }

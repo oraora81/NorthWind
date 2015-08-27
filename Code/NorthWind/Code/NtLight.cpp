@@ -2,10 +2,7 @@
 #include "NtCoreLib.h"
 #include "NtLight.h"
 
-namespace nt
-{
-namespace renderer
-{
+namespace nt { namespace renderer {
 
 
 NtLight::NtLight()

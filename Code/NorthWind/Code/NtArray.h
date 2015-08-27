@@ -3,8 +3,7 @@
 
 #include "NtAssert.h"
 
-namespace nt
-{
+namespace nt {
 
 template <typename T>
 class NtArray

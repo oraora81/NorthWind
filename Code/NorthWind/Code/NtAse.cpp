@@ -6,10 +6,7 @@
 #include "NtAse.h"
 #include "NtTexture.h"
 
-namespace nt
-{
-namespace renderer
-{
+namespace nt { namespace renderer {
 
 static const ntWchar* g_unit_materialClass[NtMaterial::MAX_MC] = 
 {

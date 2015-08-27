@@ -7,11 +7,7 @@
 #include "NtTexture.h"
 #include "NtRenderer.h"
 
-namespace nt
-{
-
-namespace FS
-{
+namespace nt { namespace FS {
 
 NtResourceManager::NtResourceManager()
 {

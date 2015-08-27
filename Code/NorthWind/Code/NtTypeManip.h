@@ -3,8 +3,7 @@
 
 #include <cassert>
 
-namespace nt
-{
+namespace nt {
 
 // Test T is Pointer Type
 template <typename T>
