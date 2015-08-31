@@ -3,8 +3,7 @@
 
 #include "NtNode.h"
 
-namespace nt
-{
+namespace nt {
 
 /*
  *	NtNormalTree

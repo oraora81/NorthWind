@@ -1,13 +1,9 @@
 
 #pragma once
 
-// TODO : 일반 String 기능 적용
-//			TLS 적용
-
-
 namespace nt {
 
-class NtString// : public Memory::NtHeapAlloc
+class NtString
 {
 	struct sBuffer
 	{
@@ -18,6 +14,7 @@ class NtString// : public Memory::NtHeapAlloc
 
 	enum { NTSTRING_BUFFER_SIZE = 24 };
 
+	// 하나의 문자를 융통성이 있게 접근하기 위한 Proxy
 	class NtCharProxy
 	{
 	public:
@@ -36,6 +33,7 @@ class NtString// : public Memory::NtHeapAlloc
 public:
 	static bool InitEmptyBuffer();
 
+	// 
 	NtString();
 	NtString(const NtString& str);
 	NtString(const ntWchar* str);
@@ -43,7 +41,7 @@ public:
 	NtString(const ntWchar* str, ntInt s, ntInt e);
 	~NtString();
 
-	// operator overloading
+	// 연산자 오버로딩
 	bool operator ==(const ntWchar* str);
 	bool operator ==(const NtString& str);
 	bool operator !=(const NtString& str);
@@ -58,48 +56,62 @@ public:
 	NtString& operator =(const ntChar* str);
 	NtString& operator =(const NtString& str);
 	NtString& operator =(ntInt integer);
-
+	
+	// 
 	const NtString::NtCharProxy operator [](ntInt index) const;
 	NtString::NtCharProxy operator [](ntInt index);
 
+	// 캐스팅 연산자 오버로딩
 	operator ntWchar* ();
 
-	// outer operator
-	friend bool		operator ==(const NtString& str1, const NtString& str2);
-	friend bool		operator !=(const NtString& str1, const NtString& str2);
-	friend bool		operator < (const NtString& str1, const NtString& str2);
-	friend bool		operator > (const NtString& str1, const NtString& str2);
-	friend bool		operator <=(const NtString& str1, const NtString& str2);
-	friend bool		operator >=(const NtString& str1, const NtString& str2);
-
+	// 외부 연산자 오버로딩
+	friend bool	operator ==(const NtString& str1, const NtString& str2);
+	friend bool	operator !=(const NtString& str1, const NtString& str2);
+	friend bool	operator < (const NtString& str1, const NtString& str2);
+	friend bool	operator > (const NtString& str1, const NtString& str2);
+	friend bool	operator <=(const NtString& str1, const NtString& str2);
+	friend bool	operator >=(const NtString& str1, const NtString& str2);
+	// for output stream
 	friend std::ostream& operator <<(std::ostream& os, const NtString& str);
 	friend std::wostream& operator << (std::wostream& os, const NtString& str);
 
-	// general
-	void 			Uppercase();
-	void 			Lowercase();
+	//
+	void InitBuffer();
+	//
+	bool Empty();
+	//
+	void Clear();
+	//
+	void AssignSubString(const ntWchar* str, ntInt s, ntInt e);
+	//
+	void AssignSubString(const ntWchar* s, const ntWchar* e);
+	//
+	void Uppercase();
+	//
+	void Lowercase();
+	//
+	bool Remove(ntWchar ch);
+	//
+	void Replace(ntWchar src, ntWchar dst);
+	//
+	void Replace(ntWchar* src, ntWchar* dst);
+	//
+	ntInt FindFirst(ntWchar ch);
+	//
+	ntInt FindLast(ntWchar ch);
+	//
+	ntIndex	Find(ntWchar* str);
 
-	void			InitBuffer();
-	bool			Empty();
-	void			Clear();
-	void			AssignSubString(const ntWchar* str, ntInt s, ntInt e);
-	void			AssignSubString(const ntWchar* s, const ntWchar* e);
-	bool			Remove(ntWchar ch);
-	void			Replace(ntWchar src, ntWchar dst);
-	void			Replace(ntWchar* src, ntWchar* dst);
-	ntInt			FindFirst(ntWchar ch);
-	ntInt			FindLast(ntWchar ch);
-	ntIndex			Find(ntWchar* str);
 
 	// get, set
-	inline const ntLong	RefCount() const	{ return m_buffer->m_refCount; }
-	inline ntLong&		RefCount()			{ return m_buffer->m_refCount; }
-	inline		 ntWchar*Buffer()			{ return m_buffer->m_str; }
-	inline const ntWchar*Buffer() const		{ return const_cast<const ntWchar*>(m_buffer->m_str); }
-	inline const ntUint	Size() const		{ return m_buffer->m_size; }
-	inline void			Size(ntSize size)	{ m_buffer->m_size = size; }
+	NtInline const ntLong	RefCount() const	{ return m_buffer->m_refCount; }
+	NtInline ntLong&		RefCount()			{ return m_buffer->m_refCount; }
+	NtInline		 ntWchar*Buffer()			{ return m_buffer->m_str; }
+	NtInline const ntWchar*Buffer() const		{ return const_cast<const ntWchar*>(m_buffer->m_str); }
+	NtInline const ntUint	Size() const		{ return m_buffer->m_size; }
+	NtInline void			Size(ntSize size)	{ m_buffer->m_size = size; }
 	
-
+	// 빈 문자열용 buffer
 	static sBuffer	m_emptyBuffer;
 
 private:

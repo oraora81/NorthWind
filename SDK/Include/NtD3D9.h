@@ -3,11 +3,7 @@
 
 #ifdef _NT_DX9
 
-namespace nt
-{
-
-namespace renderer
-{
+namespace nt { namespace renderer {
 
 class NtDirectX9Renderer : public NtD3DRenderer
 {

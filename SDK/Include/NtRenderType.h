@@ -1,8 +1,7 @@
 
 #pragma once
 
-namespace nt
-{
+namespace nt {
 
 #define NT_2D_VERTEX_Z (1e-3f)
 #define NT_RGBA(r,g,b,a) \

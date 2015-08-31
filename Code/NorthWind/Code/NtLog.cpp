@@ -67,7 +67,7 @@ void NtLog::AddSubject(ntWchar* subject, LogType flag)
 	}
 	else
 	{
-		*item->logType = flag;
+		//*item->logType = flag;
 	}
 }
 

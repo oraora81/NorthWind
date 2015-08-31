@@ -3,10 +3,11 @@
 
 #include <memory>
 
-namespace nt
-{
-	void SystemAbort(ntInt exitCode);
-	void SystemExit(ntInt exitCode);
+namespace nt {
+
+void SystemAbort(ntInt exitCode);
+void SystemExit(ntInt exitCode);
+
 
 class NtSystem
 {

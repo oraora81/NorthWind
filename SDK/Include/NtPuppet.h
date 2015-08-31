@@ -3,12 +3,12 @@
 
 #include "NtVertexFormat.h"
 
-namespace nt
-{
+namespace nt {
+
 class NtModelParser;
 
-namespace renderer
-{
+namespace renderer {
+
 class NtRenderer;
 class NtTexture;
 class NtColorShader;

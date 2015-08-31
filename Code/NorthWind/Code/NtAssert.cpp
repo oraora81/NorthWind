@@ -4,32 +4,32 @@
 namespace nt { namespace ntDebug {
 
 
-static PostAssert callbackFunc = NULL;
+static postAssert callbackFunc = NULL;
 __declspec(thread) static ntUint countAssertCall = 0;
 
 
-void SetPostAssert(PostAssert func)
+void SetPostAssert(postAssert func)
 {
 	callbackFunc = func;
 }
 
 const ntWchar* NtMakeAssertMessage(const ntWchar* expr, const ntWchar* filename, const ntUint line)
 {
-	const ntUint bufferSize = sizeof(ntWchar) * MAX_BUFFER_LENGTH;
+	const ntUint bufferSize = sizeof(ntWchar) * MAX_ASSERT_BUFFER_LENGTH;
 
 	ntWchar* buffPtr = Crt::MakeWBuffer();
-	ntWchar buff[MAX_BUFFER_LENGTH] = {0, };
+	ntWchar buff[MAX_ASSERT_BUFFER_LENGTH] = { 0, };
 
 	Crt::MemSet(buffPtr, bufferSize);
 
-	swprintf_s(buff, MAX_BUFFER_LENGTH, L"%s%sfile : %s%sline : %d%s", expr, NtWNextLine, filename, NtWNextLine, line, NtWNextLine);
-	Crt::StrCat(buffPtr, MAX_BUFFER_LENGTH, buff);
+	swprintf_s(buff, MAX_ASSERT_BUFFER_LENGTH, L"%s%sfile : %s%sline : %d%s", expr, NtWNextLine, filename, NtWNextLine, line, NtWNextLine);
+	Crt::StrCat(buffPtr, MAX_ASSERT_BUFFER_LENGTH, buff);
 
-	swprintf_s(buff, MAX_BUFFER_LENGTH, NtWNextLine
+	swprintf_s(buff, MAX_ASSERT_BUFFER_LENGTH, NtWNextLine
 		L"Abort : forever Ignore\n"
 		L"Retry : call Debugger\n"
 		L"Ignore : once Ignore\n\n");
-	Crt::StrCat(buffPtr, MAX_BUFFER_LENGTH, buff);
+	Crt::StrCat(buffPtr, MAX_ASSERT_BUFFER_LENGTH, buff);
 
 	return buffPtr;
 }

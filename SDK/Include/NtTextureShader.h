@@ -1,10 +1,8 @@
 
 #pragma once
 
-namespace nt
-{
-namespace renderer
-{
+namespace nt { namespace renderer {
+
 class NtD3DRenderer;
 class NtTexture;
 

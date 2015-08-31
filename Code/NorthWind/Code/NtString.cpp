@@ -18,7 +18,9 @@ bool NtString::InitEmptyBuffer()
 	return false;
 }
 
-// NtString::NtCharProxy Implement
+// 
+// NtString::NtCharProxy : 
+//----------------------------------------------------------------------------
 NtString::NtCharProxy::NtCharProxy(NtString& str, ntInt index)
 	: refString(str)
 	, charIndex(index)
@@ -59,7 +61,10 @@ NtString::NtCharProxy::operator ntWchar() const
 	return refString.Buffer()[charIndex];
 }
 
-// NtString Implement
+
+// 
+// NtString : TODO - refcount를 별도의 컴포넌트로 분리, mem allocator 할당
+//----------------------------------------------------------------------------
 NtString::NtString()
 : m_buffer(&m_emptyBuffer)
 {
@@ -95,7 +100,7 @@ NtString::~NtString()
 	ReleaseBuffer();
 }
 
-// Operator
+// Operators
 bool NtString::operator ==(const ntWchar* str)
 {
 	if (Crt::StrCmp(Buffer(), str) == 0)
@@ -246,12 +251,12 @@ NtString& NtString::operator =(const NtString& str)
 		return *this;
 	}
 
-	// For MultiThread Guard Start
+	// To be revise : MultiThread Assining
 	ReleaseBuffer();
 
 	m_buffer = str.m_buffer;
 	Atom::Inc(str.m_buffer->m_refCount);
-	// For MultiThread Guard End
+	// 
 
 	return *this;
 }

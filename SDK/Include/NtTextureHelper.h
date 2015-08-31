@@ -3,8 +3,7 @@
 
 #include "dds.h"
 
-namespace nt
-{
+namespace nt {
 
 class NtTextureLoader
 {

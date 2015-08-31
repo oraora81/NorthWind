@@ -1,11 +1,7 @@
 
 #pragma once
 
-namespace nt
-{
-
-namespace LOG
-{
+namespace nt { namespace LOG {
 
 // http://msdn.microsoft.com/en-us/library/yt0c3wdh.aspx
 #ifdef _DEBUG
@@ -20,7 +16,7 @@ class NtLog
 {
 public:
 
-	enum NtLogType
+	enum LogType
 	{
 		TYPE_NONE = 0x00,
 		TYPE_DBGSTR = 0x01,
@@ -30,7 +26,7 @@ public:
 		TYPE_MAX,
 	};
 
-	enum NtLogLevel
+	enum LogLevel
 	{
 		LEVEL_WARNING,		// 경고			> 콘솔
 		LEVEL_ERROR,		// 오류			> 파일 + 콘솔
@@ -41,18 +37,18 @@ public:
 
 	struct sLogItem
 	{
-		NtLogType logType;
+		LogType logType;
 		ntWchar* subject;
 	};
 
 public:
 	NtLog();
 
-	void AddSubject(ntWchar* subject);
+	void AddSubject(ntWchar* subject, LogType flag);
 	void Print(const ntWchar* subject, const ntWchar* format, ...);
 
 private:
-	NtLogType m_outputType;
+	//LogType m_outputType;
 	nt::NtHashTable<ntWchar*, sLogItem*> m_hashTable;
 
 	bool m_supportThread;

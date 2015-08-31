@@ -1,10 +1,7 @@
 
 #pragma once
 
-namespace nt
-{
-namespace renderer
-{
+namespace nt { namespace renderer {
 
 class NtAse : public nt::FS::NtFile
 {

@@ -3,8 +3,7 @@
 
 #include "NtRTTI.h"
 
-namespace nt
-{
+namespace nt {
 	
 class NtObject
 {

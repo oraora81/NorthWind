@@ -1,6 +1,9 @@
 
 #pragma once
 
+// 
+// 
+//----------------------------------------------------------------------------
 #define NtAssert_BODY(x, title, out, info) \
 do \
 { \
@@ -18,7 +21,7 @@ do \
 	else if (result == IDABORT) \
 		foreverIgnore = true; \
 } while(0)
-
+//
 #define NtError_BODY(x, title, out, info) \
 do \
 { \
@@ -37,19 +40,22 @@ do \
 		foreverIgnore = true; \
 } while(0)
 
+
+// 
+// 
+//----------------------------------------------------------------------------
 namespace nt {
 
 
-enum { MAX_BUFFER_LENGTH = 1024 };
-
+const ntInt MAX_ASSERT_BUFFER_LENGTH = 1024;
 
 namespace ntDebug
 {
 	ntInt Assert(const ntWchar* expr, const ntWchar* filename, ntUint line, const ntWchar* title = NULL);
 	bool IsAssertBox();
 
-	typedef void (*PostAssert)();
-	void SetPostAssert(PostAssert func);
+	typedef void (*postAssert)();
+	void SetPostAssert(postAssert func);
 }	// namespace ntDebug
 
 
@@ -60,7 +66,7 @@ inline void NtAssert_FUNCTION(bool expr, const ntWchar* file, ntUint line, const
 		return;
 	}
 
-	ntWchar message[MAX_BUFFER_LENGTH] = {0, };
+	ntWchar message[MAX_ASSERT_BUFFER_LENGTH] = { 0, };
 	va_list args;
 	va_start(args, format);
 	_vsnwprintf_s(message, _countof(message), _countof(message)-1, format, args);
@@ -82,6 +88,9 @@ inline void NtAssert_FUNCTION(bool expr, const ntWchar* file, ntUint line, const
 
 }	// namespace nt
 
+// 
+// 
+//----------------------------------------------------------------------------
 #define NtASSERT(expr, ...) \
 	nt::NtAssert_FUNCTION(expr, __WFILE__, __LINE__, __VA_ARGS__)
 #define NtASSERTE(expr) \

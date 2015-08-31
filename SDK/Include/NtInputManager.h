@@ -1,10 +1,7 @@
 
 #pragma once
 
-namespace nt
-{
-namespace INPUT
-{
+namespace nt { namespace INPUT {
 
 class NtInputManager
 {

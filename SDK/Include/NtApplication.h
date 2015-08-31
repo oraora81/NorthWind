@@ -5,15 +5,13 @@
 #include "NtInputManager.h"
 
 
-namespace nt
-{
+namespace nt {
 
 using namespace renderer;
 using namespace INPUT;
 using namespace FS;
 
-namespace APP
-{
+namespace APP {
 
 class NtApplication
 {
@@ -52,18 +50,16 @@ private:
 }	// namespace nt
 
 
-namespace nt
-{
-namespace APP
-{
+namespace nt {
+namespace APP {
 	class NtApplication;
 }
 
-namespace FS
-{
+namespace FS {
 	class NtResourceManager;
 }
-}
+
+} // namespace nt
 
 
 

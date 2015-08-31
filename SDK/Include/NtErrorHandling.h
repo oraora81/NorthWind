@@ -1,8 +1,7 @@
 
 #pragma once
 
-namespace nt
-{
+namespace nt {
 
 enum eErrorCode
 {

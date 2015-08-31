@@ -1,11 +1,7 @@
 
 #pragma once
 
-namespace nt
-{
-
-namespace FS
-{
+namespace nt { namespace FS {
 
 class NtBuffer
 {
