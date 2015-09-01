@@ -267,6 +267,7 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <ClInclude Include="Code\NtImage.h" />
     <ClInclude Include="Code\NtInitDelegator.h" />
     <ClInclude Include="Code\NtInputManager.h" />
+    <ClInclude Include="Code\NtIterator.h" />
     <ClInclude Include="Code\NtLight.h" />
     <ClInclude Include="Code\NtLightShader.h" />
     <ClInclude Include="Code\NtLinearAllocator.h" />
@@ -326,7 +327,6 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <None Include="Code\NtVector3.inl" />
     <None Include="Code\NtArray.inl" />
     <None Include="Code\NtHashTable.inl" />
-    <None Include="Code\NtList.inl" />
     <None Include="Code\NtTree.inl" />
     <None Include="Code\NtSystem.inl" />
     <None Include="Code\NtSearch.inl" />

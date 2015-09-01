@@ -29,7 +29,7 @@ public:
 struct Safe_Delete
 {
 	template <typename T>
-	void operator() (T object)
+	void operator() (T& object)
 	{
 		assert(NtIsPtr<T>::Result == TRUE);
 
@@ -44,7 +44,7 @@ struct Safe_Delete
 struct Safe_Delete_Array
 {
 	template <typename T>
-	void operator() (T object)
+	void operator() (T& object)
 	{
 		assert(NtIsPtr<T>::Result == TRUE);
 

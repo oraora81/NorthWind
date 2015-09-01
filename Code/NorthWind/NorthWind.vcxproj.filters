@@ -357,6 +357,7 @@
     <ClInclude Include="Code\NtContainer.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="Code\NtIterator.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Code\NtMatrix2.inl">
@@ -378,9 +379,6 @@
       <Filter>Container</Filter>
     </None>
     <None Include="Code\NtHashTable.inl">
-      <Filter>Container</Filter>
-    </None>
-    <None Include="Code\NtList.inl">
       <Filter>Container</Filter>
     </None>
     <None Include="Code\NtArray.inl">

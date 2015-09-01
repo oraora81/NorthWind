@@ -25,4 +25,13 @@ struct NtBiNode : public NtNode<T>
 	NtBiNode*	m_right;
 };
 
+
+template <typename T>
+struct NtListNode : NtNode<T>
+{
+	NtListNode* m_prev;
+	NtListNode* m_next;
+};
+
+
 }	// namespace nt
