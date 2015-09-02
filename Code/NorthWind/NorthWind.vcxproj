@@ -325,7 +325,6 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <None Include="Code\NtRenderType.inl" />
     <None Include="Code\NtVector2.inl" />
     <None Include="Code\NtVector3.inl" />
-    <None Include="Code\NtArray.inl" />
     <None Include="Code\NtHashTable.inl" />
     <None Include="Code\NtTree.inl" />
     <None Include="Code\NtSystem.inl" />
@@ -334,6 +333,9 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
   </ItemGroup>
   <ItemGroup>
     <Library Include="Code\jpeg\jpeg-static.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Code\DevNode.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

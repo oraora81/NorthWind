@@ -11,6 +11,7 @@ class NtList
 {
 public:
 	typedef T value_type;
+	typedef NtList<T> MyList;
 	typedef NtListNode<T> NodeType;
 	typedef	NtListNode<T>* NodePtr;
 	typedef value_type& reference;
@@ -22,20 +23,22 @@ public:
 public:
 	NtList()
 	{
-		m_first = new NodeType();
-		m_last = new NodeType();
-
-		m_first->m_prev = m_first;
-		m_first->m_next = m_last;
-
-		m_last->m_prev = m_first;
-		m_last->m_next = m_last;
+		Initialize();
 	}
 
 
-	NtList(const NtList& rhsList)
+	NtList(const MyList& rhs)
 	{
+		Initialize();
 
+		*this = rhs;
+	}
+
+	NtList(MyList&& rhs)
+	{
+		Initialize();
+
+		*this = std::move(rhs);
 	}
 
 	~NtList()
@@ -44,6 +47,20 @@ public:
 
 		SAFE_DELETE(m_last);
 		SAFE_DELETE(m_first);
+	}
+
+	void Initialize()
+	{
+		m_first = new NodeType();
+		m_last = new NodeType();
+
+		m_first->m_prev = m_first;
+		m_first->m_next = m_last;
+
+		m_last->m_prev = m_first;
+		m_last->m_next = m_last;
+
+		m_size = 0;
 	}
 
 	//
@@ -57,27 +74,70 @@ public:
 
 			currNode = nextNode;
 		}
+
+		// reconnect m_first <-> m_last
+		m_first->m_next = m_last;
+		m_last->m_prev = m_first;
 	}
 
+	//
+	void push_back(T&& item)
+	{
+		NodePtr newNode = new NodeType();
+		newNode->m_value = item;
+
+		InsertBack(newNode);
+		++m_size;
+	}
 	//
 	void push_back(const T& item)
 	{
 		NodePtr newNode = new NodeType();
 		newNode->m_value = item;
 
-		newNode->m_next = m_last;
-		m_last->m_prev->m_next = newNode;
-
-		newNode->m_prev = m_last->m_prev;
-		m_last->m_prev = newNode;
+		InsertBack(newNode);
+		++m_size;
 	}
 
+private:
+	void InsertBack(NodePtr& node)
+	{
+		node->m_next = m_last;
+		m_last->m_prev->m_next = node;
+
+		node->m_prev = m_last->m_prev;
+		m_last->m_prev = node;
+	}
+
+public:
+	void push_front(T&& item)
+	{
+		NodePtr newNode = new NodePtr();
+		newNode->m_value = item;
+
+		InsertFront(newNode);
+		++m_size;
+	}
 
 	void push_front(const T& item)
 	{
 		NodePtr newNode = new NodePtr();
+		newNode->m_value = item;
+
+		InsertFront(newNode);
+		++m_size;
+	}
+private:
+	void InsertFront(NodePtr& node)
+	{
+		node->m_prev = m_first;
+		m_first->m_next->m_prev = node;
+
+		node->m_next = m_first->m_next;
+		m_first->m_next = node;
 	}
 
+public:
 	Iterator begin()
 	{
 		return Iterator(m_first->m_next);
@@ -98,9 +158,58 @@ public:
 		return Iterator(m_last);
 	}
 
+	MyList& operator=(const MyList& rhs)
+	{
+		if (this == &rhs)
+		{
+			return *this;
+		}
+
+		clear();
+		
+		NodePtr currNode = rhs.m_first->m_next;
+		while (currNode != rhs.m_last)
+		{
+			NodePtr newNode = new NodeType();
+			newNode->m_value = std::forward<T>(currNode->m_value);
+
+			InsertBack(newNode);
+			++m_size;
+
+			currNode = currNode->m_next;
+		}
+
+		return *this;
+	}
+
+	MyList& operator=(MyList&& rhs)
+	{
+		if (this == &rhs)
+		{
+			return *this;
+		}
+
+		clear();
+		
+		NodePtr currNode = rhs.m_first->m_next;
+		while (currNode != rhs.m_last)
+		{
+			NodePtr newNode = new NodeType();
+			newNode->m_value = std::forward<T>(currNode->m_value);
+
+			InsertBack(newNode);
+			++m_size;
+
+			currNode = currNode->m_next;
+		}
+		
+		return *this;
+	}
+
 private:
 	NodePtr m_first;
 	NodePtr m_last;
+	//
 	ntSize m_size;
 };
 

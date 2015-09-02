@@ -638,7 +638,7 @@ void NtString::ReleaseBuffer()
 		{
 			// refCount가 0이 되어 메모리가 해제되는 경우.
 			Atom::Dec(m_buffer->m_refCount);
-			SAFE_DELETE_ARRAY(Buffer());
+			SAFE_DELETE_ARRAY(m_buffer->m_str);
 			SAFE_DELETE(m_buffer);
 			m_buffer = &NtString::m_emptyBuffer;
 		}
