@@ -217,6 +217,7 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <ClCompile Include="Code\NtMemoryInfo.cpp" />
     <ClCompile Include="Code\NtModelParser.cpp" />
     <ClCompile Include="Code\NtObject.cpp" />
+    <ClCompile Include="Code\NtPoolAllocator.cpp" />
     <ClCompile Include="Code\NtPuppet.cpp" />
     <ClCompile Include="Code\NtRenderer.cpp" />
     <ClCompile Include="Code\NtRenderType.cpp" />
@@ -277,6 +278,7 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <ClInclude Include="Code\NtMemoryInfo.h" />
     <ClInclude Include="Code\NtModelParser.h" />
     <ClInclude Include="Code\NtObject.h" />
+    <ClInclude Include="Code\NtPoolAllocator.h" />
     <ClInclude Include="Code\NtPuppet.h" />
     <ClInclude Include="Code\NtRenderDefine.h" />
     <ClInclude Include="Code\NtRenderer.h" />
@@ -315,7 +317,6 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <ClInclude Include="Code\NtProfiler.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Code\NtAllocator.inl" />
     <None Include="Code\NtErrorHandling.inl" />
     <None Include="Code\example.txt" />
     <None Include="Code\NtBuffer.inl" />

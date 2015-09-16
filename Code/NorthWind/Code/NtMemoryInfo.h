@@ -1,6 +1,8 @@
 
 #pragma once
 
+// 메모리 덤프 뜰때 사용할 Define 정의 필요
+// 항상 켜놓지 않게끔.
 namespace nt {
 
 class NtMemoryInfo
@@ -32,8 +34,6 @@ public:
 
 		// NtString m_leakFileName;
 		bool m_dumpToStdout;
-
-
 	};
 };
 

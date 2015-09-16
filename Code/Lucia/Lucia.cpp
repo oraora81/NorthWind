@@ -5,6 +5,8 @@
 #include "Lucia.h"
 
 #include "NtApplication.h"
+#include "NtList.h"
+#include "RenderObj.h"
 
 
 using namespace nt;
@@ -23,6 +25,8 @@ TCHAR szWindowClass[MAX_LOADSTRING];			// 기본 창 클래스 이름입니다.
 ATOM				MyRegisterClass(HINSTANCE hInstance);
 LRESULT CALLBACK	WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK	About(HWND, UINT, WPARAM, LPARAM);
+
+void Initialize();
 
 #include "NtModelParser.h"
 
@@ -47,6 +51,10 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	// 응용 프로그램 초기화를 수행합니다.
 	hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_LUCIA));
 
+	//
+	Initialize();
+
+
 	APP::NtApplication* app = new APP::NtApplication;
 	if (app->Initialize(false))
 	{
@@ -59,6 +67,27 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	return (int) msg.wParam;
 }
 
+void Initialize()
+{
+	nt::NtList<int> l;
+	l.push_back(5);
+	l.push_back(6);
+
+	int sum = 0;
+	auto it = l.begin();
+	for (; it != l.end(); ++it)
+	{
+		sum += (*it);
+	}
+
+	NTRACE(L"%d", sum);
+
+	nt::NtList<int> l2;
+	l2 = l;
+
+	nt::NtList<int> l3;
+	l2 = std::move(l);
+}
 
 
 //

@@ -145,6 +145,9 @@
     <ClCompile Include="Code\NtConsole.cpp">
       <Filter>Log</Filter>
     </ClCompile>
+    <ClCompile Include="Code\NtPoolAllocator.cpp">
+      <Filter>Allocator</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\NtMatrix2.h">
@@ -360,6 +363,9 @@
     <ClInclude Include="Code\NtIterator.h">
       <Filter>Container</Filter>
     </ClInclude>
+    <ClInclude Include="Code\NtPoolAllocator.h">
+      <Filter>Allocator</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Code\NtMatrix2.inl">
@@ -403,9 +409,6 @@
     </None>
     <None Include="Code\NtRenderType.inl">
       <Filter>Renderer</Filter>
-    </None>
-    <None Include="Code\NtAllocator.inl">
-      <Filter>Allocator</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

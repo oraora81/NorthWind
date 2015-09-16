@@ -49,8 +49,75 @@ public:
 // NtListIterator : NtList에서 사용하는 Iterator
 //----------------------------------------------------------------------------
 
+template <typename MyArr>
+class NtArrayIterator : public NtIterator<MyArr>
+{
+	typedef NtArrayIterator<MyArr> MyItor;
+
+public:
+	NtArrayIterator()
+	{
+
+	}
+
+	NtArrayIterator(const pointer& ptr)
+	{
+		m_current = ptr;
+	}
+
+	NtArrayIterator(const MyItor& right)
+	{
+		m_current = right.m_current;
+	}
+
+	NtArrayIterator(MyItor&& right)
+	{
+		m_current = std::forward(right->m_current);
+	}
+
+	reference operator*() const
+	{
+		return m_current;
+	}
+
+	pointer operator->() const
+	{
+		return &m_current;
+	}
+
+	MyItor& operator++()
+	{
+		++m_current
+		return *this;
+	}
+
+	MyItor operator++(int)
+	{
+		pointer temp = m_current;
+		++m_current;
+		return NtArrayIterator(temp);
+	}
+
+	bool operator==(const MyItor& right) const
+	{
+		return m_current == right.m_current;
+	}
+
+	bool operator!=(const MyItor& right) const
+	{
+		return m_current != right.m_current;
+	}
+
+private:
+	pointer m_current;
+};
+
+// 
+// NtListIterator : NtList에서 사용하는 Iterator
+//----------------------------------------------------------------------------
+
 template <typename MyList>
-class NtListIterator : NtIterator<MyList>
+class NtListIterator : public NtIterator<MyList>
 {
 	typedef typename MyList::NodePtr NodePtr;
 	typedef NtListIterator<MyList> MyItor;
@@ -71,6 +138,11 @@ public:
 		m_current = right.m_current;
 	}
 
+	NtListIterator(MyItor&& right)
+	{
+		m_current = std::forward(right.m_current);
+	}
+
 	reference operator*() const
 	{
 		return m_current->m_value;
@@ -78,7 +150,7 @@ public:
 
 	pointer operator->() const
 	{
-		return m_current->m_value;
+		return &m_current->m_value;
 	}
 
 	MyItor& operator++()

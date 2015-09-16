@@ -33,6 +33,8 @@ private:
 	void*	m_initialPosition;
 	void*	m_currentPosition;
 	ntSize	m_totalSize;
+
+	
 };
 
 }

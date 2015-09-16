@@ -174,12 +174,12 @@ ntInt ToLower(ntWchar* src, ntSize length)
 	return _wcslwr_s(src, length + 1);
 }
 
-void MemCpy(void* dest,void* src,ntUint length)
+void MemCpy(void* dest, void* src, ntUint length)
 {
 	::memcpy(dest, src, length);
 }
 
-void MemSet(void* target,ntUint length)
+void MemSet(void* target, ntUint length)
 {
 	::memset(target, 0, length);
 }

@@ -4,27 +4,23 @@
 namespace nt
 {
 
-namespace _thread
+namespace Thread
 {
 
 class NtCriticalSecton
 {
 public:
-	NtCriticalSecton()
+	NtCriticalSecton(const CRITICAL_SECTION& cs)
 	{
-		InitializeCriticalSection(&m_cs);
-		EnterCriticalSection(&m_cs);
+		EnterCriticalSection(&cs);
 	}
 
 	~NtCriticalSecton()
 	{
-		LeaveCriticalSection(&m_cs);
+		LeaveCriticalSection(&cs);
 	}
-
-private:
-	CRITICAL_SECTION m_cs;
 };
 
-}
+} // Thread
 
-}
+} // nt
