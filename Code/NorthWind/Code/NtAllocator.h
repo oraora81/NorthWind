@@ -171,8 +171,7 @@ bool isHeap(T& obj)
 	return true;
 }
 
-#include "NtAllocator.inl"
-
+ 
 }	// namespace Memory
 
 }	// namespace nt

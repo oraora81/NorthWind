@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="DebugDx11|Win32">
       <Configuration>DebugDx11</Configuration>
@@ -28,22 +28,22 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDx11|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDx9|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -133,6 +133,7 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <Lib>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>..\import\lib\x86;..\import\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>./Code/jpeg/jpeg-static.lib;./Code/jpeg/turbojpeg-static.lib</AdditionalDependencies>
     </Lib>
     <PostBuildEvent>
       <Command>copy /y Code\Nt*.h ..\..\SDK\Include
@@ -217,7 +218,6 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <ClCompile Include="Code\NtMemoryInfo.cpp" />
     <ClCompile Include="Code\NtModelParser.cpp" />
     <ClCompile Include="Code\NtObject.cpp" />
-    <ClCompile Include="Code\NtPoolAllocator.cpp" />
     <ClCompile Include="Code\NtPuppet.cpp" />
     <ClCompile Include="Code\NtRenderer.cpp" />
     <ClCompile Include="Code\NtRenderType.cpp" />
@@ -278,7 +278,6 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <ClInclude Include="Code\NtMemoryInfo.h" />
     <ClInclude Include="Code\NtModelParser.h" />
     <ClInclude Include="Code\NtObject.h" />
-    <ClInclude Include="Code\NtPoolAllocator.h" />
     <ClInclude Include="Code\NtPuppet.h" />
     <ClInclude Include="Code\NtRenderDefine.h" />
     <ClInclude Include="Code\NtRenderer.h" />
@@ -333,10 +332,11 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <None Include="Code\script1.lua" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="Code\jpeg\jpeg-static.lib" />
+    <Text Include="Code\DevNode.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Code\DevNode.txt" />
+    <Library Include="Code\jpeg\jpeg-static.lib" />
+    <Library Include="Code\jpeg\turbojpeg-static.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

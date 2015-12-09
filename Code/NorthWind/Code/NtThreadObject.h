@@ -11,14 +11,19 @@ class NtCriticalSecton
 {
 public:
 	NtCriticalSecton(const CRITICAL_SECTION& cs)
+		: m_cs(cs)
 	{
-		EnterCriticalSection(&cs);
+		EnterCriticalSection(&m_cs);
 	}
 
 	~NtCriticalSecton()
 	{
-		LeaveCriticalSection(&cs);
+		LeaveCriticalSection(&m_cs);
+		DeleteCriticalSection(&m_cs);
 	}
+
+private:
+	CRITICAL_SECTION m_cs;
 };
 
 } // Thread

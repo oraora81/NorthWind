@@ -145,9 +145,6 @@
     <ClCompile Include="Code\NtConsole.cpp">
       <Filter>Log</Filter>
     </ClCompile>
-    <ClCompile Include="Code\NtPoolAllocator.cpp">
-      <Filter>Allocator</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Code\NtMatrix2.h">
@@ -363,9 +360,6 @@
     <ClInclude Include="Code\NtIterator.h">
       <Filter>Container</Filter>
     </ClInclude>
-    <ClInclude Include="Code\NtPoolAllocator.h">
-      <Filter>Allocator</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Code\NtMatrix2.inl">
@@ -474,11 +468,14 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Code\DevNode.txt" />
+  </ItemGroup>
+  <ItemGroup>
     <Library Include="Code\jpeg\jpeg-static.lib">
       <Filter>Renderer\external</Filter>
     </Library>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Code\DevNode.txt" />
+    <Library Include="Code\jpeg\turbojpeg-static.lib">
+      <Filter>Renderer\external</Filter>
+    </Library>
   </ItemGroup>
 </Project>
