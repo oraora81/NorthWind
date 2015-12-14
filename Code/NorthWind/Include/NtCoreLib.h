@@ -35,7 +35,7 @@
 //----------------------------------------------------------------------------
 #include <D3Dcompiler.h>
 #ifdef _NT_DX11
-#include "NtD3D11Headers.h"
+#include <NtD3D11Headers.h>
 #include <xnamath.h>
 #include <dinput.h>
 #elif _NT_DX9
@@ -49,39 +49,37 @@
 // 
 // NT Library
 //----------------------------------------------------------------------------
-#include "NtType.h"
-#include "NtErrorHandling.h"
-#include "NtGlobal.h"
-#include "NtCrt.h"
-#include "NtAtom.h"
-#include "NtSystem.h"
-#include "NtAssert.h"
-#include "NtTypeManip.h"
-#include "NtTypeTrait.h"
-#include "NtMath.h"
+#include <NtType.h>
+#include <NtErrorHandling.h>
+#include <NtGlobal.h>
+#include <NtCrt.h>
+#include <NtAtom.h>
+#include <NtSystem.h>
+#include <NtAssert.h>
+#include <NtTypeManip.h>
+#include <NtTypeTrait.h>
+#include <NtMath.h>
 
-#include "NtSetup.h"
-
-#include "NtContainer.h"
-
-#include "NtLog.h"
-#include "NtException.h"
-#include "NtInitDelegator.h"
-#include "NtString.h"
-#include "NtFactory.h"
-#include "NtRTTI.h"
-#include "NtObject.h"
-#include "NtAllocator.h"
-#include "NtLinearAllocator.h"
-#include "NtBuffer.h"
-#include "NtFile.h"
+#include <NtSetup.h>
+#include <NtContainer.h>
+#include <NtLog.h>
+#include <NtException.h>
+#include <NtInitDelegator.h>
+#include <NtString.h>
+#include <NtFactory.h>
+#include <NtRTTI.h>
+#include <NtObject.h>
+#include <NtAllocator.h>
+#include <NtLinearAllocator.h>
+#include <NtBuffer.h>
+#include <NtFile.h>
 
 // render
-#include "NtRenderDefine.h"
-#include "NtRenderType.h"
-#include "NtShader.h"
-#include "NtResourceManager.h"
-#include "NtApplication.h"
+#include <NtRenderDefine.h>
+#include <NtRenderType.h>
+#include <NtShader.h>
+#include <NtResourceManager.h>
+#include <NtApplication.h>
 
 #pragma comment (lib, "dinput8.lib")
 #pragma comment (lib, "dxguid.lib")

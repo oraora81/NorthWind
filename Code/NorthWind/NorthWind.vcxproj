@@ -22,6 +22,7 @@
     <ProjectGuid>{E6FA1BB6-3B20-4D27-A59E-437AC38AC069}</ProjectGuid>
     <RootNamespace>NorthWind</RootNamespace>
     <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -63,10 +64,10 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">./../../bin</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">./../../bin/</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='DebugDx11|Win32'">./../../bin</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='DebugDx9|Win32'">./../../bin</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">./../../bin/Intermediate/$(ProjectName)/$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">./../../bin/Intermediate/$(ProjectName)/$(Configuration)/</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='DebugDx11|Win32'">./../../bin/Intermediate/$(ProjectName)/$(Configuration)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='DebugDx9|Win32'">./../../bin/Intermediate/$(ProjectName)/$(Configuration)\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">./../../bin</OutDir>
@@ -98,12 +99,12 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderOutputFile>./../../bin/Intermediate/$(ProjectName)/$(Configuration)/$(TargetName).pch</PrecompiledHeaderOutputFile>
-      <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <ProgramDataBaseFileName>$(IntDir)$(ProjectName).pdb</ProgramDataBaseFileName>
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <PrecompiledHeaderFile>NtCoreLib.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\import\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Include;..\import\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Lib>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
@@ -187,156 +188,142 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Code\NtAllocator.cpp" />
-    <ClCompile Include="Code\NtApplication.cpp" />
-    <ClCompile Include="Code\NtAse.cpp" />
-    <ClCompile Include="Code\NtBuffer.cpp" />
-    <ClCompile Include="Code\NtCamera.cpp" />
-    <ClCompile Include="Code\NtColorShader.cpp" />
-    <ClCompile Include="Code\NtConsole.cpp" />
-    <ClCompile Include="Code\NtCoreLib.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugDx11|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugDx9|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="Code\NtD3D11.cpp" />
-    <ClCompile Include="Code\NtD3D9.cpp" />
-    <ClCompile Include="Code\NtD3DMapping.cpp" />
-    <ClCompile Include="Code\NtD3DRenderer.cpp" />
-    <ClCompile Include="Code\NtFactory.cpp" />
-    <ClCompile Include="Code\NtFile.cpp" />
-    <ClCompile Include="Code\NtImage.cpp" />
-    <ClCompile Include="Code\NtInitDelegator.cpp" />
-    <ClCompile Include="Code\NtInputManager.cpp" />
-    <ClCompile Include="Code\NtLight.cpp" />
-    <ClCompile Include="Code\NtLightShader.cpp" />
-    <ClCompile Include="Code\NtLinearAllocator.cpp" />
-    <ClCompile Include="Code\NtLog.cpp" />
-    <ClCompile Include="Code\NtMath.cpp" />
-    <ClCompile Include="Code\NtMatrix2.cpp" />
-    <ClCompile Include="Code\NtMemoryInfo.cpp" />
-    <ClCompile Include="Code\NtModelParser.cpp" />
-    <ClCompile Include="Code\NtObject.cpp" />
-    <ClCompile Include="Code\NtPuppet.cpp" />
-    <ClCompile Include="Code\NtRenderer.cpp" />
-    <ClCompile Include="Code\NtRenderType.cpp" />
-    <ClCompile Include="Code\NtResourceManager.cpp" />
-    <ClCompile Include="Code\NtRTTI.cpp" />
-    <ClCompile Include="Code\NtSetup.cpp" />
-    <ClCompile Include="Code\NtShader.cpp" />
-    <ClCompile Include="Code\NtTexture.cpp" />
-    <ClCompile Include="Code\NtTextureHelper.cpp" />
-    <ClCompile Include="Code\NtTextureShader.cpp" />
-    <ClCompile Include="Code\NtThreadObject.cpp" />
-    <ClCompile Include="Code\NtTimer.cpp" />
-    <ClCompile Include="Code\NtVector2.cpp" />
-    <ClCompile Include="Code\NtVector3.cpp" />
-    <ClCompile Include="Code\NtAtom.cpp" />
-    <ClCompile Include="Code\NtSystem.cpp" />
-    <ClCompile Include="Code\NtString.cpp" />
-    <ClCompile Include="Code\NtCrt.cpp" />
-    <ClCompile Include="Code\NtSearch.cpp" />
-    <ClCompile Include="Code\NtAssert.cpp" />
-    <ClCompile Include="Code\NtProfiler.cpp" />
-    <ClCompile Include="Code\NtVertexFormat.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Code\dds.h" />
-    <ClInclude Include="Code\jpeg\jconfig.h" />
-    <ClInclude Include="Code\jpeg\jerror.h" />
-    <ClInclude Include="Code\jpeg\jmorecfg.h" />
-    <ClInclude Include="Code\jpeg\jpeglib.h" />
-    <ClInclude Include="Code\jpeg\turbojpeg.h" />
-    <ClInclude Include="Code\NtAllocator.h" />
-    <ClInclude Include="Code\NtApplication.h" />
-    <ClInclude Include="Code\NtAse.h" />
-    <ClInclude Include="Code\NtBuffer.h" />
-    <ClInclude Include="Code\NtCamera.h" />
-    <ClInclude Include="Code\NtColorShader.h" />
-    <ClInclude Include="Code\NtConsole.h" />
-    <ClInclude Include="Code\NtContainer.h" />
-    <ClInclude Include="Code\NtD3D11.h" />
-    <ClInclude Include="Code\NtD3D11Headers.h" />
-    <ClInclude Include="Code\NtD3D9.h" />
-    <ClInclude Include="Code\NtD3DMapping.h" />
-    <ClInclude Include="Code\NtD3DRenderer.h" />
-    <ClInclude Include="Code\NtErrorHandling.h" />
-    <ClInclude Include="Code\NtException.h" />
-    <ClInclude Include="Code\NtFactory.h" />
-    <ClInclude Include="Code\NtFile.h" />
-    <ClInclude Include="Code\NtImage.h" />
-    <ClInclude Include="Code\NtInitDelegator.h" />
-    <ClInclude Include="Code\NtInputManager.h" />
-    <ClInclude Include="Code\NtIterator.h" />
-    <ClInclude Include="Code\NtLight.h" />
-    <ClInclude Include="Code\NtLightShader.h" />
-    <ClInclude Include="Code\NtLinearAllocator.h" />
-    <ClInclude Include="Code\NtLog.h" />
-    <ClInclude Include="Code\NtMath.h" />
-    <ClInclude Include="Code\NtMatrix2.h" />
-    <ClInclude Include="Code\NtMemoryInfo.h" />
-    <ClInclude Include="Code\NtModelParser.h" />
-    <ClInclude Include="Code\NtObject.h" />
-    <ClInclude Include="Code\NtPuppet.h" />
-    <ClInclude Include="Code\NtRenderDefine.h" />
-    <ClInclude Include="Code\NtRenderer.h" />
-    <ClInclude Include="Code\NtRenderType.h" />
-    <ClInclude Include="Code\NtResourceManager.h" />
-    <ClInclude Include="Code\NtRTTI.h" />
-    <ClInclude Include="Code\NtSetup.h" />
-    <ClInclude Include="Code\NtShader.h" />
-    <ClInclude Include="Code\NtSingleton.h" />
-    <ClInclude Include="Code\NtTexture.h" />
-    <ClInclude Include="Code\NtTextureHelper.h" />
-    <ClInclude Include="Code\NtTextureShader.h" />
-    <ClInclude Include="Code\NtThreadObject.h" />
-    <ClInclude Include="Code\NtTimer.h" />
-    <ClInclude Include="Code\NtTypeTrait.h" />
-    <ClInclude Include="Code\NtVector2.h" />
-    <ClInclude Include="Code\NtVector3.h" />
-    <ClInclude Include="Code\NtCoreLib.h" />
-    <ClInclude Include="Code\NtVertexFormat.h" />
     <CustomBuildStep Include="Code\stdafx.h" />
-    <ClInclude Include="Code\NtArray.h" />
-    <ClInclude Include="Code\NtHashTable.h" />
-    <ClInclude Include="Code\NtList.h" />
-    <ClInclude Include="Code\NtNode.h" />
-    <ClInclude Include="Code\NtTree.h" />
-    <ClInclude Include="Code\NtAtom.h" />
-    <ClInclude Include="Code\NtGlobal.h" />
-    <ClInclude Include="Code\NtSystem.h" />
-    <ClInclude Include="Code\NtType.h" />
-    <ClInclude Include="Code\NtTypeManip.h" />
-    <ClInclude Include="Code\NtUtility.h" />
-    <ClInclude Include="Code\NtString.h" />
-    <ClInclude Include="Code\NtCrt.h" />
-    <ClInclude Include="Code\NtSearch.h" />
-    <ClInclude Include="Code\NtAssert.h" />
-    <ClInclude Include="Code\NtProfiler.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Code\NtErrorHandling.inl" />
-    <None Include="Code\example.txt" />
-    <None Include="Code\NtBuffer.inl" />
-    <None Include="Code\NtMath.inl" />
-    <None Include="Code\NtMatrix2.inl" />
-    <None Include="Code\NtObject.inl" />
-    <None Include="Code\NtRenderType.inl" />
-    <None Include="Code\NtVector2.inl" />
-    <None Include="Code\NtVector3.inl" />
-    <None Include="Code\NtHashTable.inl" />
-    <None Include="Code\NtTree.inl" />
-    <None Include="Code\NtSystem.inl" />
-    <None Include="Code\NtSearch.inl" />
-    <None Include="Code\script1.lua" />
+    <ClInclude Include="Include\dds.h" />
+    <ClInclude Include="Include\NtAllocator.h" />
+    <ClInclude Include="Include\NtApplication.h" />
+    <ClInclude Include="Include\NtArray.h" />
+    <ClInclude Include="Include\NtAse.h" />
+    <ClInclude Include="Include\NtAssert.h" />
+    <ClInclude Include="Include\NtAtom.h" />
+    <ClInclude Include="Include\NtBuffer.h" />
+    <ClInclude Include="Include\NtCamera.h" />
+    <ClInclude Include="Include\NtColorShader.h" />
+    <ClInclude Include="Include\NtConsole.h" />
+    <ClInclude Include="Include\NtContainer.h" />
+    <ClInclude Include="Include\NtCoreLib.h" />
+    <ClInclude Include="Include\NtCrt.h" />
+    <ClInclude Include="Include\NtD3D11.h" />
+    <ClInclude Include="Include\NtD3D11Headers.h" />
+    <ClInclude Include="Include\NtD3D9.h" />
+    <ClInclude Include="Include\NtD3DMapping.h" />
+    <ClInclude Include="Include\NtD3DRenderer.h" />
+    <ClInclude Include="Include\NtErrorHandling.h" />
+    <ClInclude Include="Include\NtException.h" />
+    <ClInclude Include="Include\NtFactory.h" />
+    <ClInclude Include="Include\NtFile.h" />
+    <ClInclude Include="Include\NtGlobal.h" />
+    <ClInclude Include="Include\NtHashTable.h" />
+    <ClInclude Include="Include\NtImage.h" />
+    <ClInclude Include="Include\NtInitDelegator.h" />
+    <ClInclude Include="Include\NtInputManager.h" />
+    <ClInclude Include="Include\NtIterator.h" />
+    <ClInclude Include="Include\NtLight.h" />
+    <ClInclude Include="Include\NtLightShader.h" />
+    <ClInclude Include="Include\NtLinearAllocator.h" />
+    <ClInclude Include="Include\NtList.h" />
+    <ClInclude Include="Include\NtLog.h" />
+    <ClInclude Include="Include\NtMath.h" />
+    <ClInclude Include="Include\NtMatrix2.h" />
+    <ClInclude Include="Include\NtMemoryInfo.h" />
+    <ClInclude Include="Include\NtModelParser.h" />
+    <ClInclude Include="Include\NtNode.h" />
+    <ClInclude Include="Include\NtObject.h" />
+    <ClInclude Include="Include\NtProfiler.h" />
+    <ClInclude Include="Include\NtPuppet.h" />
+    <ClInclude Include="Include\NtRenderDefine.h" />
+    <ClInclude Include="Include\NtRenderer.h" />
+    <ClInclude Include="Include\NtRenderType.h" />
+    <ClInclude Include="Include\NtResourceManager.h" />
+    <ClInclude Include="Include\NtRTTI.h" />
+    <ClInclude Include="Include\NtSearch.h" />
+    <ClInclude Include="Include\NtSetup.h" />
+    <ClInclude Include="Include\NtShader.h" />
+    <ClInclude Include="Include\NtSingleton.h" />
+    <ClInclude Include="Include\NtString.h" />
+    <ClInclude Include="Include\NtSystem.h" />
+    <ClInclude Include="Include\NtTexture.h" />
+    <ClInclude Include="Include\NtTextureHelper.h" />
+    <ClInclude Include="Include\NtTextureShader.h" />
+    <ClInclude Include="Include\NtThreadObject.h" />
+    <ClInclude Include="Include\NtTimer.h" />
+    <ClInclude Include="Include\NtTree.h" />
+    <ClInclude Include="Include\NtType.h" />
+    <ClInclude Include="Include\NtTypeManip.h" />
+    <ClInclude Include="Include\NtTypeTrait.h" />
+    <ClInclude Include="Include\NtUtility.h" />
+    <ClInclude Include="Include\NtVector2.h" />
+    <ClInclude Include="Include\NtVector3.h" />
+    <ClInclude Include="Include\NtVertexFormat.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Code\DevNode.txt" />
+    <None Include="Include\NtBuffer.inl" />
+    <None Include="Include\NtErrorHandling.inl" />
+    <None Include="Include\NtHashTable.inl" />
+    <None Include="Include\NtMath.inl" />
+    <None Include="Include\NtMatrix2.inl" />
+    <None Include="Include\NtObject.inl" />
+    <None Include="Include\NtRenderType.inl" />
+    <None Include="Include\NtSearch.inl" />
+    <None Include="Include\NtSystem.inl" />
+    <None Include="Include\NtTree.inl" />
+    <None Include="Include\NtVector2.inl" />
+    <None Include="Include\NtVector3.inl" />
+    <None Include="Source\test_cube.ase" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="Code\jpeg\jpeg-static.lib" />
-    <Library Include="Code\jpeg\turbojpeg-static.lib" />
+    <ClCompile Include="Source\NtAllocator.cpp" />
+    <ClCompile Include="Source\NtApplication.cpp" />
+    <ClCompile Include="Source\NtAse.cpp" />
+    <ClCompile Include="Source\NtAssert.cpp" />
+    <ClCompile Include="Source\NtAtom.cpp" />
+    <ClCompile Include="Source\NtBuffer.cpp" />
+    <ClCompile Include="Source\NtCamera.cpp" />
+    <ClCompile Include="Source\NtColorShader.cpp" />
+    <ClCompile Include="Source\NtConsole.cpp" />
+    <ClCompile Include="Source\NtCoreLib.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Source\NtCrt.cpp" />
+    <ClCompile Include="Source\NtD3D11.cpp" />
+    <ClCompile Include="Source\NtD3D9.cpp" />
+    <ClCompile Include="Source\NtD3DMapping.cpp" />
+    <ClCompile Include="Source\NtD3DRenderer.cpp" />
+    <ClCompile Include="Source\NtFactory.cpp" />
+    <ClCompile Include="Source\NtFile.cpp" />
+    <ClCompile Include="Source\NtImage.cpp" />
+    <ClCompile Include="Source\NtInitDelegator.cpp" />
+    <ClCompile Include="Source\NtInputManager.cpp" />
+    <ClCompile Include="Source\NtLight.cpp" />
+    <ClCompile Include="Source\NtLightShader.cpp" />
+    <ClCompile Include="Source\NtLinearAllocator.cpp" />
+    <ClCompile Include="Source\NtLog.cpp" />
+    <ClCompile Include="Source\NtMath.cpp" />
+    <ClCompile Include="Source\NtMatrix2.cpp" />
+    <ClCompile Include="Source\NtMemoryInfo.cpp" />
+    <ClCompile Include="Source\NtModelParser.cpp" />
+    <ClCompile Include="Source\NtObject.cpp" />
+    <ClCompile Include="Source\NtProfiler.cpp" />
+    <ClCompile Include="Source\NtPuppet.cpp" />
+    <ClCompile Include="Source\NtRenderer.cpp" />
+    <ClCompile Include="Source\NtRenderType.cpp" />
+    <ClCompile Include="Source\NtResourceManager.cpp" />
+    <ClCompile Include="Source\NtRTTI.cpp" />
+    <ClCompile Include="Source\NtSearch.cpp" />
+    <ClCompile Include="Source\NtSetup.cpp" />
+    <ClCompile Include="Source\NtShader.cpp" />
+    <ClCompile Include="Source\NtString.cpp" />
+    <ClCompile Include="Source\NtSystem.cpp" />
+    <ClCompile Include="Source\NtTexture.cpp" />
+    <ClCompile Include="Source\NtTextureHelper.cpp" />
+    <ClCompile Include="Source\NtTextureShader.cpp" />
+    <ClCompile Include="Source\NtThreadObject.cpp" />
+    <ClCompile Include="Source\NtTimer.cpp" />
+    <ClCompile Include="Source\NtVector2.cpp" />
+    <ClCompile Include="Source\NtVector3.cpp" />
+    <ClCompile Include="Source\NtVertexFormat.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
