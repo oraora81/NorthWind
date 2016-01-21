@@ -3,6 +3,9 @@
 
 #define _WIN32_WINNT 0x0600
 
+#pragma warning( disable : 4127 )
+#pragma warning( disable : 4838 )
+
 // 
 // Common Library
 //----------------------------------------------------------------------------
@@ -43,8 +46,6 @@
 #include <d3dx9.h>
 #include <d3dx9math.h>
 #endif
-
-#pragma warning( disable : 4127 )
 
 // 
 // NT Library

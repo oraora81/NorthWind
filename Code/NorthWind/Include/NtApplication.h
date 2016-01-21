@@ -50,8 +50,7 @@ private:
 }	// namespace nt
 
 
-namespace nt {
-namespace APP {
+namespace nt {	namespace APP {
 	class NtApplication;
 }
 
