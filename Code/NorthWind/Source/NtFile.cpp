@@ -137,7 +137,7 @@ bool NtFile::ReadTag()
 nt::ntInt NtFile::ReadInt()
 {
 	ntInt target = 0;
-	ntInt res = fwscanf_s(m_fp, L"%d", &target, sizeof(target));
+	ntInt res = fwscanf_s(m_fp, L"%d", &target);
 	if (res == EOF)
 	{
 		return false;
@@ -150,7 +150,7 @@ nt::ntInt NtFile::ReadInt()
 nt::ntFloat NtFile::ReadFloat()
 {
 	ntFloat target = 0.0f;
-	ntInt res = fwscanf_s(m_fp, L"%f", &target, sizeof(target));
+	ntInt res = fwscanf_s(m_fp, L"%f", &target);
 	if (res == EOF)
 	{
 		return false;

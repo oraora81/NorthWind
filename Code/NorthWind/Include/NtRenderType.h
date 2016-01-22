@@ -17,8 +17,8 @@ struct NtColorVertex
 
 struct NtTexVertex
 {
-	XMFLOAT3A pos;
-	XMFLOAT2A uv;
+	XMFLOAT3 pos;
+	XMFLOAT2 uv;
 };
 
 struct NtPos

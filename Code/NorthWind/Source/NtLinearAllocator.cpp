@@ -60,6 +60,7 @@ void* NtLinearAllocator::Allocate(ntSize size, ntUchar alignment)
 
 void NtLinearAllocator::DeAllocate(void* ptr)
 {
+	UNREFERENCED_PARAMETER(ptr);
 	NtAsserte(false && "please Use Reset() Function");
 }
 

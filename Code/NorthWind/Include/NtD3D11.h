@@ -3,6 +3,7 @@
 
 namespace nt { namespace renderer {
 
+__declspec(align(16))
 class NtDirectX11Renderer : public NtD3DRenderer
 {
 public:
@@ -21,6 +22,16 @@ public:
 	bool CreateShaderResourceView(ID3D11Texture1D* tex, D3D11_SHADER_RESOURCE_VIEW_DESC* SRVDesc, ID3D11ShaderResourceView** textureView);
 	bool CreateShaderResourceView(ID3D11Texture2D* tex, D3D11_SHADER_RESOURCE_VIEW_DESC* SRVDesc, ID3D11ShaderResourceView** textureView);
 	bool CreateShaderResourceView(ID3D11Texture3D* tex, D3D11_SHADER_RESOURCE_VIEW_DESC* SRVDesc, ID3D11ShaderResourceView** textureView);
+
+	void* operator new(size_t s)
+	{
+		return _aligned_malloc(s, 16);
+	}
+
+	void operator delete(void* obj)
+	{
+		_aligned_free(obj);
+	}
 
 private:
 	IDXGISwapChain*				m_swapchain;

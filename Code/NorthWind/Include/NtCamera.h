@@ -3,6 +3,7 @@
 
 namespace nt { namespace renderer {
 
+__declspec(align(16))
 class NtCamera
 {
 public:
@@ -17,6 +18,17 @@ public:
 
 	void Render();
 	void GetViewMatrix(XMMATRIX& view);
+
+
+	void* operator new(size_t s)
+	{
+		return _aligned_malloc(s, 16);
+	}
+
+		void operator delete(void* obj)
+	{
+		_aligned_free(obj);
+	}
 
 private:
 	float m_pos[3];

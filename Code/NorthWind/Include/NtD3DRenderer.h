@@ -27,8 +27,6 @@ public:
 	const ntChar* GetVShaderModel() const;
 	const ntChar* GetPShaderModel() const;
 
-	// 
-	void SetMultiSamples(ntUint sampleCount);
 
 	// error Report
 	void OutputShaderErrorMessage(ID3D10Blob* errMsg, const ntWchar* fileName);

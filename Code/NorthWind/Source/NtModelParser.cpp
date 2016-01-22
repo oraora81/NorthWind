@@ -78,8 +78,8 @@ bool NtModelParser::Execute(const ntWchar* fileName)
 			continue;
 		}
 
-		bool res = ProcessParse();
-		if (false == res)
+		bool parseRes = ProcessParse();
+		if (false == parseRes)
 		{
 			return false;
 		}

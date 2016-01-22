@@ -73,6 +73,9 @@ void NtLog::AddSubject(ntWchar* subject, LogType flag)
 
 void NtLog::Print(const ntWchar* subject, const ntWchar* format, ...)
 {
+	UNREFERENCED_PARAMETER(subject);
+	UNREFERENCED_PARAMETER(format);
+
 	if (m_supportThread)
 	{
 		// making the log string

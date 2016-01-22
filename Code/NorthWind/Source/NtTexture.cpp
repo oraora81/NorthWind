@@ -110,25 +110,6 @@ bool NtTexture::CreateTextureFromResourceFile(const ntWchar* fileName)
 		return false;
 	}
 
-
-	//ntUchar* jpgBuffer = nullptr;
-	//ntUint jpgBufferSize = 0;
-	//ntUint bpp = 0;
-	//std::unique_ptr<ntUchar[]> loadingBuffer;
-	//bool res = NtJPGLoader::LoadTextureDataFromFile(fileName, loadingBuffer, &jpgBuffer, jpgBufferSize, m_width, m_height, m_size, bpp);
-	//if (false == res)
-	//{
-	//	return false;
-	//}
-
-	//res = NtJPGLoader::CreateTextureFromJPG(renderer, jpgBuffer, m_width, m_height, m_size, bpp, D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0, &m_texResource, &m_textureView);
-	//if (false == res)
-	//{
-	//	return false;
-	//}
-
-
-
 	return true;
 }
 
