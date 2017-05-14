@@ -134,13 +134,11 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <Lib>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>$(DXSDK_DIR)Lib\x86;..\import\Lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>
-      </AdditionalDependencies>
+      <AdditionalDependencies>..\import\Lib\assimp-vc120-mtd.lib</AdditionalDependencies>
     </Lib>
     <PostBuildEvent>
-      <Command>copy /y Code\Nt*.h ..\..\SDK\Include
-copy /y Code\Nt*.inl ..\..\SDK\Include
-copy /y ..\..\bin ..\..\SDK\Lib</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDx9|Win32'">

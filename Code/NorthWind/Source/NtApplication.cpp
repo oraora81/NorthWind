@@ -7,7 +7,7 @@
 #include "scene.h"
 #include "postprocess.h"
 
-#pragma comment (lib, "assimp-vc120-mtd.lib")
+//#pragma comment (lib, "assimp-vc120-mtd.lib")
 
 // 
 //----------------------------------------------------------------------------

@@ -35,58 +35,58 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
                      LPTSTR    lpCmdLine,
                      int       nCmdShow)
 {
-	UNREFERENCED_PARAMETER(hPrevInstance);
-	UNREFERENCED_PARAMETER(lpCmdLine);
+    UNREFERENCED_PARAMETER(hPrevInstance);
+    UNREFERENCED_PARAMETER(lpCmdLine);
 
- 	// TODO: 여기에 코드를 입력합니다.
-	MSG msg;
-	HACCEL hAccelTable;
-	ZeroMemory(&msg, sizeof(msg));
+    // TODO: 여기에 코드를 입력합니다.
+    MSG msg;
+    HACCEL hAccelTable;
+    ZeroMemory(&msg, sizeof(msg));
 
-	// 전역 문자열을 초기화합니다.
-	LoadString(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
-	LoadString(hInstance, IDC_LUCIA, szWindowClass, MAX_LOADSTRING);
-	MyRegisterClass(hInstance);
+    // 전역 문자열을 초기화합니다.
+    LoadString(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
+    LoadString(hInstance, IDC_LUCIA, szWindowClass, MAX_LOADSTRING);
+    MyRegisterClass(hInstance);
 
-	// 응용 프로그램 초기화를 수행합니다.
-	hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_LUCIA));
+    // 응용 프로그램 초기화를 수행합니다.
+    hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_LUCIA));
 
-	//
-	Initialize();
+    //
+    Initialize();
 
 
-	APP::NtApplication* app = new APP::NtApplication;
-	if (app->Initialize(false))
-	{
-		app->MsgLoop();
-		app->Shutdown();
-	}
+    APP::NtApplication* app = new APP::NtApplication;
+    if (app->Initialize(false))
+    {
+        app->MsgLoop();
+        app->Shutdown();
+    }
 
-	SAFE_DELETE(app);
+    SAFE_DELETE(app);
 
-	return (int) msg.wParam;
+    return (int) msg.wParam;
 }
 
 void Initialize()
 {
-	nt::NtList<int> l;
-	l.push_back(5);
-	l.push_back(6);
+    nt::NtList<int> l;
+    l.push_back(5);
+    l.push_back(6);
 
-	int sum = 0;
-	auto it = l.begin();
-	for (; it != l.end(); ++it)
-	{
-		sum += (*it);
-	}
+    int sum = 0;
+    auto it = l.begin();
+    for (; it != l.end(); ++it)
+    {
+        sum += (*it);
+    }
 
-	NTRACE(L"%d", sum);
+    NTRACE(L"%d", sum);
 
-	nt::NtList<int> l2;
-	l2 = l;
+    nt::NtList<int> l2;
+    l2 = l;
 
-	nt::NtList<int> l3;
-	l2 = std::move(l);
+    nt::NtList<int> l3;
+    l2 = std::move(l);
 }
 
 
@@ -105,43 +105,43 @@ void Initialize()
 //
 ATOM MyRegisterClass(HINSTANCE hInstance)
 {
-	WNDCLASSEX wcex;
-	ZeroMemory(&wcex, sizeof(WNDCLASSEX));
+    WNDCLASSEX wcex;
+    ZeroMemory(&wcex, sizeof(WNDCLASSEX));
 
-	wcex.cbSize = sizeof(WNDCLASSEX);
-	wcex.style			= CS_HREDRAW | CS_VREDRAW;
-	wcex.lpfnWndProc	= WndProc;
-	wcex.cbClsExtra		= 0;
-	wcex.cbWndExtra		= 0;
-	wcex.hInstance		= hInstance;
-	wcex.hIcon			= LoadIcon(hInstance, MAKEINTRESOURCE(IDI_LUCIA));
-	wcex.hCursor		= LoadCursor(NULL, IDC_ARROW);
+    wcex.cbSize = sizeof(WNDCLASSEX);
+    wcex.style			= CS_HREDRAW | CS_VREDRAW;
+    wcex.lpfnWndProc	= WndProc;
+    wcex.cbClsExtra		= 0;
+    wcex.cbWndExtra		= 0;
+    wcex.hInstance		= hInstance;
+    wcex.hIcon			= LoadIcon(hInstance, MAKEINTRESOURCE(IDI_LUCIA));
+    wcex.hCursor		= LoadCursor(NULL, IDC_ARROW);
 
-	// no longer needed
-	//wcex.hbrBackground	= (HBRUSH)(COLOR_WINDOW+1);
-	wcex.lpszMenuName	= MAKEINTRESOURCE(IDC_LUCIA);
-	wcex.lpszClassName	= szWindowClass;
-	wcex.hIconSm		= LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
+    // no longer needed
+    //wcex.hbrBackground	= (HBRUSH)(COLOR_WINDOW+1);
+    wcex.lpszMenuName	= MAKEINTRESOURCE(IDC_LUCIA);
+    wcex.lpszClassName	= szWindowClass;
+    wcex.hIconSm		= LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
-	return RegisterClassEx(&wcex);
+    return RegisterClassEx(&wcex);
 }
 
 // 정보 대화 상자의 메시지 처리기입니다.
 INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	UNREFERENCED_PARAMETER(lParam);
-	switch (message)
-	{
-	case WM_INITDIALOG:
-		return (INT_PTR)TRUE;
+    UNREFERENCED_PARAMETER(lParam);
+    switch (message)
+    {
+    case WM_INITDIALOG:
+        return (INT_PTR)TRUE;
 
-	case WM_COMMAND:
-		if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
-		{
-			EndDialog(hDlg, LOWORD(wParam));
-			return (INT_PTR)TRUE;
-		}
-		break;
-	}
-	return (INT_PTR)FALSE;
+    case WM_COMMAND:
+        if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
+        {
+            EndDialog(hDlg, LOWORD(wParam));
+            return (INT_PTR)TRUE;
+        }
+        break;
+    }
+    return (INT_PTR)FALSE;
 }
