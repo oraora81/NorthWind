@@ -37,15 +37,9 @@
 // d3d
 //----------------------------------------------------------------------------
 #include <D3Dcompiler.h>
-#ifdef _NT_DX11
 #include <NtD3D11Headers.h>
 #include <xnamath.h>
 #include <dinput.h>
-#elif _NT_DX9
-#include <d3d9.h>
-#include <d3dx9.h>
-#include <d3dx9math.h>
-#endif
 
 // 
 // NT Library

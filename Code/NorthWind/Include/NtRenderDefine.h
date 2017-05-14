@@ -2,27 +2,15 @@
 #pragma once
 
 #ifdef USE_DIRECTX
-	#ifdef _NT_DX11
 		typedef ID3D11Buffer		NtVertexBuffer;
 		typedef ID3D11Buffer		NtIndexBuffer;
 		typedef D3D11_USAGE			NtResourceUsage;
 		typedef D3D11_BIND_FLAG		NtBindFlag;
 		typedef DXGI_FORMAT			NTCOLORFMT;
-	#elif _NT_DX9
-		typedef IDirect3DVertexBuffer9	NtVertexBuffer;
-		typedef IDirect3DIndexBuffer9	NtIndexBuffer;
-
-		// http://msdn.microsoft.com/en-us/library/windows/desktop/bb172625(v=vs.85).aspx
-		typedef D3DPOOL				NtResourceUsage;
-		typedef ntUint				NtBindFlag;
-		typedef D3DFORMAT			NTCOLORFMT;
-	#endif
-
 
 #ifdef USE_DIRECTX
 	#include "NtD3DRenderer.h"
 	//typedef nt::RENDERER::NtD3DRenderer	NtRenderEngine;
-	#ifdef _NT_DX11
 		#include "NtD3D11.h"
 		struct NtRenderBufferParam
 		{
@@ -30,14 +18,6 @@
 			D3D11_SUBRESOURCE_DATA* m_resData;
 			ID3D11Buffer** m_buffer;
 		};
-	#elif _NT_DX9
-		#include "NtD3D9.h"
-		struct NtRenderBufferParam
-		{
-			NtVertexBuffer*	m_vtxBuffer;
-			NtIndexBuffer*	m_idxBuffer;
-		};
-	#endif
 #endif
 
 #endif	// USE_DIRECTX

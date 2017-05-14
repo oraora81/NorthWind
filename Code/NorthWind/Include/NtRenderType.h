@@ -207,7 +207,6 @@ struct NtMaterial
  *	@brief		NtMeshObj :
  */
 
-#ifdef _NT_DX11
 struct NtMeshObj
 {
 	NtVertexBuffer* vtxBuffer;
@@ -216,7 +215,6 @@ struct NtMeshObj
 	D3D11_BUFFER_DESC desc;
 	ntUint		texHandle;
 };
-#endif
 
 
 /**

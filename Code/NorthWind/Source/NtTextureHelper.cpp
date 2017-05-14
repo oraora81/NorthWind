@@ -1734,12 +1734,19 @@ bool NtDDSLoader::CreateTextureFromDDS(const DirectX::DDS_HEADER* header, const 
 
 /*static*/ bool NtJPGLoader::LoadTextureDataFromFile(const ntWchar* fileName, std::unique_ptr<ntUchar[]>& outBuffer, ntUchar** bitData, ntUint& maxSize, ntUint& width, ntUint& height, ntSize& textureSize, ntUint& bpp)
 {
-	
-	
 	return true;
 }
 
-/*static*/ bool NtJPGLoader::CreateTextureFromJPG(const ntUchar* buffer,const ntUint& width,const ntUint& height, const ntUint bpp, D3D11_USAGE usage,ntUint bindFlags,ntUint cpuAccessFlags,ntUint miscFlags,ID3D11Resource** texture,ID3D11ShaderResourceView** textureView)
+/*static*/ bool NtJPGLoader::CreateTextureFromJPG(const ntUchar* buffer,
+	const ntUint& width,
+	const ntUint& height, 
+	const ntUint bpp, 
+	D3D11_USAGE usage,
+	ntUint bindFlags,
+	ntUint cpuAccessFlags,
+	ntUint miscFlags,
+	ID3D11Resource** texture,
+	ID3D11ShaderResourceView** textureView)
  {
 	DXGI_FORMAT format = DXGI_FORMAT_R8G8B8A8_UNORM;
 

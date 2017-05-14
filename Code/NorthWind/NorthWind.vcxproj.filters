@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="Include\NtCoreLib.h" />
     <ClInclude Include="Include\NtAllocator.h">
       <Filter>memory</Filter>
     </ClInclude>
@@ -37,9 +36,6 @@
     </ClInclude>
     <ClInclude Include="Include\NtContainer.h">
       <Filter>system</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\NtD3D9.h">
-      <Filter>render</Filter>
     </ClInclude>
     <ClInclude Include="Include\NtD3D11.h">
       <Filter>render</Filter>
@@ -197,6 +193,7 @@
     <ClInclude Include="Include\NtThreadObject.h">
       <Filter>system</Filter>
     </ClInclude>
+    <ClInclude Include="Include\NtCoreLib.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\test_cube.ase" />
@@ -265,9 +262,6 @@
     </ClCompile>
     <ClCompile Include="Source\NtConsole.cpp">
       <Filter>system</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\NtD3D9.cpp">
-      <Filter>render</Filter>
     </ClCompile>
     <ClCompile Include="Source\NtD3D11.cpp">
       <Filter>render</Filter>

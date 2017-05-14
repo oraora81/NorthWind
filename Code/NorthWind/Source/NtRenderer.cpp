@@ -36,22 +36,13 @@ NtRenderer::~NtRenderer()
 	SAFE_DELETE(m_light);
 	Release();
 	SAFE_DELETE(m_camera);
-#ifdef _NT_DX11
-	//
-#elif _NT_DX9
-	SAFE_DELETE(m_renderEngine);
-#endif
 }
 
 
 bool NtRenderer::Initialize(HWND hwnd, ntInt width, ntInt height)
 {
-#ifdef _NT_DX11
 	//m_renderEngine = new NtDirectX11Renderer;
 	m_renderEngine = std::shared_ptr<NtDirectX11Renderer>(new NtDirectX11Renderer());
-#elif _NT_DX9
-	m_renderEngine = new NtDirectX9Renderer;
-#endif
 	NtAsserte(m_renderEngine != nullptr);
 
 	bool res = m_renderEngine->Initialize(width, height, hwnd, VSYNC_ENABLED, false, 1000.0f, 0.1f);

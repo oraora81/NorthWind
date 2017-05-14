@@ -43,12 +43,8 @@ private:
 	bool Render(ntFloat rot);
 
 private:
-#if _NT_DX11
 	std::shared_ptr<NtDirectX11Renderer> m_renderEngine;
 	//NtDirectX11Renderer m_renderEngine;
-#elif _NT_DX9
-	NtDirectX9Renderer*	m_renderEngine;
-#endif
 	NtCamera*			m_camera;
 	NtPuppet*			m_puppet;
 	NtColorShader*		m_colorShader;

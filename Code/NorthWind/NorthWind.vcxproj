@@ -104,7 +104,7 @@
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <PrecompiledHeaderFile>NtCoreLib.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(DXSDK_DIR)Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(DXSDK_DIR)Include;.\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Lib>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
@@ -134,7 +134,8 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <Lib>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <AdditionalLibraryDirectories>$(DXSDK_DIR)Lib\x86;..\import\Lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>./Code/jpeg/jpeg-static.lib;./Code/jpeg/turbojpeg-static.lib</AdditionalDependencies>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
     </Lib>
     <PostBuildEvent>
       <Command>copy /y Code\Nt*.h ..\..\SDK\Include
@@ -209,7 +210,6 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <ClInclude Include="Include\NtCrt.h" />
     <ClInclude Include="Include\NtD3D11.h" />
     <ClInclude Include="Include\NtD3D11Headers.h" />
-    <ClInclude Include="Include\NtD3D9.h" />
     <ClInclude Include="Include\NtD3DMapping.h" />
     <ClInclude Include="Include\NtD3DRenderer.h" />
     <ClInclude Include="Include\NtErrorHandling.h" />
@@ -291,7 +291,6 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     </ClCompile>
     <ClCompile Include="Source\NtCrt.cpp" />
     <ClCompile Include="Source\NtD3D11.cpp" />
-    <ClCompile Include="Source\NtD3D9.cpp" />
     <ClCompile Include="Source\NtD3DMapping.cpp" />
     <ClCompile Include="Source\NtD3DRenderer.cpp" />
     <ClCompile Include="Source\NtFactory.cpp" />
