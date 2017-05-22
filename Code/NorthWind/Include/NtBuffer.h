@@ -47,7 +47,7 @@ private:
 
 protected:
 	eUsage	m_usage;
-	ntUint	m_bytes;
+	ntSize	m_bytes;
 	std::unique_ptr<ntUchar[]> m_data;
 };
 

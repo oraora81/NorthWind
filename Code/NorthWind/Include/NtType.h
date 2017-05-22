@@ -24,7 +24,12 @@ typedef double			ntDouble;
 
 // Custom Type
 typedef long			ntIndex;
+
+#if WIN64
+typedef unsigned __int64 ntSize;
+#else
 typedef unsigned int	ntSize;
+#endif
 
 
 // Nt Defined Type

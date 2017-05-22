@@ -7,82 +7,82 @@ namespace nt {
 
 void SystemAbort(ntInt exitCode)
 {
-	::exit(exitCode);
+    ::exit(exitCode);
 }
 
 void SystemExit(ntInt exitCode)
 {
-	::PostQuitMessage(exitCode);
+    ::PostQuitMessage(exitCode);
 }
 
 
-bool NtSystem::ReadFileSize(const ntWchar* fileName,ntUint& size)
+bool NtSystem::ReadFileSize(const ntWchar* fileName, ntSize& size)
 {
-	struct _stat64i32 fileStat;
-	if (_wstat(fileName, &fileStat) != 0)
-	{
-		size = 0;
-		return false;
-	}
+    struct _stat64i32 fileStat;
+    if (_wstat(fileName, &fileStat) != 0)
+    {
+        size = 0;
+        return false;
+    }
 
-	size = fileStat.st_size;
+    size = fileStat.st_size;
 
-	return true;
+    return true;
 }
 
 
-bool NtSystem::LoadFile(const ntWchar* fileName, std::unique_ptr<ntUchar[]>& buffer, ntUint& size)
+bool NtSystem::LoadFile(const ntWchar* fileName, std::unique_ptr<ntUchar[]>& buffer, ntSize& size)
 {
-	struct _stat64i32 fileStat;
-	if (_wstat(fileName, &fileStat) != 0)
-	{
-		size = 0;
-		return false;
-	}
+    struct _stat64i32 fileStat;
+    if (_wstat(fileName, &fileStat) != 0)
+    {
+        size = 0;
+        return false;
+    }
 
-	FILE* fp = NULL;
-	errno_t err = _wfopen_s(&fp, fileName, L"rb");
-	if (0 != err)
-	{
-		size = 0;
-		return false;
-	}
+    FILE* fp = NULL;
+    errno_t err = _wfopen_s(&fp, fileName, L"rb");
+    if (0 != err)
+    {
+        size = 0;
+        return false;
+    }
 
-	if (NULL == fp)
-	{
-		size = 0;
-		return false;
-	}
+    if (NULL == fp)
+    {
+        size = 0;
+        return false;
+    }
 
-	size = fileStat.st_size;
-	buffer.reset(new ntUchar[size]);
-	nt::Crt::MemSet(buffer.get(), sizeof(ntUchar) * size);
+    size = fileStat.st_size;
+    buffer.reset(new ntUchar[size]);
+    nt::Crt::MemSet(buffer.get(), sizeof(ntUchar) * size);
 
-	ntUint readSize = (ntUint)fread(buffer.get(), sizeof(ntUchar), size, fp);
-	if (fclose(fp) != NULL || readSize != size)
-	{
-		buffer.reset(nullptr);
-		size = 0;
-		return false;
-	}
+    ntUint readSize = (ntUint)fread(buffer.get(), sizeof(ntUchar), size, fp);
+    if (fclose(fp) != NULL || readSize != size)
+    {
+        buffer.reset(nullptr);
+        size = 0;
+        return false;
+    }
 
-	return true;
+    return true;
 }
 
-bool NtSystem::SaveFile(const ntWchar* fileName, const ntUchar* buffer, ntUint size)
+bool NtSystem::SaveFile(const ntWchar* fileName, const ntUchar* buffer, ntSize size)
 {
     if (buffer == 0 || size <= 0)
     {
-		return false;
-	}
+        return false;
+    }
 
 
     FILE* fp = NULL;
-	errno_t err = _wfopen_s(&fp, fileName, L"wb");
-	if (0 != err || NULL == fp)
-	{
-		return false;
-	}
+    errno_t err = _wfopen_s(&fp, fileName, L"wb");
+    if (0 != err || NULL == fp)
+    {
+        return false;
+    }
 
     size_t writeSize = fwrite(buffer, sizeof(ntUchar), size, fp);
     if (fclose(fp) != 0 || writeSize != size)
@@ -93,7 +93,7 @@ bool NtSystem::SaveFile(const ntWchar* fileName, const ntUchar* buffer, ntUint s
     return true;
 }
 
-bool NtSystem::AppendFile(const ntWchar* fileName, ntUchar* buffer, ntUint size)
+bool NtSystem::AppendFile(const ntWchar* fileName, ntUchar* buffer, ntSize size)
 {
     if (buffer == NULL || size <= 0)
     {
@@ -101,7 +101,7 @@ bool NtSystem::AppendFile(const ntWchar* fileName, ntUchar* buffer, ntUint size)
     }
 
     FILE* fp = NULL;
-	errno_t err = _wfopen_s(&fp, fileName, L"ab");
+    errno_t err = _wfopen_s(&fp, fileName, L"ab");
     if (0 != err || fp == NULL)
     {
         return false;
@@ -172,8 +172,8 @@ int NtSystem::Read8Byte(const ntChar* buffer, int byteSize, void* getData)
 
 int NtSystem::Write8Byte(ntChar *buffer, int byteSize, void *setData)
 {
-	_ASSERT(buffer && byteSize > 0 && setData);
-	int cpySize = 8 * byteSize;
+    _ASSERT(buffer && byteSize > 0 && setData);
+    int cpySize = 8 * byteSize;
     memcpy(buffer, setData, byteSize);
     return cpySize;
 }

@@ -255,7 +255,7 @@ ntWchar* GetCmdLine()
 
 NtErrorCode AllocEnvVariable(const ntWchar* envName, ntWchar** envValue)
 {
-	ntUint reqSize = 0;
+	ntSize reqSize = 0;
 	_wgetenv_s(&reqSize, NULL, 0, envName);
 
 	*envValue = new ntWchar[reqSize];
