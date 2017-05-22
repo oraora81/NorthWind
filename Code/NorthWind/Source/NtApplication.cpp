@@ -85,7 +85,7 @@ bool NtApplication::Initialize(bool fullscreen)
 		return false;
 	}*/
 
-	path = L"D:\\src_etc\\northwind\\bin\\data";
+	path = L"E:\\work\\dx\\northwind\\bin";
 
 	m_globalPath = path;
 	m_globalPath.Replace(L'\\', L'/');
