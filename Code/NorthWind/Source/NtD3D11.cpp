@@ -163,8 +163,8 @@ NtDirectX11Renderer::~NtDirectX11Renderer()
 
 	// swap chain, Direct3d Device, Direct3D device context »ý¼º
 	res = D3D11CreateDeviceAndSwapChain(
-		adapter, 
-		D3D_DRIVER_TYPE_UNKNOWN, 
+		nullptr, 
+		D3D_DRIVER_TYPE_HARDWARE,
 		NULL,
 		NULL, 
 		NULL, //&featureLevel,
