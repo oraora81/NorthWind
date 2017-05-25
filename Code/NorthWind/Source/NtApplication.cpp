@@ -228,6 +228,8 @@ void NtApplication::MsgLoop()
 {
 	MSG msg;
 
+	m_timer.Reset();
+
 	Crt::MemSet(&msg, sizeof(MSG));
 	bool END = false;
 	while (!END)
@@ -245,6 +247,8 @@ void NtApplication::MsgLoop()
 		}
 		else
 		{
+            m_timer.Tick();
+
 			if (!Process())
 			{
 				END = true;

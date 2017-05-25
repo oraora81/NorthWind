@@ -36,6 +36,7 @@ private:
 
 	HWND m_hwnd;
 	HINSTANCE m_hInst;
+    NtTimer m_timer;
 
 	bool m_fullScreen;
 

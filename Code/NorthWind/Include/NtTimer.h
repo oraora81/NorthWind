@@ -13,19 +13,28 @@ public:
 	NtTimer();
 	~NtTimer();
 
-	void	StartTimer();
-	ntFloat GetTime();
-	ntFloat	GetFrameTime();
+	void Reset();
+	void Start();
+	void Stop();
+	void Tick();
+
+    float TotalTime() const;
+
+    inline float DeltaTime() const
+    {
+        return (float)m_deltaTime;
+    }
 
 private:
-	ntDouble	m_countsPerSecond;
-	ntInt64		m_counterStart;
-	ntInt64		m_frameTimeOld;
-	ntFloat		m_frameTime;
+	ntDouble m_secondsPerCount;
+	ntDouble m_deltaTime;
+	ntInt64 m_baseTime;
+	ntInt64 m_pausedTime;
+	ntInt64 m_stopTime;
+	ntInt64 m_prevTime;
+	ntInt64 m_currTime;
 
-public:
-	ntInt		m_frameCount;
-	ntInt		m_fps;
+    bool m_stopped;
 };
 
 }
