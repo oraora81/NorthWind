@@ -3,7 +3,7 @@
 
 #include "NtRenderer.h"
 #include "NtInputManager.h"
-
+#include "NtTimer.h"
 
 namespace nt {
 
@@ -16,18 +16,24 @@ namespace APP {
 class NtApplication
 {
 public:
-	NtApplication() {}
+	NtApplication();
 	virtual ~NtApplication() {}
 
-	bool Initialize(bool fullscreen);
-	void Shutdown();
+	virtual bool Initialize(bool fullscreen);
+	virtual void Shutdown();
+	virtual bool OnResize(ntInt width, ntInt height);
 
 	void MsgLoop();
-	bool Process();
+	virtual bool Process();
 
 	LRESULT CALLBACK MessageHandler(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 	const HWND Handle();
+
+	float AspectRatio() const
+	{
+		return static_cast<float>(m_width / m_height);
+	}
 
 private:
 	NtString m_appName;
@@ -36,9 +42,15 @@ private:
 
 	HWND m_hwnd;
 	HINSTANCE m_hInst;
-    NtTimer m_timer;
+	NtTimer m_timer;
 
+	ntUint m_width;
+	ntUint m_height;
 	bool m_fullScreen;
+	bool m_minimized;
+	bool m_maximized;
+	bool m_resizing;
+	bool m_appPaused;
 
 	// dependency
 	NtRenderer* m_renderer;
@@ -67,7 +79,7 @@ extern nt::APP::NtApplication* g_app;
 extern nt::FS::NtResourceManager* g_resManager;
 extern nt::Memory::NtLinearAllocator* g_liAllocator;
 extern nt::renderer::NtRenderer* g_renderInterface;
-extern std::shared_ptr<nt::renderer::NtDirectX11Renderer> g_renderer;
+extern std::shared_ptr<nt::renderer::NtDx11Renderer> g_renderer;
 
 
 static LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)

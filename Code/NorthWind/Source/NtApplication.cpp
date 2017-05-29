@@ -17,7 +17,7 @@ nt::Memory::NtLinearAllocator* g_liAllocator = nullptr;
 
 #if _NT_DX11
 nt::renderer::NtRenderer* g_renderInterface;
-std::shared_ptr<nt::renderer::NtDirectX11Renderer> g_renderer;
+std::shared_ptr<nt::renderer::NtDx11Renderer> g_renderer;
 #endif
 
 // 
@@ -58,6 +58,21 @@ namespace APP {
 		// We're done. Everything will be cleaned up by the importer destructor
 		return ;
 	}
+
+NtApplication::NtApplication()
+	: m_width(0)
+	, m_height(0)
+	, m_fullScreen(false)
+	, m_minimized(false)
+	, m_maximized(false)
+	, m_resizing(false)
+	, m_appPaused(false)
+	, m_renderer(nullptr)
+	, m_inputManager(nullptr)
+	, m_resManager(nullptr)
+{
+
+}
 
 bool NtApplication::Initialize(bool fullscreen)
 {
@@ -223,6 +238,11 @@ void NtApplication::Shutdown()
 	g_app = nullptr;
 }
 
+bool NtApplication::OnResize(ntInt width, ntInt height)
+{
+	return m_renderer->Resize(width, height);
+}
+
 
 void NtApplication::MsgLoop()
 {
@@ -247,7 +267,7 @@ void NtApplication::MsgLoop()
 		}
 		else
 		{
-            m_timer.Tick();
+			m_timer.Tick();
 
 			if (!Process())
 			{
@@ -286,6 +306,58 @@ LRESULT CALLBACK NtApplication::MessageHandler(HWND hwnd, UINT message, WPARAM w
 	case WM_KEYUP:
 		{
 			m_inputManager->KeyUp((ntUint)wParam);
+		}
+		return 0;
+
+	case WM_SIZE:
+		{
+			int width = LOWORD(lParam);
+			int height = HIWORD(lParam);
+			
+			if (wParam == SIZE_MINIMIZED)
+			{
+				m_appPaused = true;
+				m_minimized = true;
+				m_maximized = false;
+			}
+			else if (wParam == SIZE_MAXIMIZED)
+			{
+				m_appPaused = false;
+				m_minimized = false;
+				m_maximized = true;
+				m_renderer->Resize(width, height);
+			}
+			else if (wParam == SIZE_RESTORED)
+			{
+				if (m_minimized)
+				{
+					m_appPaused = false;
+					m_minimized = false;
+					m_renderer->Resize(width, height);
+				}
+				else if (m_maximized)
+				{
+					m_appPaused = false;
+					m_maximized = false;
+					m_renderer->Resize(width, height);
+				}
+				else if (m_resizing)
+				{
+					// If user is dragging the resize bars, we do not resize 
+					// the buffers here because as the user continuously 
+					// drags the resize bars, a stream of WM_SIZE messages are
+					// sent to the window, and it would be pointless (and slow)
+					// to resize for each WM_SIZE message received from dragging
+					// the resize bars.  So instead, we reset after the user is 
+					// done resizing the window and releases the resize bars, which 
+					// sends a WM_EXITSIZEMOVE message.
+				}
+				else
+				{
+					// API call such as SetWindowPos or m_swapChain->SetFullscreenState.
+					m_renderer->Resize(width, height);
+				}
+			}
 		}
 		return 0;
 	}

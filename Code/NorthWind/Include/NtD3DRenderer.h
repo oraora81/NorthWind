@@ -9,11 +9,13 @@ public:
 	NtD3DRenderer();
 	virtual ~NtD3DRenderer();
 
-	virtual bool Initialize(int width, int height, HWND hwnd, bool vsync, bool fullscreen, float screenDepth, float screenNear) = 0;
+	virtual bool Initialize(int width, int height, HWND hwnd, bool vsync, bool fullscreen, bool enableMsaa, float screenDepth, float screenNear) = 0;
 	virtual void Release() = 0;
 
 	virtual void BeginScene(float r, float g, float b, float a) = 0;
 	virtual void EndScene() = 0;
+
+	virtual bool Resize(ntInt width, ntInt height) = 0;
 	
 	void GetWorldMatrix(XMMATRIX& world);
 	void GetProjectionMatrix(XMMATRIX& proj);

@@ -37,9 +37,6 @@
     <ClInclude Include="Include\NtContainer.h">
       <Filter>system</Filter>
     </ClInclude>
-    <ClInclude Include="Include\NtD3D11.h">
-      <Filter>render</Filter>
-    </ClInclude>
     <ClInclude Include="Include\NtD3D11Headers.h">
       <Filter>render</Filter>
     </ClInclude>
@@ -194,6 +191,9 @@
       <Filter>system</Filter>
     </ClInclude>
     <ClInclude Include="Include\NtCoreLib.h" />
+    <ClInclude Include="Include\NtDx11Renderer.h">
+      <Filter>render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\test_cube.ase" />
@@ -262,9 +262,6 @@
     </ClCompile>
     <ClCompile Include="Source\NtConsole.cpp">
       <Filter>system</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\NtD3D11.cpp">
-      <Filter>render</Filter>
     </ClCompile>
     <ClCompile Include="Source\NtD3DMapping.cpp">
       <Filter>render</Filter>
@@ -373,6 +370,9 @@
     </ClCompile>
     <ClCompile Include="Source\NtThreadObject.cpp">
       <Filter>system</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\NtDx11Renderer.cpp">
+      <Filter>render</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -9,9 +9,9 @@
 		typedef DXGI_FORMAT			NTCOLORFMT;
 
 #ifdef USE_DIRECTX
-	#include "NtD3DRenderer.h"
-	//typedef nt::RENDERER::NtD3DRenderer	NtRenderEngine;
-		#include "NtD3D11.h"
+		#include "NtD3DRenderer.h"
+		//typedef nt::RENDERER::NtD3DRenderer	NtRenderEngine;
+		#include "NtDx11Renderer.h"
 		struct NtRenderBufferParam
 		{
 			const D3D11_BUFFER_DESC* m_desc;

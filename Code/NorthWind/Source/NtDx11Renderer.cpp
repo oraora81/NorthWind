@@ -6,7 +6,7 @@
 
 namespace nt { namespace renderer {
 
-NtDirectX11Renderer::NtDirectX11Renderer()
+NtDx11Renderer::NtDx11Renderer()
 : NtD3DRenderer()
 {
 	m_swapchain = nullptr;
@@ -20,12 +20,20 @@ NtDirectX11Renderer::NtDirectX11Renderer()
 }
 
 
-NtDirectX11Renderer::~NtDirectX11Renderer()
+NtDx11Renderer::~NtDx11Renderer()
 {
 	Release();
 }
 
-/*virtual*/ bool NtDirectX11Renderer::Initialize(int width, int height, HWND hwnd, bool vsync, bool fullscreen, float screenDepth, float screenNear)
+/*virtual*/ bool NtDx11Renderer::Initialize(
+	int width, 
+	int height, 
+	HWND hwnd, 
+	bool vsync, 
+	bool fullscreen, 
+	bool enable4xMsaa,
+	float screenDepth, 
+	float screenNear)
 {
 	// vsync 설정
 	m_vsync = vsync;
@@ -109,6 +117,40 @@ NtDirectX11Renderer::~NtDirectX11Renderer()
 		return false;
 	}
 
+	// create device
+	ntUint createDeviceFlags = 0;
+#if defined(_DEBUG) || defined(DEBUG)
+	createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
+#endif
+
+	// DX 11용 feture level 설정
+	D3D_FEATURE_LEVEL featureLevel = D3D_FEATURE_LEVEL_11_0;
+	/*res = D3D11CreateDevice(
+		nullptr,
+		D3D_DRIVER_TYPE_HARDWARE,
+		0,
+		createDeviceFlags,
+		0, 0,
+		D3D11_SDK_VERSION,
+		&m_device,
+		&featureLevel,
+		&m_deviceContext);
+	if (FAILED(res))
+	{
+		return false;
+	}*/
+
+	/*ntUint m4xMsaaQuality = 0;
+	res = m_device->CheckMultisampleQualityLevels(
+		DXGI_FORMAT_R8G8B8A8_UNORM,
+		4,
+		&m4xMsaaQuality);
+	if (FAILED(res))
+	{
+		return false;
+	}
+	NtAsserte(m4xMsaaQuality > 0);*/
+
 	// swap chain desc 초기화
 	DXGI_SWAP_CHAIN_DESC swapChainDesc;
 	Crt::MemSet(&swapChainDesc, sizeof(swapChainDesc));
@@ -141,9 +183,18 @@ NtDirectX11Renderer::~NtDirectX11Renderer()
 	// handle 셋팅
 	swapChainDesc.OutputWindow = hwnd;
 
-	// 멀티 샘플링은 끔
-	swapChainDesc.SampleDesc.Count = 1;
-	swapChainDesc.SampleDesc.Quality = 0;
+	// 멀티 샘플링
+	if (enable4xMsaa)
+	{
+		// 4X MSAA를 사용
+		//swapChainDesc.SampleDesc.Count = 4;
+		//swapChainDesc.SampleDesc.Quality = m4xMsaaQuality - 1;
+	}
+	else
+	{
+		swapChainDesc.SampleDesc.Count = 1;
+		swapChainDesc.SampleDesc.Quality = 0;
+	}
 
 	// 윈도우 모드 설정
 	swapChainDesc.Windowed = fullscreen ? false : true;
@@ -158,12 +209,10 @@ NtDirectX11Renderer::~NtDirectX11Renderer()
 	// 
 	swapChainDesc.Flags = 0;
 
-	// DX 11용 feture level 설정
-	D3D_FEATURE_LEVEL featureLevel = D3D_FEATURE_LEVEL_11_0;
-
-	// swap chain, Direct3d Device, Direct3D device context 생성
+	// swap chain 생성
+	
 	res = D3D11CreateDeviceAndSwapChain(
-		nullptr, 
+		nullptr,
 		D3D_DRIVER_TYPE_HARDWARE,
 		NULL,
 		NULL, 
@@ -171,6 +220,7 @@ NtDirectX11Renderer::~NtDirectX11Renderer()
 		NULL,
 		D3D11_SDK_VERSION, 
 		&swapChainDesc, &m_swapchain, &m_device, &featureLevel, &m_deviceContext);
+
 	if (FAILED(res))
 	{
 		return false;
@@ -339,8 +389,8 @@ NtDirectX11Renderer::~NtDirectX11Renderer()
 	D3D11_VIEWPORT viewport;
 	Crt::MemSet(&viewport, sizeof(viewport));
 
-	viewport.Width = (ntFloat)width;
-	viewport.Height = (ntFloat)height;
+	viewport.Width = static_cast<ntFloat>(width);
+	viewport.Height = static_cast<ntFloat>(height);
 	viewport.MinDepth = 0.0f;
 	viewport.MaxDepth = 1.0f;
 	viewport.TopLeftX = 0.0f;
@@ -367,7 +417,7 @@ NtDirectX11Renderer::~NtDirectX11Renderer()
 }
 
 
-/*virtual*/ void NtDirectX11Renderer::Release()
+/*virtual*/ void NtDx11Renderer::Release()
 {
 	// 
 	if (m_swapchain)
@@ -385,7 +435,7 @@ NtDirectX11Renderer::~NtDirectX11Renderer()
 	SAFE_RELEASE(m_swapchain);
 }
 
-/*virtual*/ void NtDirectX11Renderer::BeginScene(float r, float g, float b, float a)
+/*virtual*/ void NtDx11Renderer::BeginScene(float r, float g, float b, float a)
 {
 	// 
 	ntFloat color[4] = {r, g, b, a};
@@ -398,7 +448,7 @@ NtDirectX11Renderer::~NtDirectX11Renderer()
 }
 
 
-/*virtual*/ void NtDirectX11Renderer::EndScene()
+/*virtual*/ void NtDx11Renderer::EndScene()
 {
 	// 렌더링이 완료되었으므로 백버퍼를 표시한다
 	if (m_vsync)
@@ -413,33 +463,103 @@ NtDirectX11Renderer::~NtDirectX11Renderer()
 	}
 }
 
+/*virtual*/ bool NtDx11Renderer::Resize(ntInt width, ntInt height)
+{
+	NtAsserte(m_deviceContext);
+	NtAsserte(m_device);
+	NtAsserte(m_swapchain);
 
-ID3D11Device* NtDirectX11Renderer::Device() const
+	//
+	SAFE_RELEASE(m_renderTargetView);
+	SAFE_RELEASE(m_depthStencilView);
+	SAFE_RELEASE(m_depthStencilBuffer);
+
+	// 스왑체인 리사이징하고 렌더타겟뷰 다시 생성
+	HRESULT result = m_swapchain->ResizeBuffers(1, width, height, DXGI_FORMAT_R8G8B8A8_UNORM, 0);
+	if (FAILED(result))
+	{
+		return false;
+	}
+	ID3D11Texture2D* backBuffer = nullptr;
+	result = m_swapchain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&backBuffer));
+	if (FAILED(result))
+	{
+		return false;
+	}
+	
+	m_device->CreateRenderTargetView(backBuffer, 0, &m_renderTargetView);
+	SAFE_RELEASE(backBuffer);
+
+	// depth stencil 버퍼, 뷰 생성
+	D3D11_TEXTURE2D_DESC depthStencilDesc;
+	depthStencilDesc.Width = width;
+	depthStencilDesc.Height = height;
+	depthStencilDesc.MipLevels = 1;
+	depthStencilDesc.ArraySize = 1;
+	depthStencilDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	
+	depthStencilDesc.SampleDesc.Count = 1;
+	depthStencilDesc.SampleDesc.Quality = 0;
+
+	depthStencilDesc.Usage = D3D11_USAGE_DEFAULT;
+	depthStencilDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	depthStencilDesc.CPUAccessFlags = 0;
+	depthStencilDesc.MiscFlags = 0;
+
+	result = m_device->CreateTexture2D(&depthStencilDesc, 0, &m_depthStencilBuffer);
+	if (FAILED(result))
+	{
+		return false;
+	}
+
+	result = m_device->CreateDepthStencilView(m_depthStencilBuffer, 0, &m_depthStencilView);
+
+	// 파이프라인에 depth/stencil view를 바인딩
+	m_deviceContext->OMSetRenderTargets(1, &m_renderTargetView, m_depthStencilView);
+
+	// 뷰포트 다시 셋팅
+	D3D11_VIEWPORT viewport;
+	Crt::MemSet(&viewport);
+
+	viewport.TopLeftX = 0;
+	viewport.TopLeftY = 0;
+	viewport.Width = static_cast<float>(width);
+	viewport.Height = static_cast<float>(height);
+	viewport.MinDepth = 0f;
+	viewport.MaxDepth = 1f;
+
+	m_deviceContext->RSSetViewports(1, &viewport);
+
+	return true;
+}
+
+
+ID3D11Device* NtDx11Renderer::Device() const
 {
 	return m_device;
 }
 
-ID3D11DeviceContext* NtDirectX11Renderer::DeviceContext() const
+ID3D11DeviceContext* NtDx11Renderer::DeviceContext() const
 {
 	return m_deviceContext;
 }
 
 
-bool NtDirectX11Renderer::CreateShaderResourceView(ID3D11Texture1D* tex,D3D11_SHADER_RESOURCE_VIEW_DESC* SRVDesc,ID3D11ShaderResourceView** textureView)
+bool NtDx11Renderer::CreateShaderResourceView(ID3D11Texture1D* tex,D3D11_SHADER_RESOURCE_VIEW_DESC* SRVDesc,ID3D11ShaderResourceView** textureView)
 {
 	HRESULT res = Device()->CreateShaderResourceView(tex, SRVDesc, textureView);
 
 	return FAILED(res) ? false : true;
 }
 
-bool NtDirectX11Renderer::CreateShaderResourceView(ID3D11Texture2D* tex,D3D11_SHADER_RESOURCE_VIEW_DESC* SRVDesc,ID3D11ShaderResourceView** textureView)
+bool NtDx11Renderer::CreateShaderResourceView(ID3D11Texture2D* tex,D3D11_SHADER_RESOURCE_VIEW_DESC* SRVDesc,ID3D11ShaderResourceView** textureView)
 {
 	HRESULT res = Device()->CreateShaderResourceView(tex, SRVDesc, textureView);
 
 	return FAILED(res) ? false : true;
 }
 
-bool NtDirectX11Renderer::CreateShaderResourceView(ID3D11Texture3D* tex,D3D11_SHADER_RESOURCE_VIEW_DESC* SRVDesc,ID3D11ShaderResourceView** textureView)
+bool NtDx11Renderer::CreateShaderResourceView(ID3D11Texture3D* tex,D3D11_SHADER_RESOURCE_VIEW_DESC* SRVDesc,ID3D11ShaderResourceView** textureView)
 {
 	HRESULT res = Device()->CreateShaderResourceView(tex, SRVDesc, textureView);
 

@@ -4,17 +4,27 @@
 namespace nt { namespace renderer {
 
 __declspec(align(16))
-class NtDirectX11Renderer : public NtD3DRenderer
+class NtDx11Renderer : public NtD3DRenderer
 {
 public:
-	NtDirectX11Renderer();
-	~NtDirectX11Renderer();
+	NtDx11Renderer();
+	~NtDx11Renderer();
 
-	virtual bool Initialize(int width, int height, HWND hwnd, bool vsync, bool fullscreen, float screenDepth, float screenNear);
-	virtual void Release();
+	virtual bool Initialize(
+		int width, 
+		int height, 
+		HWND hwnd, 
+		bool vsync, 
+		bool fullscreen, 
+		bool enable4xMsaa,
+		float screenDepth, 
+		float screenNear) override;
+	virtual void Release() override;
 
-	virtual void BeginScene(float r, float g, float b, float a);
-	virtual void EndScene();
+	virtual void BeginScene(float r, float g, float b, float a) override;
+	virtual void EndScene() override;
+
+	virtual bool Resize(ntInt width, ntInt height) override;
 
 	ID3D11Device* Device() const;
 	ID3D11DeviceContext* DeviceContext() const;

@@ -41,11 +41,10 @@ NtRenderer::~NtRenderer()
 
 bool NtRenderer::Initialize(HWND hwnd, ntInt width, ntInt height)
 {
-	//m_renderEngine = new NtDirectX11Renderer;
-	m_renderEngine = std::shared_ptr<NtDirectX11Renderer>(new NtDirectX11Renderer());
+	m_renderEngine = std::shared_ptr<NtDx11Renderer>(new NtDx11Renderer());
 	NtAsserte(m_renderEngine != nullptr);
 
-	bool res = m_renderEngine->Initialize(width, height, hwnd, VSYNC_ENABLED, false, 1000.0f, 0.1f);
+	bool res = m_renderEngine->Initialize(width, height, hwnd, VSYNC_ENABLED, false, false, 1000.0f, 0.1f);
 	if (res == false)
 	{
 		MessageBox(hwnd, L"Could not initialize Direct3D", L"Error", MB_OK);
@@ -205,6 +204,15 @@ bool NtRenderer::Render(ntFloat rot)
 	return true;
 }
 
+void NtRenderer::Resize(ntInt width, ntInt height)
+{
+	bool result =  m_renderEngine->Resize(width, height);
+	if (result == false)
+	{
+
+	}
+}
+
 
 bool NtRenderer::CreateTexture1D(D3D11_TEXTURE1D_DESC* desc,D3D11_SUBRESOURCE_DATA* initData,ID3D11Texture1D** tex)
 {
@@ -232,7 +240,7 @@ int NtRenderer::GetFeatureLevel()
 	return m_renderEngine->Device()->GetFeatureLevel();
 }
 
-std::shared_ptr<NtDirectX11Renderer>& NtRenderer::GetD3DRenderer()
+std::shared_ptr<NtDx11Renderer>& NtRenderer::GetD3DRenderer()
 {
 	return m_renderEngine;
 }

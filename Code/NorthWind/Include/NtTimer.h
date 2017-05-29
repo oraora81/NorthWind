@@ -18,12 +18,12 @@ public:
 	void Stop();
 	void Tick();
 
-    float TotalTime() const;
+	float TotalTime() const;
 
-    inline float DeltaTime() const
-    {
-        return (float)m_deltaTime;
-    }
+	inline float DeltaTime() const
+	{
+		return (float)m_deltaTime;
+	}
 
 private:
 	ntDouble m_secondsPerCount;
@@ -34,7 +34,7 @@ private:
 	ntInt64 m_prevTime;
 	ntInt64 m_currTime;
 
-    bool m_stopped;
+	bool m_stopped;
 };
 
 }
