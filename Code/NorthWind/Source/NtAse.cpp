@@ -90,7 +90,7 @@ bool NtAse::FindKeyword(ntWchar* keyword)
 	ntWchar buffer[READ_BUF_SIZE];
 	Crt::MemSet(buffer, sizeof(buffer));
 
-	ntInt res = swscanf_s(GetData(), L"%s", buffer, _countof(buffer));
+	ntInt res = swscanf_s(GetData(), L"%s", buffer, (unsigned)_countof(buffer));
 	if (res == EOF)
 	{
 		return false;
@@ -159,9 +159,9 @@ bool NtAse::ParseMaterial()
 
 		if (CompareKeyword(L"*MATERIAL_COUNT"))
 		{
-			ntWchar* temp[32] = {0, };
+			ntWchar temp[32] = {0, };
 			ntInt materialCount = 0;
-			ntInt res = swscanf_s(GetData(), L"%s %d", temp, _countof(temp), &materialCount);
+			ntInt res = swscanf_s(GetData(), L"%s %d", temp, (unsigned)_countof(temp), &materialCount);
 			if (res != 2)	return false;
 
 			if (materialCount != 0)
@@ -176,9 +176,9 @@ bool NtAse::ParseMaterial()
 		}
 		else if (CompareKeyword(L"*MATERIAL"))
 		{
-			ntWchar* temp[32] = {0, };
+			ntWchar temp[32] = {0, };
 			ntInt number = -1;
-			ntInt res = swscanf_s(GetData(), L"%s %d", temp, _countof(temp), &number);
+			ntInt res = swscanf_s(GetData(), L"%s %d", temp, (unsigned)_countof(temp), &number);
 			if (res != 2)	return false;
 
 			NtAsserte(number != -1 && number < (ntInt)m_materialVector.size());
@@ -258,25 +258,25 @@ void NtAse::ParseTM()
 
 		if (m_keyword == L"*TM_ROW0")
 		{
-			ntInt res = swscanf_s(GetData(), L"%s %f %f %f",name, _countof(name), &a, &b, &c);
+			ntInt res = swscanf_s(GetData(), L"%s %f %f %f",name, (unsigned)_countof(name), &a, &b, &c);
 			if (res != 4)	return;
 			v[0] = XMFLOAT3A(a, b, c);
 		}
 		else if (m_keyword == L"*TM_ROW1")
 		{
-			ntInt res = swscanf_s(GetData(), L"%s %f %f %f",name, _countof(name), &a, &b, &c);
+			ntInt res = swscanf_s(GetData(), L"%s %f %f %f",name, (unsigned)_countof(name), &a, &b, &c);
 			if (res != 4)	return;
 			v[1] = XMFLOAT3A(a, b, c);
 		}
 		else if (m_keyword == L"*TM_ROW2")
 		{
-			ntInt res = swscanf_s(GetData(), L"%s %f %f %f",name, _countof(name), &a, &b, &c);
+			ntInt res = swscanf_s(GetData(), L"%s %f %f %f",name, (unsigned)_countof(name), &a, &b, &c);
 			if (res != 4)	return;
 			v[2] = XMFLOAT3A(a, b, c);
 		}
 		else if (m_keyword == L"*TM_ROW3")
 		{
-			ntInt res = swscanf_s(GetData(), L"%s %f %f %f",name, _countof(name), &a, &b, &c);
+			ntInt res = swscanf_s(GetData(), L"%s %f %f %f",name, (unsigned)_countof(name), &a, &b, &c);
 			if (res != 4)	return;
 			v[3] = XMFLOAT3A(a, b, c);
 		}
@@ -298,7 +298,7 @@ void NtAse::ParseMesh()
 		if (CompareKeyword(L"*MESH_NUMVERTEX"))
 		{
 			ntInt count = 0;
-			ntInt res = swscanf_s(GetData(), L"%s %d", name, _countof(name), &count);
+			ntInt res = swscanf_s(GetData(), L"%s %d", name, (unsigned)_countof(name), &count);
 			if (res != 2)	return;
 			m_currentMesh->m_vertexNum = count;
 
@@ -310,7 +310,7 @@ void NtAse::ParseMesh()
 		else if (CompareKeyword(L"*MESH_NUMFACES"))
 		{
 			ntInt count = 0;
-			ntInt res = swscanf_s(GetData(), L"%s %d", name, _countof(name), &count);
+			ntInt res = swscanf_s(GetData(), L"%s %d", name, (unsigned)_countof(name), &count);
 			if (res != 2)	return;
 			m_currentMesh->m_faceNum = count;
 
@@ -346,7 +346,7 @@ void NtAse::ParseMesh()
 		else if (CompareKeyword(L"*MESH_NUMTVERTEX"))
 		{
 			ntInt count = 0;
-			ntInt res = swscanf_s(GetData(), L"%s %d", name, _countof(name), &count);
+			ntInt res = swscanf_s(GetData(), L"%s %d", name, (unsigned)_countof(name), &count);
 			if (res != 2)	return;
 			m_currentMesh->m_tvertexNum = count;
 			if (count != 0)
@@ -371,7 +371,7 @@ void NtAse::ParseMaterialRef()
 	ntWchar temp[32] = {0, };
 	ntInt index;
 
-	ntInt res = swscanf_s(GetData(), L"%s %d", temp, _countof(temp), &index);
+	ntInt res = swscanf_s(GetData(), L"%s %d", temp, (unsigned)_countof(temp), &index);
 	if (res != 2)	return;
 
 	if (index >= (ntInt)m_materialVector.size())
@@ -437,7 +437,7 @@ void NtAse::ParseVertex()
 
 		if (m_keyword == L"*MESH_VERTEX")
 		{
-			ntInt res = swscanf_s(GetData(), L"%s %d %f %f %f", name, _countof(name), &index, &a, &c, &b);
+			ntInt res = swscanf_s(GetData(), L"%s %d %f %f %f", name, (unsigned)_countof(name), &index, &a, &c, &b);
 			if (res != 5)	return;
 
 			NtAsserte(m_currentMesh->m_vertexNum > index);
@@ -467,7 +467,7 @@ void NtAse::ParseFace()
 			//ex : *MESH_FACE   0:    A:   1 B:   2 C:   3 AB:    1 BC:    0 CA:    1	 *MESH_SMOOTHING 0 	*MESH_MTLID 0
 
 			ntInt res = swscanf_s(GetData(), L"%s %d %s %s %d %s %d %s %d",
-				temp, _countof(temp), &index, temp, _countof(temp), temp, _countof(temp), &a, temp, _countof(temp), &c, temp, _countof(temp), &b);	/* A, B, C */
+				temp, (unsigned)_countof(temp), &index, temp, (unsigned)_countof(temp), temp, (unsigned)_countof(temp), &a, temp, (unsigned)_countof(temp), &c, temp, (unsigned)_countof(temp), &b);	/* A, B, C */
 			if (res != 9)	return;
 
 			subMat = 0;
@@ -475,7 +475,7 @@ void NtAse::ParseFace()
 			const ntWchar* s = Crt::StrChr(GetData() + 1, L'*');
 			while (realMatID == false && s != nullptr)
 			{
-				int matIdRes = swscanf_s(s, L"%s", temp, _countof(temp));
+				int matIdRes = swscanf_s(s, L"%s", temp, (unsigned)_countof(temp));
 				if (matIdRes == 0)
 				{
 					break;
@@ -483,7 +483,7 @@ void NtAse::ParseFace()
 
 				if (Crt::StrStr(temp, L"MESH_MTLID") != nullptr)
 				{
-					ntInt lastRes = swscanf_s(s + 1, L"%s %d", temp, _countof(temp), &subMat);
+					ntInt lastRes = swscanf_s(s + 1, L"%s %d", temp, (unsigned)_countof(temp), &subMat);
 					if (lastRes == 2)
 					{
 						realMatID = true;
@@ -520,7 +520,7 @@ void NtAse::ParseNormal()
 
 		if (CompareKeyword(L"*MESH_VERTEXNORMAL"))
 		{
-			ntInt res = swscanf_s(GetData(), L"%s %d %f %f %f", temp, _countof(temp), &index, &a, &c, &b);
+			ntInt res = swscanf_s(GetData(), L"%s %d %f %f %f", temp, (unsigned)_countof(temp), &index, &a, &c, &b);
 			if (res != 5)	return;
 
 			NtAsserte(&m_currentMesh->m_vertex[index] != nullptr);
@@ -549,7 +549,7 @@ void NtAse::ParseTexVertex()
 
 		if (CompareKeyword(L"*MESH_TVERT"))
 		{
-			ntInt res = swscanf_s(GetData(), L"%s %d %f %f", temp, _countof(temp), &index, &a, &b);
+			ntInt res = swscanf_s(GetData(), L"%s %d %f %f", temp, (unsigned)_countof(temp), &index, &a, &b);
 			if (res != 4)	return;
 
 			NtAsserte(m_currentMesh->m_rawTFace != nullptr);
@@ -575,7 +575,7 @@ void NtAse::ParseTexFace()
 
 		if (CompareKeyword(L"*MESH_TFACE"))
 		{
-			ntInt res = swscanf_s(GetData(), L"%s %d %d %d %d", temp, _countof(temp), &index, &a, &c, &b);
+			ntInt res = swscanf_s(GetData(), L"%s %d %d %d %d", temp, (unsigned)_countof(temp), &index, &a, &c, &b);
 			if (res != 5)	return;
 
 			NtAsserte(m_currentMesh->m_rawTFace != nullptr);
@@ -604,7 +604,7 @@ void NtAse::ParsePhysiqueVertex()
 
 		if (CompareKeyword(L"*MESH_PHYSIQUE_VERTEX"))
 		{
-			ntInt res = swscanf_s(GetData(), L"%s %d %f %f %f", temp, _countof(temp), &index, &a, &c, &b);
+			ntInt res = swscanf_s(GetData(), L"%s %d %f %f %f", temp, (unsigned)_countof(temp), &index, &a, &c, &b);
 			if (res != 5)	return;
 
 			m_currentMesh->m_vertex[index].m_p.x = a;
@@ -637,8 +637,8 @@ void NtAse::ParsePhysiqueVertex()
 			if (weightPtr != nullptr)
 			{
 				ntFloat weightVal = 0.0f;
-				ntInt res = swscanf_s(weightPtr, L"%s %f", temp, _countof(temp), &weightVal);
-				if (res != 2)	return;
+				ntInt resl = swscanf_s(weightPtr, L"%s %f", temp, (unsigned)_countof(temp), &weightVal);
+				if (resl != 2)	return;
 
 				m_currentMesh->m_vertex[index].m_weight = weightVal;
 			}
@@ -797,7 +797,7 @@ void NtAse::ParseMaterialElement(NtMaterial* material)
 		{
 			ntFloat r, g, b;
 			ntWchar temp[32] = {0, };
-			ntInt res = swscanf_s(GetData(), L"%s %f %f %f", temp, _countof(temp), &b, &g, &r);
+			ntInt res = swscanf_s(GetData(), L"%s %f %f %f", temp, (unsigned)_countof(temp), &b, &g, &r);
 			if (res != 4)	return;
 
 			material->m_diffuse = NT_RGBA(r*255.0f, g*255.0f, b*255.0f, 255);
@@ -806,7 +806,7 @@ void NtAse::ParseMaterialElement(NtMaterial* material)
 		{
 			ntFloat r, g, b;
 			ntWchar temp[32] = {0, };
-			ntInt res = swscanf_s(GetData(), L"%s %f %f %f", temp, _countof(temp), &b, &g, &r);
+			ntInt res = swscanf_s(GetData(), L"%s %f %f %f", temp, (unsigned)_countof(temp), &b, &g, &r);
 			if (res != 4)	return;
 
 			material->m_specular[0] = r;
@@ -817,7 +817,7 @@ void NtAse::ParseMaterialElement(NtMaterial* material)
 		{
 			ntFloat a;
 			ntWchar temp[32] = {0, };
-			ntInt res = swscanf_s(GetData(), L"%s %f", temp, _countof(temp), &a);
+			ntInt res = swscanf_s(GetData(), L"%s %f", temp, (unsigned)_countof(temp), &a);
 			if (res != 2)	return;
 
 			material->m_diffuse = (material->m_diffuse & (0x00ffffff)) | NT_RGBA(0, 0, 0, (255 - (ntInt)(a * 255.0f)));
@@ -826,7 +826,7 @@ void NtAse::ParseMaterialElement(NtMaterial* material)
 		{
 			ntFloat shine;
 			ntWchar temp[32];
-			ntInt res = swscanf_s(GetData(), L"%s %f", temp, _countof(temp), &shine);
+			ntInt res = swscanf_s(GetData(), L"%s %f", temp, (unsigned)_countof(temp), &shine);
 			if (res != 2)	return;
 
 
@@ -835,7 +835,7 @@ void NtAse::ParseMaterialElement(NtMaterial* material)
 		{
 			ntFloat shinestrength;
 			ntWchar temp[32];
-			ntInt res = swscanf_s(GetData(), L"%s %f", temp, _countof(temp), &shinestrength);
+			ntInt res = swscanf_s(GetData(), L"%s %f", temp, (unsigned)_countof(temp), &shinestrength);
 			if (res != 2)	return;
 
 			material->m_specular[0] = material->m_specular[0] * shinestrength / 100.0f;
@@ -854,7 +854,7 @@ void NtAse::ParseMaterialElement(NtMaterial* material)
 		{
 			ntInt subMatNum = 0;
 			ntWchar temp[32];
-			ntInt res = swscanf_s(GetData(), L"%s %d", temp, _countof(temp), &subMatNum);
+			ntInt res = swscanf_s(GetData(), L"%s %d", temp, (unsigned)_countof(temp), &subMatNum);
 			if (res != 2)	return;
 
 			if (subMatNum != 0)
@@ -867,7 +867,7 @@ void NtAse::ParseMaterialElement(NtMaterial* material)
 		{
 			ntInt subMatIndex = 0;
 			ntWchar temp[32];
-			ntInt res = swscanf_s(GetData(), L"%s %d", temp, _countof(temp), &subMatIndex);
+			ntInt res = swscanf_s(GetData(), L"%s %d", temp, (unsigned)_countof(temp), &subMatIndex);
 			if (res != 2)	return;
 
 			if (subMatIndex > m_currentMaterial->m_subMaterialNum)
@@ -900,7 +900,7 @@ void NtAse::ParseMapDiffuse(NtMaterial* material)
 			
 			material->m_bitmapName = bitMap;
 
-			ntInt lastPos = material->m_bitmapName.FindLast('\\');
+			ntSize lastPos = material->m_bitmapName.FindLast('\\');
 			if (lastPos == -1)
 			{
 				continue;

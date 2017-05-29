@@ -31,7 +31,7 @@ public:
 	void ReleaseData();
 
 	inline eUsage GetUsage() const;
-	inline ntUint GetBytes() const;
+	inline ntSize GetBytes() const;
 	inline const ntUchar* GetData() const;
 	inline ntUchar* GetData();
 
@@ -46,8 +46,8 @@ private:
 
 
 protected:
-	eUsage	m_usage;
 	ntSize	m_bytes;
+	eUsage	m_usage;
 	std::unique_ptr<ntUchar[]> m_data;
 };
 

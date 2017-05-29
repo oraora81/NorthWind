@@ -4,7 +4,7 @@ inline nt::FS::NtBuffer::eUsage NtBuffer::GetUsage() const
 	return m_usage;
 }
 
-inline ntUint NtBuffer::GetBytes() const
+inline ntSize NtBuffer::GetBytes() const
 {
 	return m_bytes;
 }

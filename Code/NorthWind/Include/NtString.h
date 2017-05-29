@@ -108,7 +108,7 @@ public:
 	NtInline ntLong&		RefCount()			{ return m_buffer->m_refCount; }
 	NtInline		 ntWchar*Buffer()			{ return m_buffer->m_str; }
 	NtInline const ntWchar*Buffer() const		{ return const_cast<const ntWchar*>(m_buffer->m_str); }
-	NtInline const ntUint	Size() const		{ return m_buffer->m_size; }
+	NtInline const ntSize	Size() const		{ return m_buffer->m_size; }
 	NtInline void			Size(ntSize size)	{ m_buffer->m_size = size; }
 	
 	// 빈 문자열용 buffer

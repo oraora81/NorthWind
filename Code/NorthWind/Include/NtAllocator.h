@@ -7,12 +7,12 @@ namespace nt { namespace Memory {
 	
 inline void* NextAlignedAddress(void* address, ntUchar alignment)
 {
-	return (void*)( ((ntUint)address + (alignment - 1)) & ~(alignment - 1) );
+	return (void*)( ((ULONG_PTR)address + (alignment - 1)) & ~(alignment - 1) );
 }
 
 inline ntUchar AlignAdjustment(void* address, ntUchar alignment)
 {
-	ntUchar adjustment = alignment - ( (ntUint)address & (alignment - 1) );
+	ntUchar adjustment = alignment - ( (ULONG_PTR)address & (alignment - 1) );
 
 	if (adjustment == alignment)
 	{
@@ -24,7 +24,7 @@ inline ntUchar AlignAdjustment(void* address, ntUchar alignment)
 
 inline ntUchar AlignAdjustmentWithHeader(void* address, ntUchar alignment, ntUchar headerSize)
 {
-	ntUchar adjustment = alignment - ((ntUint)address & (alignment - 1));
+	ntUchar adjustment = alignment - ((ULONG_PTR)address & (alignment - 1));
 
 	if (adjustment == alignment)
 	{
