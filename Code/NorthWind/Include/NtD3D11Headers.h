@@ -7,6 +7,7 @@
 #include <d2d1.h>
 #include <D2D1Helper.h>
 #include <dwrite.h>
+#include <dxerr.h>
 
 
 #pragma comment (lib, "d3d11.lib")

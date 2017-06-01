@@ -38,6 +38,7 @@
 //----------------------------------------------------------------------------
 #include <D3Dcompiler.h>
 #include <NtD3D11Headers.h>
+#include <NtD3dUtil.h>
 #include <xnamath.h>
 #include <dinput.h>
 

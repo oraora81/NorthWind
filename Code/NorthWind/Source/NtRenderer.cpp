@@ -204,13 +204,9 @@ bool NtRenderer::Render(ntFloat rot)
 	return true;
 }
 
-void NtRenderer::Resize(ntInt width, ntInt height)
+bool NtRenderer::Resize(ntInt width, ntInt height)
 {
-	bool result =  m_renderEngine->Resize(width, height);
-	if (result == false)
-	{
-
-	}
+	return m_renderEngine->Resize(width, height);
 }
 
 

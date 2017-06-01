@@ -21,7 +21,7 @@ public:
 	bool Initialize(HWND hwnd, ntInt width, ntInt height);
 	void Release();
 	bool Process();
-	void Resize(ntInt width, ntInt height);
+	bool Resize(ntInt width, ntInt height);
 
 	// 차후 D3D를 상속받은 NtRenderer에서 호출하게끔 수정필요.
 	bool CreateTexture1D(D3D11_TEXTURE1D_DESC* desc, D3D11_SUBRESOURCE_DATA* initData, ID3D11Texture1D** tex);

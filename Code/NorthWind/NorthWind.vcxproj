@@ -371,6 +371,7 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <ClInclude Include="Include\NtContainer.h" />
     <ClInclude Include="Include\NtCoreLib.h" />
     <ClInclude Include="Include\NtCrt.h" />
+    <ClInclude Include="Include\NtD3dUtil.h" />
     <ClInclude Include="Include\NtDx11Renderer.h" />
     <ClInclude Include="Include\NtD3D11Headers.h" />
     <ClInclude Include="Include\NtD3DMapping.h" />
@@ -455,6 +456,7 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='DebugDx11|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Source\NtCrt.cpp" />
+    <ClCompile Include="Source\NtD3dUtil.cpp" />
     <ClCompile Include="Source\NtDx11Renderer.cpp" />
     <ClCompile Include="Source\NtD3DMapping.cpp" />
     <ClCompile Include="Source\NtD3DRenderer.cpp" />

@@ -41,46 +41,26 @@ NtDx11Renderer::~NtDx11Renderer()
 
 	// DirectX Graphics Infrastructure factory 생성
 	IDXGIFactory* factory = nullptr;
-	HRESULT res = CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)&factory);
-	if (FAILED(res))
-	{
-		return false;
-	}
+	HRF(CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)&factory));
 
 	// 팩토리를 이용해 메인 그래픽스 인터페이스(비디오 카드) 어댑터 생성
 	IDXGIAdapter* adapter = nullptr;
-	res = factory->EnumAdapters(0, &adapter);
-	if (FAILED(res))
-	{
-		return false;
-	}
-
+	HRF(factory->EnumAdapters(0, &adapter));
+	
 	// 메인 output어댑터 enumerate (moniter)
 	IDXGIOutput* adapterOutput = nullptr;
-	res = adapter->EnumOutputs(0, &adapterOutput);
-	if (FAILED(res))
-	{
-		return false;
-	}
+	HRF(adapter->EnumOutputs(0, &adapterOutput));
 
 	// DXGI_FORMAT_R8G8B8A8_UNORM 표시에 맞는 모드들 가져오기
 	ntUint numMode = 0;
-	res = adapterOutput->GetDisplayModeList(g_colorFormat[eColorFormat::NT_FMT_A8R8G8B8], DXGI_ENUM_MODES_INTERLACED, &numMode, NULL);
-	if (FAILED(res))
-	{
-		return false;
-	}
+	HRF(adapterOutput->GetDisplayModeList(g_colorFormat[eColorFormat::NT_FMT_A8R8G8B8], DXGI_ENUM_MODES_INTERLACED, &numMode, NULL));
 
 	// 비디오와 모니터 조합에 의한 디스플레이 설정수 만큼 생성
 	DXGI_MODE_DESC* displayModeList = new DXGI_MODE_DESC[numMode];
 	NtAsserte(displayModeList != nullptr);
 
 	// displayModeList 다시 채우기
-	res = adapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &numMode, displayModeList);
-	if (FAILED(res))
-	{
-		return false;
-	}
+	HRF(adapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &numMode, displayModeList));
 
 	// 화면 너비, 높이에 맞는 해상도 찾기
 	int numerate = 0;
@@ -99,11 +79,7 @@ NtDx11Renderer::~NtDx11Renderer()
 	// 비디오 카드 description 찾기
 	DXGI_ADAPTER_DESC adapterDesc;
 	Crt::MemSet(&adapterDesc, sizeof(adapterDesc));
-	res = adapter->GetDesc(&adapterDesc);
-	if (FAILED(res))
-	{
-		return false;
-	}
+	HRF(adapter->GetDesc(&adapterDesc));
 
 	// 할당된 비디오 메모리를 mb로 변환
 	m_videoCardMemory = (ntInt)(adapterDesc.DedicatedVideoMemory / 1024 / 1024);
@@ -211,7 +187,7 @@ NtDx11Renderer::~NtDx11Renderer()
 
 	// swap chain 생성
 	
-	res = D3D11CreateDeviceAndSwapChain(
+	HRF(D3D11CreateDeviceAndSwapChain(
 		nullptr,
 		D3D_DRIVER_TYPE_HARDWARE,
 		NULL,
@@ -219,12 +195,7 @@ NtDx11Renderer::~NtDx11Renderer()
 		NULL, //&featureLevel,
 		NULL,
 		D3D11_SDK_VERSION, 
-		&swapChainDesc, &m_swapchain, &m_device, &featureLevel, &m_deviceContext);
-
-	if (FAILED(res))
-	{
-		return false;
-	}
+		&swapChainDesc, &m_swapchain, &m_device, &featureLevel, &m_deviceContext));
 
 	switch(featureLevel)
 	{
@@ -270,18 +241,10 @@ NtDx11Renderer::~NtDx11Renderer()
 
 	// back buffer 포인터 얻어오기
 	ID3D11Texture2D* backBuffer = nullptr;
-	res = m_swapchain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&backBuffer);
-	if (FAILED(res))
-	{
-		return false;
-	}
+	HRF(m_swapchain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&backBuffer));
 
 	// backbuffer pointer로 렌더타겟뷰 생성
-	res = m_device->CreateRenderTargetView(backBuffer, nullptr, &m_renderTargetView);
-	if (FAILED(res))
-	{
-		return false;
-	}
+	HRF(m_device->CreateRenderTargetView(backBuffer, nullptr, &m_renderTargetView));
 
 	// 얻어온 백버퍼 해제
 	SAFE_RELEASE(backBuffer);
@@ -303,11 +266,7 @@ NtDx11Renderer::~NtDx11Renderer()
 	depthBufferDesc.MiscFlags = 0;
 
 	// 깊이 버퍼를 위한 텍스쳐 생성
-	res = m_device->CreateTexture2D(&depthBufferDesc, NULL, &m_depthStencilBuffer);
-	if (FAILED(res))
-	{
-		return false;
-	}
+	HRF(m_device->CreateTexture2D(&depthBufferDesc, NULL, &m_depthStencilBuffer));
 
 	// 스텐실 desc 설정
 	D3D11_DEPTH_STENCIL_DESC depthStencilDesc;
@@ -333,11 +292,7 @@ NtDx11Renderer::~NtDx11Renderer()
 	depthStencilDesc.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
 
 	// 
-	res = m_device->CreateDepthStencilState(&depthStencilDesc, &m_depthStencilState);
-	if (FAILED(res))
-	{
-		return false;
-	}
+	HRF(m_device->CreateDepthStencilState(&depthStencilDesc, &m_depthStencilState));
 
 	// 스텐실상태 설정
 	m_deviceContext->OMSetDepthStencilState(m_depthStencilState, 1);
@@ -351,12 +306,8 @@ NtDx11Renderer::~NtDx11Renderer()
 	depthStencilViewDesc.Texture2D.MipSlice = 0;
 
 	// 깊이 스텐실 뷰 생성
-	res = m_device->CreateDepthStencilView(m_depthStencilBuffer, &depthStencilViewDesc, &m_depthStencilView);
-	if (FAILED(res))
-	{
-		return false;
-	}
-
+	HRF(m_device->CreateDepthStencilView(m_depthStencilBuffer, &depthStencilViewDesc, &m_depthStencilView));
+	
 	// 렌더타겟뷰랑 깊이 스텐실 버퍼를 렌더파이프라인(output merger)에 바인딩
 	m_deviceContext->OMSetRenderTargets(1, &m_renderTargetView, m_depthStencilView);
 
@@ -376,11 +327,7 @@ NtDx11Renderer::~NtDx11Renderer()
 	rasterDesc.SlopeScaledDepthBias = 0.0f;
 
 	//
-	res = m_device->CreateRasterizerState(&rasterDesc, &m_rasterState);
-	if (FAILED(res))
-	{
-		return false;
-	}
+	HRF(m_device->CreateRasterizerState(&rasterDesc, &m_rasterState));
 
 	// rasterizer state 설정
 	m_deviceContext->RSSetState(m_rasterState);
@@ -475,17 +422,10 @@ NtDx11Renderer::~NtDx11Renderer()
 	SAFE_RELEASE(m_depthStencilBuffer);
 
 	// 스왑체인 리사이징하고 렌더타겟뷰 다시 생성
-	HRESULT result = m_swapchain->ResizeBuffers(1, width, height, DXGI_FORMAT_R8G8B8A8_UNORM, 0);
-	if (FAILED(result))
-	{
-		return false;
-	}
+	HRF(m_swapchain->ResizeBuffers(1, width, height, DXGI_FORMAT_R8G8B8A8_UNORM, 0));
+
 	ID3D11Texture2D* backBuffer = nullptr;
-	result = m_swapchain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&backBuffer));
-	if (FAILED(result))
-	{
-		return false;
-	}
+	HRF(m_swapchain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&backBuffer)));
 	
 	m_device->CreateRenderTargetView(backBuffer, 0, &m_renderTargetView);
 	SAFE_RELEASE(backBuffer);
@@ -506,27 +446,23 @@ NtDx11Renderer::~NtDx11Renderer()
 	depthStencilDesc.CPUAccessFlags = 0;
 	depthStencilDesc.MiscFlags = 0;
 
-	result = m_device->CreateTexture2D(&depthStencilDesc, 0, &m_depthStencilBuffer);
-	if (FAILED(result))
-	{
-		return false;
-	}
-
-	result = m_device->CreateDepthStencilView(m_depthStencilBuffer, 0, &m_depthStencilView);
+	HRF(m_device->CreateTexture2D(&depthStencilDesc, 0, &m_depthStencilBuffer));
+	
+	HRF(m_device->CreateDepthStencilView(m_depthStencilBuffer, 0, &m_depthStencilView));
 
 	// 파이프라인에 depth/stencil view를 바인딩
 	m_deviceContext->OMSetRenderTargets(1, &m_renderTargetView, m_depthStencilView);
 
 	// 뷰포트 다시 셋팅
 	D3D11_VIEWPORT viewport;
-	Crt::MemSet(&viewport);
+	Crt::MemSet(&viewport, sizeof(viewport));
 
 	viewport.TopLeftX = 0;
 	viewport.TopLeftY = 0;
 	viewport.Width = static_cast<float>(width);
 	viewport.Height = static_cast<float>(height);
-	viewport.MinDepth = 0f;
-	viewport.MaxDepth = 1f;
+	viewport.MinDepth = 0.0f;
+	viewport.MaxDepth = 1.0f;
 
 	m_deviceContext->RSSetViewports(1, &viewport);
 
