@@ -31,7 +31,7 @@
 // Need for WIN32 macro Check.
 //----------------------------------------------------------------------------
 #include <Windows.h>
-
+#include <windowsx.h>
 
 // 
 // d3d

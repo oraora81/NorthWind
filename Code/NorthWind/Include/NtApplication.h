@@ -22,9 +22,13 @@ public:
 	virtual bool Initialize(bool fullscreen);
 	virtual void Shutdown();
 	virtual bool OnResize(ntInt width, ntInt height);
+	virtual bool Process();
+
+	virtual void OnMouseDown(WPARAM buttonState, ntInt x, ntInt y) {}
+	virtual void OnMouseUp(WPARAM buttonState, ntInt x, ntInt y) {}
+	virtual void OnMouseMove(WPARAM buttonState, ntInt x, ntInt y) {}
 
 	void MsgLoop();
-	virtual bool Process();
 
 	LRESULT CALLBACK MessageHandler(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 

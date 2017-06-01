@@ -111,7 +111,7 @@ bool NtApplication::Initialize(bool fullscreen)
 
 
 	// set the window class
-	wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
+	wc.style = CS_HREDRAW | CS_VREDRAW /*| CS_OWNDC*/;
 	wc.lpfnWndProc = WndProc;
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
@@ -309,6 +309,59 @@ LRESULT CALLBACK NtApplication::MessageHandler(HWND hwnd, UINT message, WPARAM w
 		}
 		return 0;
 
+	case WM_ACTIVATE:
+		{
+			if (LOWORD(wParam) == WA_INACTIVE)
+			{
+				m_appPaused = true;
+				m_timer.Stop();
+			}
+			else
+			{
+				m_appPaused = false;
+				m_timer.Start();
+			}
+		}
+		return 0;
+
+	case WM_ENTERSIZEMOVE:
+		{
+			m_appPaused = true;
+			m_resizing  = true;
+			m_timer.Stop();
+		}
+		return 0;
+
+	case WM_EXITSIZEMOVE:
+		{
+			m_appPaused = false;
+			m_resizing = false;
+			m_timer.Start();
+		}
+		return 0;
+
+	case WM_LBUTTONDOWN:
+	case WM_MBUTTONDOWN:
+	case WM_RBUTTONDOWN:
+		{
+			OnMouseDown(wParam, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+		}
+		return 0;
+
+	case WM_LBUTTONUP:
+	case WM_MBUTTONUP:
+	case WM_RBUTTONUP:
+		{
+			OnMouseUp(wParam, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+		}
+		return 0;
+
+	case WM_MOUSEMOVE:
+		{
+			OnMouseMove(wParam, GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+		}
+		return 0;
+
 	case WM_SIZE:
 		{
 			int width = LOWORD(lParam);
@@ -325,7 +378,7 @@ LRESULT CALLBACK NtApplication::MessageHandler(HWND hwnd, UINT message, WPARAM w
 				m_appPaused = false;
 				m_minimized = false;
 				m_maximized = true;
-				m_renderer->Resize(width, height);
+				OnResize(width, height);
 			}
 			else if (wParam == SIZE_RESTORED)
 			{
@@ -333,13 +386,13 @@ LRESULT CALLBACK NtApplication::MessageHandler(HWND hwnd, UINT message, WPARAM w
 				{
 					m_appPaused = false;
 					m_minimized = false;
-					m_renderer->Resize(width, height);
+					OnResize(width, height);
 				}
 				else if (m_maximized)
 				{
 					m_appPaused = false;
 					m_maximized = false;
-					m_renderer->Resize(width, height);
+					OnResize(width, height);
 				}
 				else if (m_resizing)
 				{
@@ -355,11 +408,12 @@ LRESULT CALLBACK NtApplication::MessageHandler(HWND hwnd, UINT message, WPARAM w
 				else
 				{
 					// API call such as SetWindowPos or m_swapChain->SetFullscreenState.
-					m_renderer->Resize(width, height);
+					OnResize(width, height);
 				}
 			}
 		}
 		return 0;
+
 	}
 
 	return DefWindowProc(hwnd, message, wParam, lParam);
