@@ -52,7 +52,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
     hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_LUCIA));
 
     //
-    Initialize();
+    //Initialize();
 
 
     APP::NtApplication* app = new APP::NtApplication;

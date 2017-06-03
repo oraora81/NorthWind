@@ -7,8 +7,6 @@
 #include "scene.h"
 #include "postprocess.h"
 
-//#pragma comment (lib, "assimp-vc120-mtd.lib")
-
 // 
 //----------------------------------------------------------------------------
 nt::APP::NtApplication* g_app = nullptr;
@@ -175,6 +173,14 @@ bool NtApplication::Initialize(bool fullscreen)
 			return false;
 		}
 	}
+
+	//
+	m_renderer = new nt::renderer::NtRenderer;
+	g_renderInterface = m_renderer;
+	if (false == m_renderer->Initialize(m_hwnd, width, height))
+	{
+		return false;
+	}
 	
 	
 	// 
@@ -200,14 +206,6 @@ bool NtApplication::Initialize(bool fullscreen)
 	Crt::WideStrToMultiStr(buf, Crt::StrLen(buf), fname);
 
 	DoImport(buf);
-
-	//
-	m_renderer = new nt::renderer::NtRenderer;
-	g_renderInterface = m_renderer;
-	if (false == m_renderer->Initialize(m_hwnd, width, height))
-	{
-		return false;
-	}
 	
 	return true;
 }
@@ -240,6 +238,11 @@ void NtApplication::Shutdown()
 
 bool NtApplication::OnResize(ntInt width, ntInt height)
 {
+	if (m_renderer == nullptr)
+	{
+		return false;
+	}
+
 	return m_renderer->Resize(width, height);
 }
 

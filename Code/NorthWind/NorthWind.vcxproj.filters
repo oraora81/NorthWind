@@ -197,6 +197,9 @@
     <ClInclude Include="Include\NtD3dUtil.h">
       <Filter>render</Filter>
     </ClInclude>
+    <ClInclude Include="Include\dxerr.h">
+      <Filter>render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\test_cube.ase" />
@@ -378,6 +381,9 @@
       <Filter>render</Filter>
     </ClCompile>
     <ClCompile Include="Source\NtD3dUtil.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\dxerr.cpp">
       <Filter>render</Filter>
     </ClCompile>
   </ItemGroup>

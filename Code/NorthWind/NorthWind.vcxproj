@@ -358,6 +358,7 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\dds.h" />
+    <ClInclude Include="Include\dxerr.h" />
     <ClInclude Include="Include\NtAllocator.h" />
     <ClInclude Include="Include\NtApplication.h" />
     <ClInclude Include="Include\NtArray.h" />
@@ -440,6 +441,7 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <None Include="Source\test_cube.ase" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\dxerr.cpp" />
     <ClCompile Include="Source\NtAllocator.cpp" />
     <ClCompile Include="Source\NtApplication.cpp" />
     <ClCompile Include="Source\NtAse.cpp" />

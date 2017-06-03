@@ -10,15 +10,7 @@ public:
 	NtDx11Renderer();
 	~NtDx11Renderer();
 
-	virtual bool Initialize(
-		int width, 
-		int height, 
-		HWND hwnd, 
-		bool vsync, 
-		bool fullscreen, 
-		bool enable4xMsaa,
-		float screenDepth, 
-		float screenNear) override;
+	virtual bool Initialize(int width, int height, HWND hwnd, bool vsync, bool fullscreen, bool enable4xMsaa, float screenDepth, float screenNear) override;
 	virtual void Release() override;
 
 	virtual void BeginScene(float r, float g, float b, float a) override;
