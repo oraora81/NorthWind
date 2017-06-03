@@ -138,7 +138,7 @@
     <IncludePath>$(IncludePath)</IncludePath>
     <LibraryPath>$(LibraryPath)</LibraryPath>
     <OutDir>./../../bin</OutDir>
-    <IntDir>./../../bin/Intermediate/$(ProjectName)/$(Configuration)\</IntDir>
+    <IntDir>./../../Intermediate/$(ProjectName)/$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_$(Configuration)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDx11|x64'">
@@ -147,7 +147,7 @@
     <IncludePath>$(IncludePath)</IncludePath>
     <LibraryPath>$(LibraryPath)</LibraryPath>
     <OutDir>./../../bin</OutDir>
-    <IntDir>./../../bin/Intermediate/$(ProjectName)/$(Configuration)\</IntDir>
+    <IntDir>./../../Intermediate/$(ProjectName)/$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDx9|Win32'">
     <LinkIncremental>true</LinkIncremental>
@@ -220,7 +220,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>USE_DIRECTX;_NT_DX11;WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>../NorthWind/Include;../import/include;../import/assimp</AdditionalIncludeDirectories>
-      <PrecompiledHeaderOutputFile>./../../bin/Intermediate/$(ProjectName)/$(Configuration)/$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile>./../../Intermediate/$(ProjectName)/$(Configuration)/$(TargetName).pch</PrecompiledHeaderOutputFile>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
@@ -237,7 +237,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>USE_DIRECTX;_NT_DX11;WIN64;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>../NorthWind/Include;../import/include;../import/assimp</AdditionalIncludeDirectories>
-      <PrecompiledHeaderOutputFile>./../../bin/Intermediate/$(ProjectName)/$(Configuration)/$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile>./../../Intermediate/$(ProjectName)/$(Configuration)/$(TargetName).pch</PrecompiledHeaderOutputFile>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
@@ -318,16 +318,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="color_ps_hlsl" />
-    <None Include="color_vs_hlsl" />
     <None Include="exam.fx" />
-    <None Include="light_ps.hlsl" />
-    <None Include="light_vs.hlsl" />
     <None Include="Lucia.ico" />
     <None Include="ReadMe.txt" />
     <None Include="small.ico" />
-    <None Include="texture_ps.hlsl" />
-    <None Include="texture_vs.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DxInput.h" />

@@ -219,7 +219,7 @@ const ntWchar* NtResourceManager::GetWholePath(const ntWchar* fileName)
 const NtResource* NtResourceManager::FindResource(const ntWchar* fileName)
 {
 	NtString name(fileName);
-	auto res = m_resourceTable.find(name);
+	auto res = m_resourceTable.find(name.Buffer());
 	if (res == m_resourceTable.end())
 	{
 		return nullptr;

@@ -78,9 +78,6 @@ bool NtApplication::Initialize(bool fullscreen)
 
 	m_fullScreen = fullscreen;
 
-	WNDCLASSEX wc;
-	DEVMODE screenSetting;
-
 	// set external pointer
 	g_app = this;
 
@@ -92,21 +89,22 @@ bool NtApplication::Initialize(bool fullscreen)
 
 	//
 	ntWchar* path = nullptr;
-	/*NtErrorCode res = Crt::AllocEnvVariable(L"NT_PATH", &path);
+	NtErrorCode res = Crt::AllocEnvVariable(L"NT_PATH", &path);
 	if (res != NtERROR_SUCCESS)
 	{
 		return false;
-	}*/
-
-	path = L"E:\\work\\dx\\northwind\\bin";
+	}
 
 	m_globalPath = path;
+	m_globalPath.Lowercase();
 	m_globalPath.Replace(L'\\', L'/');
 	m_globalPath += L"/";
 	
 	// set the cmd lines
 	m_cmdArg = Crt::GetCmdLine();
 
+	WNDCLASSEX wc;
+	DEVMODE screenSetting;
 
 	// set the window class
 	wc.style = CS_HREDRAW | CS_VREDRAW /*| CS_OWNDC*/;
@@ -174,15 +172,6 @@ bool NtApplication::Initialize(bool fullscreen)
 		}
 	}
 
-	//
-	m_renderer = new nt::renderer::NtRenderer;
-	g_renderInterface = m_renderer;
-	if (false == m_renderer->Initialize(m_hwnd, width, height))
-	{
-		return false;
-	}
-	
-	
 	// 
 	m_resManager = new nt::FS::NtResourceManager;
 	if (false == m_resManager->Initialize(m_globalPath.Buffer()))
@@ -198,6 +187,15 @@ bool NtApplication::Initialize(bool fullscreen)
 	{
 		return false;
 	}
+
+	//
+	m_renderer = new nt::renderer::NtRenderer;
+	g_renderInterface = m_renderer;
+	if (false == m_renderer->Initialize(m_hwnd, width, height))
+	{
+		return false;
+	}
+
 
 	const ntWchar* fname = g_resManager->GetWholePath(L"test_cube.ase");
 

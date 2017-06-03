@@ -37,24 +37,6 @@
     <None Include="exam.fx">
       <Filter>소스 파일</Filter>
     </None>
-    <None Include="color_ps_hlsl">
-      <Filter>fx</Filter>
-    </None>
-    <None Include="color_vs_hlsl">
-      <Filter>fx</Filter>
-    </None>
-    <None Include="light_ps.hlsl">
-      <Filter>fx</Filter>
-    </None>
-    <None Include="light_vs.hlsl">
-      <Filter>fx</Filter>
-    </None>
-    <None Include="texture_ps.hlsl">
-      <Filter>fx</Filter>
-    </None>
-    <None Include="texture_vs.hlsl">
-      <Filter>fx</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
