@@ -247,6 +247,8 @@ bool NtApplication::Process()
 		return false;
 	}
 
+	CalculateFrame();
+
 	return true;
 }
 
@@ -382,6 +384,33 @@ const HWND NtApplication::Handle()
 	return m_hwnd;
 }
 
+void NtApplication::CalculateFrame()
+{
+	// 평균 fps계산, 한 프레임 렌더링하는데 걸리는 평균 시간 계산
+	static int frameCount = 0;
+	static float timeElapsed = 0.0f;
+
+	frameCount++;
+
+	// 1초 동안의 평균 프레임 수를 계산한다.
+	if ((m_timer.TotalTime() - timeElapsed) >= 1.0f)
+	{
+		// fps = frameCount / 1
+		float fps = (float)frameCount;
+		float mspf = 1000.0f / fps;
+
+		std::wostringstream outs;
+		outs.precision(6);
+		outs << m_appName.Buffer() << L"      "
+			<< L"FPS : " << fps << L"      "
+			<< L"Frame Time : " << mspf << L" (ms)";
+
+		SetWindowText(m_hwnd, outs.str().c_str());
+
+		frameCount = 0;
+		timeElapsed += 1.0f;
+	}
+}
 
 }	// namespace app
 

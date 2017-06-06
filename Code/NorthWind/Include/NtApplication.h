@@ -34,15 +34,19 @@ public:
 
 	const HWND Handle();
 
+	void CalculateFrame();
+
 	float AspectRatio() const
 	{
 		return static_cast<float>(m_width / m_height);
 	}
 
+
 private:
 	NtString m_appName;
 	NtString m_cmdArg;
 	NtString m_globalPath;
+	NtString m_windowCaption;
 
 	HWND m_hwnd;
 	HINSTANCE m_hInst;
