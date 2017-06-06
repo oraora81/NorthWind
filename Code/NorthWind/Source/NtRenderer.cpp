@@ -105,19 +105,19 @@ bool NtRenderer::Initialize(HWND hwnd, ntInt width, ntInt height)
 	}
 
 	// create the puppet model object
-	m_puppet = new NtPuppet;
-	NtAsserte(m_puppet != nullptr);
+	//m_puppet = new NtPuppet;
+	//NtAsserte(m_puppet != nullptr);
 
-	res = m_puppet->Initialize(L"test_cube.ase");
-	if (res == false)
-	{
-		MessageBox(hwnd, L"Could not initialize the puppet object", L"Error", MB_OK);
-		return false;
-	}
+	//res = m_puppet->Initialize(L"test_cube.ase");
+	//if (res == false)
+	//{
+	//	MessageBox(hwnd, L"Could not initialize the puppet object", L"Error", MB_OK);
+	//	return false;
+	//}
 
-	//m_puppet->SetLightShader(m_lightShader);
-	m_puppet->SetColorShader(m_colorShader);
-	m_puppet->SetTextureShader(m_textureShader);
+	////m_puppet->SetLightShader(m_lightShader);
+	//m_puppet->SetColorShader(m_colorShader);
+	//m_puppet->SetTextureShader(m_textureShader);
 
 	return true;
 }
@@ -139,7 +139,7 @@ void NtRenderer::Release()
 	//WholeReleaseObject(m_lightShader);
 	WholeReleaseObject(m_textureShader);
 	WholeReleaseObject(m_colorShader);
-	WholeReleaseObject(m_puppet);
+	//WholeReleaseObject(m_puppet);
 }
 
 bool NtRenderer::Process()
@@ -170,7 +170,7 @@ bool NtRenderer::Render(ntFloat rot)
 
 	// clear the buffers to begin the scene
 	// r, g, b
-	m_renderEngine->BeginScene(0.0f, 0.0f, 0.0f, 1.0f);
+	m_renderEngine->BeginScene(0.0f, 0.0f, 1.0f, 1.0f);
 
 	// generate the view matrix based on the camera and d3d objects
 	m_camera->Render();
@@ -190,7 +190,7 @@ bool NtRenderer::Render(ntFloat rot)
 
 
 	// put the puppet vertex and index buffers on the graphics pipeline to prepare them for drawing
-	m_puppet->Render(worldMatrix, viewMatrix, projMatrix, m_light);
+	//m_puppet->Render(worldMatrix, viewMatrix, projMatrix, m_light);
 
 		
 	//NtPoint p1(-10.0f, 0.0f);
