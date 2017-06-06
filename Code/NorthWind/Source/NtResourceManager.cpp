@@ -7,7 +7,7 @@
 #include "NtTexture.h"
 #include "NtRenderer.h"
 
-namespace nt { namespace FS {
+namespace nt { namespace fs {
 
 NtResourceManager::NtResourceManager()
 {
@@ -267,5 +267,5 @@ void NtResourceManager::AddTexHandleObj()
 	m_texHandleSource.push_back(handleList);
 }
 
-}	//namespace FS
+}	//namespace fs
 }	// namespace nt

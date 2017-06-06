@@ -1,7 +1,7 @@
 
 #pragma once
 
-namespace nt { namespace FS {
+namespace nt { namespace fs {
 
 class NtBuffer
 {
@@ -63,6 +63,6 @@ public:
 
 #include "NtBuffer.inl"
 
-}	// namespace FS
+}	// namespace fs
 
 }	// namespace nt

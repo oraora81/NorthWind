@@ -1,7 +1,7 @@
 
 #pragma once
 
-namespace nt { namespace LOG {
+namespace nt { namespace log {
 
 // http://msdn.microsoft.com/en-us/library/yt0c3wdh.aspx
 #ifdef _DEBUG
@@ -54,13 +54,13 @@ private:
 	bool m_supportThread;
 };
 
-}	// namespace LOG
+}	// namespace log
 
 }	// namespace nt
 
 #ifdef _DEBUG
 #define  NTRACE(msg, ...) \
-	nt::LOG::DebugTrace(msg, __VA_ARGS__)
+	nt::log::DebugTrace(msg, __VA_ARGS__)
 #else
 __noop
 #endif

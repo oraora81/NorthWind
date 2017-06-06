@@ -2,7 +2,7 @@
 #include "NtCoreLib.h"
 #include "NtBuffer.h"
 
-namespace nt { namespace FS {
+namespace nt { namespace fs {
 
 NtBuffer::NtBuffer()
 	: m_usage(NtBuffer::BUFFER_QUANTITY)
@@ -63,6 +63,6 @@ NtFileBuffer::~NtFileBuffer()
 
 
 
-}	// namespace FS
+}	// namespace fs
 
 }	// namespace nt

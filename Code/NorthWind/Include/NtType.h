@@ -1,11 +1,7 @@
 
 #pragma once
 
-namespace nt {
-
-
 // Fundamental Type
-// Integral
 typedef char			ntChar;
 typedef wchar_t			ntWchar;
 typedef unsigned char	ntUchar;
@@ -38,6 +34,3 @@ enum NtErrorCode
 	NtERROR_FAIL = 0,
 	NtERROR_SUCCESS,
 };
-
-
-}	// namespace nt

@@ -18,7 +18,7 @@ enum eParseKeyword
 };
 typedef eParseKeyword PARSE_KEYWORD;
 
-class FS::NtBuffer;
+class fs::NtBuffer;
 
 class NtParseModeBinder
 {
@@ -62,7 +62,7 @@ private:
 	bool	ReadVertexInfo();
 
 private:
-	FS::NtFile		m_file;
+	fs::NtFile		m_file;
 	PARSE_KEYWORD	m_parseMode;
 	renderer::NtPuppet* m_linkPuppet;
 };

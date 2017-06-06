@@ -29,7 +29,7 @@ NtParseModeBinder::NtParseModeBinder( const ntWchar* str )
 
 }
 
-nt::ntInt NtParseModeBinder::FindParseKey()
+ntInt NtParseModeBinder::FindParseKey()
 {
 	ntInt index = -1;
 
@@ -65,7 +65,7 @@ NtModelParser::~NtModelParser()
 
 bool NtModelParser::Execute(const ntWchar* fileName)
 {
-	bool res = m_file.Execute(fileName, FS::IO_READ);
+	bool res = m_file.Execute(fileName, fs::IO_READ);
 	if (false == res)
 	{
 		return false;

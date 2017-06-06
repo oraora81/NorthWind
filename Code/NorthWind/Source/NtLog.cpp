@@ -2,7 +2,7 @@
 #include "NtCoreLib.h"
 #pragma hdrstop
 
-namespace nt { namespace LOG {
+namespace nt { namespace log {
 
 #ifdef _DEBUG
 int DebugTrace(const ntWchar* msg, ...)
@@ -85,6 +85,6 @@ void NtLog::Print(const ntWchar* subject, const ntWchar* format, ...)
 }
 
 
-}	// namespace LOG
+}	// namespace log
 
 }	// namespace nt

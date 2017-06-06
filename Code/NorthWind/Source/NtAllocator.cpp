@@ -1,11 +1,11 @@
 
 #include "NtCoreLib.h"
 
-namespace nt { namespace Memory {
+namespace nt { namespace memory {
 
 //NT_IMPLEMENT_OBJECT(NtAllocator, NtObject)
 //NT_IMPLEMENT_FACTORY(NtAllocator)
 //NT_REGISTER_FACTORY(NtAllocator)
 
-}	// Memory
+}	// memory
 }	// nt

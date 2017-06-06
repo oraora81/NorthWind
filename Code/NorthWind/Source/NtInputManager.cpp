@@ -2,7 +2,7 @@
 #include "NtCoreLib.h"
 #include "NtInputManager.h"
 
-namespace nt { namespace INPUT {
+namespace nt { namespace input {
 
 bool NtInputManager::Initialize()
 {

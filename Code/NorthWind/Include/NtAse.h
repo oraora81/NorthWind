@@ -3,7 +3,7 @@
 
 namespace nt { namespace renderer {
 
-class NtAse : public nt::FS::NtFile
+class NtAse : public nt::fs::NtFile
 {
 	enum eParseMODE
 	{

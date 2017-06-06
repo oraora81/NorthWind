@@ -1,7 +1,7 @@
 
 #pragma once
 
-namespace nt { namespace INPUT {
+namespace nt { namespace input {
 
 class NtInputManager
 {
@@ -21,5 +21,5 @@ private:
 	ntChar m_keystate[MAX_KEY_STATE];
 };
 
-}	// namespace INPUT
+}	// namespace input
 }	// namespace nt

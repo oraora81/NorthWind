@@ -5,7 +5,7 @@
 #include "NtConsole.h"
 
 
-namespace nt { namespace LOG {
+namespace nt { namespace log {
 
 static const ntShort BUFFER_WIDTH = 120;
 static const ntShort BUFFER_HEIGHT = 999;
@@ -14,7 +14,7 @@ static const ntShort BUFFER_HEIGHT = 999;
 //  NtConsole Implement
 //----------------------------------------------------------------------------
 
-nt::FS::NtFile* NtConsole::ms_file = nullptr;
+nt::fs::NtFile* NtConsole::ms_file = nullptr;
 HANDLE NtConsole::ms_handle = nullptr;
 
 bool NtConsole::Initialize(const ntWchar* subject)
@@ -58,5 +58,5 @@ void NtConsole::Print(const NtString& str)
 	WriteConsole(ms_handle, str.Buffer(), str.Size(), &written, nullptr);
 }
 
-}	// namespace LOG
+}	// namespace log
 }	// namespace nt

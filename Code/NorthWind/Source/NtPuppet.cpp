@@ -188,7 +188,7 @@ bool NtPuppet::InitializeAse(ntWchar* puppetName)
 
 
 
-	//     ¸ðµ¨ ASE ·Îµù
+	// ¸ðµ¨ ASE ·Îµù
 
 	const std::map<NtString, NtMesh*> meshMap =	puppetLoader.GetMeshMap();
 	for (auto itor = meshMap.begin(); itor != meshMap.end(); ++itor)
@@ -351,7 +351,7 @@ void NtPuppet::SetVertexCount( ntInt count )
 }
 
 
-nt::ntInt NtPuppet::GetVertexCount() const
+ntInt NtPuppet::GetVertexCount() const
 {
 	return m_vertexCount;
 }
@@ -361,7 +361,7 @@ bool NtPuppet::SetFormatType( const ntWchar* usage, const ntWchar* type )
 	return m_vertexFormat.SetFormatType(usage, type);
 }
 
-nt::ntInt NtPuppet::GetSumOffset()
+ntInt NtPuppet::GetSumOffset()
 {
 	return m_vertexFormat.GetSumOffset();
 }

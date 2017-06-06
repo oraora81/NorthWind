@@ -97,7 +97,7 @@ bool NtVertexFormat::SetFormatType( const ntWchar* usage, const ntWchar* type )
 	return true;
 }
 
-nt::ntInt NtVertexFormat::GetSumOffset()
+ntInt NtVertexFormat::GetSumOffset()
 {
 	ntInt sum = 0;
 	ntInt size = _countof(m_element);

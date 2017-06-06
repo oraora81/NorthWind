@@ -8,10 +8,10 @@
 namespace nt {
 
 using namespace renderer;
-using namespace INPUT;
-using namespace FS;
+using namespace input;
+using namespace fs;
 
-namespace APP {
+namespace app {
 
 class NtApplication
 {
@@ -62,16 +62,16 @@ private:
 	NtResourceManager* m_resManager;
 };
 
-}	// namespace APP
+}	// namespace app
 
 }	// namespace nt
 
 
-namespace nt {	namespace APP {
+namespace nt {	namespace app {
 	class NtApplication;
 }
 
-namespace FS {
+namespace fs {
 	class NtResourceManager;
 }
 
@@ -79,9 +79,9 @@ namespace FS {
 
 
 
-extern nt::APP::NtApplication* g_app;
-extern nt::FS::NtResourceManager* g_resManager;
-extern nt::Memory::NtLinearAllocator* g_liAllocator;
+extern nt::app::NtApplication* g_app;
+extern nt::fs::NtResourceManager* g_resManager;
+extern nt::memory::NtLinearAllocator* g_liAllocator;
 extern nt::renderer::NtRenderer* g_renderInterface;
 extern std::shared_ptr<nt::renderer::NtDx11Renderer> g_renderer;
 

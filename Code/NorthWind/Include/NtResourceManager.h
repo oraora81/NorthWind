@@ -11,7 +11,7 @@ namespace renderer
 	class NtTexHandle;
 }
 
-namespace FS
+namespace fs
 {
 
 using namespace renderer;
@@ -66,5 +66,5 @@ private:
 };
 
 
-}	// namespace FS
+}	// namespace fs
 }	// namespace nt

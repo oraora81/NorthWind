@@ -1,7 +1,7 @@
 
 #pragma once
 
-namespace nt { namespace FS {
+namespace nt { namespace fs {
 
 enum eIOMode
 {
@@ -54,5 +54,5 @@ private:
 };
 
 
-}	// namespace FS
+}	// namespace fs
 }	// namespace nt

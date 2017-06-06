@@ -2,7 +2,7 @@
 #pragma once
 
 
-namespace nt { namespace Memory {
+namespace nt { namespace memory {
 
 	
 inline void* NextAlignedAddress(void* address, ntUchar alignment)
@@ -172,6 +172,6 @@ bool isHeap(T& obj)
 }
 
  
-}	// namespace Memory
+}	// namespace memory
 
 }	// namespace nt

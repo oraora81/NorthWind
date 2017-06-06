@@ -5,7 +5,7 @@
 // NtLinearAllocator
 //----------------------------------------------------------------------------
 
-namespace nt { namespace Memory {
+namespace nt { namespace memory {
 
 class NtLinearAllocator : public NtAllocator
 {

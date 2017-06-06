@@ -324,6 +324,7 @@
     <None Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="theApp.h" />
     <ClInclude Include="DxInput.h" />
     <ClInclude Include="DXRenderer.h" />
     <ClInclude Include="FontRender.h" />
@@ -335,6 +336,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="theApp.cpp" />
     <ClCompile Include="DxInput.cpp" />
     <ClCompile Include="DXRenderer.cpp" />
     <ClCompile Include="FontRender.cpp" />

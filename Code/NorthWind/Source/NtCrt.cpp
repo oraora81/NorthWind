@@ -226,22 +226,22 @@ void WideStrToMultiStr(ntChar* dest, ntSize dstSize, const ntWchar* src)
 	NtAsserte(dest[0] != NULL);
 }
 
-nt::ntInt StringToNumber( const ntWchar* buffer )
+ntInt StringToNumber( const ntWchar* buffer )
 {
 	return _wtoi(buffer);
 }
 
-nt::ntInt64 StringToNumber64( const ntWchar* buffer )
+ntInt64 StringToNumber64( const ntWchar* buffer )
 {
 	return _wtoi64(buffer);
 }
 
-nt::ntInt StringToNumber( const ntChar* buffer )
+ntInt StringToNumber( const ntChar* buffer )
 {
 	return atoi(buffer);
 }
 
-nt::ntInt64 StringToNumber64( const ntChar* buffer )
+ntInt64 StringToNumber64( const ntChar* buffer )
 {
 	return _atoi64(buffer);
 }

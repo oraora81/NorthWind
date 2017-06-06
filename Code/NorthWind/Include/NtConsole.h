@@ -1,7 +1,7 @@
 
 #pragma once
 
-namespace nt { namespace LOG {
+namespace nt { namespace log {
 
 class NtConsole
 {
@@ -10,9 +10,9 @@ public:
 	static void Print(const NtString& str);
 
 private:
-	static nt::FS::NtFile* ms_file;
+	static nt::fs::NtFile* ms_file;
 	static HANDLE ms_handle;
 };
 
-}	// namespace LOG
+}	// namespace log
 }	// namespace nt

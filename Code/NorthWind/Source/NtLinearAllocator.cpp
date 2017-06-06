@@ -2,7 +2,7 @@
 #include "NtCoreLib.h"
 #pragma hdrstop
 
-namespace nt { namespace Memory {
+namespace nt { namespace memory {
 
 NT_IMPLEMENT_OBJECT(NtLinearAllocator, NtAllocator)
 NT_IMPLEMENT_FACTORY(NtLinearAllocator)
@@ -72,5 +72,5 @@ void NtLinearAllocator::Reset()
 	m_currentPosition = m_initialPosition;
 }
 
-}	// namespace Memory
+}	// namespace memory
 }	// namespace nt
