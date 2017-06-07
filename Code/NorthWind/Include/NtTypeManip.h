@@ -71,13 +71,14 @@ struct Safe_Delete_Second
 struct Safe_Release
 {
 	template <typename T>
-	void operator() (T object)
+	void operator() (T& object)
 	{
 		assert(NtIsPtr<T>::Result == TRUE);
 
 		if (object)
 		{
 			object->Release();
+			object = nullptr;
 		}
 	}
 };

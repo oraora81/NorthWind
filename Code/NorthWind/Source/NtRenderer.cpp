@@ -9,7 +9,6 @@
 #include "NtTextureShader.h"
 #include "NtLightShader.h"
 #include "NtLight.h"
-
 #include "NtModelParser.h"
 #include "NtAse.h"
 
@@ -39,12 +38,12 @@ NtRenderer::~NtRenderer()
 }
 
 
-bool NtRenderer::Initialize(HWND hwnd, ntInt width, ntInt height)
+bool NtRenderer::Initialize(HWND hwnd, ntInt width, ntInt height, bool fullScreen)
 {
 	m_renderEngine = std::shared_ptr<NtDx11Renderer>(new NtDx11Renderer());
 	NtAsserte(m_renderEngine != nullptr);
 
-	bool res = m_renderEngine->Initialize(width, height, hwnd, VSYNC_ENABLED, false, false, 1000.0f, 0.1f);
+	bool res = m_renderEngine->Initialize(width, height, hwnd, VSYNC_ENABLED, fullScreen, false, 1000.0f, 0.1f);
 	if (res == false)
 	{
 		MessageBox(hwnd, L"Could not initialize Direct3D", L"Error", MB_OK);
@@ -231,17 +230,16 @@ bool NtRenderer::CreateTexture3D(D3D11_TEXTURE3D_DESC* desc,D3D11_SUBRESOURCE_DA
 	return FAILED(res) ? false : true;
 }
 
-int NtRenderer::GetFeatureLevel()
+int NtRenderer::GetFeatureLevel() const
 {
 	return m_renderEngine->Device()->GetFeatureLevel();
 }
 
-std::shared_ptr<NtDx11Renderer>& NtRenderer::GetD3DRenderer()
+const std::shared_ptr<NtDx11Renderer>& NtRenderer::GetD3DRenderer() const
 {
 	return m_renderEngine;
 }
 
-//bool NtRenderer::CreateBuffer(const D3D11_BUFFER_DESC& desc,D3D11_SUBRESOURCE_DATA* resData,ID3D11Buffer** buffer)
 bool NtRenderer::CreateBuffer(NtRenderBufferParam& param)
 {
 	HRESULT res = m_renderEngine->Device()->CreateBuffer(param.m_desc, param.m_resData, param.m_buffer);

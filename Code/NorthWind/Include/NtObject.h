@@ -13,6 +13,7 @@ public:
 	virtual const NtRTTI& GetRTTI() const;
 	
 	bool IsExactly(const NtRTTI* rtti) const;
+
 	bool IsDerived(const NtRTTI* rtti) const;
 
 	const NtString& GetObjName() const;
@@ -21,8 +22,11 @@ public:
 	typedef NtObjectFactory<NtObject> OBJ_FACTORY;
 
 	static bool RegisterFactory();
+
 	static void InitializeFactory();
+
 	static void TerminateFactory();
+
 	static NtObject* CreateObject(const NtString& obj_name);
 	
 protected:

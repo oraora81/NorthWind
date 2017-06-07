@@ -157,7 +157,7 @@ bool NtApplication::Initialize(bool fullscreen)
 	//
 	m_renderer = new nt::renderer::NtRenderer;
 	g_renderInterface = m_renderer;
-	if (false == m_renderer->Initialize(m_hwnd, width, height))
+	if (false == m_renderer->Initialize(m_hwnd, width, height, m_fullScreen))
 	{
 		return false;
 	}

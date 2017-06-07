@@ -47,6 +47,11 @@ NtDx11Renderer::~NtDx11Renderer()
 	IDXGIAdapter* adapter = nullptr;
 	HRF(factory->EnumAdapters(0, &adapter));
 	
+	/* Direct3d 10 버전만 지원함
+	LARGE_INTEGER umdVersion;
+	HRF(adapter->CheckInterfaceSupport(__uuidof(ID3D11Device), &umdVersion));
+	*/
+
 	// 메인 output어댑터 enumerate (moniter)
 	IDXGIOutput* adapterOutput = nullptr;
 	HRF(adapter->EnumOutputs(0, &adapterOutput));
@@ -218,6 +223,9 @@ NtDx11Renderer::~NtDx11Renderer()
 	default:
 		return false;
 	}
+
+	// DXGI가 Alt + Enter를 감지하여 전체 창 전환을 못하도록 메시지큐를 모니터링 하지 않도록 한다.
+	HRF(factory->MakeWindowAssociation(hwnd, DXGI_MWA_NO_WINDOW_CHANGES | DXGI_MWA_NO_ALT_ENTER));
 
 	// release tools
 	SAFE_DELETE_ARRAY(displayModeList);
