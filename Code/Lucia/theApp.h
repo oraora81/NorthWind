@@ -8,9 +8,12 @@ class TheApp : public nt::app::NtApplication
 {
 public:
 	TheApp();
-	virtual ~TheApp();
+
+	virtual ~TheApp() override;
 
 	virtual bool Initialize(bool fullscreen) override;
+
 	virtual void OnMouseDown(WPARAM buttonState, ntInt x, ntInt y) override;
+
 	virtual void OnMouseUp(WPARAM buttonState, ntInt x, ntInt y) override;
 };

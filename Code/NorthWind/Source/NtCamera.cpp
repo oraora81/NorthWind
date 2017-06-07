@@ -31,13 +31,13 @@ void NtCamera::SetRotation(float x, float y, float z)
 	m_rot[2] = z;
 }
 
-const XMFLOAT3A NtCamera::GetPosition()
+const XMFLOAT3A NtCamera::GetPosition() const
 {
 	return XMFLOAT3A(m_pos[0], m_pos[1], m_pos[2]);
 }
 
 
-const XMFLOAT3A NtCamera::GetRotation()
+const XMFLOAT3A NtCamera::GetRotation() const
 {
 	return XMFLOAT3A(m_rot[0], m_rot[1], m_rot[2]);
 }

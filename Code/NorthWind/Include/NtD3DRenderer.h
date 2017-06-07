@@ -7,28 +7,30 @@ class NtD3DRenderer
 {
 public:
 	NtD3DRenderer();
+
 	virtual ~NtD3DRenderer();
 
 	virtual bool Initialize(int width, int height, HWND hwnd, bool vsync, bool fullscreen, bool enableMsaa, float screenDepth, float screenNear) = 0;
+
 	virtual void Release() = 0;
 
 	virtual void BeginScene(float r, float g, float b, float a) = 0;
+
 	virtual void EndScene() = 0;
 
 	virtual bool Resize(ntInt width, ntInt height) = 0;
 	
 	void GetWorldMatrix(XMMATRIX& world);
+
 	void GetProjectionMatrix(XMMATRIX& proj);
+
 	void GetOrthoMatrix(XMMATRIX& ortho);
 
-
-	//
 	void GetDeviceCardInfo(NtString& cardName, ntInt& memory);
 
-	//
 	const ntChar* GetVShaderModel() const;
-	const ntChar* GetPShaderModel() const;
 
+	const ntChar* GetPShaderModel() const;
 
 	// error Report
 	void OutputShaderErrorMessage(ID3D10Blob* errMsg, const ntWchar* fileName);
@@ -36,6 +38,7 @@ public:
 private:
 	// prevent obj copy
 	NtD3DRenderer(const NtD3DRenderer&);
+
 	NtD3DRenderer& operator = (NtD3DRenderer&);
 
 protected:
