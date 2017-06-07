@@ -906,7 +906,7 @@ void NtAse::ParseMapDiffuse(NtMaterial* material)
 				continue;
 			}
 
-			NtString fileName(material->m_bitmapName.Buffer(), lastPos+1, material->m_bitmapName.Size());
+			NtString fileName(material->m_bitmapName.Buffer(), static_cast<ntInt>(lastPos+1), static_cast<ntInt>(material->m_bitmapName.Size()));
 			material->m_bitmapName = fileName;
 
 			ntUint handle = g_resManager->LoadTexture(fileName.Buffer());
@@ -921,7 +921,7 @@ void NtAse::ParseMapDiffuse(NtMaterial* material)
 		{
 			float scale = 0.0f;
 			ntWchar temp[32];
-			ntInt res = swscanf_s(GetData(), L"%s %f", temp, _countof(temp), &scale);
+			ntInt res = swscanf_s(GetData(), L"%s %f", temp, (unsigned)_countof(temp), &scale);
 			if (res != 2)	return;
 
 			material->m_scaleU = scale;
@@ -930,7 +930,7 @@ void NtAse::ParseMapDiffuse(NtMaterial* material)
 		{
 			float scale = 0.0f;
 			ntWchar temp[32];
-			ntInt res = swscanf_s(GetData(), L"%s %f", temp, _countof(temp), &scale);
+			ntInt res = swscanf_s(GetData(), L"%s %f", temp, (unsigned)_countof(temp), &scale);
 			if (res != 2)	return;
 
 			material->m_scaleV = scale;
@@ -960,7 +960,7 @@ void NtAse::SetKeyword()
 	ntWchar buffer[READ_BUF_SIZE];
 	Crt::MemSet(buffer, sizeof(buffer));
 
-	ntInt res = swscanf_s(GetData(), L"%s", buffer, _countof(buffer));
+	ntInt res = swscanf_s(GetData(), L"%s", buffer, (unsigned)_countof(buffer));
 	if (res == EOF)
 	{
 		return;

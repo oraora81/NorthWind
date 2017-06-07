@@ -54,9 +54,6 @@
     <ClInclude Include="Renderer.h">
       <Filter>헤더 파일\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="DXRenderer.h">
-      <Filter>헤더 파일\Renderer</Filter>
-    </ClInclude>
     <ClInclude Include="FontRender.h">
       <Filter>헤더 파일\Renderer</Filter>
     </ClInclude>
@@ -76,9 +73,6 @@
     </ClCompile>
     <ClCompile Include="Lucia.cpp">
       <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="DXRenderer.cpp">
-      <Filter>소스 파일\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="FontRender.cpp">
       <Filter>소스 파일\Renderer</Filter>

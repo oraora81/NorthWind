@@ -90,22 +90,4 @@ extern nt::renderer::NtRenderer* g_renderInterface;
 extern std::shared_ptr<nt::renderer::NtDx11Renderer> g_renderer;
 
 
-static LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-	switch(message)
-	{
-	case WM_DESTROY:
-		{
-			PostQuitMessage(0);
-		}
-		return 0;
-
-	case WM_CLOSE:
-		{
-			PostQuitMessage(0);
-		}
-		return 0;
-	}
-
-	return g_app->MessageHandler(hwnd, message, wParam, lParam);
-}
+static LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);

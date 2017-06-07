@@ -326,7 +326,6 @@
   <ItemGroup>
     <ClInclude Include="theApp.h" />
     <ClInclude Include="DxInput.h" />
-    <ClInclude Include="DXRenderer.h" />
     <ClInclude Include="FontRender.h" />
     <ClInclude Include="Lucia.h" />
     <ClInclude Include="Renderer.h" />
@@ -338,7 +337,6 @@
   <ItemGroup>
     <ClCompile Include="theApp.cpp" />
     <ClCompile Include="DxInput.cpp" />
-    <ClCompile Include="DXRenderer.cpp" />
     <ClCompile Include="FontRender.cpp" />
     <ClCompile Include="Lucia.cpp" />
     <ClCompile Include="RenderObj.cpp" />

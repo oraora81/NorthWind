@@ -5,6 +5,7 @@
 
 #pragma warning( disable : 4127 )
 #pragma warning( disable : 4838 )
+#pragma warning( disable : 4100 )
 
 // 
 // Common Library
