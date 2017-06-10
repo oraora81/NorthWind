@@ -124,7 +124,7 @@ bool NtFile::ReadTag()
 {
 	Crt::MemSet(m_readBuffer, sizeof(m_readBuffer));
 
-	ntInt res = fwscanf_s(m_fp, L"%s", m_readBuffer, _countof(m_readBuffer));
+	ntInt res = fwscanf_s(m_fp, L"%s", m_readBuffer, (ntUint)_countof(m_readBuffer));
 	if (res == EOF)
 	{
 		return false;

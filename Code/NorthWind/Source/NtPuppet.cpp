@@ -84,7 +84,7 @@ void NtPuppet::Render(const XMMATRIX& world, const XMMATRIX& view, const XMMATRI
 	// set the type of primitive that should be rendered from this vertex buffer, in this case triangles.
 	//renderer->SetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
 
-	g_renderer->DeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	g_renderInterface->SetPrimitiveTopology(ePrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	ntSize size = (ntSize)m_meshVector.size();
 	for (ntSize i = 0; i < size; ++i)

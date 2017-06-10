@@ -235,11 +235,6 @@ int NtRenderer::GetFeatureLevel() const
 	return m_renderEngine->Device()->GetFeatureLevel();
 }
 
-const std::shared_ptr<NtDx11Renderer>& NtRenderer::GetD3DRenderer() const
-{
-	return m_renderEngine;
-}
-
 bool NtRenderer::CreateBuffer(NtRenderBufferParam& param)
 {
 	HRESULT res = m_renderEngine->Device()->CreateBuffer(param.m_desc, param.m_resData, param.m_buffer);
