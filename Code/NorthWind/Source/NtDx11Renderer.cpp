@@ -450,7 +450,7 @@ NtDx11Renderer::~NtDx11Renderer()
 	depthStencilDesc.SampleDesc.Quality = 0;
 
 	depthStencilDesc.Usage = D3D11_USAGE_DEFAULT;
-	depthStencilDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	depthStencilDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
 	depthStencilDesc.CPUAccessFlags = 0;
 	depthStencilDesc.MiscFlags = 0;
 

@@ -38,11 +38,16 @@ NtApplication::NtApplication()
 
 }
 
-bool NtApplication::Initialize(bool fullscreen)
+bool NtApplication::Initialize(bool fullscreen, ntInt width, ntInt height)
 {
 	NtSetup::Setup();
 
 	m_fullScreen = fullscreen;
+	m_width = width;
+	m_height = height;
+	// 
+	//int width = GetSystemMetrics(SM_CXSCREEN);
+	//int height = GetSystemMetrics(SM_CYSCREEN);
 
 	// set external pointer
 	g_app = this;
@@ -90,18 +95,14 @@ bool NtApplication::Initialize(bool fullscreen)
 	RegisterClassEx(&wc);
 
 	// 
-	int width = GetSystemMetrics(SM_CXSCREEN);
-	int height = GetSystemMetrics(SM_CYSCREEN);
-
-	// 
 	int posX = 0;
 	int posY = 0;
 	if (m_fullScreen)
 	{
 		Crt::MemSet(&screenSetting, sizeof(screenSetting));
 		screenSetting.dmSize = sizeof(screenSetting);
-		screenSetting.dmPelsWidth = static_cast<ntUint>(width);
-		screenSetting.dmPelsHeight = static_cast<ntUint>(height);
+		screenSetting.dmPelsWidth = static_cast<ntUint>(m_width);
+		screenSetting.dmPelsHeight = static_cast<ntUint>(m_height);
 		screenSetting.dmBitsPerPel = 32;
 		screenSetting.dmFields = DM_BITSPERPEL | DM_PELSWIDTH | DM_PELSHEIGHT;
 
@@ -110,13 +111,13 @@ bool NtApplication::Initialize(bool fullscreen)
 	}
 	else
 	{
-		posX = (GetSystemMetrics(SM_CXSCREEN) - width) / 2;
-		posY = (GetSystemMetrics(SM_CYSCREEN) - height) / 2;
+		posX = (GetSystemMetrics(SM_CXSCREEN) - m_width) / 2;
+		posY = (GetSystemMetrics(SM_CYSCREEN) - m_height) / 2;
 	}
 
 	m_hwnd = CreateWindowEx(WS_EX_APPWINDOW, m_appName.Buffer(), m_appName.Buffer(),
 		WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_POPUP,
-		posX, posY, width, height, NULL, NULL, m_hInst, NULL);
+		posX, posY, m_width, m_height, NULL, NULL, m_hInst, NULL);
 
 
 	// Bring the window up on the screen and set it as main focus.
@@ -157,7 +158,7 @@ bool NtApplication::Initialize(bool fullscreen)
 	//
 	m_renderer = new nt::renderer::NtRenderer;
 	g_renderInterface = m_renderer;
-	if (false == m_renderer->Initialize(m_hwnd, width, height, m_fullScreen))
+	if (false == m_renderer->Initialize(m_hwnd, m_width, m_height, m_fullScreen))
 	{
 		return false;
 	}

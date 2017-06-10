@@ -55,6 +55,11 @@ const ntChar* NtD3DRenderer::GetPShaderModel() const
 	return m_shaderModel[1];
 }
 
+ntInt NtD3DRenderer::VideoMemory() const
+{
+	return m_videoCardMemory;
+}
+
 void NtD3DRenderer::OutputShaderErrorMessage(ID3D10Blob* errMsg, const ntWchar* fileName)
 {
 	ntChar* msg = reinterpret_cast<ntChar*>(errMsg->GetBufferPointer());

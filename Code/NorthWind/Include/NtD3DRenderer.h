@@ -32,6 +32,8 @@ public:
 
 	const ntChar* GetPShaderModel() const;
 
+	ntInt VideoMemory() const;
+
 	// error Report
 	void OutputShaderErrorMessage(ID3D10Blob* errMsg, const ntWchar* fileName);
 

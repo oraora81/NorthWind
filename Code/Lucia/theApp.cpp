@@ -54,9 +54,9 @@ TheApp::~TheApp()
 
 }
 
-bool TheApp::Initialize(bool fullscreen)
+bool TheApp::Initialize(bool fullscreen, ntInt width, ntInt height)
 {
-	bool result = NtApplication::Initialize(fullscreen);
+	bool result = NtApplication::Initialize(fullscreen, width, height);
 	if (result == false)
 	{
 		return false;

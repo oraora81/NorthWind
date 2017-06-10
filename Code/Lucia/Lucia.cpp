@@ -55,7 +55,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 
 	TheApp* theApp = new TheApp();
-	if (theApp->Initialize(false))
+	if (theApp->Initialize(false, 1024, 768))
 	{
 		theApp->MsgLoop();
 		theApp->Shutdown();

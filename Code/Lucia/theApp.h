@@ -11,7 +11,7 @@ public:
 
 	virtual ~TheApp() override;
 
-	virtual bool Initialize(bool fullscreen) override;
+	virtual bool Initialize(bool fullscreen, ntInt width, ntInt height) override;
 
 	virtual void OnMouseDown(WPARAM buttonState, ntInt x, ntInt y) override;
 

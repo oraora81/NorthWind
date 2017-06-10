@@ -19,7 +19,7 @@ public:
 	NtApplication();
 	virtual ~NtApplication() {}
 
-	virtual bool Initialize(bool fullscreen);
+	virtual bool Initialize(bool fullscreen, ntInt width, ntInt height);
 	virtual void Shutdown();
 	virtual bool OnResize(ntInt width, ntInt height);
 	virtual bool Process();
