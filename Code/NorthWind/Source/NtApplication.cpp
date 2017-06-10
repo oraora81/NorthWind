@@ -83,16 +83,20 @@ bool NtApplication::Initialize(bool fullscreen, ntInt width, ntInt height)
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
 	wc.hInstance = m_hInst;
-	wc.hIcon = LoadIcon(NULL, IDI_WINLOGO);
+	wc.hIcon = LoadIcon(NULL, IDI_APPLICATION);
 	wc.hIconSm = wc.hIcon;
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wc.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
+	wc.hbrBackground = (HBRUSH)GetStockObject(NULL_BRUSH);
 	wc.lpszMenuName = NULL;
 	wc.lpszClassName = m_appName.Buffer();
 	wc.cbSize = sizeof(WNDCLASSEX);
 
 	// register the window class
-	RegisterClassEx(&wc);
+	if (!RegisterClassEx(&wc))
+	{
+		MessageBox(0, L"Register Class Failed!", L"Error", 0);
+		return false;
+	}
 
 	// 
 	int posX = 0;
@@ -116,7 +120,8 @@ bool NtApplication::Initialize(bool fullscreen, ntInt width, ntInt height)
 	}
 
 	m_hwnd = CreateWindowEx(WS_EX_APPWINDOW, m_appName.Buffer(), m_appName.Buffer(),
-		WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_POPUP,
+		WS_OVERLAPPEDWINDOW,
+		//WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_POPUP,
 		posX, posY, m_width, m_height, NULL, NULL, m_hInst, NULL);
 
 
