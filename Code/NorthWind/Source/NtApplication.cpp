@@ -418,29 +418,4 @@ void NtApplication::CalculateFrame()
 	}
 }
 
-}	// namespace app
-
-}	// namespace nt
-
-
-
-// default WndProc
-//LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
-//{
-//	switch(message)
-//	{
-//	case WM_DESTROY:
-//		{
-//			PostQuitMessage(0);
-//		}
-//		return 0;
-//
-//	case WM_CLOSE:
-//		{
-//			PostQuitMessage(0);
-//		}
-//		return 0;
-//	}
-//
-//	return g_app->MessageHandler(hwnd, message, wParam, lParam);
-//}
+} }

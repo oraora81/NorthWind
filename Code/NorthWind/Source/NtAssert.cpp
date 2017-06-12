@@ -79,5 +79,5 @@ bool IsAssertBox()
 	return countAssertCall > 0;
 }
 
-}	// namespace ntDebug
-}	// namespace nt
+} }
+

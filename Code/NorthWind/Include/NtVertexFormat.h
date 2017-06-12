@@ -60,5 +60,5 @@ protected:
 	NtFlag		m_formatUsage;
 };
 
-} // namespace renderer
-} // namespace nt
+} }
+

@@ -366,7 +366,7 @@ NtDx11Renderer::~NtDx11Renderer()
 	
 	// 2d 렌더링에 사용할 정사영 행렬 생성
 	// create an orthogonal graphic projection matrix for 2D rendering
-	XMMatrixOrthographicLH((ntFloat)width, (ntFloat)height, screenNear, screenDepth);
+	m_ortho = XMMatrixOrthographicLH((ntFloat)width, (ntFloat)height, screenNear, screenDepth);
 
 	return true;
 }
@@ -510,5 +510,5 @@ bool NtDx11Renderer::CreateShaderResourceView(ID3D11Texture3D* tex,D3D11_SHADER_
 	return FAILED(res) ? false : true;
 }
 
-}	// namespace renderer
-}	// namespace nt
+} }
+

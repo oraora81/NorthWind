@@ -259,7 +259,5 @@ void NtRenderer::SetIndexBuffers(NtIndexBuffer* buffer, NTCOLORFMT format, ntUin
 	m_renderEngine->DeviceContext()->IASetIndexBuffer(buffer, format, offset);
 }
 
+} }
 
-} // namespace renderer
-
-} // namespace nt

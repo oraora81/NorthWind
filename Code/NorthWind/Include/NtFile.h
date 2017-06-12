@@ -54,5 +54,5 @@ private:
 };
 
 
-}	// namespace fs
-}	// namespace nt
+} }
+

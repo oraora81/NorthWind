@@ -59,5 +59,5 @@ private:
 	NtLight*			m_light;
 };
 
-}	// namespace renderer
-}	// namespace nt
+} }
+

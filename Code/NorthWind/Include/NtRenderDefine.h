@@ -68,5 +68,3 @@
 		//make something
 		#pragma error
 #endif
-
-

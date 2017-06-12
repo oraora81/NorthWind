@@ -272,6 +272,5 @@ void FreeEnvVariable(ntWchar* envValue)
 
 
 
-}	// namespace Crt
+} }
 
-}	// namespace nt

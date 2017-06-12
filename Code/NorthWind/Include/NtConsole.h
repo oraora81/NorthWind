@@ -14,5 +14,5 @@ private:
 	static HANDLE ms_handle;
 };
 
-}	// namespace log
-}	// namespace nt
+} }
+

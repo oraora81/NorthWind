@@ -75,6 +75,4 @@ ntWchar* GetCmdLine();
 NtErrorCode	AllocEnvVariable(const ntWchar* envName, ntWchar** envValue);
 void	FreeEnvVariable(ntWchar* envValue);
 	
-}	// namespace Crt
-
-}	// namespace nt
+} }

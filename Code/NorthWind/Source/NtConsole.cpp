@@ -58,5 +58,5 @@ void NtConsole::Print(const NtString& str)
 	WriteConsole(ms_handle, str.Buffer(), str.Size(), &written, nullptr);
 }
 
-}	// namespace log
-}	// namespace nt
+} }
+

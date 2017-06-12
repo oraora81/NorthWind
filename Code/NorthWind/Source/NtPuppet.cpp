@@ -390,5 +390,5 @@ void NtPuppet::SetLightShader(NtLightShader* shader)
 }
 
 
-}	// namespace renderer
-}	// namespace nt
+} }
+

@@ -62,5 +62,5 @@ bool NtImage::InitializeBuffer()
 	return true;
 }
 
-}	// namespace renderer
-}	// namespace nt
+} }
+

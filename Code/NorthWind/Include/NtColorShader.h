@@ -37,5 +37,5 @@ private:
 	ID3D11Buffer*		m_matrixBuffer;
 };
 
-}	// namespace renderer
-}	// namespace nt
+} }
+

@@ -82,4 +82,3 @@ void TheApp::OnMouseUp(WPARAM buttonState, ntInt x, ntInt y)
 {
 	NTRACE(L"Up - x : %d, y : %%d", x, y);
 }
-

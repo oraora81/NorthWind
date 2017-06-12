@@ -253,5 +253,4 @@ void NtColorShader::RenderShader(int indexCount)
 	g_renderer->DeviceContext()->DrawIndexed(indexCount, 0, 0);
 }
 
-}
-}
+} }

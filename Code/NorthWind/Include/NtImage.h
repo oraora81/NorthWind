@@ -36,5 +36,5 @@ ntInt NtImage::GetIndexCount() const
 	return m_indexCount;
 }
 
-}	// namespace renderer
-}	// namespace nt
+} }
+

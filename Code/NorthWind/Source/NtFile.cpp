@@ -178,5 +178,4 @@ void NtFile::ClearData()
 	Crt::MemSet(m_readBuffer, sizeof(m_readBuffer));
 }
 
-}	// namespace fs
-}	// namespace nt
+} }
