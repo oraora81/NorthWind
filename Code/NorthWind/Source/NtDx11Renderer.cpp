@@ -190,8 +190,10 @@ NtDx11Renderer::~NtDx11Renderer()
 	// 
 	swapChainDesc.Flags = 0;
 
+	// DXGI가 Alt + Enter를 감지하여 전체 창 전환을 못하도록 메시지큐를 모니터링 하지 않도록 한다.
+	//HRF(factory->MakeWindowAssociation(hwnd, DXGI_MWA_NO_WINDOW_CHANGES | DXGI_MWA_NO_ALT_ENTER));
+
 	// swap chain 생성
-	
 	HRF(D3D11CreateDeviceAndSwapChain(
 		nullptr,
 		D3D_DRIVER_TYPE_HARDWARE,
@@ -223,9 +225,6 @@ NtDx11Renderer::~NtDx11Renderer()
 	default:
 		return false;
 	}
-
-	// DXGI가 Alt + Enter를 감지하여 전체 창 전환을 못하도록 메시지큐를 모니터링 하지 않도록 한다.
-	HRF(factory->MakeWindowAssociation(hwnd, DXGI_MWA_NO_WINDOW_CHANGES | DXGI_MWA_NO_ALT_ENTER));
 
 	// release tools
 	SAFE_DELETE_ARRAY(displayModeList);
