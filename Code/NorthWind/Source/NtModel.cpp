@@ -31,14 +31,14 @@ NtModel::~NtModel()
 
 }
 
-bool NtModel::Initialize(ntWchar* puppetName)
+bool NtModel::Initialize(const ntWchar* modelName)
 {
 	// load the puppet Data from txt file.
-	bool res = InitializeAse(puppetName);
-	if (false == res)
-	{
-		return false;
-	}
+	//bool res = InitializeAse(modelName);
+	//if (false == res)
+	//{
+	//	return false;
+	//}
 
 	// init the vertex and index buffer that hold the geometry for the triangle.
 	//res = InitializeBuffer(renderer);
@@ -46,6 +46,17 @@ bool NtModel::Initialize(ntWchar* puppetName)
 	//{
 	//	return false;
 	//}
+
+	NtVertexType vertices[] = 
+	{
+		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), (const float*)&Colors::White},
+		{ XMFLOAT3(-1.0f, +1.0f, -1.0f), (const float*)&Colors::White },
+		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), (const float*)&Colors::White },
+		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), (const float*)&Colors::White },
+		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), (const float*)&Colors::White },
+		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), (const float*)&Colors::White },
+
+	};
 
 	return true;
 }
@@ -114,7 +125,7 @@ int NtModel::GetIndexCount()
 }
 
 
-bool NtModel::InitializeAse(ntWchar* puppetName)
+bool NtModel::InitializeAse(const ntWchar* puppetName)
 {
 	// load the raw data from ase file
 	NtAse puppetLoader(puppetName);

@@ -20,9 +20,8 @@ class NtModel
 {
 	struct NtVertexType
 	{
-		XMFLOAT3A position;
-		XMFLOAT2A texture;
-		XMFLOAT3A normal;
+		XMFLOAT3 position;
+		XMFLOAT4 color;
 	};
 
 public:
@@ -30,7 +29,7 @@ public:
 	NtModel();
 	~NtModel();
 
-	bool Initialize(ntWchar* puppetName);
+	bool Initialize(const ntWchar* puppetName);
 	void Release();
 	void Render(const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj, const NtLight* light);
 
@@ -50,7 +49,7 @@ public:
 	void	SetLightShader(NtLightShader* shader);
 
 private:
-	bool InitializeAse(ntWchar* puppetName);
+	bool InitializeAse(const ntWchar* puppetName);
 	void ReleaseBuffer();
 	
 private:
