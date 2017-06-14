@@ -84,7 +84,7 @@ bool NtRenderer::Initialize(HWND hwnd, ntInt width, ntInt height, bool fullScree
 	m_colorShader = new NtColorShader;
 	NtAsserte(m_colorShader != nullptr);
 
-	res = m_colorShader->Initialize(L"color_vs_hlsl", L"color_ps_hlsl");
+	res = m_colorShader->Initialize(L"color_vs.hlsl", L"color_ps.hlsl");
 	if (res == false)
 	{
 		MessageBox(hwnd, L"Could not initialize the color shader object", L"Error", MB_OK);
