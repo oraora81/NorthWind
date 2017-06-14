@@ -4,7 +4,7 @@
 
 #include "NtModelParser.h"
 #include "NtVertexFormat.h"
-#include "NtPuppet.h"
+#include "NtModel.h"
 
 namespace nt {
 
@@ -332,7 +332,7 @@ bool NtModelParser::ReadVertexInfo()
 	return true;
 }
 
-void NtModelParser::SetPuppet(renderer::NtPuppet* puppet)
+void NtModelParser::SetPuppet(renderer::NtModel* puppet)
 {
 	m_linkPuppet = puppet;
 }

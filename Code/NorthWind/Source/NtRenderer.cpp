@@ -4,7 +4,7 @@
 
 #include "NtD3DRenderer.h"
 #include "NtCamera.h"
-#include "NtPuppet.h"
+#include "NtModel.h"
 #include "NtColorShader.h"
 #include "NtTextureShader.h"
 #include "NtLightShader.h"

@@ -35,7 +35,7 @@ private:
 
 namespace renderer
 {
-class NtPuppet;
+class NtModel;
 }
 
 class NtModelParser
@@ -46,7 +46,7 @@ public:
 
 	bool	Execute(const ntWchar* fileName);
 
-	void	SetPuppet(renderer::NtPuppet* puppet);
+	void	SetPuppet(renderer::NtModel* puppet);
 
 private:
 	bool	ProcessParse();
@@ -64,7 +64,7 @@ private:
 private:
 	fs::NtFile		m_file;
 	PARSE_KEYWORD	m_parseMode;
-	renderer::NtPuppet* m_linkPuppet;
+	renderer::NtModel* m_linkPuppet;
 };
 
 }	// namespace nt

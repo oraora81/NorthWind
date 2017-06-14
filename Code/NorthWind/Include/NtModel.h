@@ -16,7 +16,7 @@ class NtLightShader;
 class NtTextureShader;
 class NtLight;
 
-class NtPuppet
+class NtModel
 {
 	struct NtVertexType
 	{
@@ -27,8 +27,8 @@ class NtPuppet
 
 public:
 
-	NtPuppet();
-	~NtPuppet();
+	NtModel();
+	~NtModel();
 
 	bool Initialize(ntWchar* puppetName);
 	void Release();

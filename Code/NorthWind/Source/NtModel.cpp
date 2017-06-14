@@ -2,7 +2,7 @@
 #include "NtCoreLib.h"
 #pragma hdrstop
 
-#include "NtPuppet.h"
+#include "NtModel.h"
 
 #include "NtRenderer.h"
 #include "NtTexture.h"
@@ -14,7 +14,7 @@
 
 namespace nt { namespace renderer {
 
-NtPuppet::NtPuppet()
+NtModel::NtModel()
 	: m_vertexBuffer(nullptr)
 	, m_indexBuffer(nullptr)
 	, m_vertexCount(0)
@@ -26,12 +26,12 @@ NtPuppet::NtPuppet()
 	m_lightShader = nullptr;
 }
 
-NtPuppet::~NtPuppet()
+NtModel::~NtModel()
 {
 
 }
 
-bool NtPuppet::Initialize(ntWchar* puppetName)
+bool NtModel::Initialize(ntWchar* puppetName)
 {
 	// load the puppet Data from txt file.
 	bool res = InitializeAse(puppetName);
@@ -51,13 +51,13 @@ bool NtPuppet::Initialize(ntWchar* puppetName)
 }
 
 
-void NtPuppet::Release()
+void NtModel::Release()
 {
 	ReleaseBuffer();
 }
 
 
-void NtPuppet::Render(const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj, const NtLight* light)
+void NtModel::Render(const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj, const NtLight* light)
 {
 	ntUint stride = sizeof(NtTexVertex);
 	ntUint offset = 0;
@@ -108,13 +108,13 @@ void NtPuppet::Render(const XMMATRIX& world, const XMMATRIX& view, const XMMATRI
 	}
 }
 
-int NtPuppet::GetIndexCount()
+int NtModel::GetIndexCount()
 {
 	return m_indexCount;
 }
 
 
-bool NtPuppet::InitializeAse(ntWchar* puppetName)
+bool NtModel::InitializeAse(ntWchar* puppetName)
 {
 	// load the raw data from ase file
 	NtAse puppetLoader(puppetName);
@@ -336,14 +336,14 @@ bool NtPuppet::InitializeAse(ntWchar* puppetName)
 }
 
 
-void NtPuppet::ReleaseBuffer()
+void NtModel::ReleaseBuffer()
 {
 	SAFE_RELEASE(m_indexBuffer);
 	SAFE_RELEASE(m_vertexBuffer);
 }
 
 
-void NtPuppet::SetVertexCount( ntInt count )
+void NtModel::SetVertexCount( ntInt count )
 {
 	NtAsserte(count > 0);
 
@@ -351,22 +351,22 @@ void NtPuppet::SetVertexCount( ntInt count )
 }
 
 
-ntInt NtPuppet::GetVertexCount() const
+ntInt NtModel::GetVertexCount() const
 {
 	return m_vertexCount;
 }
 
-bool NtPuppet::SetFormatType( const ntWchar* usage, const ntWchar* type )
+bool NtModel::SetFormatType( const ntWchar* usage, const ntWchar* type )
 {
 	return m_vertexFormat.SetFormatType(usage, type);
 }
 
-ntInt NtPuppet::GetSumOffset()
+ntInt NtModel::GetSumOffset()
 {
 	return m_vertexFormat.GetSumOffset();
 }
 
-void NtPuppet::SetVertexInfo( ntFloat* vtxInfo )
+void NtModel::SetVertexInfo( ntFloat* vtxInfo )
 {
 	NtAsserte(vtxInfo != NULL);
 
@@ -374,17 +374,17 @@ void NtPuppet::SetVertexInfo( ntFloat* vtxInfo )
 }
 
 
-void NtPuppet::SetColorShader(NtColorShader* shader)
+void NtModel::SetColorShader(NtColorShader* shader)
 {
 	m_colorShader = shader;
 }
 
-void NtPuppet::SetTextureShader(NtTextureShader* shader)
+void NtModel::SetTextureShader(NtTextureShader* shader)
 {
 	m_textureShader = shader;
 }
 
-void NtPuppet::SetLightShader(NtLightShader* shader)
+void NtModel::SetLightShader(NtLightShader* shader)
 {
 	m_lightShader = shader;
 }

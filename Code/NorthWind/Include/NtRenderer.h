@@ -5,7 +5,7 @@ namespace nt { namespace renderer {
 
 class NtD3DRenderer;
 class NtCamera;
-class NtPuppet;
+class NtModel;
 class NtColorShader;
 class NtTextureShader;
 class NtLightShader;
@@ -52,7 +52,7 @@ private:
 private:
 	std::shared_ptr<NtDx11Renderer> m_renderEngine;
 	NtCamera*			m_camera;
-	NtPuppet*			m_puppet;
+	NtModel*			m_puppet;
 	NtColorShader*		m_colorShader;
 	NtTextureShader*	m_textureShader;
 	NtLightShader*		m_lightShader;
