@@ -47,16 +47,67 @@ bool NtModel::Initialize(const ntWchar* modelName)
 	//	return false;
 	//}
 
+    // vb
 	NtVertexType vertices[] = 
 	{
 		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), (const float*)&Colors::White},
-		{ XMFLOAT3(-1.0f, +1.0f, -1.0f), (const float*)&Colors::White },
-		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), (const float*)&Colors::White },
-		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), (const float*)&Colors::White },
-		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), (const float*)&Colors::White },
-		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), (const float*)&Colors::White },
-
+		{ XMFLOAT3(-1.0f, +1.0f, -1.0f), (const float*)&Colors::Black},
+		{ XMFLOAT3(+1.0f, +-1.0f, -1.0f), (const float*)&Colors::Red},
+		{ XMFLOAT3(+1.0f, -1.0f, -1.0f), (const float*)&Colors::Green },
+		{ XMFLOAT3(-1.0f, -1.0f, +1.0f), (const float*)&Colors::Blue },
+		{ XMFLOAT3(-1.0f, +1.0f, +1.0f), (const float*)&Colors::Yellow },
+		{ XMFLOAT3(+1.0f, +1.0f, +1.0f), (const float*)&Colors::Cyan },
+		{ XMFLOAT3(+1.0f, -1.0f, +1.0f), (const float*)&Colors::Magenta },
 	};
+
+    D3D11_BUFFER_DESC vd;
+    vd.Usage = D3D11_USAGE_IMMUTABLE;
+    vd.ByteWidth = sizeof(vertices);
+    vd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+    vd.CPUAccessFlags = 0;
+    vd.MiscFlags = 0;
+    vd.StructureByteStride = 0;
+
+    D3D11_SUBRESOURCE_DATA vbData;
+    vbData.pSysMem = vertices;
+
+    ID3D11Buffer* vb;
+    HRF(g_renderer->Device()->CreateBuffer(&vd, &vbData, &vb));
+
+    ntUint stride = sizeof(NtVertexType);
+    ntUint offset = 0;
+    g_renderer->DeviceContext()->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
+
+    //ib
+    ntUint indices[24] =
+    {
+        0,1,2,
+        0,2,3,
+        0,3,4,
+        0,4,5,
+        0,5,6,
+        0,6,7,
+        0,7,8,
+        0,8,1
+    };
+
+    D3D11_BUFFER_DESC id;
+    id.Usage = D3D11_USAGE_IMMUTABLE;
+    id.ByteWidth = sizeof(indices);
+    id.BindFlags = D3D11_BIND_INDEX_BUFFER;
+    id.CPUAccessFlags = 0;
+    id.MiscFlags = 0;
+    id.StructureByteStride = 0;
+
+    D3D11_SUBRESOURCE_DATA ibData;
+    ibData.pSysMem = indices;
+
+    ID3D11Buffer* ib;
+    stride = sizeof(ntUint);
+    offset = 0;
+    HRF(g_renderer->Device()->CreateBuffer(&id, &ibData, &ib));
+
+    g_renderer->DeviceContext()->IASetIndexBuffer(ib, DXGI_FORMAT_R32_UINT, 0);
 
 	return true;
 }
