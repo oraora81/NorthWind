@@ -319,25 +319,36 @@ NtDx11Renderer::~NtDx11Renderer()
 	m_deviceContext->OMSetRenderTargets(1, &m_renderTargetView, m_depthStencilView);
 
 	// 어떻게 폴리곤을 그릴지 raster desc 설정
-	D3D11_RASTERIZER_DESC rasterDesc;
-	Crt::MemSet(&rasterDesc, sizeof(rasterDesc));
+	D3D11_RASTERIZER_DESC defRasterDesc;
+	Crt::MemSet(&defRasterDesc, sizeof(defRasterDesc));
 
-	rasterDesc.AntialiasedLineEnable = false;
-	rasterDesc.CullMode = D3D11_CULL_BACK;
-	rasterDesc.DepthBias = 0;
-	rasterDesc.DepthBiasClamp = 0.0f;
-	rasterDesc.DepthClipEnable = true;
-	rasterDesc.FillMode = D3D11_FILL_SOLID;
-	rasterDesc.FrontCounterClockwise = false;
-	rasterDesc.MultisampleEnable = false;
-	rasterDesc.ScissorEnable = false;
-	rasterDesc.SlopeScaledDepthBias = 0.0f;
+	defRasterDesc.AntialiasedLineEnable = false;
+	defRasterDesc.CullMode = D3D11_CULL_BACK;
+	defRasterDesc.DepthBias = 0;
+	defRasterDesc.DepthBiasClamp = 0.0f;
+	defRasterDesc.DepthClipEnable = true;
+	defRasterDesc.FillMode = D3D11_FILL_SOLID;
+	defRasterDesc.FrontCounterClockwise = false;
+	defRasterDesc.MultisampleEnable = false;
+	defRasterDesc.ScissorEnable = false;
+	defRasterDesc.SlopeScaledDepthBias = 0.0f;
 
 	//
-	HRF(m_device->CreateRasterizerState(&rasterDesc, &m_rasterState));
+	HRF(m_device->CreateRasterizerState(&defRasterDesc, &m_rasterState));
 
 	// rasterizer state 설정
 	m_deviceContext->RSSetState(m_rasterState);
+
+	// nocull raster desc설정
+	D3D11_RASTERIZER_DESC ncRasterDesc;
+	Crt::MemSet(&ncRasterDesc, sizeof(ncRasterDesc));
+
+	ncRasterDesc.FillMode = D3D11_FILL_SOLID;
+	ncRasterDesc.CullMode = D3D11_CULL_NONE;
+	ncRasterDesc.FrontCounterClockwise = false;
+	ncRasterDesc.DepthClipEnable = true;
+
+	HRF(m_device->CreateRasterizerState(&ncRasterDesc, &m_noCullRasterState));
 
 	// 렌더링 뷰포트 설정
 	D3D11_VIEWPORT viewport;
@@ -379,6 +390,7 @@ NtDx11Renderer::~NtDx11Renderer()
 		m_swapchain->SetFullscreenState(FALSE, nullptr);
 	}
 
+	SAFE_RELEASE(m_noCullRasterState);
 	SAFE_RELEASE(m_rasterState);
 	SAFE_RELEASE(m_depthStencilView);
 	SAFE_RELEASE(m_depthStencilState);

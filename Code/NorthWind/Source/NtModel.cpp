@@ -109,6 +109,18 @@ bool NtModel::Initialize(const ntWchar* modelName)
 
     g_renderer->DeviceContext()->IASetIndexBuffer(ib, DXGI_FORMAT_R32_UINT, 0);
 
+	NtMeshObj drawInfo;
+	drawInfo.desc = vd;
+	drawInfo.idxBuffer = ib;
+	drawInfo.vtxBuffer = vb;
+	drawInfo.idxCount = _countof(indices);
+	/*if (mesh.m_rawIndex != nullptr)
+	{
+		drawInfo.texHandle = mesh.m_rawIndex[0].m_texHandle;
+	}*/
+
+	m_meshVector.push_back(drawInfo);
+
 	return true;
 }
 
