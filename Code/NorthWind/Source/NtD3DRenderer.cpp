@@ -55,6 +55,11 @@ const ntChar* NtD3DRenderer::GetPShaderModel() const
 	return m_shaderModel[1];
 }
 
+const ntChar* NtD3DRenderer::GetFxShaderModel() const
+{
+	return m_shaderModel[2];
+}
+
 ntInt NtD3DRenderer::VideoMemory() const
 {
 	return m_videoCardMemory;

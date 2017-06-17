@@ -70,7 +70,7 @@ bool NtLightShader::InitializeShader(const ntWchar* vs, const ntWchar* ps)
 
 	
 	// compile the vertex shader code
-	HRESULT res = D3DX11CompileFromFile(g_resManager->GetWholePath(vs), NULL, NULL, "LightVertexShader", g_renderer->GetVShaderModel(), D3D10_SHADER_ENABLE_STRICTNESS, 0 , NULL, &vertexShaderBuffer, &errMsg, NULL);
+	HRESULT res = D3DX11CompileFromFile(g_resManager->GetPath(vs), NULL, NULL, "LightVertexShader", g_renderer->GetVShaderModel(), D3D10_SHADER_ENABLE_STRICTNESS, 0 , NULL, &vertexShaderBuffer, &errMsg, NULL);
 	if (FAILED(res))
 	{
 		// if the shader failed to compile it should have written something to the error message
@@ -85,7 +85,7 @@ bool NtLightShader::InitializeShader(const ntWchar* vs, const ntWchar* ps)
 		return false;
 	}
 
-	res = D3DX11CompileFromFile(g_resManager->GetWholePath(ps), NULL, NULL, "LightPixelShader", g_renderer->GetPShaderModel(), D3D10_SHADER_ENABLE_STRICTNESS, 0, NULL, &pixelShaderBuffer, &errMsg, NULL);
+	res = D3DX11CompileFromFile(g_resManager->GetPath(ps), NULL, NULL, "LightPixelShader", g_renderer->GetPShaderModel(), D3D10_SHADER_ENABLE_STRICTNESS, 0, NULL, &pixelShaderBuffer, &errMsg, NULL);
 	if (FAILED(res))
 	{
 		if (errMsg)

@@ -4,13 +4,14 @@
 
 namespace nt { namespace renderer {
 
-eVSShaderModel NtShader::m_vsModel = eVSShaderModel::NT_MAX_VSSHADER_MODEL;
-ePSShaderModel NtShader::m_psModel = ePSShaderModel::NT_MAX_PSSHADER_MODEL;
+eVShaderModel NtShader::ms_vsModel = eVShaderModel::NT_MAX_VSHADER_MODEL;
+ePShaderModel NtShader::ms_psModel = ePShaderModel::NT_MAX_PSHADER_MODEL;
+eFxShaderModel NtShader::ms_fxModel = eFxShaderModel::NT_MAX_FXSHADER_MODEL;
 
 namespace
 {
 
-static ntChar* g_vsShaderModel[eVSShaderModel::NT_MAX_VSSHADER_MODEL] = 
+static ntChar* g_vsShaderModel[eVShaderModel::NT_MAX_VSHADER_MODEL] = 
 {
 	"vs_1_1",
 	"vs_2_0",
@@ -20,7 +21,7 @@ static ntChar* g_vsShaderModel[eVSShaderModel::NT_MAX_VSSHADER_MODEL] =
 };
 
 
-static ntChar* g_psShaderModel[ePSShaderModel::NT_MAX_PSSHADER_MODEL] = 
+static ntChar* g_psShaderModel[ePShaderModel::NT_MAX_PSHADER_MODEL] = 
 {
 	"ps_1_1",
 	"ps_2_0",
@@ -29,29 +30,44 @@ static ntChar* g_psShaderModel[ePSShaderModel::NT_MAX_PSSHADER_MODEL] =
 	"ps_5_0",
 };
 
+static ntChar* g_fxShaderModel[eFxShaderModel::NT_MAX_FXSHADER_MODEL] = 
+{
+	"fx_2_0",
+	"fx_4_0",
+	"fx_4_1",
+	"fx_5_0",
+};
 
 }
 
-
-const ntChar* NtShader::GetVSModel()
+bool NtShader::InitializeFx(const ntWchar* fx)
 {
-	return g_vsShaderModel[NtShader::m_vsModel];
+	return true;
 }
 
-const ntChar* NtShader::GetPSModel()
+const ntChar* NtShader::GetVSModel() const
 {
-	return g_psShaderModel[NtShader::m_psModel];
+	return g_vsShaderModel[NtShader::ms_vsModel];
 }
 
-
-void NtShader::SetVSShaderModel(eVSShaderModel vs)
+const ntChar* NtShader::GetPSModel() const
 {
-	m_vsModel = vs;
+	return g_psShaderModel[NtShader::ms_psModel];
 }
 
-void NtShader::SetPSShaderModel(ePSShaderModel ps)
+const ntChar* NtShader::GetFXModel() const
 {
-	m_psModel = ps;
+	return g_fxShaderModel[NtShader::ms_fxModel];
+}
+
+void NtShader::SetVShaderModel(eVShaderModel vs)
+{
+	ms_vsModel = vs;
+}
+
+void NtShader::SetPShaderModel(ePShaderModel ps)
+{
+	ms_psModel = ps;
 }
 
 

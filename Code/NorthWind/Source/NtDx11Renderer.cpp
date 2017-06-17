@@ -211,15 +211,18 @@ NtDx11Renderer::~NtDx11Renderer()
 	case D3D_FEATURE_LEVEL_9_3:
 		m_shaderModel[0] = "vs_2_0";
 		m_shaderModel[1] = "ps_2_0";
+		m_shaderModel[2] = "fx_2_0";
 		break;
 	case D3D_FEATURE_LEVEL_10_0:
 	case D3D_FEATURE_LEVEL_10_1:
 		m_shaderModel[0] = "vs_4_0";
 		m_shaderModel[1] = "ps_4_0";
+		m_shaderModel[2] = "fx_4_0";
 		break;
 	case D3D_FEATURE_LEVEL_11_0:
 		m_shaderModel[0] = "vs_5_0";
 		m_shaderModel[1] = "ps_5_0";
+		m_shaderModel[2] = "fx_5_0";
 		break;
 
 	default:

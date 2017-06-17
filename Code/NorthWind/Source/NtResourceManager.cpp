@@ -209,7 +209,7 @@ NtFile* NtResourceManager::GetFile(const ntWchar* fileName)
 }
 
 
-const ntWchar* NtResourceManager::GetWholePath(const ntWchar* fileName)
+const ntWchar* NtResourceManager::GetPath(const ntWchar* fileName)
 {
 	const NtResource* resource = FindResource(fileName);
 	return resource != nullptr ? resource->wholePath : nullptr;

@@ -30,26 +30,33 @@ class NtResourceManager
 
 public:
 	NtResourceManager();
+
 	~NtResourceManager();
 
 	bool Initialize(const NtString& str);
+
 	void UpdateWholeDirectoryFiles(const ntWchar* directory);
+
 	void AddMappingInfo(const ntWchar* fileName, ntWchar* wholePath);
+
 	void SetEnvDirectory(const NtString& str);
 
-	ntUint		LoadTexture(const ntWchar* fileName);
-	NtTexture*	AcquireTexture(ntUint handle);
-	void		ReleaseTexture(ntUint handle);
+	ntUint LoadTexture(const ntWchar* fileName);
 
+	NtTexture* AcquireTexture(ntUint handle);
 
-	NtFile*			GetFile(const ntWchar* fileName);
-	const ntWchar*	GetWholePath(const ntWchar* fileName);
+	void ReleaseTexture(ntUint handle);
+
+	NtFile*	GetFile(const ntWchar* fileName);
+
+	const ntWchar* GetPath(const ntWchar* fileName);
 	
-
 private:
 	const NtResource* FindResource(const ntWchar* fileName);
-	NtTexHandle*	FindUsableHandle();
-	void		AddTexHandleObj();
+
+	NtTexHandle* FindUsableHandle();
+
+	void AddTexHandleObj();
 
 
 private:
@@ -61,7 +68,6 @@ private:
 	TEXTURE_TABLE			m_texTable;
 	TEXTURE_REFERENCE_ARRAY	m_texReferenceArray;
 	TEXTURE_REFERENCE_ARRAY	m_texHandleSource;
-
 	NtString				m_env;
 };
 

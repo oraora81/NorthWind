@@ -13,14 +13,22 @@ public:
 
 	virtual bool Initialize(const ntWchar* vs, const ntWchar* ps) = 0;
 
-	const ntChar* GetVSModel();
-	const ntChar* GetPSModel();
+	virtual bool InitializeFx(const ntWchar* fx);
 
-	static void SetVSShaderModel(eVSShaderModel vs);
-	static void SetPSShaderModel(ePSShaderModel ps);
+	const ntChar* GetVSModel() const;
 
-	static eVSShaderModel m_vsModel;
-	static ePSShaderModel m_psModel;
+	const ntChar* GetPSModel() const;
+
+	const ntChar* GetFXModel() const;
+
+	static void SetVShaderModel(eVShaderModel vs);
+
+	static void SetPShaderModel(ePShaderModel ps);
+
+public:
+	static eVShaderModel ms_vsModel;
+	static ePShaderModel ms_psModel;
+	static eFxShaderModel ms_fxModel;
 };
 
 

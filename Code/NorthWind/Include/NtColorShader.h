@@ -16,19 +16,27 @@ class NtColorShader : public NtShader
 
 public:
 	NtColorShader();
-	~NtColorShader();
 
-	bool Initialize(const ntWchar* vs, const ntWchar* ps);
+	~NtColorShader() override;
+
+	bool Initialize(const ntWchar* vs, const ntWchar* ps) override;
+
+	bool InitializeFx(const ntWchar* fx) override;
+
 	void Release();
+
 	bool Render(ntInt indexCount, const XMMATRIX& worldMatrix, const XMMATRIX& viewMatrix, const XMMATRIX& projMatrix);
+
 	bool RenderLine(const XMMATRIX& worldMatrix, const XMMATRIX& viewMatrix, const XMMATRIX& projMatrix);
 
 private:
 	bool InitializeShader(const ntWchar* vs, const ntWchar* ps);
-	void ReleaseShader();
-	bool SetShaderParameters(const XMMATRIX& worldMatrix, const XMMATRIX& viewMatrix, const XMMATRIX& projMatrix);
-	void RenderShader(int indexCount);
 
+	void ReleaseShader();
+
+	bool SetShaderParameters(const XMMATRIX& worldMatrix, const XMMATRIX& viewMatrix, const XMMATRIX& projMatrix);
+
+	void RenderShader(int indexCount) const;
 
 private:
 	ID3D11VertexShader*	m_vertexShader;

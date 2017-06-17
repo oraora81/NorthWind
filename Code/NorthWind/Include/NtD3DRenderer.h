@@ -32,6 +32,8 @@ public:
 
 	const ntChar* GetPShaderModel() const;
 
+	const ntChar* GetFxShaderModel() const;
+
 	ntInt VideoMemory() const;
 
 	// error Report
@@ -46,7 +48,7 @@ private:
 protected:
 	ntInt		m_videoCardMemory;
 	NtString	m_videoCardDescription;
-	ntChar*		m_shaderModel[2];
+	ntChar*		m_shaderModel[3];
 
 	XMMATRIX	m_world;
 	XMMATRIX	m_proj;

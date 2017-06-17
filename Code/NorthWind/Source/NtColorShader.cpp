@@ -23,6 +23,9 @@ NtColorShader::~NtColorShader()
 
 bool NtColorShader::Initialize(const ntWchar* vs, const ntWchar* ps)
 {
+	NtAsserte(vs != nullptr);
+	NtAsserte(ps != nullptr);
+
 	// initialize the vertex and pixel shaders;
 	bool res = InitializeShader(vs, ps);
 	if (false == res)
@@ -33,6 +36,37 @@ bool NtColorShader::Initialize(const ntWchar* vs, const ntWchar* ps)
 	return true;
 }
 
+bool NtColorShader::InitializeFx(const ntWchar* fx)
+{
+	NtAsserte(fx != nullptr);
+
+	ID3D10Blob* fxShaderBuffer = nullptr;
+	ID3D10Blob* errBuffer = nullptr;
+
+	HRESULT res = D3DX11CompileFromFile(g_resManager->GetPath(fx), nullptr, nullptr, nullptr,
+		g_renderer->GetFxShaderModel(),
+		D3D10_SHADER_DEBUG | D3D10_SHADER_SKIP_OPTIMIZATION,
+		0,
+		nullptr,
+		&fxShaderBuffer,
+		&errBuffer,
+		nullptr);
+
+	if (FAILED(res))
+	{
+		if (errBuffer != nullptr)
+		{
+			g_renderer->OutputShaderErrorMessage(errBuffer, fx);
+		}
+		else
+		{
+			MessageBox(nullptr, fx, L"Missing Shader File", MB_OK);
+		}
+		return false;
+	}
+
+	return true;
+}
 
 void NtColorShader::Release()
 {
@@ -53,7 +87,6 @@ bool NtColorShader::Render(ntInt indexCount, const XMMATRIX& worldMatrix, const 
 
 	return true;
 }
-
 
 bool NtColorShader::RenderLine(const XMMATRIX& worldMatrix,const XMMATRIX& viewMatrix,const XMMATRIX& projMatrix)
 {
@@ -77,7 +110,6 @@ bool NtColorShader::RenderLine(const XMMATRIX& worldMatrix,const XMMATRIX& viewM
 	return true;
 }
 
-
 bool NtColorShader::InitializeShader(const ntWchar* vs, const ntWchar* ps)
 {
 	// Initialize the pointers this function will use to null
@@ -85,7 +117,9 @@ bool NtColorShader::InitializeShader(const ntWchar* vs, const ntWchar* ps)
 	ID3D10Blob* vertexShaderBuffer = nullptr;
 
 	// compile the vertex shader code
-	HRESULT res = D3DX11CompileFromFile(g_resManager->GetWholePath(vs), NULL, NULL, "ColorVertexShader", g_renderer->GetVShaderModel(), D3D10_SHADER_ENABLE_STRICTNESS, 0, NULL, 
+	HRESULT res = D3DX11CompileFromFile(g_resManager->GetPath(vs), NULL, NULL, "ColorVertexShader", 
+		g_renderer->GetVShaderModel(), D3D10_SHADER_DEBUG | D3D10_SHADER_ENABLE_STRICTNESS, 
+		0, NULL,
 		&vertexShaderBuffer, &errMsg, NULL);
 	if (FAILED(res))
 	{
@@ -104,7 +138,7 @@ bool NtColorShader::InitializeShader(const ntWchar* vs, const ntWchar* ps)
 
 	// compile the pixel shader code
 	ID3D10Blob* pixelShaderBuffer = nullptr;
-	res = D3DX11CompileFromFile(g_resManager->GetWholePath(ps), NULL, NULL, "ColorPixelShader", g_renderer->GetPShaderModel(), D3D10_SHADER_ENABLE_STRICTNESS, 0, NULL,
+	res = D3DX11CompileFromFile(g_resManager->GetPath(ps), NULL, NULL, "ColorPixelShader", g_renderer->GetPShaderModel(), D3D10_SHADER_ENABLE_STRICTNESS, 0, NULL,
 		&pixelShaderBuffer, &errMsg, NULL);
 	if (FAILED(res))
 	{
@@ -240,7 +274,7 @@ bool NtColorShader::SetShaderParameters(const XMMATRIX& worldMatrix, const XMMAT
 }
 
 
-void NtColorShader::RenderShader(int indexCount)
+void NtColorShader::RenderShader(int indexCount) const
 {
 	// set the vertex input layout
 	g_renderer->DeviceContext()->IASetInputLayout(m_layout);

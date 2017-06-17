@@ -403,5 +403,13 @@
     <Filter Include="math">
       <UniqueIdentifier>{5008bfd1-c37e-43ac-8803-02aeffaf724e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="study">
+      <UniqueIdentifier>{d9b54411-4fac-467b-9963-c58f6c64db57}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="x64\d3dx11.md">
+      <Filter>study</Filter>
+    </Text>
   </ItemGroup>
 </Project>

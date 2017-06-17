@@ -33,7 +33,7 @@
 		NT_FMT_MAX,
 	};
 		
-	enum eVSShaderModel
+	enum eVShaderModel
 	{
 		NT_VS_1_1,
 		NT_VS_2_0,
@@ -41,10 +41,10 @@
 		NT_VS_4_0,
 		NT_VS_5_0,
 	
-		NT_MAX_VSSHADER_MODEL,
+		NT_MAX_VSHADER_MODEL,
 	};
 
-	enum ePSShaderModel
+	enum ePShaderModel
 	{
 		NT_PS_1_1,
 		NT_PS_2_0,
@@ -52,7 +52,17 @@
 		NT_PS_4_0,
 		NT_PS_5_0,
 
-		NT_MAX_PSSHADER_MODEL,
+		NT_MAX_PSHADER_MODEL,
+	};
+
+	enum eFxShaderModel
+	{
+		NT_FX_2_0,
+		NT_FX_4_0,
+		NT_FX_4_1,
+		NT_FX_5_0,
+
+		NT_MAX_FXSHADER_MODEL,
 	};
 
 #ifdef USE_DIRECTX
