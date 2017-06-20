@@ -234,21 +234,7 @@ NtDx11Renderer::~NtDx11Renderer()
 	SAFE_RELEASE(adapterOutput);
 	SAFE_RELEASE(adapter);
 	SAFE_RELEASE(factory);
-
-	//S_OK != D3D11CreateDeviceAndSwapChain(
-	//	adapter, 
-	//	D3D_DRIVER_TYPE_UNKNOWN, //D3D_DRIVER_TYPE_HARDWARE, 
-	//	NULL, 
-	//	NULL, //D3D11_CREATE_DEVICE_DEBUG | D3D11_CREATE_DEVICE_BGRA_SUPPORT, 
-	//	NULL, 
-	//	NULL,
-	//	D3D11_SDK_VERSION, 
-	//	&swapChainDesc,
-	//	&m_d3dSwapChain, 
-	//	&m_d3dDevice, 
-	//	NULL, 
-	//	&m_d3dDeviceContext)
-
+	
 	// back buffer 포인터 얻어오기
 	ID3D11Texture2D* backBuffer = nullptr;
 	HRF(m_swapchain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&backBuffer));

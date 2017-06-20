@@ -65,6 +65,11 @@ bool NtColorShader::InitializeFx(const ntWchar* fx)
 		return false;
 	}
 
+    HRF(D3DX11CreateEffectFromMemory(fxShaderBuffer->GetBufferPointer(), fxShaderBuffer->GetBufferSize(),
+        0, g_renderer->Device(), &m_fx));
+
+    SAFE_RELEASE(fxShaderBuffer);
+
 	return true;
 }
 
