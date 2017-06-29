@@ -37,27 +37,15 @@ bool NtFile::Execute(const ntWchar* fileName, IO_MODE mode /*= IO_READ*/)
 	{
 		option = L"r";
 	}
-	else if (IO_READ_PLUS == m_mode)
-	{
-		option = L"r+";
-	}
 	else if (IO_WRITE == m_mode)
 	{
 		option = L"w";
-	}
-	else if (IO_WRITE_PLUS == m_mode)
-	{
-		option = L"w+";
 	}
 	else if (IO_APPEND == m_mode)
 	{
 		option = L"a";
 	}
-	else if (IO_APPEND_PLUS == m_mode)
-	{
-		option = L"a+";
-	}
-
+	
 	if (option == NULL)
 	{
 		return false;
@@ -72,12 +60,10 @@ bool NtFile::Execute(const ntWchar* fileName, IO_MODE mode /*= IO_READ*/)
 	return true;
 }
 
-
 void NtFile::Write4Byte( ntWchar* buffer )
 {
 	fwrite(buffer, sizeof(ntWchar) * 4, 1, m_fp);
 }
-
 
 void NtFile::Read1Byte()
 {
@@ -85,7 +71,6 @@ void NtFile::Read1Byte()
 
 	fread_s(m_readBuffer, sizeof(m_readBuffer), sizeof(ntWchar) * 1, 1, m_fp);
 }
-
 
 void NtFile::Read4Byte()
 {
@@ -161,13 +146,13 @@ ntFloat NtFile::ReadFloat()
 }
 
 
-bool NtFile::IsEOF()
+bool NtFile::IsEOF() const
 {
 	return feof(m_fp) != 0 ? true : false;
 }
 
 
-bool NtFile::IsOpen()
+bool NtFile::IsOpen() const
 {
 	return m_fp != NULL ? true : false;
 }

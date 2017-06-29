@@ -141,27 +141,12 @@ void NtRenderer::Release()
 	//WholeReleaseObject(m_puppet);
 }
 
-bool NtRenderer::Process()
+bool NtRenderer::Process(const ntFloat deltaTime)
 {
-	static ntFloat rot = 0.0f;
-
-	// update the rotation variable each frame
-	rot += NtMath<ntFloat>::PI * 0.005f;
-	if (rot > 360.0f)
-	{
-		rot = 0.0f;
-	}
-
-
-	if (!Render(rot))
-	{
-		return false;
-	}
-
 	return true;
 }
 
-bool NtRenderer::Render(ntFloat rot)
+bool NtRenderer::Draw()
 {
 	XMMATRIX worldMatrix;
 	XMMATRIX viewMatrix;
@@ -190,10 +175,6 @@ bool NtRenderer::Render(ntFloat rot)
 
 	// put the puppet vertex and index buffers on the graphics pipeline to prepare them for drawing
 	//m_puppet->Render(worldMatrix, viewMatrix, projMatrix, m_light);
-
-		
-	//NtPoint p1(-10.0f, 0.0f);
-	//NtPoint p2(10.0f, 0.0f);
 
 	//m_colorShader->RenderLine(m_renderEngine, worldMatrix, viewMatrix, projMatrix);
 

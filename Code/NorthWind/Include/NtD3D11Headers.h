@@ -8,7 +8,7 @@
 #include <D2D1Helper.h>
 #include <dwrite.h>
 #include "dxerr.h"
-#include "d3dx11effect.h"
+#include <d3dx11effect.h>
 
 
 #pragma comment (lib, "d3d11.lib")

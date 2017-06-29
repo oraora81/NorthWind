@@ -36,11 +36,16 @@ public:
 
 	void CalculateFrame();
 
-	float AspectRatio() const
+	inline float AspectRatio() const
 	{
 		return static_cast<float>(m_width / m_height);
 	}
 
+protected:
+	inline float DeltaTime() const
+	{
+		return m_timer.DeltaTime();
+	}
 
 private:
 	NtString m_appName;

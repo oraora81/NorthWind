@@ -52,7 +52,7 @@ VS_OUTPUT VS(float4 inPos : POSITION, float2 inTexCoord : TEXCOORD, float3 norma
 //--------------------------------------------------------------------------------------
 float4 PS(VS_OUTPUT input) : SV_TARGET
 {
-    input.normal = normalize(input.normal);
+	input.normal = normalize(input.normal);
 
 	float4 diffuse = objTexture.Sample(objSamplerState, input.TexCoord);
 	//clip(diffuse.a - 0.1);

@@ -43,8 +43,9 @@ private:
 	ID3D11PixelShader*	m_pixelShader;
 	ID3D11InputLayout*	m_layout;
 	ID3D11Buffer*		m_matrixBuffer;
-    ID3DX11Effect*      m_fx;
+	ID3DX11Effect*      m_fx;
+	ID3DX11EffectTechnique* m_tech;
+	ID3DX11EffectMatrixVariable* m_fxWorldViewProj;
 };
 
 } }
-

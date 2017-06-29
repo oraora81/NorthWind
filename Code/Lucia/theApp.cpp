@@ -9,6 +9,7 @@
 #include "postprocess.h"
 
 #include "NtLog.h"
+#include "NtModel.h"
 
 using namespace nt::log;
 
@@ -45,8 +46,12 @@ namespace
 
 TheApp::TheApp()
 	: NtApplication()
+	, m_theta(1.5f * NtMath<float>::PI)
+	, m_phi(0.25f * NtMath<float>::PI)
+	, m_radius(5.0f)
 {
-
+	m_lastMousePos.x = 0;
+	m_lastMousePos.y = 0;
 }
 
 TheApp::~TheApp()
@@ -62,13 +67,25 @@ bool TheApp::Initialize(bool fullscreen, ntInt width, ntInt height)
 		return false;
 	}
 
-	const ntWchar* fname = g_resManager->GetWholePath(L"test_cube.ase");
+	//const ntWchar* fname = g_resManager->GetPath(L"test_cube.ase");
+	//ntChar buf[256];
+	//Crt::WideStrToMultiStr(buf, Crt::StrLen(buf), fname);
+	//DoImport(buf);
 
-	ntChar buf[256];
+	NtModel::NtPCVertex vertices[] =
+	{
+		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), (const float*)&Colors::White },
+		{ XMFLOAT3(-1.0f, +1.0f, -1.0f), (const float*)&Colors::Black },
+		{ XMFLOAT3(+1.0f, +-1.0f, -1.0f), (const float*)&Colors::Red },
+		{ XMFLOAT3(+1.0f, -1.0f, -1.0f), (const float*)&Colors::Green },
+		{ XMFLOAT3(-1.0f, -1.0f, +1.0f), (const float*)&Colors::Blue },
+		{ XMFLOAT3(-1.0f, +1.0f, +1.0f), (const float*)&Colors::Yellow },
+		{ XMFLOAT3(+1.0f, +1.0f, +1.0f), (const float*)&Colors::Cyan },
+		{ XMFLOAT3(+1.0f, -1.0f, +1.0f), (const float*)&Colors::Magenta },
+	};
 
-	Crt::WideStrToMultiStr(buf, Crt::StrLen(buf), fname);
-
-	DoImport(buf);
+	NtModel model;
+	model.IntializeModelData(vertices, _countof(vertices));
 
 	return true;
 }
@@ -81,4 +98,14 @@ void TheApp::OnMouseDown(WPARAM buttonState, ntInt x, ntInt y)
 void TheApp::OnMouseUp(WPARAM buttonState, ntInt x, ntInt y)
 {
 	NTRACE(L"Up - x : %d, y : %%d", x, y);
+}
+
+
+virtual bool TheApp::Process()
+{
+	float dt = DeltaTime();
+
+	float x = m_radius * NtMath<float>::Sin(m_phi) * NtMath<float>::Cos(m_theta);
+	float z = m_radius * NtMath<float>::Sin(m_phi) * NtMath<float>::Sin(m_theta);
+	float y = m_radius * NtMath<float>::Cos(m_phi);
 }

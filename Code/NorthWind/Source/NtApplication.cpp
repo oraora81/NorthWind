@@ -248,10 +248,14 @@ bool NtApplication::Process()
 		return false;
 	}
 
-	if (!m_renderer->Process())
+	const float deltaTime = m_timer.DeltaTime();
+
+	if (!m_renderer->Process(deltaTime))
 	{
 		return false;
 	}
+
+	m_renderer->Draw();
 
 	CalculateFrame();
 

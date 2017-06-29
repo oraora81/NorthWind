@@ -18,19 +18,22 @@ class NtLight;
 
 class NtModel
 {
-	struct NtVertexType
+public:
+	struct NtPCVertex
 	{
 		XMFLOAT3 position;
 		XMFLOAT4 color;
 	};
 
-public:
-
 	NtModel();
 	~NtModel();
 
 	bool Initialize(const ntWchar* puppetName);
+
+	bool IntializeModelData(NtPCVertex* vertices, ntInt vertexCount, ntUint* indices, ntInt indexCount);
+
 	void Release();
+
 	void Render(const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj, const NtLight* light);
 
 	int GetIndexCount();

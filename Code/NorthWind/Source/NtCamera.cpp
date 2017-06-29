@@ -49,7 +49,8 @@ void NtCamera::Render()
 	XMVECTOR up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
 	
 	// 월드에서의 카메라 위치 설정
-	XMVECTOR pos = XMVectorSet(m_pos[0], m_pos[1], m_pos[2], 0.0f);
+	// XMVECTOR pos = XMVectorSet(m_pos[0], m_pos[1], m_pos[2], 0.0f); ???
+	 XMVECTOR pos = XMVectorSet(m_pos[0], m_pos[1], m_pos[2], 1.0f);
 	
 	// 기본 카메라 방향 설정
 	XMVECTOR look = XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f);

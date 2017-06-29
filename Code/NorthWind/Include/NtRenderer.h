@@ -23,7 +23,9 @@ public:
 
 	void Release();
 
-	bool Process();
+	bool Process(const ntFloat deltaTime);
+
+	bool Draw();
 
 	bool Resize(ntInt width, ntInt height);
 
@@ -45,9 +47,6 @@ public:
 	void SetVertexBuffers(ntUint startSlot, ntUint numBuffers, NtVertexBuffer** buffer, ntUint* stride, ntUint* offset);
 
 	void SetIndexBuffers(NtIndexBuffer* buffer, NTCOLORFMT format, ntUint offset);
-
-private:
-	bool Render(ntFloat rot);
 
 private:
 	std::shared_ptr<NtDx11Renderer> m_renderEngine;

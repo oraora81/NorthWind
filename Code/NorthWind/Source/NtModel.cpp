@@ -31,6 +31,58 @@ NtModel::~NtModel()
 
 }
 
+bool NtModel::IntializeModelData(NtPCVertex* vertices, ntInt vertexCount, ntUint* indices, ntInt indexCount)
+{
+	// vb
+	D3D11_BUFFER_DESC vd;
+	vd.Usage = D3D11_USAGE_IMMUTABLE;
+	vd.ByteWidth = sizeof(NtModel::NtPCVertex) * vertexCount;
+	vd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	vd.CPUAccessFlags = 0;
+	vd.MiscFlags = 0;
+	vd.StructureByteStride = 0;
+
+	D3D11_SUBRESOURCE_DATA vbData;
+	vbData.pSysMem = vertices;
+
+	ID3D11Buffer* vb;
+	HRF(g_renderer->Device()->CreateBuffer(&vd, &vbData, &vb));
+
+	ntUint stride = sizeof(NtPCVertex);
+	ntUint offset = 0;
+	g_renderer->DeviceContext()->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
+
+
+	// index buffer
+	D3D11_BUFFER_DESC id;
+	id.Usage = D3D11_USAGE_IMMUTABLE;
+	id.ByteWidth = sizeof(ntUint) * indexCount;
+	id.BindFlags = D3D11_BIND_INDEX_BUFFER;
+	id.CPUAccessFlags = 0;
+	id.MiscFlags = 0;
+	id.StructureByteStride = 0;
+
+	D3D11_SUBRESOURCE_DATA ibData;
+	ibData.pSysMem = indices;
+
+	ID3D11Buffer* ib;
+	stride = sizeof(ntUint);
+	offset = 0;
+	HRF(g_renderer->Device()->CreateBuffer(&id, &ibData, &ib));
+
+	g_renderer->DeviceContext()->IASetIndexBuffer(ib, DXGI_FORMAT_R32_UINT, 0);
+
+	NtMeshObj drawInfo;
+	drawInfo.desc = vd;
+	drawInfo.idxBuffer = ib;
+	drawInfo.vtxBuffer = vb;
+	drawInfo.idxCount = indexCount;
+
+	m_meshVector.push_back(drawInfo);
+
+	return true;
+}
+
 bool NtModel::Initialize(const ntWchar* modelName)
 {
 	// load the puppet Data from txt file.
@@ -47,8 +99,8 @@ bool NtModel::Initialize(const ntWchar* modelName)
 	//	return false;
 	//}
 
-    // vb
-	NtVertexType vertices[] = 
+	// vb
+	NtPCVertex vertices[] =
 	{
 		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), (const float*)&Colors::White},
 		{ XMFLOAT3(-1.0f, +1.0f, -1.0f), (const float*)&Colors::Black},
@@ -60,54 +112,54 @@ bool NtModel::Initialize(const ntWchar* modelName)
 		{ XMFLOAT3(+1.0f, -1.0f, +1.0f), (const float*)&Colors::Magenta },
 	};
 
-    D3D11_BUFFER_DESC vd;
-    vd.Usage = D3D11_USAGE_IMMUTABLE;
-    vd.ByteWidth = sizeof(vertices);
-    vd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-    vd.CPUAccessFlags = 0;
-    vd.MiscFlags = 0;
-    vd.StructureByteStride = 0;
+	D3D11_BUFFER_DESC vd;
+	vd.Usage = D3D11_USAGE_IMMUTABLE;
+	vd.ByteWidth = sizeof(vertices);
+	vd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	vd.CPUAccessFlags = 0;
+	vd.MiscFlags = 0;
+	vd.StructureByteStride = 0;
 
-    D3D11_SUBRESOURCE_DATA vbData;
-    vbData.pSysMem = vertices;
+	D3D11_SUBRESOURCE_DATA vbData;
+	vbData.pSysMem = vertices;
 
-    ID3D11Buffer* vb;
-    HRF(g_renderer->Device()->CreateBuffer(&vd, &vbData, &vb));
+	ID3D11Buffer* vb;
+	HRF(g_renderer->Device()->CreateBuffer(&vd, &vbData, &vb));
 
-    ntUint stride = sizeof(NtVertexType);
-    ntUint offset = 0;
-    g_renderer->DeviceContext()->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
+	ntUint stride = sizeof(NtPCVertex);
+	ntUint offset = 0;
+	g_renderer->DeviceContext()->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
 
-    //ib
-    ntUint indices[24] =
-    {
-        0,1,2,
-        0,2,3,
-        0,3,4,
-        0,4,5,
-        0,5,6,
-        0,6,7,
-        0,7,8,
-        0,8,1
-    };
+	//ib
+	ntUint indices[24] =
+	{
+		0,1,2,
+		0,2,3,
+		0,3,4,
+		0,4,5,
+		0,5,6,
+		0,6,7,
+		0,7,8,
+		0,8,1
+	};
 
-    D3D11_BUFFER_DESC id;
-    id.Usage = D3D11_USAGE_IMMUTABLE;
-    id.ByteWidth = sizeof(indices);
-    id.BindFlags = D3D11_BIND_INDEX_BUFFER;
-    id.CPUAccessFlags = 0;
-    id.MiscFlags = 0;
-    id.StructureByteStride = 0;
+	D3D11_BUFFER_DESC id;
+	id.Usage = D3D11_USAGE_IMMUTABLE;
+	id.ByteWidth = sizeof(indices);
+	id.BindFlags = D3D11_BIND_INDEX_BUFFER;
+	id.CPUAccessFlags = 0;
+	id.MiscFlags = 0;
+	id.StructureByteStride = 0;
 
-    D3D11_SUBRESOURCE_DATA ibData;
-    ibData.pSysMem = indices;
+	D3D11_SUBRESOURCE_DATA ibData;
+	ibData.pSysMem = indices;
 
-    ID3D11Buffer* ib;
-    stride = sizeof(ntUint);
-    offset = 0;
-    HRF(g_renderer->Device()->CreateBuffer(&id, &ibData, &ib));
+	ID3D11Buffer* ib;
+	stride = sizeof(ntUint);
+	offset = 0;
+	HRF(g_renderer->Device()->CreateBuffer(&id, &ibData, &ib));
 
-    g_renderer->DeviceContext()->IASetIndexBuffer(ib, DXGI_FORMAT_R32_UINT, 0);
+	g_renderer->DeviceContext()->IASetIndexBuffer(ib, DXGI_FORMAT_R32_UINT, 0);
 
 	NtMeshObj drawInfo;
 	drawInfo.desc = vd;

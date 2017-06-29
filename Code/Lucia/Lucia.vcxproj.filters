@@ -37,6 +37,7 @@
     <None Include="exam.fx">
       <Filter>소스 파일</Filter>
     </None>
+    <None Include="simple_fx.fxo" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -50,9 +51,6 @@
     </ClInclude>
     <ClInclude Include="Lucia.h">
       <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer.h">
-      <Filter>헤더 파일\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="FontRender.h">
       <Filter>헤더 파일\Renderer</Filter>
@@ -91,5 +89,10 @@
     <ResourceCompile Include="Lucia.rc">
       <Filter>리소스 파일</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="simple_ps.hlsl" />
+    <FxCompile Include="simple_vs.hlsl" />
+    <FxCompile Include="simple_fx.fx" />
   </ItemGroup>
 </Project>

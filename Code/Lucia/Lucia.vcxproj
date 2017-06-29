@@ -144,10 +144,11 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDx11|x64'">
     <TargetName>$(ProjectName)_$(Configuration)</TargetName>
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(IncludePath)</IncludePath>
-    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath);$(DXSDK_DIR)Include</IncludePath>
+    <LibraryPath>$(IncludePath);$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
     <OutDir>./../../bin</OutDir>
     <IntDir>./../../Intermediate/$(ProjectName)/$(Configuration)\</IntDir>
+    <ExecutablePath>$(VC_ExecutablePath_x64);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(FxCopDir);$(PATH);</ExecutablePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDx9|Win32'">
     <LinkIncremental>true</LinkIncremental>
@@ -236,7 +237,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>USE_DIRECTX;_NT_DX11;WIN64;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../NorthWind/Include;../import/include;../import/assimp</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(WindowsSDK_IncludePath);../NorthWind/Include;../import/assimp;$(DXSDK_DIR)Include;..\import\Include\</AdditionalIncludeDirectories>
       <PrecompiledHeaderOutputFile>./../../Intermediate/$(ProjectName)/$(Configuration)/$(TargetName).pch</PrecompiledHeaderOutputFile>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
     </ClCompile>
@@ -246,6 +247,12 @@
       <AdditionalLibraryDirectories>../import/lib/x64;../import/lib/assimp/Debug;../../bin</AdditionalLibraryDirectories>
       <AdditionalDependencies>NorthWind_DebugDx11.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <FxCompile>
+      <AssemblerOutput>
+      </AssemblerOutput>
+      <AssemblerOutputFile>
+      </AssemblerOutputFile>
+    </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDx9|Win32'">
     <ClCompile>
@@ -321,6 +328,7 @@
     <None Include="exam.fx" />
     <None Include="Lucia.ico" />
     <None Include="ReadMe.txt" />
+    <None Include="simple_fx.fxo" />
     <None Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -328,7 +336,6 @@
     <ClInclude Include="DxInput.h" />
     <ClInclude Include="FontRender.h" />
     <ClInclude Include="Lucia.h" />
-    <ClInclude Include="Renderer.h" />
     <ClInclude Include="RenderObj.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -358,6 +365,26 @@
     <ProjectReference Include="..\NorthWind\NorthWind.vcxproj">
       <Project>{e6fa1bb6-3b20-4d27-a59e-437ac38ac069}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="simple_fx.fx">
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='DebugDx11|x64'">2.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='DebugDx11|x64'">Effect</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='DebugDx11|x64'">$(OutDir)%(Filename).fxo</ObjectFileOutput>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='DebugDx11|x64'">
+      </EntryPointName>
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='DebugDx11|x64'">"$(DXSDK_DIR)Utilities\bin\x64\fxc.exe" /T fx_2_0 /Fo "$(SolutionDir)\bin\%(Filename).fxo" "%(FullPath)"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='DebugDx11|x64'">fxc compile for release: %(FullPath)</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='DebugDx11|x64'">%(RelativeDir)\%(Filename).fxo</Outputs>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDx11|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="simple_ps.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDx11|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="simple_vs.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDx11|x64'">true</ExcludedFromBuild>
+    </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

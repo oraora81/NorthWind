@@ -10,8 +10,11 @@ namespace nt { namespace renderer {
 NtColorShader::NtColorShader()
 	: m_vertexShader(nullptr)
 	, m_pixelShader(nullptr)
-	, m_layout(0)
-	, m_matrixBuffer(0)
+	, m_layout(nullptr)
+	, m_matrixBuffer(nullptr)
+	, m_fx(nullptr)
+	, m_tech(nullptr)
+	, m_fxWorldViewProj(nullptr)
 {
 
 }
@@ -43,32 +46,38 @@ bool NtColorShader::InitializeFx(const ntWchar* fx)
 	ID3D10Blob* fxShaderBuffer = nullptr;
 	ID3D10Blob* errBuffer = nullptr;
 
-	HRESULT res = D3DX11CompileFromFile(g_resManager->GetPath(fx), nullptr, nullptr, nullptr,
-		g_renderer->GetFxShaderModel(),
-		D3D10_SHADER_DEBUG | D3D10_SHADER_SKIP_OPTIMIZATION,
-		0,
-		nullptr,
-		&fxShaderBuffer,
-		&errBuffer,
-		nullptr);
+	ntUint shaderFlag = 0;
+#if defined(DEBUG) || defined(_DEBUG)
+	shaderFlag |= D3D10_SHADER_DEBUG;
+	shaderFlag |= D3D10_SHADER_SKIP_OPTIMIZATION;
+#endif
 
-	if (FAILED(res))
-	{
-		if (errBuffer != nullptr)
-		{
-			g_renderer->OutputShaderErrorMessage(errBuffer, fx);
-		}
-		else
-		{
-			MessageBox(nullptr, fx, L"Missing Shader File", MB_OK);
-		}
-		return false;
-	}
+	//HRESULT res = D3DX11CompileFromFile(g_resManager->GetPath(fx), nullptr, nullptr, nullptr,
+	//	g_renderer->GetFxShaderModel(),
+	//	shaderFlag,
+	//	0,
+	//	nullptr,
+	//	&fxShaderBuffer,
+	//	&errBuffer,
+	//	nullptr);
 
-    HRF(D3DX11CreateEffectFromMemory(fxShaderBuffer->GetBufferPointer(), fxShaderBuffer->GetBufferSize(),
-        0, g_renderer->Device(), &m_fx));
+	//if (FAILED(res))
+	//{
+	//	if (errBuffer != nullptr)
+	//	{
+	//		g_renderer->OutputShaderErrorMessage(errBuffer, fx);
+	//	}
+	//	else
+	//	{
+	//		MessageBox(nullptr, fx, L"Missing Shader File", MB_OK);
+	//	}
+	//	return false;
+	//}
 
-    SAFE_RELEASE(fxShaderBuffer);
+	HRF(D3DX11CreateEffectFromMemory(fxShaderBuffer->GetBufferPointer(), fxShaderBuffer->GetBufferSize(),
+		0, g_renderer->Device(), &m_fx));
+
+	SAFE_RELEASE(fxShaderBuffer);
 
 	return true;
 }
@@ -121,9 +130,18 @@ bool NtColorShader::InitializeShader(const ntWchar* vs, const ntWchar* ps)
 	ID3D10Blob* errMsg = nullptr;
 	ID3D10Blob* vertexShaderBuffer = nullptr;
 
+	ntUint shaderFlag = 0;
+#if defined(DEBUG) || defined(_DEBUG)
+	shaderFlag |= D3D10_SHADER_DEBUG;
+	shaderFlag |= D3D10_SHADER_SKIP_OPTIMIZATION;
+#else
+	shaderFlag |= D3D10_SHADER_ENABLE_STRICTNESS;
+#endif
+
 	// compile the vertex shader code
 	HRESULT res = D3DX11CompileFromFile(g_resManager->GetPath(vs), NULL, NULL, "ColorVertexShader", 
-		g_renderer->GetVShaderModel(), D3D10_SHADER_DEBUG | D3D10_SHADER_ENABLE_STRICTNESS, 
+		g_renderer->GetVShaderModel(), 
+		shaderFlag, 
 		0, NULL,
 		&vertexShaderBuffer, &errMsg, NULL);
 	if (FAILED(res))
@@ -143,7 +161,11 @@ bool NtColorShader::InitializeShader(const ntWchar* vs, const ntWchar* ps)
 
 	// compile the pixel shader code
 	ID3D10Blob* pixelShaderBuffer = nullptr;
-	res = D3DX11CompileFromFile(g_resManager->GetPath(ps), NULL, NULL, "ColorPixelShader", g_renderer->GetPShaderModel(), D3D10_SHADER_ENABLE_STRICTNESS, 0, NULL,
+	res = D3DX11CompileFromFile(g_resManager->GetPath(ps), NULL, NULL, "ColorPixelShader", 
+		g_renderer->GetPShaderModel(), 
+		shaderFlag, 
+		0, 
+		NULL,
 		&pixelShaderBuffer, &errMsg, NULL);
 	if (FAILED(res))
 	{
@@ -176,7 +198,7 @@ bool NtColorShader::InitializeShader(const ntWchar* vs, const ntWchar* ps)
 
 
 	// now setup the layout of the data that goes into the shader
-	// This setup needs to match the NtVertexType structure in the ModelClass and in the shader.h
+	// This setup needs to match the NtPCVertex structure in the ModelClass and in the shader.h
 	D3D11_INPUT_ELEMENT_DESC elementLayout[2];
 	elementLayout[0].SemanticName = "POSITION";
 	elementLayout[0].SemanticIndex = 0;

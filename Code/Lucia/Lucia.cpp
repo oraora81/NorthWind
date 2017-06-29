@@ -5,8 +5,6 @@
 #include "Lucia.h"
 
 #include "theApp.h"
-#include "RenderObj.h"
-
 
 using namespace nt;
 
@@ -52,6 +50,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 	//
 	//Initialize();
+
+
 
 
 	TheApp* theApp = new TheApp();
