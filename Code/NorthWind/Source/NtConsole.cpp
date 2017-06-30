@@ -55,7 +55,7 @@ void NtConsole::Print(const NtString& str)
 	}
 
 	ntUlong written;
-	WriteConsole(ms_handle, str.Buffer(), str.Size(), &written, nullptr);
+	WriteConsole(ms_handle, str.Buffer(), (ntUint)str.Size(), &written, nullptr);
 }
 
 } }

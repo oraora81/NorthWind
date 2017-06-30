@@ -70,7 +70,7 @@ void NtD3DRenderer::OutputShaderErrorMessage(ID3D10Blob* errMsg, const ntWchar* 
 	ntChar* msg = reinterpret_cast<ntChar*>(errMsg->GetBufferPointer());
 
 	// get the length of the msg
-	ntInt bufferSize = errMsg->GetBufferSize();
+	ntSize bufferSize = errMsg->GetBufferSize();
 
 	std::ofstream fout;
 

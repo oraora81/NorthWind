@@ -255,7 +255,7 @@ bool NtModelParser::ReadVertexType()
 			continue;
 		}
 
-		ntInt scanfCount = swscanf_s(m_file.GetData(), L"%s %s", usage, _countof(usage), type, _countof(type));
+		ntInt scanfCount = swscanf_s(m_file.GetData(), L"%s %s", usage, (unsigned)_countof(usage), type, _countof(type));
 		if (scanfCount == 2)
 		{
 			m_linkPuppet->SetFormatType(usage, type);

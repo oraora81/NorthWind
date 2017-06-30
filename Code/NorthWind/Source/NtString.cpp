@@ -229,7 +229,7 @@ NtString& NtString::operator =(const ntChar* str)
 	ntSize strSize = Crt::StrLen(str);
 	ntWchar* tempBuffer = new ntWchar[strSize + 1];
 
-	MultiByteToWideChar(CP_ACP, 0, str, strSize + 1, tempBuffer, strSize + 1);
+	MultiByteToWideChar(CP_ACP, 0, str, (ntInt)(strSize + 1), tempBuffer, (ntInt)(strSize + 1));
 
 	if (*this == (const ntWchar*)tempBuffer)
 	{
@@ -324,7 +324,7 @@ void NtString::AssignSubString(const ntWchar* str, ntInt s, ntInt e)
 	ntWchar* newStr = new ntWchar[size];
 	NtAsserte(newStr != nullptr);
 
-	Crt::MemSet(newStr, sizeof(ntWchar) * size);
+	Crt::MemSet(newStr, (ntUint)(sizeof(ntWchar) * size));
 
 	ntWchar* target = newStr;
 	while (s != e)
@@ -357,7 +357,7 @@ void NtString::AssignSubString(const ntWchar* s, const ntWchar* e)
 	ntWchar* newStr = new ntWchar[size];
 	NtAsserte(newStr != nullptr);
 
-	Crt::MemSet(newStr, sizeof(ntWchar) * size);
+	Crt::MemSet(newStr, (ntUint)(sizeof(ntWchar) * size));
 
 	ntWchar* target = newStr;
 	idx = s;
@@ -396,7 +396,7 @@ bool NtString::Remove(ntWchar ch)
 	}
 
 	ntWchar* buf = new ntWchar[Size() - targetCount + 1];
-	Crt::MemSet(buf, sizeof(ntWchar) * (Size() - targetCount + 1));
+	Crt::MemSet(buf, (ntUint)(sizeof(ntWchar) * (Size() - targetCount + 1)));
 
 	while(*src)
 	{
@@ -428,7 +428,7 @@ void NtString::Replace(ntWchar src, ntWchar dst)
 
 	ntWchar* srcStr = Buffer();
 	ntWchar* buf = new ntWchar[Size() + 1];
-	Crt::MemSet(buf, sizeof(ntWchar) * (Size() + 1));
+	Crt::MemSet(buf, (ntUint)(sizeof(ntWchar) * (Size() + 1)));
 
 	ntWchar* target = buf;
 	while(*srcStr)
@@ -484,7 +484,7 @@ void NtString::Replace(ntWchar* src, ntWchar* dst)
 				ntSize newSize = Size() - srcLength + dstLength + 1;
 
 				ntWchar* buf = new ntWchar[newSize];
-				Crt::MemSet(buf, sizeof(ntWchar) * newSize);
+				Crt::MemSet(buf, (ntUint)(sizeof(ntWchar) * newSize));
 
 				ntWchar* tempSrc = Buffer();
 				ntInt i = 0;
@@ -526,7 +526,7 @@ ntInt NtString::FindFirst(ntWchar ch)
 		++buffer;
 	}
 
-	return	(ntUint)(buffer - Buffer()) >= Size() ? -1 : (buffer - Buffer());
+	return	(ntUint)(buffer - Buffer()) >= Size() ? -1 : (ntInt)(buffer - Buffer());
 }
 
 
@@ -538,7 +538,7 @@ ntInt NtString::FindLast(ntWchar ch)
 		--buffer;
 	}
 
-	return (buffer < Buffer()) ? -1 : (buffer - Buffer());
+	return (buffer < Buffer()) ? -1 : (ntInt)(buffer - Buffer());
 }
 
 
@@ -718,7 +718,7 @@ bool operator >=(const NtString& str1, const NtString& str2)
 std::ostream& operator << (std::ostream& os, const NtString& str)
 {
 	ntChar* outStr = new ntChar[str.m_buffer->m_size + 1];
-	WideCharToMultiByte( CP_ACP, 0, str.m_buffer->m_str, -1, outStr, str.m_buffer->m_size + 1, NULL, NULL );
+	WideCharToMultiByte( CP_ACP, 0, str.m_buffer->m_str, -1, outStr, (ntInt)str.m_buffer->m_size + 1, NULL, NULL );
 
 	os << outStr;
 	SAFE_DELETE_ARRAY(outStr);

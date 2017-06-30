@@ -85,7 +85,7 @@ bool TheApp::Initialize(bool fullscreen, ntInt width, ntInt height)
 	};
 
 	NtModel model;
-	model.IntializeModelData(vertices, _countof(vertices));
+	//model.IntializeModelData(vertices, _countof(vertices));
 
 	return true;
 }
@@ -101,11 +101,13 @@ void TheApp::OnMouseUp(WPARAM buttonState, ntInt x, ntInt y)
 }
 
 
-virtual bool TheApp::Process()
+bool TheApp::Process()
 {
 	float dt = DeltaTime();
 
 	float x = m_radius * NtMath<float>::Sin(m_phi) * NtMath<float>::Cos(m_theta);
 	float z = m_radius * NtMath<float>::Sin(m_phi) * NtMath<float>::Sin(m_theta);
 	float y = m_radius * NtMath<float>::Cos(m_phi);
+
+	return true;
 }

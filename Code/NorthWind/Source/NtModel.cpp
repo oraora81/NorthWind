@@ -342,7 +342,7 @@ bool NtModel::InitializeAse(const ntWchar* puppetName)
 		D3D11_BUFFER_DESC bufferDesc;
 		bufferDesc.Usage = D3D11_USAGE_DEFAULT;
 		bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-		bufferDesc.ByteWidth = sizeof(NtTexVertex) * mesh.m_vertexNum;
+		bufferDesc.ByteWidth = (ntUint)(sizeof(NtTexVertex) * mesh.m_vertexNum);
 		bufferDesc.CPUAccessFlags = 0;
 		bufferDesc.MiscFlags = 0;
 		bufferDesc.StructureByteStride = 0;
@@ -350,7 +350,7 @@ bool NtModel::InitializeAse(const ntWchar* puppetName)
 		NtTexVertex* vt = new NtTexVertex[mesh.m_vertexNum];
 		ntUint* indices = new ntUint[mesh.m_faceNum * 3];
 
-		Crt::MemSet(vt, sizeof(NtTexVertex) * mesh.m_vertexNum);
+		Crt::MemSet(vt, (ntUint)(sizeof(NtTexVertex) * mesh.m_vertexNum));
 
 		// Set Position and Normal
 		for (ntUint i = 0; i < mesh.m_vertexNum; ++i)
@@ -419,7 +419,7 @@ bool NtModel::InitializeAse(const ntWchar* puppetName)
 
 		D3D11_BUFFER_DESC indexBufferDesc;
 		indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-		indexBufferDesc.ByteWidth = sizeof(NtTris) * mesh.m_faceNum;
+		indexBufferDesc.ByteWidth = (ntUint)(sizeof(NtTris) * mesh.m_faceNum);
 		indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
 		indexBufferDesc.CPUAccessFlags = 0;
 		indexBufferDesc.MiscFlags = 0;
@@ -446,7 +446,7 @@ bool NtModel::InitializeAse(const ntWchar* puppetName)
 		drawInfo.desc = bufferDesc;
 		drawInfo.idxBuffer = indexBuffer;
 		drawInfo.vtxBuffer = vertexBuffer;
-		drawInfo.idxCount = mesh.m_faceNum * 3;
+		drawInfo.idxCount = (ntUint)(mesh.m_faceNum * 3);
 		if (mesh.m_rawIndex != nullptr)
 		{
 			drawInfo.texHandle = mesh.m_rawIndex[0].m_texHandle;

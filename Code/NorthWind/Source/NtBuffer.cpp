@@ -16,7 +16,7 @@ NtBuffer::NtBuffer(ntInt num, ntSize size, eUsage usage)
 	, m_bytes(num * size)
 	, m_data(new ntUchar [m_bytes])
 {
-	nt::Crt::MemSet(m_data.get(), sizeof(ntUchar) * m_bytes);
+	nt::Crt::MemSet(m_data.get(), (ntUint)(sizeof(ntUchar) * m_bytes));
 }
 
 NtBuffer::NtBuffer( const NtBuffer& buf )

@@ -44,7 +44,7 @@ bool NtColorShader::InitializeFx(const ntWchar* fx)
 	NtAsserte(fx != nullptr);
 
 	ID3D10Blob* fxShaderBuffer = nullptr;
-	ID3D10Blob* errBuffer = nullptr;
+	//ID3D10Blob* errBuffer = nullptr;
 
 	ntUint shaderFlag = 0;
 #if defined(DEBUG) || defined(_DEBUG)
