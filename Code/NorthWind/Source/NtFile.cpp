@@ -17,7 +17,7 @@ NtFile::~NtFile()
 {
 	if (m_fp != nullptr)
 	{
-		fclose(m_fp);
+		Crt::FClose(m_fp);
 	}
 }
 

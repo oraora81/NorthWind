@@ -3,7 +3,6 @@
 
 #include "stdafx.h"
 #include "Lucia.h"
-
 #include "theApp.h"
 
 using namespace nt;
@@ -27,7 +26,7 @@ void Initialize();
 
 #include "NtModelParser.h"
 
-int APIENTRY _tWinMain(HINSTANCE hInstance,
+int APIENTRY wWinMain(HINSTANCE hInstance,
 					 HINSTANCE hPrevInstance,
 					 LPTSTR    lpCmdLine,
 					 int       nCmdShow)
@@ -50,18 +49,14 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 	//
 	//Initialize();
-
-
-
-
-	TheApp* theApp = new TheApp();
+	/*TheApp* theApp = new TheApp();
 	if (theApp->Initialize(false, 1024, 768))
 	{
 		theApp->MsgLoop();
 		theApp->Shutdown();
-	}
+	}*/
 
-	SAFE_DELETE(theApp);
+	//SAFE_DELETE(theApp);
 
 	return (int) msg.wParam;
 }

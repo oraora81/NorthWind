@@ -219,6 +219,12 @@ ERROR_CODE	FSeek(FILE* fp, ntLong offset, ntInt origin)
 	return ERR_SUCCESS;
 }
 
+void FClose(FILE*& fp)
+{
+	fclose(fp);
+	fp = nullptr;
+}
+
 void WideStrToMultiStr(ntChar* dest, ntSize dstSize, const ntWchar* src)
 {
 	WideCharToMultiByte(CP_ACP, 0, src, -1, dest, (ntInt)dstSize, NULL, NULL);
