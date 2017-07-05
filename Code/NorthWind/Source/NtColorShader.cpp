@@ -43,41 +43,38 @@ bool NtColorShader::InitializeFx(const ntWchar* fx)
 {
 	NtAsserte(fx != nullptr);
 
-	ID3D10Blob* fxShaderBuffer = nullptr;
-	//ID3D10Blob* errBuffer = nullptr;
+	nt::fs::NtFileBuffer fileBuffer(fx);
 
-	ntUint shaderFlag = 0;
-#if defined(DEBUG) || defined(_DEBUG)
-	shaderFlag |= D3D10_SHADER_DEBUG;
-	shaderFlag |= D3D10_SHADER_SKIP_OPTIMIZATION;
-#endif
+	HRF(D3DX11CreateEffectFromMemory(fileBuffer.GetData(), fileBuffer.GetBytes(), 0, g_renderer->Device(), &m_fx));
 
-	//HRESULT res = D3DX11CompileFromFile(g_resManager->GetPath(fx), nullptr, nullptr, nullptr,
-	//	g_renderer->GetFxShaderModel(),
-	//	shaderFlag,
-	//	0,
-	//	nullptr,
-	//	&fxShaderBuffer,
-	//	&errBuffer,
-	//	nullptr);
+	m_tech = m_fx->GetTechniqueByName("ColorTech");
 
-	//if (FAILED(res))
-	//{
-	//	if (errBuffer != nullptr)
-	//	{
-	//		g_renderer->OutputShaderErrorMessage(errBuffer, fx);
-	//	}
-	//	else
-	//	{
-	//		MessageBox(nullptr, fx, L"Missing Shader File", MB_OK);
-	//	}
-	//	return false;
-	//}
+	m_fxWorldViewProj = m_fx->GetVariableByName("gWorldViewProj")->AsMatrix();
 
-	/*HRF(D3DX11CreateEffectFromMemory(fxShaderBuffer->GetBufferPointer(), fxShaderBuffer->GetBufferSize(),
-		0, g_renderer->Device(), &m_fx));*/
+	// now setup the layout of the data that goes into the shader
+	// This setup needs to match the NtPCVertex structure in the ModelClass and in the shader.h
+	D3D11_INPUT_ELEMENT_DESC elementLayout[2];
+	elementLayout[0].SemanticName = "POSITION";
+	elementLayout[0].SemanticIndex = 0;
+	elementLayout[0].Format = DXGI_FORMAT_R32G32B32_FLOAT;
+	elementLayout[0].InputSlot = 0;
+	elementLayout[0].AlignedByteOffset = 0;
+	elementLayout[0].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+	elementLayout[0].InstanceDataStepRate = 0;
 
-	SAFE_RELEASE(fxShaderBuffer);
+	elementLayout[1].SemanticName = "COLOR";
+	elementLayout[1].SemanticIndex = 0;
+	elementLayout[1].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	elementLayout[1].InputSlot = 0;
+	//elementLayout[1].AlignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT;
+	elementLayout[1].AlignedByteOffset = 12;
+	elementLayout[1].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+	elementLayout[1].InstanceDataStepRate = 0;
+
+	D3DX11_PASS_DESC passDesc;
+	m_tech->GetPassByIndex(0)->GetDesc(&passDesc);
+	HRF(g_renderer->Device()->CreateInputLayout(elementLayout, 2, passDesc.pIAInputSignature,
+		passDesc.IAInputSignatureSize, &m_layout));
 
 	return true;
 }

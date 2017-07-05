@@ -20,8 +20,8 @@ NtModel::NtModel()
 	, m_vertexCount(0)
 	, m_indexCount(0)
 	, m_puppetRawData(nullptr)
+	, m_colorShader(new NtColorShader())
 {
-	m_colorShader = nullptr;
 	m_textureShader = nullptr;
 	m_lightShader = nullptr;
 }
@@ -31,7 +31,7 @@ NtModel::~NtModel()
 
 }
 
-bool NtModel::IntializeModelData(NtPCVertex* vertices, ntInt vertexCount, ntUint* indices, ntInt indexCount)
+bool NtModel::IntializeModelData(NtPCVertex* vertices, ntInt vertexCount, ntUint* indices, ntInt indexCount, const ntWchar* fx)
 {
 	// vb
 	D3D11_BUFFER_DESC vd;
@@ -79,6 +79,8 @@ bool NtModel::IntializeModelData(NtPCVertex* vertices, ntInt vertexCount, ntUint
 	drawInfo.idxCount = indexCount;
 
 	m_meshVector.push_back(drawInfo);
+
+	m_colorShader->InitializeFx(fx);
 
 	return true;
 }
@@ -428,7 +430,8 @@ void NtModel::SetVertexInfo( ntFloat* vtxInfo )
 
 void NtModel::SetColorShader(NtColorShader* shader)
 {
-	m_colorShader = shader;
+	//m_colorShader = shader;
+	//m_colorShader.reset()
 }
 
 void NtModel::SetTextureShader(NtTextureShader* shader)

@@ -81,27 +81,27 @@ bool NtRenderer::Initialize(HWND hwnd, ntInt width, ntInt height, bool fullScree
 	//m_light->SetDirection(0.0f, 0.0f, 1.0f);
 
 	// create the color shader object
-	m_colorShader = new NtColorShader;
-	NtAsserte(m_colorShader != nullptr);
+	//m_colorShader = new NtColorShader;
+	//NtAsserte(m_colorShader != nullptr);
 
-	res = m_colorShader->Initialize(L"color_vs.hlsl", L"color_ps.hlsl");
-	if (res == false)
-	{
-		MessageBox(hwnd, L"Could not initialize the color shader object", L"Error", MB_OK);
-		return false;
-	}
+	//res = m_colorShader->Initialize(L"color_vs.hlsl", L"color_ps.hlsl");
+	//if (res == false)
+	//{
+	//	MessageBox(hwnd, L"Could not initialize the color shader object", L"Error", MB_OK);
+	//	return false;
+	//}
 
 	// create the texture shader object
-	m_textureShader = new NtTextureShader;
-	NtAsserte(m_textureShader != nullptr);
+	//m_textureShader = new NtTextureShader;
+	//NtAsserte(m_textureShader != nullptr);
 
 	// initialize the texture shader object
-	res = m_textureShader->Initialize(L"texture_vs.hlsl", L"texture_ps.hlsl");
-	if (false == res)
-	{
-		MessageBox(hwnd, L"Could not initialize the texture shader object", L"Error", MB_OK);
-		return false;
-	}
+	//res = m_textureShader->Initialize(L"texture_vs.hlsl", L"texture_ps.hlsl");
+	//if (false == res)
+	//{
+	//	MessageBox(hwnd, L"Could not initialize the texture shader object", L"Error", MB_OK);
+	//	return false;
+	//}
 
 	// create the puppet model object
 	//m_puppet = new NtPuppet;
@@ -136,8 +136,8 @@ void WholeReleaseObject(MEM_OBJ& obj)
 void NtRenderer::Release()
 {
 	//WholeReleaseObject(m_lightShader);
-	WholeReleaseObject(m_textureShader);
-	WholeReleaseObject(m_colorShader);
+	//WholeReleaseObject(m_textureShader);
+	//WholeReleaseObject(m_colorShader);
 	//WholeReleaseObject(m_puppet);
 }
 

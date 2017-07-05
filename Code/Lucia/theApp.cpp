@@ -107,7 +107,7 @@ bool TheApp::Initialize(bool fullscreen, ntInt width, ntInt height)
 
 
 	NtModel model;
-	model.IntializeModelData(vertices, _countof(vertices), indices, _countof(indices));
+	model.IntializeModelData(vertices, _countof(vertices), indices, _countof(indices), L"../Code/Lucia/simple_fx.fxo");
 
 	return true;
 }

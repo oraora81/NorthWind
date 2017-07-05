@@ -42,14 +42,20 @@ ntFloat Atof(const ntWchar* src);
 ntInt ToLower(ntWchar* src, ntSize length);
 
 void MemCpy(void* dest, void* src, ntUint length);
+
 void MemSet(void* target, ntUint length);
 	
 
 // file process
 ERROR_CODE FOpen(const ntWchar* fileName, const ntWchar* option, FILE*& fp);
+
 ntLong FTell(FILE* fp);
+
 ERROR_CODE FSeek(FILE* fp, ntLong offset, ntInt origin);
+
 void FClose(FILE*& fp);
+
+ntSize FSize(FILE*& fp);
 
 void WideStrToMultiStr(ntChar* dest, ntSize dstSize, const ntWchar* src);
 

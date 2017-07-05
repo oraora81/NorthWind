@@ -225,6 +225,15 @@ void FClose(FILE*& fp)
 	fp = nullptr;
 }
 
+ntSize FSize(FILE*& fp)
+{
+	FSeek(fp, 0, SEEK_END);
+	ntSize size = (ntSize)FTell(fp);
+	FSeek(fp, 0, SEEK_SET);
+
+	return size;
+}
+
 void WideStrToMultiStr(ntChar* dest, ntSize dstSize, const ntWchar* src)
 {
 	WideCharToMultiByte(CP_ACP, 0, src, -1, dest, (ntInt)dstSize, NULL, NULL);

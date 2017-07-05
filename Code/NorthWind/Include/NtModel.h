@@ -30,7 +30,7 @@ public:
 
 	bool Initialize(const ntWchar* puppetName);
 
-	bool IntializeModelData(NtPCVertex* vertices, ntInt vertexCount, ntUint* indices, ntInt indexCount);
+	bool IntializeModelData(NtPCVertex* vertices, ntInt vertexCount, ntUint* indices, ntInt indexCount, const ntWchar* fx);
 
 	void Release();
 
@@ -65,7 +65,7 @@ private:
 	NtVertexFormat m_vertexFormat;
 	ntFloat*	m_puppetRawData;
 
-	NtColorShader* m_colorShader;
+	std::shared_ptr<NtColorShader> m_colorShader;
 	NtTextureShader* m_textureShader;
 	NtLightShader* m_lightShader;
 

@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "Lucia.h"
 #include "theApp.h"
+#include "NtBuffer.h"
 
 using namespace nt;
 

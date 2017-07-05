@@ -18,8 +18,6 @@ enum eParseKeyword
 };
 typedef eParseKeyword PARSE_KEYWORD;
 
-class fs::NtBuffer;
-
 class NtParseModeBinder
 {
 public:
