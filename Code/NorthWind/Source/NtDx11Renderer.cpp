@@ -354,14 +354,14 @@ NtDx11Renderer::~NtDx11Renderer()
 	m_deviceContext->RSSetViewports(1, &viewport);
 
 	// 프로젝션 행렬 생성
-	float fieldOfView = (ntFloat)NtMath<float>::PI / 4.0f;
-	float screenAspect = (ntFloat)width / (ntFloat)height;
-
+	float fov = (ntFloat)NtMath<float>::PI * 0.25f;
+	
 	// 
-	m_proj = XMMatrixPerspectiveFovLH(fieldOfView, screenAspect, screenNear, screenDepth);
+	XMMATRIX p = XMMatrixPerspectiveFovLH(fov, g_app->AspectRatio(), screenNear, screenDepth);
+	XMStoreFloat4x4(&m_proj, p);
 	
 	// 월드를 단위행렬로 초기화
-	m_world = XMMatrixIdentity();
+	XMStoreFloat4x4(&m_world, ms_identity);
 	
 	// 2d 렌더링에 사용할 정사영 행렬 생성
 	// create an orthogonal graphic projection matrix for 2D rendering
@@ -473,6 +473,10 @@ NtDx11Renderer::~NtDx11Renderer()
 	viewport.MaxDepth = 1.0f;
 
 	m_deviceContext->RSSetViewports(1, &viewport);
+
+	float fov = (ntFloat)NtMath<float>::PI * 0.25f;
+	XMMATRIX p = XMMatrixPerspectiveFovLH(fov, g_app->AspectRatio(), 1.0f, 1000.0f);
+	XMStoreFloat4x4(&m_proj, p);
 
 	return true;
 }

@@ -14,6 +14,7 @@
 
 namespace nt { namespace renderer {
 
+
 NtModel::NtModel()
 	: m_vertexBuffer(nullptr)
 	, m_indexBuffer(nullptr)
@@ -28,7 +29,7 @@ NtModel::NtModel()
 
 NtModel::~NtModel()
 {
-
+	Release();
 }
 
 bool NtModel::IntializeModelData(NtPCVertex* vertices, ntInt vertexCount, ntUint* indices, ntInt indexCount, const ntWchar* fx)
@@ -45,14 +46,10 @@ bool NtModel::IntializeModelData(NtPCVertex* vertices, ntInt vertexCount, ntUint
 	D3D11_SUBRESOURCE_DATA vbData;
 	vbData.pSysMem = vertices;
 
-	ID3D11Buffer* vb;
+	ID3D11Buffer* vb = nullptr;
 	HRF(g_renderer->Device()->CreateBuffer(&vd, &vbData, &vb));
 
-	ntUint stride = sizeof(NtPCVertex);
-	ntUint offset = 0;
-	g_renderer->DeviceContext()->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
-
-
+	
 	// index buffer
 	D3D11_BUFFER_DESC id;
 	id.Usage = D3D11_USAGE_IMMUTABLE;
@@ -65,20 +62,13 @@ bool NtModel::IntializeModelData(NtPCVertex* vertices, ntInt vertexCount, ntUint
 	D3D11_SUBRESOURCE_DATA ibData;
 	ibData.pSysMem = indices;
 
-	ID3D11Buffer* ib;
-	stride = sizeof(ntUint);
-	offset = 0;
+	ID3D11Buffer* ib = nullptr;
 	HRF(g_renderer->Device()->CreateBuffer(&id, &ibData, &ib));
 
-	g_renderer->DeviceContext()->IASetIndexBuffer(ib, DXGI_FORMAT_R32_UINT, 0);
-
-	NtMeshObj drawInfo;
-	drawInfo.desc = vd;
-	drawInfo.idxBuffer = ib;
-	drawInfo.vtxBuffer = vb;
-	drawInfo.idxCount = indexCount;
-
-	m_meshVector.push_back(drawInfo);
+	m_vertexBuffer = vb;
+	m_indexBuffer = ib;
+	m_vertexCount = vertexCount;
+	m_indexCount = indexCount;
 
 	m_colorShader->InitializeFx(fx);
 
@@ -110,6 +100,10 @@ void NtModel::Release()
 	ReleaseBuffer();
 }
 
+void NtModel::Update(float deltaTime)
+{
+
+}
 
 void NtModel::Render(const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj, const NtLight* light)
 {
@@ -160,6 +154,20 @@ void NtModel::Render(const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX
 			return;
 		}
 	}
+}
+
+void NtModel::RenderColor(const XMMATRIX& worldViewProj)
+{
+	ntUint stride = sizeof(NtPCVertex);
+	ntUint offset = 0;
+
+	g_renderInterface->SetVertexBuffers(0, 1, &m_vertexBuffer, &stride, &offset);
+
+	g_renderInterface->SetPrimitiveTopology(ePrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	g_renderInterface->SetIndexBuffers(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
+
+	m_colorShader->RenderFx(m_indexCount, worldViewProj);
 }
 
 int NtModel::GetIndexCount()
@@ -396,14 +404,12 @@ void NtModel::ReleaseBuffer()
 	SAFE_RELEASE(m_vertexBuffer);
 }
 
-
 void NtModel::SetVertexCount( ntInt count )
 {
 	NtAsserte(count > 0);
 
 	m_vertexCount = count;
 }
-
 
 ntInt NtModel::GetVertexCount() const
 {
@@ -443,7 +449,6 @@ void NtModel::SetLightShader(NtLightShader* shader)
 {
 	m_lightShader = shader;
 }
-
 
 } }
 

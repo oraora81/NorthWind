@@ -9,7 +9,7 @@
 #include "postprocess.h"
 
 #include "NtLog.h"
-#include "NtModel.h"
+//#include "Box.h"
 
 using namespace nt::log;
 
@@ -46,9 +46,6 @@ namespace
 
 TheApp::TheApp()
 	: NtApplication()
-	, m_theta(1.5f * NtMath<float>::PI)
-	, m_phi(0.25f * NtMath<float>::PI)
-	, m_radius(5.0f)
 {
 	m_lastMousePos.x = 0;
 	m_lastMousePos.y = 0;
@@ -72,7 +69,7 @@ bool TheApp::Initialize(bool fullscreen, ntInt width, ntInt height)
 	//Crt::WideStrToMultiStr(buf, Crt::StrLen(buf), fname);
 	//DoImport(buf);
 
-	NtModel::NtPCVertex vertices[] =
+	/*NtModel::NtPCVertex vertices[] =
 	{
 		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), (const float*)&Colors::White },
 		{ XMFLOAT3(-1.0f, +1.0f, -1.0f), (const float*)&Colors::Black },
@@ -103,11 +100,10 @@ bool TheApp::Initialize(bool fullscreen, ntInt width, ntInt height)
 
 		4, 0, 3,
 		4, 3, 7
-	};
+	};*/
 
-
-	NtModel model;
-	model.IntializeModelData(vertices, _countof(vertices), indices, _countof(indices), L"../Code/Lucia/simple_fx.fxo");
+	/*m_model = new Box();
+	m_model->IntializeModelData(vertices, _countof(vertices), indices, _countof(indices), L"../Code/Lucia/simple_fx.fxo");*/
 
 	return true;
 }
@@ -122,14 +118,11 @@ void TheApp::OnMouseUp(WPARAM buttonState, ntInt x, ntInt y)
 	NTRACE(L"Up - x : %d, y : %%d", x, y);
 }
 
-
 bool TheApp::Process()
 {
 	float dt = DeltaTime();
 
-	float x = m_radius * NtMath<float>::Sin(m_phi) * NtMath<float>::Cos(m_theta);
-	float z = m_radius * NtMath<float>::Sin(m_phi) * NtMath<float>::Sin(m_theta);
-	float y = m_radius * NtMath<float>::Cos(m_phi);
+	//m_model->Update(dt);
 
 	return true;
 }

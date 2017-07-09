@@ -99,6 +99,25 @@ bool NtColorShader::Render(ntInt indexCount, const XMMATRIX& worldMatrix, const 
 	return true;
 }
 
+bool NtColorShader::RenderFx(ntInt indexCount, const XMMATRIX& worldViewProj)
+{
+	g_renderer->DeviceContext()->IASetInputLayout(m_layout);
+	g_renderInterface->SetPrimitiveTopology(ePrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	m_fxWorldViewProj->SetMatrix(reinterpret_cast<const float*>(&worldViewProj));
+
+	D3DX11_TECHNIQUE_DESC techDesc;
+	m_tech->GetDesc(&techDesc);
+	for (ntUint i = 0; i < techDesc.Passes; i++)
+	{
+		m_tech->GetPassByIndex(i)->Apply(0, g_renderer->DeviceContext());
+
+		g_renderer->DeviceContext()->DrawIndexed(indexCount, 0, 0);
+	}
+
+	return true;
+}
+
 bool NtColorShader::RenderLine(const XMMATRIX& worldMatrix,const XMMATRIX& viewMatrix,const XMMATRIX& projMatrix)
 {
 	// set the shader parameters that it will use for rendering.

@@ -3,10 +3,8 @@
 
 #include "stdafx.h"
 #include "Lucia.h"
-#include "theApp.h"
-#include "NtBuffer.h"
-
-using namespace nt;
+//#include "theApp.h"
+//#include "NtBuffer.h"
 
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
@@ -22,10 +20,6 @@ TCHAR szWindowClass[MAX_LOADSTRING];			// 기본 창 클래스 이름입니다.
 ATOM				MyRegisterClass(HINSTANCE hInstance);
 LRESULT CALLBACK	WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK	About(HWND, UINT, WPARAM, LPARAM);
-
-void Initialize();
-
-#include "NtModelParser.h"
 
 int APIENTRY wWinMain(HINSTANCE hInstance,
 					 HINSTANCE hPrevInstance,
@@ -49,14 +43,14 @@ int APIENTRY wWinMain(HINSTANCE hInstance,
 	hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_LUCIA));
 
 	//
-	//Initialize();
+	
 	/*TheApp* theApp = new TheApp();
 	if (theApp->Initialize(false, 1024, 768))
 	{
 		theApp->MsgLoop();
 		theApp->Shutdown();
-	}*/
-
+	}
+*/
 	//SAFE_DELETE(theApp);
 
 	return (int) msg.wParam;
@@ -117,3 +111,9 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 	}
 	return (INT_PTR)FALSE;
 }
+
+
+//LRESULT CALLBACK	WndProc(HWND, UINT, WPARAM, LPARAM)
+//{
+//	return 0;
+//}

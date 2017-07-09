@@ -26,7 +26,7 @@ public:
 	};
 
 	NtModel();
-	~NtModel();
+	virtual ~NtModel();
 
 	bool Initialize(const ntWchar* puppetName);
 
@@ -34,28 +34,36 @@ public:
 
 	void Release();
 
+	virtual void Update(float deltaTime);
+
 	void Render(const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj, const NtLight* light);
+
+	void RenderColor(const XMMATRIX& worldViewProj);
 
 	int GetIndexCount();
 
-	NtTexture* GetTexture();
+	void SetVertexCount(ntInt count);
 
-	// get , set
-	void	SetVertexCount(ntInt count);
-	ntInt	GetVertexCount() const;
-	bool	SetFormatType(const ntWchar* usage, const ntWchar* type);
-	ntInt	GetSumOffset();
-	void	SetVertexInfo(ntFloat* vtxInfo);
+	ntInt GetVertexCount() const;
 
-	void	SetColorShader(NtColorShader* shader);
-	void	SetTextureShader(NtTextureShader* shader);
-	void	SetLightShader(NtLightShader* shader);
+	bool SetFormatType(const ntWchar* usage, const ntWchar* type);
+
+	ntInt GetSumOffset();
+
+	void SetVertexInfo(ntFloat* vtxInfo);
+
+	void SetColorShader(NtColorShader* shader);
+
+	void SetTextureShader(NtTextureShader* shader);
+
+	void SetLightShader(NtLightShader* shader);
 
 private:
 	bool InitializeAse(const ntWchar* puppetName);
+
 	void ReleaseBuffer();
 	
-private:
+protected:
 	ID3D11Buffer* m_vertexBuffer;
 	ID3D11Buffer* m_indexBuffer;
 	ntUint		m_texhandle;
@@ -70,7 +78,6 @@ private:
 	NtLightShader* m_lightShader;
 
 	typedef std::vector<NtMeshObj>	MESH_VECTOR;
-
 	MESH_VECTOR m_meshVector;
 };
 

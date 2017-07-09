@@ -20,9 +20,13 @@ public:
 
 	virtual bool Resize(ntInt width, ntInt height) = 0;
 	
-	void GetWorldMatrix(XMMATRIX& world);
+	void WorldMatrix(XMMATRIX& world);
 
-	void GetProjectionMatrix(XMMATRIX& proj);
+	void ViewMatrix(XMMATRIX& view);
+
+	void ProjectionMatrix(XMMATRIX& proj);
+
+	void Transform(XMMATRIX& tm);
 
 	void GetOrthoMatrix(XMMATRIX& ortho);
 
@@ -46,21 +50,24 @@ private:
 	NtD3DRenderer& operator = (NtD3DRenderer&);
 
 protected:
-	ntInt		m_videoCardMemory;
-	NtString	m_videoCardDescription;
-	ntChar*		m_shaderModel[3];
+	ntInt m_videoCardMemory;
+	NtString m_videoCardDescription;
+	ntChar*	m_shaderModel[3];
 
-	XMMATRIX	m_world;
-	XMMATRIX	m_proj;
-	XMMATRIX	m_ortho;
+	XMFLOAT4X4 m_world;
+	XMFLOAT4X4 m_view;
+	XMFLOAT4X4 m_proj;
+	XMMATRIX m_ortho;
 
-	ntUint		m_width;
-	ntUint		m_height;
-	ntUint		m_refreshRate;
-	ntUint		m_multiSamples;
+	ntUint m_width;
+	ntUint m_height;
+	ntUint m_refreshRate;
+	ntUint m_multiSamples;
 
-	bool		m_vsync;
-	bool		m_windowMode;
+	bool m_vsync;
+	bool m_windowMode;
+
+	static XMMATRIX ms_identity;
 };
 
 }	// namespace renderer

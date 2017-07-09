@@ -6,6 +6,8 @@
 
 namespace nt { namespace renderer {
 
+XMMATRIX NtD3DRenderer::ms_identity = XMMatrixIdentity();
+
 
 NtD3DRenderer::NtD3DRenderer()
 {
@@ -14,6 +16,10 @@ NtD3DRenderer::NtD3DRenderer()
 	m_multiSamples = 0;
 	m_vsync = false;
 	m_windowMode = false;
+
+	XMStoreFloat4x4(&m_world, ms_identity);
+	XMStoreFloat4x4(&m_view, ms_identity);
+	XMStoreFloat4x4(&m_proj, ms_identity);
 }
 
 NtD3DRenderer::~NtD3DRenderer()
@@ -22,17 +28,29 @@ NtD3DRenderer::~NtD3DRenderer()
 }
 
 
-void NtD3DRenderer::GetWorldMatrix(XMMATRIX& world)
+void NtD3DRenderer::WorldMatrix(XMMATRIX& world)
 {
-	world = m_world;
+	world = XMLoadFloat4x4(&m_world);
 }
 
-
-void NtD3DRenderer::GetProjectionMatrix(XMMATRIX& proj)
+void NtD3DRenderer::ViewMatrix(XMMATRIX& view)
 {
-	proj = m_proj;
+	view = XMLoadFloat4x4(&m_view);
 }
 
+void NtD3DRenderer::ProjectionMatrix(XMMATRIX& proj)
+{
+	proj = XMLoadFloat4x4(&m_proj);
+}
+
+void NtD3DRenderer::Transform(XMMATRIX& tm)
+{
+	XMMATRIX world = XMLoadFloat4x4(&m_world);
+	XMMATRIX view = XMLoadFloat4x4(&m_view);
+	XMMATRIX proj = XMLoadFloat4x4(&m_proj);
+
+	tm = world*view*proj;;
+}
 
 void NtD3DRenderer::GetOrthoMatrix(XMMATRIX& ortho)
 {

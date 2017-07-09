@@ -52,7 +52,6 @@ bool NtRenderer::Initialize(HWND hwnd, ntInt width, ntInt height, bool fullScree
 
 	g_renderer = m_renderEngine;
 
-
 	// create the camera object
 	m_camera = new NtCamera;
 	NtAsserte(m_camera != nullptr);
@@ -161,8 +160,8 @@ bool NtRenderer::Draw()
 
 	// get the world, view and proj matrices from the camera and d3d objects
 	m_camera->GetViewMatrix(viewMatrix);
-	m_renderEngine->GetWorldMatrix(worldMatrix);
-	m_renderEngine->GetProjectionMatrix(projMatrix);
+	m_renderEngine->WorldMatrix(worldMatrix);
+	m_renderEngine->ProjectionMatrix(projMatrix);
 
 	//////////////////////////////////////////////////////////////////////////
 
@@ -179,6 +178,25 @@ bool NtRenderer::Draw()
 	//m_colorShader->RenderLine(m_renderEngine, worldMatrix, viewMatrix, projMatrix);
 
 	// present the rendered scene to the screen
+	m_renderEngine->EndScene();
+
+	return true;
+}
+
+bool NtRenderer::DrawTest()
+{
+	m_renderEngine->BeginScene(0.0f, 0.0f, 1.0f, 1.0f);
+
+	XMMATRIX tm;
+	m_renderEngine->Transform(tm);
+
+	auto itor = m_models.begin();
+	for (; itor != m_models.end(); ++itor)
+	{
+		NtModel* model = (*itor);
+		model->RenderColor(tm);
+	}
+
 	m_renderEngine->EndScene();
 
 	return true;

@@ -27,6 +27,8 @@ public:
 
 	bool Render(ntInt indexCount, const XMMATRIX& worldMatrix, const XMMATRIX& viewMatrix, const XMMATRIX& projMatrix);
 
+	bool RenderFx(ntInt indexCount, const XMMATRIX& worldViewProj);
+
 	bool RenderLine(const XMMATRIX& worldMatrix, const XMMATRIX& viewMatrix, const XMMATRIX& projMatrix);
 
 private:

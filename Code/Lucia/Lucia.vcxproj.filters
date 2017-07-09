@@ -27,15 +27,11 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ReadMe.txt" />
     <None Include="small.ico">
       <Filter>리소스 파일</Filter>
     </None>
     <None Include="Lucia.ico">
       <Filter>리소스 파일</Filter>
-    </None>
-    <None Include="exam.fx">
-      <Filter>소스 파일</Filter>
     </None>
     <None Include="simple_fx.fxo" />
   </ItemGroup>
@@ -52,16 +48,10 @@
     <ClInclude Include="Lucia.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="FontRender.h">
-      <Filter>헤더 파일\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderObj.h">
-      <Filter>헤더 파일\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="DxInput.h">
-      <Filter>헤더 파일\Renderer</Filter>
-    </ClInclude>
     <ClInclude Include="theApp.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Box.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -72,16 +62,10 @@
     <ClCompile Include="Lucia.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="FontRender.cpp">
-      <Filter>소스 파일\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderObj.cpp">
-      <Filter>헤더 파일\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="DxInput.cpp">
-      <Filter>소스 파일\Renderer</Filter>
-    </ClCompile>
     <ClCompile Include="theApp.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Box.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -89,10 +73,5 @@
     <ResourceCompile Include="Lucia.rc">
       <Filter>리소스 파일</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="simple_ps.hlsl" />
-    <FxCompile Include="simple_vs.hlsl" />
-    <FxCompile Include="simple_fx.fx" />
   </ItemGroup>
 </Project>

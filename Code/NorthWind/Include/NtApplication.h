@@ -20,12 +20,19 @@ public:
 	virtual ~NtApplication() {}
 
 	virtual bool Initialize(bool fullscreen, ntInt width, ntInt height);
+
 	virtual void Shutdown();
+
 	virtual bool OnResize(ntInt width, ntInt height);
+
 	virtual bool Process();
 
+	virtual void Render();
+
 	virtual void OnMouseDown(WPARAM buttonState, ntInt x, ntInt y) {}
+
 	virtual void OnMouseUp(WPARAM buttonState, ntInt x, ntInt y) {}
+
 	virtual void OnMouseMove(WPARAM buttonState, ntInt x, ntInt y) {}
 
 	void MsgLoop();

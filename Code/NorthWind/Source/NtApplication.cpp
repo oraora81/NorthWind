@@ -237,6 +237,7 @@ void NtApplication::MsgLoop()
 			{
 				END = true;
 			}
+			Render();
 		}
 	}
 }
@@ -255,11 +256,14 @@ bool NtApplication::Process()
 		return false;
 	}
 
+	return true;
+}
+
+void NtApplication::Render()
+{
 	m_renderer->Draw();
 
 	CalculateFrame();
-
-	return true;
 }
 
 

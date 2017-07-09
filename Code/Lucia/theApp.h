@@ -2,7 +2,7 @@
 
 #include "NtApplication.h"
 
-using namespace nt;
+class Box;
 
 class TheApp : public nt::app::NtApplication
 {
@@ -23,9 +23,6 @@ private:
 
 
 private:
-	float m_theta;
-	float m_phi;
-	float m_radius;
-
 	POINT m_lastMousePos;
+	//Box* m_model;
 };
