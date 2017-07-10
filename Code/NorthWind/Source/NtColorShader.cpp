@@ -45,7 +45,7 @@ bool NtColorShader::InitializeFx(const ntWchar* fx)
 
 	nt::fs::NtFileBuffer fileBuffer(fx);
 
-	HRF(D3DX11CreateEffectFromMemory(fileBuffer.GetData(), fileBuffer.GetBytes(), 0, g_renderer->Device(), &m_fx));
+	HRF(D3DX11CreateEffectFromMemory(fileBuffer.GetData(), fileBuffer.GetBytes(), 0, g_renderer->Device(), &m_fx, nullptr));
 
 	m_tech = m_fx->GetTechniqueByName("ColorTech");
 

@@ -140,7 +140,7 @@
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IncludePath);$(DXSDK_DIR)Include</IncludePath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IncludePath);$(DXSDK_DIR)Include</IncludePath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='DebugDx11|Win32'">$(IncludePath);$(DXSDK_DIR)Include</IncludePath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='DebugDx11|x64'">$(IncludePath);$(DXSDK_DIR)Include</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='DebugDx11|x64'">$(IncludePath)</IncludePath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='DebugDx9|Win32'">$(IncludePath);$(DXSDK_DIR)Include</IncludePath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='DebugDx9|x64'">$(IncludePath);$(DXSDK_DIR)Include</IncludePath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IncludePath);$(DXSDK_DIR)Lib\x86;$(LibraryPath)</LibraryPath>
@@ -249,7 +249,7 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <PrecompiledHeaderFile>NtCoreLib.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(WindowsSDK_IncludePath);.\Include;$(DXSDK_DIR)Include;..\import\Include\;..\import\assimp\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(WindowsSDK_IncludePath);.\Include;..\import\Include\;..\import\assimp\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Lib>

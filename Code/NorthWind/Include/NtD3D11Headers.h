@@ -16,12 +16,10 @@
 #if defined(_DEBUG) || defined(DEBUG)
 #pragma comment (lib, "d3dx11d.lib")
 #pragma comment (lib, "d3dx10d.lib")
-//#pragma comment (lib, "Effects11d.lib")
 #else
 #pragma comment (lib, "d3dx11.lib")
 #pragma comment (lib, "d3dx10.lib")
 #pragma comment (lib, "d3d10_1.lib")
-//#pragma comment (lib, "Effects11.lib")
 #endif
 
 #pragma comment (lib, "dxgi.lib")

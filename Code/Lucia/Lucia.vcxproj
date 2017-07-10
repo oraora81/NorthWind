@@ -144,7 +144,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugDx11|x64'">
     <TargetName>$(ProjectName)_$(Configuration)</TargetName>
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(IncludePath);$(DXSDK_DIR)Include</IncludePath>
+    <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(IncludePath);$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
     <OutDir>./../../bin</OutDir>
     <IntDir>./../../Intermediate/$(ProjectName)/$(Configuration)\</IntDir>
@@ -237,7 +237,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>USE_DIRECTX;_NT_DX11;WIN64;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(WindowsSDK_IncludePath);../NorthWind/Include;../import/assimp;$(DXSDK_DIR)Include;..\import\Include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(WindowsSDK_IncludePath);../NorthWind/Include;../import/assimp;..\import\Include\</AdditionalIncludeDirectories>
       <PrecompiledHeaderOutputFile>./../../Intermediate/$(ProjectName)/$(Configuration)/$(TargetName).pch</PrecompiledHeaderOutputFile>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
     </ClCompile>
@@ -360,6 +360,9 @@
     <ResourceCompile Include="Lucia.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FX11\Effects11_2015_Win10.vcxproj">
+      <Project>{df460eab-570d-4b50-9089-2e2fc801bf38}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\NorthWind\NorthWind.vcxproj">
       <Project>{e6fa1bb6-3b20-4d27-a59e-437ac38ac069}</Project>
     </ProjectReference>
