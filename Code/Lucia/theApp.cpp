@@ -74,7 +74,7 @@ bool TheApp::Initialize(bool fullscreen, ntInt width, ntInt height)
 	{
 		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), (const float*)&Colors::White },
 		{ XMFLOAT3(-1.0f, +1.0f, -1.0f), (const float*)&Colors::Black },
-		{ XMFLOAT3(+1.0f, +-1.0f, -1.0f), (const float*)&Colors::Red },
+		{ XMFLOAT3(+1.0f, +1.0f, -1.0f), (const float*)&Colors::Red },
 		{ XMFLOAT3(+1.0f, -1.0f, -1.0f), (const float*)&Colors::Green },
 		{ XMFLOAT3(-1.0f, -1.0f, +1.0f), (const float*)&Colors::Blue },
 		{ XMFLOAT3(-1.0f, +1.0f, +1.0f), (const float*)&Colors::Yellow },
