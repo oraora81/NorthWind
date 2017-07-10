@@ -142,6 +142,13 @@ void NtRenderer::Release()
 
 bool NtRenderer::Process(const ntFloat deltaTime)
 {
+    auto itor = m_models.begin();
+    for (; itor != m_models.end(); ++itor)
+    {
+        NtModel* model = (*itor);
+        model->Update(deltaTime);
+    }
+
 	return true;
 }
 
@@ -256,6 +263,13 @@ void NtRenderer::SetVertexBuffers(ntUint startSlot, ntUint numBuffers, NtVertexB
 void NtRenderer::SetIndexBuffers(NtIndexBuffer* buffer, NTCOLORFMT format, ntUint offset)
 {
 	m_renderEngine->DeviceContext()->IASetIndexBuffer(buffer, format, offset);
+}
+
+bool NtRenderer::AddModel(NtModel* model)
+{
+	m_models.push_back(model);
+
+	return true;
 }
 
 } }

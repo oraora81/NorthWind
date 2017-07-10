@@ -17,12 +17,7 @@ public:
 
 	virtual void OnMouseUp(WPARAM buttonState, ntInt x, ntInt y) override;
 
-	virtual bool Process() override;
-
-private:
-
-
 private:
 	POINT m_lastMousePos;
-	//Box* m_model;
+	Box* m_model;
 };

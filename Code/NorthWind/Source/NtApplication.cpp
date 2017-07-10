@@ -261,7 +261,8 @@ bool NtApplication::Process()
 
 void NtApplication::Render()
 {
-	m_renderer->Draw();
+	//m_renderer->Draw();
+    m_renderer->DrawTest();
 
 	CalculateFrame();
 }

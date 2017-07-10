@@ -9,9 +9,10 @@
 #include "postprocess.h"
 
 #include "NtLog.h"
-//#include "Box.h"
+#include "Box.h"
 
 using namespace nt::log;
+using namespace nt::renderer;
 
 namespace
 {
@@ -69,7 +70,7 @@ bool TheApp::Initialize(bool fullscreen, ntInt width, ntInt height)
 	//Crt::WideStrToMultiStr(buf, Crt::StrLen(buf), fname);
 	//DoImport(buf);
 
-	/*NtModel::NtPCVertex vertices[] =
+	NtModel::NtPCVertex vertices[] =
 	{
 		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), (const float*)&Colors::White },
 		{ XMFLOAT3(-1.0f, +1.0f, -1.0f), (const float*)&Colors::Black },
@@ -100,10 +101,13 @@ bool TheApp::Initialize(bool fullscreen, ntInt width, ntInt height)
 
 		4, 0, 3,
 		4, 3, 7
-	};*/
+	};
 
-	/*m_model = new Box();
-	m_model->IntializeModelData(vertices, _countof(vertices), indices, _countof(indices), L"../Code/Lucia/simple_fx.fxo");*/
+	m_model = new Box();
+	m_model->IntializeModelData(vertices, _countof(vertices), indices, _countof(indices), L"../Code/Lucia/simple_fx.fxo");
+
+
+    g_renderInterface->AddModel(m_model);
 
 	return true;
 }
@@ -116,13 +120,4 @@ void TheApp::OnMouseDown(WPARAM buttonState, ntInt x, ntInt y)
 void TheApp::OnMouseUp(WPARAM buttonState, ntInt x, ntInt y)
 {
 	NTRACE(L"Up - x : %d, y : %%d", x, y);
-}
-
-bool TheApp::Process()
-{
-	float dt = DeltaTime();
-
-	//m_model->Update(dt);
-
-	return true;
 }

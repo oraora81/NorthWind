@@ -3,8 +3,8 @@
 
 #include "stdafx.h"
 #include "Lucia.h"
-//#include "theApp.h"
-//#include "NtBuffer.h"
+#include "theApp.h"
+#include "NtBuffer.h"
 
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
@@ -44,13 +44,13 @@ int APIENTRY wWinMain(HINSTANCE hInstance,
 
 	//
 	
-	/*TheApp* theApp = new TheApp();
+	TheApp* theApp = new TheApp();
 	if (theApp->Initialize(false, 1024, 768))
 	{
 		theApp->MsgLoop();
 		theApp->Shutdown();
 	}
-*/
+
 	//SAFE_DELETE(theApp);
 
 	return (int) msg.wParam;

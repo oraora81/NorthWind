@@ -50,6 +50,8 @@ public:
 
 	void SetIndexBuffers(NtIndexBuffer* buffer, NTCOLORFMT format, ntUint offset);
 
+    bool AddModel(NtModel* model);
+
 private:
 	std::shared_ptr<NtDx11Renderer> m_renderEngine;
 	NtCamera*			m_camera;
