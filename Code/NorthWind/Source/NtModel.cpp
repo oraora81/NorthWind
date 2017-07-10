@@ -156,14 +156,14 @@ void NtModel::Render(const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX
 	}
 }
 
-void NtModel::RenderColor(const XMMATRIX& worldViewProj)
+void NtModel::RenderColor(XMMATRIX& worldViewProj)
 {
 	ntUint stride = sizeof(NtPCVertex);
 	ntUint offset = 0;
 
-	g_renderInterface->SetVertexBuffers(0, 1, &m_vertexBuffer, &stride, &offset);
+    g_renderInterface->SetPrimitiveTopology(ePrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	g_renderInterface->SetPrimitiveTopology(ePrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	g_renderInterface->SetVertexBuffers(0, 1, &m_vertexBuffer, &stride, &offset);
 
 	g_renderInterface->SetIndexBuffers(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 

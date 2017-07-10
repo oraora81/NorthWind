@@ -27,20 +27,34 @@ NtD3DRenderer::~NtD3DRenderer()
 	
 }
 
-
-void NtD3DRenderer::WorldMatrix(XMMATRIX& world)
+void NtD3DRenderer::SetWorldMatrix(XMMATRIX& world)
 {
-	world = XMLoadFloat4x4(&m_world);
+    XMStoreFloat4x4(&m_world, world);
 }
 
-void NtD3DRenderer::ViewMatrix(XMMATRIX& view)
+void NtD3DRenderer::SetViewMatrix(XMMATRIX& view)
 {
-	view = XMLoadFloat4x4(&m_view);
+    XMStoreFloat4x4(&m_view, view);
 }
 
-void NtD3DRenderer::ProjectionMatrix(XMMATRIX& proj)
+void NtD3DRenderer::SetProjectionMatrix(XMMATRIX& proj)
 {
-	proj = XMLoadFloat4x4(&m_proj);
+    XMStoreFloat4x4(&m_proj, proj);
+}
+
+void NtD3DRenderer::GetWorldMatrix(XMMATRIX& world)
+{
+    world = XMLoadFloat4x4(&m_world);
+}
+
+void NtD3DRenderer::GetViewMatrix(XMMATRIX& view)
+{
+    view = XMLoadFloat4x4(&m_view);
+}
+
+void NtD3DRenderer::GetProjectionMatrix(XMMATRIX& proj)
+{
+    proj = XMLoadFloat4x4(&m_proj);
 }
 
 void NtD3DRenderer::Transform(XMMATRIX& tm)

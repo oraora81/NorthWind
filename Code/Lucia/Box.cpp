@@ -33,5 +33,5 @@ void Box::Update(float deltaTime)
 
 	XMMATRIX v = XMMatrixLookAtLH(pos, target, up);
 
-	g_renderer->ViewMatrix(v);
+	g_renderer->SetViewMatrix(v);
 }

@@ -20,11 +20,17 @@ public:
 
 	virtual bool Resize(ntInt width, ntInt height) = 0;
 	
-	void WorldMatrix(XMMATRIX& world);
+	void SetWorldMatrix(XMMATRIX& world);
 
-	void ViewMatrix(XMMATRIX& view);
+	void SetViewMatrix(XMMATRIX& view);
 
-	void ProjectionMatrix(XMMATRIX& proj);
+	void SetProjectionMatrix(XMMATRIX& proj);
+
+    void GetWorldMatrix(XMMATRIX& world);
+
+    void GetViewMatrix(XMMATRIX& view);
+
+    void GetProjectionMatrix(XMMATRIX& proj);
 
 	void Transform(XMMATRIX& tm);
 

@@ -167,8 +167,8 @@ bool NtRenderer::Draw()
 
 	// get the world, view and proj matrices from the camera and d3d objects
 	m_camera->GetViewMatrix(viewMatrix);
-	m_renderEngine->WorldMatrix(worldMatrix);
-	m_renderEngine->ProjectionMatrix(projMatrix);
+	m_renderEngine->SetWorldMatrix(worldMatrix);
+	m_renderEngine->SetProjectionMatrix(projMatrix);
 
 	//////////////////////////////////////////////////////////////////////////
 

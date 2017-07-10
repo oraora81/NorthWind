@@ -102,8 +102,7 @@ bool NtColorShader::Render(ntInt indexCount, const XMMATRIX& worldMatrix, const 
 bool NtColorShader::RenderFx(ntInt indexCount, const XMMATRIX& worldViewProj)
 {
 	g_renderer->DeviceContext()->IASetInputLayout(m_layout);
-	g_renderInterface->SetPrimitiveTopology(ePrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
+	
 	m_fxWorldViewProj->SetMatrix(reinterpret_cast<const float*>(&worldViewProj));
 
 	D3DX11_TECHNIQUE_DESC techDesc;
