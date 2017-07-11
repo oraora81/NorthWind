@@ -25,7 +25,7 @@ public:
 
 	virtual bool OnResize(ntInt width, ntInt height);
 
-	virtual bool Process();
+	virtual bool Process(const float deltaTime);
 
 	virtual void Render();
 

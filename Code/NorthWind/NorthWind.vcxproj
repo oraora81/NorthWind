@@ -383,6 +383,7 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <ClInclude Include="Include\NtException.h" />
     <ClInclude Include="Include\NtFactory.h" />
     <ClInclude Include="Include\NtFile.h" />
+    <ClInclude Include="Include\NtFrameSkip.h" />
     <ClInclude Include="Include\NtGlobal.h" />
     <ClInclude Include="Include\NtHashTable.h" />
     <ClInclude Include="Include\NtImage.h" />

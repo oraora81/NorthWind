@@ -200,6 +200,9 @@
     <ClInclude Include="Include\NtModel.h">
       <Filter>render</Filter>
     </ClInclude>
+    <ClInclude Include="Include\NtFrameSkip.h">
+      <Filter>system</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\test_cube.ase" />

@@ -2,6 +2,8 @@
 #include "NtCoreLib.h"
 #pragma hdrstop
 
+#include "NtFrameSkip.h"
+
 // 
 //----------------------------------------------------------------------------
 nt::app::NtApplication* g_app = nullptr;
@@ -214,6 +216,9 @@ void NtApplication::MsgLoop()
 
 	m_timer.Reset();
 
+	NtFrameSkip fs;
+	fs.SetFramePerSec(60.0f);
+
 	Crt::MemSet(&msg, sizeof(MSG));
 	bool END = false;
 	while (!END)
@@ -233,23 +238,43 @@ void NtApplication::MsgLoop()
 		{
 			m_timer.Tick();
 
-			if (!Process())
+			float deltaTime = m_timer.DeltaTime();
+
+			// >>>
+			// 1. 가능한 빠르게 동작해야 하는 부분 
+			//		카메라 이동?
+			// <<<
+
+
+			// >>>
+			// 고정 프레임으로 동작하는 부분
+			if (fs.Update(deltaTime))
 			{
-				END = true;
+				if (!Process(deltaTime))
+				{
+					END = true;
+				}
 			}
-			Render();
+			// <<<
+
+			// >>>
+			// 경우에 따라 호출되지 않아도 되는 코드
+			// 렌더링 같이 시간을 많이 잡아먹는 코드를 넣는다
+			if (fs.IsFrameSkip() == false)
+			{
+				Render();
+			}
+			// >>>
 		}
 	}
 }
 
-bool NtApplication::Process()
+bool NtApplication::Process(const float deltaTime)
 {
 	if (m_inputManager->IsKeyDown(VK_ESCAPE))
 	{
 		return false;
 	}
-
-	const float deltaTime = m_timer.DeltaTime();
 
 	if (!m_renderer->Process(deltaTime))
 	{
@@ -261,10 +286,9 @@ bool NtApplication::Process()
 
 void NtApplication::Render()
 {
-	//m_renderer->Draw();
-    m_renderer->DrawTest();
-
 	CalculateFrame();
+	//m_renderer->Draw();
+	m_renderer->DrawTest();
 }
 
 
@@ -418,7 +442,8 @@ void NtApplication::CalculateFrame()
 		outs.precision(6);
 		outs << m_appName.Buffer() << L"      "
 			<< L"FPS : " << fps << L"      "
-			<< L"Frame Time : " << mspf << L" (ms)";
+			<< L"Frame Time : " << mspf << L" (ms)" << L"      "
+			<< L"dt : " << m_timer.DeltaTime() << L"      ";
 
 		SetWindowText(m_hwnd, outs.str().c_str());
 

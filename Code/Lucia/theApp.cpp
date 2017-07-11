@@ -107,7 +107,7 @@ bool TheApp::Initialize(bool fullscreen, ntInt width, ntInt height)
 	m_model->IntializeModelData(vertices, _countof(vertices), indices, _countof(indices), L"../Code/Lucia/simple_fx.fxo");
 
 
-    g_renderInterface->AddModel(m_model);
+	g_renderInterface->AddModel(m_model);
 
 	return true;
 }
