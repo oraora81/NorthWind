@@ -35,6 +35,9 @@ public:
 
 	static real Abs(real val);
 	static bool IsZero(real val);
+	static real Min(real a, real b);
+	static real Max(real a, real b);
+	static real Clamp(real current, real min, real max);
 
 	static const real EPSILON;
 	static const real TOLERANCE;
