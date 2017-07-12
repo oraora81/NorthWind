@@ -11,6 +11,7 @@
 #include "NtLog.h"
 #include "Box.h"
 
+using namespace nt;
 using namespace nt::log;
 using namespace nt::renderer;
 
@@ -114,10 +115,45 @@ bool TheApp::Initialize(bool fullscreen, ntInt width, ntInt height)
 
 void TheApp::OnMouseDown(WPARAM buttonState, ntInt x, ntInt y)
 {
-	NTRACE(L"Down - x : %d, y : %%d", x, y);
+	m_lastMousePos.x = x;
+	m_lastMousePos.y = y;
+
+	SetCapture(Handle());
 }
 
 void TheApp::OnMouseUp(WPARAM buttonState, ntInt x, ntInt y)
 {
-	NTRACE(L"Up - x : %d, y : %%d", x, y);
+	ReleaseCapture();
+}
+
+
+void TheApp::OnMouseMove(WPARAM buttonState, ntInt x, ntInt y)
+{
+	if ((buttonState & MK_LBUTTON) != 0)
+	{
+		// 1픽셀이 4분의 1도(디그리)가 되게 한다.
+		float dx = XMConvertToRadians(0.25f * static_cast<float>(x - m_lastMousePos.x));
+		float dy = XMConvertToRadians(0.25f * static_cast<float>(y - m_lastMousePos.y));
+
+		// 마우스 입력에 기초한 각도로 상자 주변의 궤도 카메라를 갱신한다.
+		m_model->Theta() += dx;
+		m_model->Phi() += dy;
+
+		float phi = NtMath<float>::Clamp(m_model->Phi(), 0.1f, NtMath<float>::PI - 0.1f);
+		m_model->Phi(phi);
+	}
+	else if ((buttonState & MK_RBUTTON) != 0)
+	{
+		// 1픽셀이 장면의 0.005 단위가 되게 한다.
+		float dx = 0.005f * static_cast<float>(x - m_lastMousePos.x);
+		float dy = 0.005f * static_cast<float>(y - m_lastMousePos.y);
+
+		float r = m_model->Radius();
+		r += (dx - dy);
+		r = NtMath<float>::Clamp(r, 3.0f, 15.0f);
+		m_model->Radius(r);
+	}
+
+	m_lastMousePos.x = x;
+	m_lastMousePos.y = y;
 }

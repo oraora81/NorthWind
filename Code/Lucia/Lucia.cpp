@@ -5,6 +5,7 @@
 #include "Lucia.h"
 #include "theApp.h"
 #include "NtBuffer.h"
+using namespace nt;
 
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
@@ -51,7 +52,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance,
 		theApp->Shutdown();
 	}
 
-	//SAFE_DELETE(theApp);
+	SAFE_DELETE(theApp);
 
 	return (int) msg.wParam;
 }
