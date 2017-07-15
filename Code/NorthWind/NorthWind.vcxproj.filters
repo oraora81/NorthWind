@@ -203,6 +203,9 @@
     <ClInclude Include="Include\NtFrameSkip.h">
       <Filter>system</Filter>
     </ClInclude>
+    <ClInclude Include="Include\NtGeometryGenerator.h">
+      <Filter>render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\test_cube.ase" />
@@ -387,6 +390,9 @@
       <Filter>render</Filter>
     </ClCompile>
     <ClCompile Include="Source\NtModel.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\NtGeometryGenerator.cpp">
       <Filter>render</Filter>
     </ClCompile>
   </ItemGroup>

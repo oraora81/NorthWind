@@ -384,6 +384,7 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <ClInclude Include="Include\NtFactory.h" />
     <ClInclude Include="Include\NtFile.h" />
     <ClInclude Include="Include\NtFrameSkip.h" />
+    <ClInclude Include="Include\NtGeometryGenerator.h" />
     <ClInclude Include="Include\NtGlobal.h" />
     <ClInclude Include="Include\NtHashTable.h" />
     <ClInclude Include="Include\NtImage.h" />
@@ -467,6 +468,7 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <ClCompile Include="Source\NtD3DRenderer.cpp" />
     <ClCompile Include="Source\NtFactory.cpp" />
     <ClCompile Include="Source\NtFile.cpp" />
+    <ClCompile Include="Source\NtGeometryGenerator.cpp" />
     <ClCompile Include="Source\NtImage.cpp" />
     <ClCompile Include="Source\NtInitDelegator.cpp" />
     <ClCompile Include="Source\NtInputManager.cpp" />
