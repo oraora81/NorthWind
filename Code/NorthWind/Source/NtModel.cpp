@@ -32,7 +32,7 @@ NtModel::~NtModel()
 	Release();
 }
 
-bool NtModel::IntializeModelData(NtPCVertex* vertices, ntInt vertexCount, ntUint* indices, ntInt indexCount, const ntWchar* fx)
+bool NtModel::InitializeModelData(NtPCVertex* vertices, ntInt vertexCount, ntUint* indices, ntInt indexCount, const ntWchar* fx)
 {
 	// vb
 	D3D11_BUFFER_DESC vd;
@@ -161,7 +161,7 @@ void NtModel::RenderColor(XMMATRIX& worldViewProj)
 	ntUint stride = sizeof(NtPCVertex);
 	ntUint offset = 0;
 
-    g_renderInterface->SetPrimitiveTopology(ePrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	g_renderInterface->SetPrimitiveTopology(ePrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	g_renderInterface->SetVertexBuffers(0, 1, &m_vertexBuffer, &stride, &offset);
 

@@ -22,9 +22,9 @@ public:
 		m_tuple = new T[DEFAULT_ARRAY_LENGTH];
 		Crt::MemSet(m_tuple, sizeof(T) * DEFAULT_ARRAY_LENGTH);
 
-		m_first = m_tuple[0];
+		m_first = &m_tuple[0];
 		m_last = m_first;
-		m_end = m_tuple[DEFAULT_ARRAY_LENGTH - 1];
+		m_end = &m_tuple[DEFAULT_ARRAY_LENGTH - 1];
 	}
 
 	explicit NtArray(ntSize maxSize)
@@ -59,7 +59,7 @@ public:
 private:
 	void Resize()
 	{
-		if (m_end == ((T)m_last + 1))
+		if (m_end > ((T*)m_last + 1))
 		{
 			return;
 		}
@@ -70,60 +70,59 @@ private:
 		if (length != 0)
 		{
 			T* newTuple = new T[length];
-			Crt::MemCpy(newTuple, m_tuple, sizeof(T) * (length >> 1));
+			Crt::MemCpy(newTuple, m_tuple, (ntUint)(sizeof(T) * (length >> 1)));
 
-			clear();
+			Clear();
 			m_tuple = newTuple;
 			m_first = &m_tuple[0];
 			m_last = (m_first + (length >> 1) - 1);
-			m_end = length - 1;
+			m_end = &m_tuple[length - 1];
 		}
 	}
 
 public:
-	void push_back(const T& value)
+	void Pushback(const T& value)
 	{
 		Resize();
-
-		++m_last;
 		*m_last = value;
+		++m_last;
 	}
 	
-	void push_back(T&& value)
+	void Pushback(T&& value)
 	{
 		Resize();
 
-		++m_last;
 		*m_last = value;
+		++m_last;
 	}
 
-	void Insert(ntIndex index, T value)
-	{
-		Resize();
+	//void Insert(ntIndex index, T value)
+	//{
+	//	Resize();
 
-		NtAsserte(index >= 0 && index < m_arraySize);
-		// 하나씩 뒤로 밀어준다.
-		for (ntIndex end = m_arraySize; end > index; --end)
-		{
-			m_tuple[end] = m_tuple[end - 1];
-		}
-		m_tuple[index] = value;
-		++m_arraySize;
-	}
+	//	NtAsserte(index >= 0 && index < m_arraySize);
+	//	// 하나씩 뒤로 밀어준다.
+	//	for (ntIndex end = Size(); end > index; --end)
+	//	{
+	//		m_tuple[end] = m_tuple[end - 1];
+	//	}
+	//	m_tuple[index] = value;
+	//	++m_arraySize;
+	//}
 
-	void Erase(ntIndex index)
-	{
-		NtAsserte(index >= 0 && index < m_arraySize);
+	//void Erase(ntIndex index)
+	//{
+	//	NtAsserte(index >= 0 && index < m_arraySize);
 
-		// 하나씩 당겨준다.
-		for (ntIndex i = index; i < m_arraySize - 1; ++i)
-		{
-			m_tuple[i] = m_tuple[i + 1];
-		}
-		--m_arraySize;
-	}
+	//	// 하나씩 당겨준다.
+	//	for (ntIndex i = index; i < m_arraySize - 1; ++i)
+	//	{
+	//		m_tuple[i] = m_tuple[i + 1];
+	//	}
+	//	--m_arraySize;
+	//}
 
-	void clear()
+	void Clear()
 	{
 		SAFE_DELETE_ARRAY(m_tuple);
 	}
@@ -154,13 +153,6 @@ public:
 		return m_arraySize;
 	}
 
-	ntSize	MaxSize() const
-	{
-		return m_maxArraySize;
-	}
-
-
-
 	NtArray& operator=(const NtArray& rhs)
 	{
 		if (*this == rhs)
@@ -168,11 +160,10 @@ public:
 			return *this;
 		}
 
-		clear();
+		Clear();
 
-		m_maxArraySize = rhs.MaxSize();
 		m_arraySize = rhs.Size();
-		m_tuple = m_maxArraySize ? new T[m_maxArraySize] : nullptr;
+		m_tuple = m_arraySize ? new T[m_arraySize] : nullptr;
 
 		for (ntIndex i = 0; i < m_arraySize; ++i)
 		{
@@ -183,12 +174,11 @@ public:
 	}
 
 private:
-    T*  m_tuple;
+	T*  m_tuple;
 	pointer m_first;
 	pointer m_last;
 	pointer m_end;
+	ntSize	m_arraySize;
 };
-
-#include "NtArray.inl"
 
 } // namespace nt

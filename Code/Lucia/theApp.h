@@ -3,6 +3,7 @@
 #include "NtApplication.h"
 
 class Box;
+class Hills;
 
 class TheApp : public nt::app::NtApplication
 {
@@ -21,5 +22,6 @@ public:
 
 private:
 	POINT m_lastMousePos;
-	Box* m_model;
+	//Box* m_model;
+	Hills* m_model;
 };

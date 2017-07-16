@@ -70,6 +70,7 @@
 #include <NtLinearAllocator.h>
 #include <NtBuffer.h>
 #include <NtFile.h>
+#include <NtArray.h>
 
 // render
 #include <NtRenderDefine.h>

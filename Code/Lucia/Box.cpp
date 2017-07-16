@@ -19,6 +19,44 @@ Box::~Box()
 
 }
 
+void Box::MakeGeometry()
+{
+	NtModel::NtPCVertex vertices[] =
+	{
+		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), (const float*)&Colors::White },
+		{ XMFLOAT3(-1.0f, +1.0f, -1.0f), (const float*)&Colors::Black },
+		{ XMFLOAT3(+1.0f, +1.0f, -1.0f), (const float*)&Colors::Red },
+		{ XMFLOAT3(+1.0f, -1.0f, -1.0f), (const float*)&Colors::Green },
+		{ XMFLOAT3(-1.0f, -1.0f, +1.0f), (const float*)&Colors::Blue },
+		{ XMFLOAT3(-1.0f, +1.0f, +1.0f), (const float*)&Colors::Yellow },
+		{ XMFLOAT3(+1.0f, +1.0f, +1.0f), (const float*)&Colors::Cyan },
+		{ XMFLOAT3(+1.0f, -1.0f, +1.0f), (const float*)&Colors::Magenta },
+	};
+
+	ntUint indices[] =
+	{
+		0, 1, 2,
+		0, 2, 3,
+
+		4, 6, 5,
+		4, 7, 6,
+
+		4, 5, 1,
+		4, 1, 0,
+
+		3, 2, 6,
+		3, 6, 7,
+
+		1, 5, 6,
+		1, 6, 2,
+
+		4, 0, 3,
+		4, 3, 7
+	};
+
+	InitializeModelData(vertices, _countof(vertices), indices, _countof(indices), L"../Code/Lucia/simple_fx.fxo");
+}
+
 void Box::Update(float deltaTime)
 {
 	NtModel::Update(deltaTime);

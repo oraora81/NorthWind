@@ -10,6 +10,7 @@
 
 #include "NtLog.h"
 #include "Box.h"
+#include "Hills.h"
 
 using namespace nt;
 using namespace nt::log;
@@ -71,41 +72,9 @@ bool TheApp::Initialize(bool fullscreen, ntInt width, ntInt height)
 	//Crt::WideStrToMultiStr(buf, Crt::StrLen(buf), fname);
 	//DoImport(buf);
 
-	NtModel::NtPCVertex vertices[] =
-	{
-		{ XMFLOAT3(-1.0f, -1.0f, -1.0f), (const float*)&Colors::White },
-		{ XMFLOAT3(-1.0f, +1.0f, -1.0f), (const float*)&Colors::Black },
-		{ XMFLOAT3(+1.0f, +1.0f, -1.0f), (const float*)&Colors::Red },
-		{ XMFLOAT3(+1.0f, -1.0f, -1.0f), (const float*)&Colors::Green },
-		{ XMFLOAT3(-1.0f, -1.0f, +1.0f), (const float*)&Colors::Blue },
-		{ XMFLOAT3(-1.0f, +1.0f, +1.0f), (const float*)&Colors::Yellow },
-		{ XMFLOAT3(+1.0f, +1.0f, +1.0f), (const float*)&Colors::Cyan },
-		{ XMFLOAT3(+1.0f, -1.0f, +1.0f), (const float*)&Colors::Magenta },
-	};
-
-	ntUint indices[] = 
-	{
-		0, 1, 2,
-		0, 2, 3,
-
-		4, 6, 5, 
-		4, 7, 6,
-
-		4, 5, 1,
-		4, 1, 0, 
-
-		3, 2, 6,
-		3, 6, 7,
-
-		1, 5, 6,
-		1, 6, 2,
-
-		4, 0, 3,
-		4, 3, 7
-	};
-
-	m_model = new Box();
-	m_model->IntializeModelData(vertices, _countof(vertices), indices, _countof(indices), L"../Code/Lucia/simple_fx.fxo");
+	//m_model = new Box();
+	m_model = new Hills();
+	m_model->MakeGeometry();
 
 
 	g_renderInterface->AddModel(m_model);
@@ -145,12 +114,12 @@ void TheApp::OnMouseMove(WPARAM buttonState, ntInt x, ntInt y)
 	else if ((buttonState & MK_RBUTTON) != 0)
 	{
 		// 1픽셀이 장면의 0.005 단위가 되게 한다.
-		float dx = 0.005f * static_cast<float>(x - m_lastMousePos.x);
-		float dy = 0.005f * static_cast<float>(y - m_lastMousePos.y);
+		float dx = 0.2f * static_cast<float>(x - m_lastMousePos.x);
+		float dy = 0.2f * static_cast<float>(y - m_lastMousePos.y);
 
 		float r = m_model->Radius();
 		r += (dx - dy);
-		r = NtMath<float>::Clamp(r, 3.0f, 15.0f);
+		r = NtMath<float>::Clamp(r, 50.0f, 500.0f);
 		m_model->Radius(r);
 	}
 

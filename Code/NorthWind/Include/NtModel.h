@@ -30,7 +30,7 @@ public:
 
 	bool Initialize(const ntWchar* puppetName);
 
-	bool IntializeModelData(NtPCVertex* vertices, ntInt vertexCount, ntUint* indices, ntInt indexCount, const ntWchar* fx);
+	bool InitializeModelData(NtPCVertex* vertices, ntInt vertexCount, ntUint* indices, ntInt indexCount, const ntWchar* fx);
 
 	void Release();
 

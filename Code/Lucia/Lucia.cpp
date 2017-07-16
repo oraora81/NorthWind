@@ -5,6 +5,7 @@
 #include "Lucia.h"
 #include "theApp.h"
 #include "NtBuffer.h"
+
 using namespace nt;
 
 const int SCREEN_WIDTH = 800;
@@ -44,7 +45,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance,
 	hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_LUCIA));
 
 	//
-	
+
 	TheApp* theApp = new TheApp();
 	if (theApp->Initialize(false, 1024, 768))
 	{

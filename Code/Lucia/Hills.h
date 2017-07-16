@@ -2,11 +2,11 @@
 
 #include "NtModel.h"
 
-class Box : public nt::renderer::NtModel
+class Hills : public nt::renderer::NtModel
 {
 public:
-	Box();
-	virtual ~Box();
+	Hills();
+	virtual ~Hills();
 
 	virtual void Update(float deltaTime) override;
 
