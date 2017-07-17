@@ -61,9 +61,8 @@ void Hills::MakeGeometry()
 
 		XMFLOAT3 p = v.Position;
 
-		//p.y = GetHeight(p.x, p.z);
-		p.y = 0.0f;
-
+		p.y = GetHeight(p.x, p.z);
+		
 		vertices[i].position = p;
 
 		if (p.y < -10.0f)
