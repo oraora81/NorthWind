@@ -46,11 +46,13 @@ public:
 
 	void SetPrimitiveTopology(ntInt topology);
 
+	void SetRenderState(eRenderState state);
+
 	void SetVertexBuffers(ntUint startSlot, ntUint numBuffers, NtVertexBuffer** buffer, ntUint* stride, ntUint* offset);
 
 	void SetIndexBuffers(NtIndexBuffer* buffer, NTCOLORFMT format, ntUint offset);
 
-    bool AddModel(NtModel* model);
+	bool AddModel(NtModel* model);
 
 private:
 	std::shared_ptr<NtDx11Renderer> m_renderEngine;

@@ -19,6 +19,10 @@ public:
 	virtual void EndScene() = 0;
 
 	virtual bool Resize(ntInt width, ntInt height) = 0;
+
+	virtual void SetRenderStateSolid() const = 0;
+
+	virtual void SetRenderStateWireframe() const = 0;
 	
 	void SetWorldMatrix(XMMATRIX& world);
 
@@ -26,11 +30,11 @@ public:
 
 	void SetProjectionMatrix(XMMATRIX& proj);
 
-    void GetWorldMatrix(XMMATRIX& world);
+	void GetWorldMatrix(XMMATRIX& world);
 
-    void GetViewMatrix(XMMATRIX& view);
+	void GetViewMatrix(XMMATRIX& view);
 
-    void GetProjectionMatrix(XMMATRIX& proj);
+	void GetProjectionMatrix(XMMATRIX& proj);
 
 	void Transform(XMMATRIX& tm);
 

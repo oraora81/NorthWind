@@ -78,3 +78,14 @@
 		//make something
 		#pragma error
 #endif
+
+	enum eRenderState
+	{
+#ifdef USE_DIRECTX
+		NT_RS_SOLID = D3D11_FILL_SOLID,
+		NT_RS_WIRE_FRAME = D3D11_FILL_WIREFRAME,
+#else
+		NT_RS_SOLID,
+		NT_RS_WIRE_FRAME,
+#endif
+	};

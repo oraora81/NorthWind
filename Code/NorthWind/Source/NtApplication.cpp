@@ -276,6 +276,16 @@ bool NtApplication::Process(const float deltaTime)
 		return false;
 	}
 
+	if (m_inputManager->IsKeyDown(VK_F1))
+	{
+		g_renderInterface->SetRenderState(NT_RS_SOLID);
+	}
+
+	if (m_inputManager->IsKeyDown(VK_F2))
+	{
+		g_renderInterface->SetRenderState(NT_RS_WIRE_FRAME);
+	}
+
 	if (!m_renderer->Process(deltaTime))
 	{
 		return false;

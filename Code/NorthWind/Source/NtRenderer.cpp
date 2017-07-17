@@ -142,12 +142,12 @@ void NtRenderer::Release()
 
 bool NtRenderer::Process(const ntFloat deltaTime)
 {
-    auto itor = m_models.begin();
-    for (; itor != m_models.end(); ++itor)
-    {
-        NtModel* model = (*itor);
-        model->Update(deltaTime);
-    }
+	auto itor = m_models.begin();
+	for (; itor != m_models.end(); ++itor)
+	{
+		NtModel* model = (*itor);
+		model->Update(deltaTime);
+	}
 
 	return true;
 }
@@ -248,12 +248,23 @@ bool NtRenderer::CreateBuffer(NtRenderBufferParam& param)
 	return FAILED(res) ? false : true;
 }
 
-
 void NtRenderer::SetPrimitiveTopology(ntInt topology)
 {
 	m_renderEngine->DeviceContext()->IASetPrimitiveTopology((D3D11_PRIMITIVE_TOPOLOGY)topology);
 }
 
+void NtRenderer::SetRenderState(eRenderState state)
+{
+	switch (state)
+	{
+	case eRenderState::NT_RS_SOLID:
+		m_renderEngine->SetRenderStateSolid();
+		break;
+	case eRenderState::NT_RS_WIRE_FRAME:
+		m_renderEngine->SetRenderStateWireframe();
+		break;
+	}
+}
 
 void NtRenderer::SetVertexBuffers(ntUint startSlot, ntUint numBuffers, NtVertexBuffer** buffer, ntUint* stride, ntUint* offset)
 {

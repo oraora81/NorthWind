@@ -19,6 +19,10 @@ public:
 
 	virtual bool Resize(ntInt width, ntInt height) override;
 
+	virtual void SetRenderStateSolid() const override;
+
+	virtual void SetRenderStateWireframe() const override;
+
 	ID3D11Device* Device() const;
 
 	ID3D11DeviceContext* DeviceContext() const;
@@ -47,7 +51,8 @@ private:
 	ID3D11Texture2D*			m_depthStencilBuffer;
 	ID3D11DepthStencilState*	m_depthStencilState;
 	ID3D11DepthStencilView*		m_depthStencilView;
-	ID3D11RasterizerState*		m_rasterState;
+	ID3D11RasterizerState*		m_solidRasterState;
+	ID3D11RasterizerState*		m_wireRasterState;
 	ID3D11RasterizerState*		m_noCullRasterState;
 };
 

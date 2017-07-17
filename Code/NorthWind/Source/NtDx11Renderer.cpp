@@ -9,14 +9,15 @@ namespace nt { namespace renderer {
 NtDx11Renderer::NtDx11Renderer()
 : NtD3DRenderer()
 {
-	m_swapchain = nullptr;
-	m_device = nullptr;
-	m_deviceContext = nullptr;
-	m_renderTargetView = nullptr;
+	m_swapchain          = nullptr;
+	m_device             = nullptr;
+	m_deviceContext      = nullptr;
+	m_renderTargetView   = nullptr;
 	m_depthStencilBuffer = nullptr;
-	m_depthStencilState = nullptr;
-	m_depthStencilView = nullptr;
-	m_rasterState = nullptr;
+	m_depthStencilState  = nullptr;
+	m_depthStencilView   = nullptr;
+	m_solidRasterState   = nullptr;
+	m_wireRasterState    = nullptr;
 }
 
 
@@ -323,10 +324,15 @@ NtDx11Renderer::~NtDx11Renderer()
 	defRasterDesc.SlopeScaledDepthBias = 0.0f;
 
 	//
-	HRF(m_device->CreateRasterizerState(&defRasterDesc, &m_rasterState));
+	HRF(m_device->CreateRasterizerState(&defRasterDesc, &m_solidRasterState));
+
+	// wireframe용 raster상태도 생성
+	defRasterDesc.FillMode = D3D11_FILL_WIREFRAME;
+
+	HRF(m_device->CreateRasterizerState(&defRasterDesc, &m_wireRasterState));
 
 	// rasterizer state 설정
-	m_deviceContext->RSSetState(m_rasterState);
+	m_deviceContext->RSSetState(m_solidRasterState);
 
 	// nocull raster desc설정
 	D3D11_RASTERIZER_DESC ncRasterDesc;
@@ -380,7 +386,7 @@ NtDx11Renderer::~NtDx11Renderer()
 	}
 
 	SAFE_RELEASE(m_noCullRasterState);
-	SAFE_RELEASE(m_rasterState);
+	SAFE_RELEASE(m_solidRasterState);
 	SAFE_RELEASE(m_depthStencilView);
 	SAFE_RELEASE(m_depthStencilState);
 	SAFE_RELEASE(m_depthStencilBuffer);
@@ -481,6 +487,15 @@ NtDx11Renderer::~NtDx11Renderer()
 	return true;
 }
 
+void NtDx11Renderer::SetRenderStateSolid() const
+{
+	DeviceContext()->RSSetState(m_solidRasterState);
+}
+
+void NtDx11Renderer::SetRenderStateWireframe() const
+{
+	DeviceContext()->RSSetState(m_wireRasterState);
+}
 
 ID3D11Device* NtDx11Renderer::Device() const
 {
