@@ -49,6 +49,10 @@ public:
 	void CreateGrid(ntFloat width, ntFloat depth, ntUint m, ntUint n, MeshData& meshData);
 
 	void CreateFullScreenQuad(MeshData& meshData);
+
+private:
+    void BuildCylinderTopCap(ntFloat bottomRaius, ntFloat topRadius, ntFloat height, ntUint sliceCount, ntUint stackCount, MeshData& meshData);
+    void BuildCylinderBottomCap(ntFloat bottomRaius, ntFloat topRadius, ntFloat height, ntUint sliceCount, ntUint stackCount, MeshData& meshData);
 };
 
 }}
