@@ -88,6 +88,88 @@ void NtGeometryGenerator::CreateSphere(ntFloat radius, ntUint slideCount, ntUint
 {
 	meshData.Vertices.clear();
 	meshData.Indices.clear();
+
+    // 상단에서 하단으로 쌓아 내려오면서 정점들의 상태를 계산한다.
+    
+    //
+    gVertex topVertex(0.0f, radius, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+    gVertex bottomVertex(0.0f, -radius, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f);
+
+    meshData.Vertices.push_back(topVertex);
+
+    ntFloat phiStep = NtMath<ntFloat>::PI / stackCount;
+    ntFloat thetaStep = 2.0f * NtMath<ntFloat>::PI / slideCount;
+
+    for (ntUint i = 1; i <= stackCount - 1; ++i)
+    {
+        ntFloat phi = i * phiStep;
+
+        for (ntUint j = 0; j <= slideCount; j++)
+        {
+            float theta = j * thetaStep;
+
+            gVertex v;
+
+            // spherical to cartesian
+            v.Position.x = radius * NtMath<float>::Sin(phi) * NtMath<ntFloat>::Cos(theta);
+            v.Position.y = radius * NtMath<ntFloat>::Cos(phi);
+            v.Position.z = radius * NtMath<ntFloat>::Sin(theta);
+
+            // Partial derivative of P with respect to theta
+            v.TangentU.x = -radius * NtMath<ntFloat>::Sin(phi) * NtMath<ntFloat>::Sin(theta);
+            v.TangentU.y = 0.0f;
+            v.TangentU.z = radius * NtMath<ntFloat>::Sin(phi) * NtMath<ntFloat>::Cos(theta);
+
+            XMVECTOR T = XMLoadFloat3(&v.TangentU);
+            XMStoreFloat3(&v.TangentU, XMVector4Normalize(T));
+
+            XMVECTOR p = XMLoadFloat3(&v.Position);
+            XMStoreFloat3(&v.Normal, XMVector3Normalize(p));
+
+            v.TexC.x = theta / XM_2PI;
+            v.TexC.y = phi / XM_PI;
+
+            meshData.Vertices.push_back(v);
+        }
+    }
+
+    meshData.Vertices.push_back(bottomVertex);
+
+    // compute indices for top stack. the top stack was written first fo the vertex buffer
+    // and connects the top pole to the first ring
+    for (ntUint i = 1; i <= slideCount; i++)
+    {
+        meshData.Indices.push_back(0);
+        meshData.Indices.push_back(i + 1);
+        meshData.Indices.push_back(i);
+    }
+
+    // offset the indics to the index of the first vertex int the first ring.
+    // This is just skipping the top pole vertex
+    ntUint baseIndex = 1;
+    ntUint ringVertexCount = slideCount + 1;
+    for (ntUint i = 0; i <= slideCount; ++i)
+    {
+        for (ntUint j = 0; j < slideCount; j++)
+        {
+            meshData.Indices.push_back(baseIndex + i * ringVertexCount + j);
+            meshData.Indices.push_back(baseIndex + i * ringVertexCount + j + 1);
+            meshData.Indices.push_back(baseIndex + (i + 1) * ringVertexCount + j);
+
+            meshData.Indices.push_back(baseIndex + (i + 1) * ringVertexCount + j);
+            meshData.Indices.push_back(baseIndex + r * ringVertexCount + j + 1);
+            meshData.Indices.push_back(baseIndex + (i + 1) * ringVertexCount + j + 1);
+        }
+    }
+
+    // Compute indices for bottom stack. the bottom stack was written last to the vertex buffer
+    // and connect the bottom pole to the bottom ring.
+
+    // south pole vertex was added last
+    ntUint southPoleIndex = (ntUint)meshData.Vertices.size() - 1;
+
+    // offset the indices to the index of the first vertex in the last ring.
+
 }
 
 //void CreateGeosphere(ntFloat radius, ntUint numSubdivision, MeshData& meshData);
