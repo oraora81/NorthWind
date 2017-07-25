@@ -51,8 +51,11 @@ public:
 	void CreateFullScreenQuad(MeshData& meshData);
 
 private:
-    void BuildCylinderTopCap(ntFloat bottomRaius, ntFloat topRadius, ntFloat height, ntUint sliceCount, ntUint stackCount, MeshData& meshData);
-    void BuildCylinderBottomCap(ntFloat bottomRaius, ntFloat topRadius, ntFloat height, ntUint sliceCount, ntUint stackCount, MeshData& meshData);
+	void BuildCylinderTopCap(ntFloat bottomRaius, ntFloat topRadius, ntFloat height, ntUint sliceCount, ntUint stackCount, MeshData& meshData);
+	
+	void BuildCylinderBottomCap(ntFloat bottomRaius, ntFloat topRadius, ntFloat height, ntUint sliceCount, ntUint stackCount, MeshData& meshData);
+
+	void SubDivide(MeshData& meshData);
 };
 
 }}

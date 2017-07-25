@@ -20,6 +20,9 @@ public:
 	static real ATan(real value);
 	static real ATan2(real yValue, real xValue);
 
+	//
+	static real Angle(ntFloat x, ntFloat y);
+
 	// 정수화 함수
 	static real Floor(real value);
 	static real Ceil(real value);
@@ -51,5 +54,7 @@ public:
 };
 
 #include "NtMath.inl"
+
+typedef NtMath<float> NtMathf;
 
 }
