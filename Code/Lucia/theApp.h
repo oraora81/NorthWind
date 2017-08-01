@@ -4,6 +4,7 @@
 
 class Box;
 class Hills;
+class Shapes;
 
 class TheApp : public nt::app::NtApplication
 {
@@ -23,5 +24,6 @@ public:
 private:
 	POINT m_lastMousePos;
 	//Box* m_model;
-	Hills* m_model;
+	//Hills* m_model;
+    Shapes* m_model;
 };

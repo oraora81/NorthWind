@@ -11,6 +11,7 @@
 #include "NtLog.h"
 #include "Box.h"
 #include "Hills.h"
+#include "Shapes.h"
 
 using namespace nt;
 using namespace nt::log;
@@ -73,7 +74,8 @@ bool TheApp::Initialize(bool fullscreen, ntInt width, ntInt height)
 	//DoImport(buf);
 
 	//m_model = new Box();
-	m_model = new Hills();
+	//m_model = new Hills();
+    m_model = new Shapes();
 	m_model->MakeGeometry();
 
 

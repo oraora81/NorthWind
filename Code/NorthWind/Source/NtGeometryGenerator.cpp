@@ -231,6 +231,7 @@ void NtGeometryGenerator::CreateGeosphere(ntFloat radius, ntUint numSubdivision,
 		XMVECTOR n = XMVector3Normalize(XMLoadFloat3(&meshData.Vertices[i].Position));
 
 		// Project onto sphere
+        // 주어진 반지름으로 비례시킨다.
 		XMVECTOR p = radius * n;
 
 		XMStoreFloat3(&meshData.Vertices[i].Position, p);
@@ -247,6 +248,7 @@ void NtGeometryGenerator::CreateGeosphere(ntFloat radius, ntUint numSubdivision,
 		meshData.Vertices[i].TexC.y = phi / XM_PI;
 
 		// Partial derivative of P with respect to theta
+        // 세타에 대한 P의 편미분을 구한다.
 		meshData.Vertices[i].TangentU.x = -radius * NtMathf::Sin(phi) * NtMathf::Sin(theta);
 		meshData.Vertices[i].TangentU.y = 0.0f;
 		meshData.Vertices[i].TangentU.z = +radius * NtMathf::Sin(phi) * NtMathf::Cos(theta);
