@@ -104,7 +104,7 @@ void NtGeometryGenerator::CreateSphere(ntFloat radius, ntUint slideCount, ntUint
 	{
 		ntFloat phi = i * phiStep;
 
-		for (ntUint j = 0; j <= slideCount; j++)
+		for (ntUint j = 0; j <= slideCount; ++j)
 		{
 			float theta = j * thetaStep;
 
@@ -113,7 +113,7 @@ void NtGeometryGenerator::CreateSphere(ntFloat radius, ntUint slideCount, ntUint
 			// spherical to cartesian
 			v.Position.x = radius * NtMath<float>::Sin(phi) * NtMath<ntFloat>::Cos(theta);
 			v.Position.y = radius * NtMath<ntFloat>::Cos(phi);
-			v.Position.z = radius * NtMath<ntFloat>::Sin(theta) * NtMath<ntFloat>::Sin(theta);
+			v.Position.z = radius * NtMath<ntFloat>::Sin(phi) * NtMath<ntFloat>::Sin(theta);
 
 			// Partial derivative of P with respect to theta
 			v.TangentU.x = -radius * NtMath<ntFloat>::Sin(phi) * NtMath<ntFloat>::Sin(theta);
@@ -137,7 +137,7 @@ void NtGeometryGenerator::CreateSphere(ntFloat radius, ntUint slideCount, ntUint
 
 	// compute indices for top stack. the top stack was written first fo the vertex buffer
 	// and connects the top pole to the first ring
-	for (ntUint i = 1; i <= slideCount; i++)
+	for (ntUint i = 1; i <= slideCount; ++i)
 	{
 		meshData.Indices.push_back(0);
 		meshData.Indices.push_back(i + 1);
@@ -148,7 +148,7 @@ void NtGeometryGenerator::CreateSphere(ntFloat radius, ntUint slideCount, ntUint
 	// This is just skipping the top pole vertex
 	ntUint baseIndex = 1;
 	ntUint ringVertexCount = slideCount + 1;
-	for (ntUint i = 0; i <= slideCount - 2; ++i)
+	for (ntUint i = 0; i < slideCount - 2; ++i)
 	{
 		for (ntUint j = 0; j < slideCount; j++)
 		{
@@ -167,6 +167,9 @@ void NtGeometryGenerator::CreateSphere(ntFloat radius, ntUint slideCount, ntUint
 
 	// south pole vertex was added last
 	ntUint southPoleIndex = (ntUint)meshData.Vertices.size() - 1;
+
+	// offset the indices to the index of the first vertex in the last ring.
+	baseIndex = southPoleIndex - ringVertexCount;
 
 	// offset the indices to the index of the first vertex in the last ring.
 	for (ntUint i = 0; i < slideCount; ++i)
@@ -225,13 +228,13 @@ void NtGeometryGenerator::CreateGeosphere(ntFloat radius, ntUint numSubdivision,
 	}
 
 	// Project vertices onto sphere and scale.
-	for (ntUint i = 0; i < meshData.Vertices.size(); i++)
+	for (ntUint i = 0; i < meshData.Vertices.size(); ++i)
 	{
 		// Project onto unit sphere.
 		XMVECTOR n = XMVector3Normalize(XMLoadFloat3(&meshData.Vertices[i].Position));
 
 		// Project onto sphere
-        // 주어진 반지름으로 비례시킨다.
+		// 주어진 반지름으로 비례시킨다.
 		XMVECTOR p = radius * n;
 
 		XMStoreFloat3(&meshData.Vertices[i].Position, p);
@@ -242,13 +245,13 @@ void NtGeometryGenerator::CreateGeosphere(ntFloat radius, ntUint numSubdivision,
 			meshData.Vertices[i].Position.x,
 			meshData.Vertices[i].Position.z);
 
-		ntFloat phi = NtMathf::Cos(meshData.Vertices[i].Position.y / radius);
+		ntFloat phi = NtMathf::ACos(meshData.Vertices[i].Position.y / radius);
 
 		meshData.Vertices[i].TexC.x = theta / XM_2PI;
 		meshData.Vertices[i].TexC.y = phi / XM_PI;
 
 		// Partial derivative of P with respect to theta
-        // 세타에 대한 P의 편미분을 구한다.
+		// 세타에 대한 P의 편미분을 구한다.
 		meshData.Vertices[i].TangentU.x = -radius * NtMathf::Sin(phi) * NtMathf::Sin(theta);
 		meshData.Vertices[i].TangentU.y = 0.0f;
 		meshData.Vertices[i].TangentU.z = +radius * NtMathf::Sin(phi) * NtMathf::Cos(theta);
@@ -277,7 +280,7 @@ void NtGeometryGenerator::SubDivide(MeshData& meshData)
 	// v0    m2     v2
 
 	ntUint numTris = dup.Indices.size() / 3;
-	for (ntUint i = 0; i < numTris; i++)
+	for (ntUint i = 0; i < numTris; ++i)
 	{
 		gVertex v0 = dup.Vertices[dup.Indices[i * 3 + 0]];
 		gVertex v1 = dup.Vertices[dup.Indices[i * 3 + 1]];
