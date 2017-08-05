@@ -38,7 +38,7 @@ public:
 
 	void Render(const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj, const NtLight* light);
 
-	void RenderColor(XMMATRIX& worldViewProj);
+	virtual void RenderColor(XMMATRIX& worldViewProj);
 
 	int GetIndexCount();
 

@@ -139,6 +139,20 @@ bool NtColorShader::RenderLine(const XMMATRIX& worldMatrix,const XMMATRIX& viewM
 	return true;
 }
 
+const ID3DX11EffectTechnique* NtColorShader::GetEffectTechnique()
+{
+    NtAsserte(m_tech != nullptr);
+
+    return m_tech;
+}
+
+const ID3DX11EffectMatrixVariable* NtColorShader::GetEffectMatrix()
+{
+    NtAsserte(m_fxWorldViewProj != nullptr);
+
+    return m_fxWorldViewProj;
+}
+
 bool NtColorShader::InitializeShader(const ntWchar* vs, const ntWchar* ps)
 {
 	// Initialize the pointers this function will use to null

@@ -31,6 +31,10 @@ public:
 
 	bool RenderLine(const XMMATRIX& worldMatrix, const XMMATRIX& viewMatrix, const XMMATRIX& projMatrix);
 
+    const ID3DX11EffectTechnique* GetEffectTechnique();
+
+    const ID3DX11EffectMatrixVariable* GetEffectMatrix();
+
 private:
 	bool InitializeShader(const ntWchar* vs, const ntWchar* ps);
 

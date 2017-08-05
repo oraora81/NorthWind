@@ -4,13 +4,23 @@
 #include "Shapes.h"
 #include "NtMath.h"
 #include "NtGeometryGenerator.h"
+#include "NtColorShader.h"
 
 Shapes::Shapes()
     : m_theta(1.5f * nt::NtMath<float>::PI)
     , m_phi(0.25f * nt::NtMath<float>::PI)
     , m_radius(5.0f)
 {
-    
+    const XMMATRIX I = XMMatrixIdentity();
+
+    XMStoreFloat4x4(&m_gridWorld, I);
+    XMStoreFloat4x4(&m_boxWorld, I);
+    XMStoreFloat4x4(&m_view, I);
+    XMStoreFloat4x4(&m_proj, I);
+
+    XMMATRIX boxScale = XMMatrixScaling(2.0f, 1.0f, 2.0f);
+    XMMATRIX boxOffset = XMMatrixTranslation(0.0f, 0.5f, 0.0f);
+    XMStoreFloat4x4(&m_boxWorld, XMMatrixMultiply(boxScale, boxOffset));
 }
 
 Shapes::~Shapes()
@@ -33,6 +43,50 @@ void Shapes::Update(float deltaTime)
     XMMATRIX v = XMMatrixLookAtLH(pos, target, up);
 
     g_renderer->SetViewMatrix(v);
+}
+
+void Shapes::RenderColor(XMMATRIX& worldViewProj)
+{
+    ntUint stride = sizeof(NtPCVertex);
+    ntUint offset = 0;
+
+    g_renderInterface->SetPrimitiveTopology(ePrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+    g_renderInterface->SetVertexBuffers(0, 1, &m_vertexBuffer, &stride, &offset);
+
+    g_renderInterface->SetIndexBuffers(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
+
+    //m_colorShader->RenderFx(m_indexCount, worldViewProj);
+
+    XMMATRIX view;
+    XMMATRIX proj;
+    g_renderer->GetViewMatrix(view);
+    g_renderer->GetProjectionMatrix(proj);
+
+    XMMATRIX viewProj = view * proj;
+
+    D3DX11_TECHNIQUE_DESC techDesc;
+    
+    ID3DX11EffectTechnique* tech = const_cast<ID3DX11EffectTechnique*>(m_colorShader->GetEffectTechnique());
+    ID3DX11EffectMatrixVariable* effectMatrix = const_cast<ID3DX11EffectMatrixVariable*>(m_colorShader->GetEffectMatrix());
+
+    tech->GetDesc(&techDesc);
+
+    for (UINT p = 0; p < techDesc.Passes; ++p)
+    {
+        //// draw the grid
+        //XMMATRIX world = XMLoadFloat4x4(&m_gridWorld);
+        //effectMatrix->SetMatrix(reinterpret_cast<float*>(&(world * viewProj)));
+        //tech->GetPassByIndex(p)->Apply(0, g_renderer->DeviceContext());
+        //g_renderer->DeviceContext()->DrawIndexed(m_gridIndexCount, m_gridIndexOffset, m_gridVertexOffset);
+
+        // draw the box
+        //world = XMLoadFloat4x4(&m_boxWorld);
+        //effectMatrix->SetMatrix(reinterpret_cast<float*>(&(world * viewProj)));
+        effectMatrix->SetMatrix(reinterpret_cast<float*>(&worldViewProj));
+        tech->GetPassByIndex(p)->Apply(0, g_renderer->DeviceContext());
+        g_renderer->DeviceContext()->DrawIndexed(m_boxIndexCount, m_boxIndexOffset, m_boxVertexOffset);
+    }
 }
 
 void Shapes::MakeGeometry()
