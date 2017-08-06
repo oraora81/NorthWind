@@ -31,6 +31,8 @@ public:
 
 	bool RenderLine(const XMMATRIX& worldMatrix, const XMMATRIX& viewMatrix, const XMMATRIX& projMatrix);
 
+	ID3D11InputLayout* GetInputLayout();
+
     const ID3DX11EffectTechnique* GetEffectTechnique();
 
     const ID3DX11EffectMatrixVariable* GetEffectMatrix();

@@ -139,6 +139,13 @@ bool NtColorShader::RenderLine(const XMMATRIX& worldMatrix,const XMMATRIX& viewM
 	return true;
 }
 
+ID3D11InputLayout* NtColorShader::GetInputLayout()
+{
+	NtAsserte(m_layout);
+
+	return m_layout;
+}
+
 const ID3DX11EffectTechnique* NtColorShader::GetEffectTechnique()
 {
     NtAsserte(m_tech != nullptr);

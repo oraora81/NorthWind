@@ -21,6 +21,19 @@ Shapes::Shapes()
     XMMATRIX boxScale = XMMatrixScaling(2.0f, 1.0f, 2.0f);
     XMMATRIX boxOffset = XMMatrixTranslation(0.0f, 0.5f, 0.0f);
     XMStoreFloat4x4(&m_boxWorld, XMMatrixMultiply(boxScale, boxOffset));
+
+	XMMATRIX centerSphereScale = XMMatrixScaling(2.0f, 2.0f, 2.0f);
+	XMMATRIX centerSphereOffset = XMMatrixTranslation(0.0f, 2.0f, 0.0f);
+	XMStoreFloat4x4(&m_centerSphere, XMMatrixMultiply(centerSphereScale, centerSphereOffset));
+
+	for (int i = 0; i < 5; i++)
+	{
+		XMStoreFloat4x4(&m_cylWorld[i * 2 + 0], XMMatrixTranslation(-5.0f, 1.5f, -10.0f + i * 5.0f));
+		XMStoreFloat4x4(&m_cylWorld[i * 2 + 1], XMMatrixTranslation(+5.0f, 1.5f, -10.0f + i * 5.0f));
+
+		XMStoreFloat4x4(&m_sphereWorld[i * 2 + 0], XMMatrixTranslation(-5.0f, 3.5f, -10.0f + i * 5.0f));
+		XMStoreFloat4x4(&m_sphereWorld[i * 2 + 1], XMMatrixTranslation(+5.0f, 3.5f, -10.0f + i * 5.0f));
+	}
 }
 
 Shapes::~Shapes()
@@ -56,7 +69,7 @@ void Shapes::RenderColor(XMMATRIX& worldViewProj)
 
     g_renderInterface->SetIndexBuffers(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 
-    //m_colorShader->RenderFx(m_indexCount, worldViewProj);
+	g_renderer->DeviceContext()->IASetInputLayout(m_colorShader->GetInputLayout());
 
     XMMATRIX view;
     XMMATRIX proj;
@@ -75,17 +88,40 @@ void Shapes::RenderColor(XMMATRIX& worldViewProj)
     for (UINT p = 0; p < techDesc.Passes; ++p)
     {
         //// draw the grid
-        //XMMATRIX world = XMLoadFloat4x4(&m_gridWorld);
-        //effectMatrix->SetMatrix(reinterpret_cast<float*>(&(world * viewProj)));
-        //tech->GetPassByIndex(p)->Apply(0, g_renderer->DeviceContext());
-        //g_renderer->DeviceContext()->DrawIndexed(m_gridIndexCount, m_gridIndexOffset, m_gridVertexOffset);
+        XMMATRIX world = XMLoadFloat4x4(&m_gridWorld);
+        effectMatrix->SetMatrix(reinterpret_cast<float*>(&(world * viewProj)));
+        tech->GetPassByIndex(p)->Apply(0, g_renderer->DeviceContext());
+        g_renderer->DeviceContext()->DrawIndexed(m_gridIndexCount, m_gridIndexOffset, m_gridVertexOffset);
 
         // draw the box
-        //world = XMLoadFloat4x4(&m_boxWorld);
-        //effectMatrix->SetMatrix(reinterpret_cast<float*>(&(world * viewProj)));
-        effectMatrix->SetMatrix(reinterpret_cast<float*>(&worldViewProj));
+        world = XMLoadFloat4x4(&m_boxWorld);
+        effectMatrix->SetMatrix(reinterpret_cast<float*>(&(world * viewProj)));
         tech->GetPassByIndex(p)->Apply(0, g_renderer->DeviceContext());
         g_renderer->DeviceContext()->DrawIndexed(m_boxIndexCount, m_boxIndexOffset, m_boxVertexOffset);
+
+		// draw center sphere
+		world = XMLoadFloat4x4(&m_centerSphere);
+		effectMatrix->SetMatrix(reinterpret_cast<float*>(&(world * viewProj)));
+		tech->GetPassByIndex(p)->Apply(0, g_renderer->DeviceContext());
+		g_renderer->DeviceContext()->DrawIndexed(m_sphereIndexCount, m_sphereIndexOffset, m_sphereVertexOffset);
+
+		// draw the cylinder
+		for (int i = 0; i < 10; i++)
+		{
+			world = XMLoadFloat4x4(&m_cylWorld[i]);
+			effectMatrix->SetMatrix(reinterpret_cast<float*>(&(world * viewProj)));
+			tech->GetPassByIndex(p)->Apply(0, g_renderer->DeviceContext());
+			g_renderer->DeviceContext()->DrawIndexed(m_cylinderIndexCount, m_cylinderIndexOffset, m_cylinderVertexOffset);
+		}
+
+		// draw the sphere
+		for (int i = 0; i < 10; i++)
+		{
+			world = XMLoadFloat4x4(&m_sphereWorld[i]);
+			effectMatrix->SetMatrix(reinterpret_cast<float*>(&(world * viewProj)));
+			tech->GetPassByIndex(p)->Apply(0, g_renderer->DeviceContext());
+			g_renderer->DeviceContext()->DrawIndexed(m_sphereIndexCount, m_sphereIndexOffset, m_sphereVertexOffset);
+		}
     }
 }
 
