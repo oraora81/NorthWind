@@ -36,11 +36,15 @@ void Skull::Update(float deltaTime)
 
 void Skull::MakeGeometry()
 {
-    std::ifstream fin("Models/skull.txt");
+	const ntWchar* fileName = L"car.txt";
+
+	const ntWchar* path = g_resManager->GetPath(fileName);
+
+    std::ifstream fin(path);
 
     if (!fin)
     {
-        MessageBox(0, L"Models/skull.txt not found.", 0, 0);
+        //MessageBox(0, L"skull.txt not found.", 0, 0);
         return;
     }
 
@@ -78,4 +82,9 @@ void Skull::MakeGeometry()
     }
 
     fin.close();
+
+	NtModel::NtPCVertex* vtxArray = &vertices[0];
+	UINT* idxArray = &indices[0];
+
+	InitializeModelData(vtxArray, vertices.size(), idxArray, m_skullIndexCount, L"../Code/Lucia/simple_fx.fxo");
 }

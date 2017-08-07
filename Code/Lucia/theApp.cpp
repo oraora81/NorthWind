@@ -12,6 +12,7 @@
 #include "Box.h"
 #include "Hills.h"
 #include "Shapes.h"
+#include "Skull.h"
 
 using namespace nt;
 using namespace nt::log;
@@ -75,7 +76,8 @@ bool TheApp::Initialize(bool fullscreen, ntInt width, ntInt height)
 
 	//m_model = new Box();
 	//m_model = new Hills();
-    m_model = new Shapes();
+    //m_model = new Shapes();
+	m_model = new Skull();
 	m_model->MakeGeometry();
 
 
