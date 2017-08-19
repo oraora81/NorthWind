@@ -6,6 +6,7 @@ class Box;
 class Hills;
 class Shapes;
 class Skull;
+class WaveModel;
 
 class TheApp : public nt::app::NtApplication
 {
@@ -27,5 +28,6 @@ private:
 	//Box* m_model;
 	//Hills* m_model;
     //Shapes* m_model;
-	Skull* m_model;
+	//Skull* m_model;
+	WaveModel* m_model;
 };

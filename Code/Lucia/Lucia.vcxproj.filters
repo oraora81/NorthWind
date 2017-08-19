@@ -63,6 +63,12 @@
     <ClInclude Include="Skull.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Waves.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="WaveModel.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -84,6 +90,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Skull.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Waves.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="WaveModel.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

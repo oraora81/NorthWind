@@ -48,6 +48,8 @@ public:
 		return static_cast<float>(m_width / m_height);
 	}
 
+	const NtTimer& Timer() const;
+
 protected:
 	inline float DeltaTime() const
 	{

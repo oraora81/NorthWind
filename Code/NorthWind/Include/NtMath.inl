@@ -177,3 +177,15 @@ real NtMath<real>::Clamp(real current, real min, real max)
 {
 	return Min(Max(min, current), max);
 }
+
+template <typename real>
+real NtMath<real>::Rand()
+{
+	return (real)(rand()) / (real)RAND_MAX;
+}
+
+template <typename real>
+real NtMath<real>::Rand(real a, real b)
+{
+	return a + Rand() * (b - a);
+}

@@ -34,41 +34,13 @@ NtModel::~NtModel()
 
 bool NtModel::InitializeModelData(NtPCVertex* vertices, ntInt vertexCount, ntUint* indices, ntInt indexCount, const ntWchar* fx)
 {
-	// vb
-	D3D11_BUFFER_DESC vd;
-	vd.Usage = D3D11_USAGE_IMMUTABLE;
-	vd.ByteWidth = sizeof(NtModel::NtPCVertex) * vertexCount;
-	vd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	vd.CPUAccessFlags = 0;
-	vd.MiscFlags = 0;
-	vd.StructureByteStride = 0;
+	m_vertexBuffer = MakeVertexBuffer(vertices, vertexCount, eBufferUsage::USAGE_DYNAMIC, eCpuAccessFlag::CPU_ACCESS_WRITE);
 
-	D3D11_SUBRESOURCE_DATA vbData;
-	vbData.pSysMem = vertices;
-
-	ID3D11Buffer* vb = nullptr;
-	HRF(g_renderer->Device()->CreateBuffer(&vd, &vbData, &vb));
-
-	
-	// index buffer
-	D3D11_BUFFER_DESC id;
-	id.Usage = D3D11_USAGE_IMMUTABLE;
-	id.ByteWidth = sizeof(ntUint) * indexCount;
-	id.BindFlags = D3D11_BIND_INDEX_BUFFER;
-	id.CPUAccessFlags = 0;
-	id.MiscFlags = 0;
-	id.StructureByteStride = 0;
-
-	D3D11_SUBRESOURCE_DATA ibData;
-	ibData.pSysMem = indices;
-
-	ID3D11Buffer* ib = nullptr;
-	HRF(g_renderer->Device()->CreateBuffer(&id, &ibData, &ib));
-
-	m_vertexBuffer = vb;
-	m_indexBuffer = ib;
 	m_vertexCount = vertexCount;
-	m_indexCount = indexCount;
+
+	m_indexBuffer = MakeIndexBuffer(indices, indexCount);
+
+	m_indexCount = m_indexCount;
 
 	m_colorShader->InitializeFx(fx);
 
@@ -139,6 +111,7 @@ void NtModel::Render(const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX
 	{
 		NtMeshObj& mesh = m_meshVector[i];
 		g_renderInterface->SetVertexBuffers(0, 1, &mesh.vtxBuffer, &stride, &offset);
+
 		g_renderInterface->SetIndexBuffers(mesh.idxBuffer, DXGI_FORMAT_R32_UINT, 0);
 
 		//bool res = m_colorShader->Render(renderer->GetD3DRenderer(), mesh.idxCount, world, view, proj);
@@ -397,6 +370,54 @@ bool NtModel::InitializeAse(const ntWchar* puppetName)
 	return true;
 }
 
+ID3D11Buffer* NtModel::MakeVertexBuffer(NtPCVertex* vertices, ntIndex vtxCount, eBufferUsage usage, eCpuAccessFlag cpuFlag)
+{
+	// vb
+	D3D11_BUFFER_DESC vd;
+	vd.Usage = (D3D11_USAGE)usage;
+	vd.ByteWidth = sizeof(NtModel::NtPCVertex) * vtxCount;
+	vd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	vd.CPUAccessFlags = cpuFlag;
+	vd.MiscFlags = 0;
+	vd.StructureByteStride = 0;
+
+	ID3D11Buffer* vb = nullptr;
+
+	if (vertices != nullptr)
+	{
+		D3D11_SUBRESOURCE_DATA vbData;
+		vbData.pSysMem = vertices;
+
+		HR(g_renderer->Device()->CreateBuffer(&vd, &vbData, &vb));
+	}
+	else
+	{
+		// use dynamic buffer
+		HR(g_renderer->Device()->CreateBuffer(&vd, nullptr, &vb));
+	}
+	
+	return vb;
+}
+
+ID3D11Buffer* NtModel::MakeIndexBuffer(ntUint* indices, ntInt indexCount)
+{
+	// index buffer
+	D3D11_BUFFER_DESC id;
+	id.Usage = D3D11_USAGE_IMMUTABLE;
+	id.ByteWidth = sizeof(ntUint) * indexCount;
+	id.BindFlags = D3D11_BIND_INDEX_BUFFER;
+	id.CPUAccessFlags = 0;
+	id.MiscFlags = 0;
+	id.StructureByteStride = 0;
+
+	D3D11_SUBRESOURCE_DATA ibData;
+	ibData.pSysMem = indices;
+
+	ID3D11Buffer* ib = nullptr;
+	HR(g_renderer->Device()->CreateBuffer(&id, &ibData, &ib));
+
+	return ib;
+}
 
 void NtModel::ReleaseBuffer()
 {

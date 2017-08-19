@@ -36,9 +36,9 @@ public:
 
 	virtual void Update(float deltaTime);
 
-	void Render(const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj, const NtLight* light);
-
 	virtual void RenderColor(XMMATRIX& worldViewProj);
+
+	void Render(const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj, const NtLight* light);
 
 	int GetIndexCount();
 
@@ -57,6 +57,10 @@ public:
 	void SetTextureShader(NtTextureShader* shader);
 
 	void SetLightShader(NtLightShader* shader);
+
+	ID3D11Buffer* MakeVertexBuffer(NtPCVertex* vertices, ntIndex vtxCount, eBufferUsage usage, eCpuAccessFlag cpuFlag);
+
+	ID3D11Buffer* MakeIndexBuffer(ntUint* indices, ntInt indexCount);
 
 private:
 	bool InitializeAse(const ntWchar* puppetName);

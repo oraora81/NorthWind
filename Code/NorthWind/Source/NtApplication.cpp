@@ -462,4 +462,9 @@ void NtApplication::CalculateFrame()
 	}
 }
 
+const NtTimer& NtApplication::Timer() const
+{
+	return m_timer;
+}
+
 } }
