@@ -1,48 +1,18 @@
 #pragma once
 
-#include "NtModel.h"
+#include "BaseShape.h"
 
-class Shapes : public nt::renderer::NtModel
+class Shapes : public BaseShape
 {
 public:
     Shapes();
     virtual ~Shapes();
 
-    virtual void Update(float deltaTime) override;
     virtual void RenderColor(XMMATRIX& worldViewProj) override;
 
     void MakeGeometry();
 
-    float& Theta()
-    {
-        return m_theta;
-    }
-
-    float& Phi()
-    {
-        return m_phi;
-    }
-
-    void Phi(float p)
-    {
-        m_phi = p;
-    }
-
-    float Radius()
-    {
-        return m_radius;
-    }
-
-    void Radius(float r)
-    {
-        m_radius = r;
-    }
-
 private:
-    float m_theta;
-    float m_phi;
-    float m_radius;
-
     XMFLOAT4X4 m_gridWorld;
     XMFLOAT4X4 m_boxWorld;
     XMFLOAT4X4 m_sphereWorld[10];

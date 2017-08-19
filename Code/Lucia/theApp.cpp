@@ -14,6 +14,8 @@
 #include "Shapes.h"
 #include "Skull.h"
 #include "WaveModel.h"
+#include "Point.h"
+#include "Pyramid.h"
 
 using namespace nt;
 using namespace nt::log;
@@ -79,7 +81,9 @@ bool TheApp::Initialize(bool fullscreen, ntInt width, ntInt height)
 	//m_model = new Hills();
     //m_model = new Shapes();
 	//m_model = new Skull();
-	m_model = new WaveModel();
+	//m_model = new WaveModel();
+    //m_model = new Points();
+    m_model = new Pyramid();
 	m_model->MakeGeometry();
 
 

@@ -330,8 +330,11 @@
     <None Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BaseShape.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="Hills.h" />
+    <ClInclude Include="Point.h" />
+    <ClInclude Include="Pyramid.h" />
     <ClInclude Include="Shapes.h" />
     <ClInclude Include="Skull.h" />
     <ClInclude Include="theApp.h" />
@@ -343,10 +346,13 @@
     <ClInclude Include="Waves.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BaseShape.cpp" />
     <ClCompile Include="Box.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDx11|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Hills.cpp" />
+    <ClCompile Include="Point.cpp" />
+    <ClCompile Include="Pyramid.cpp" />
     <ClCompile Include="Shapes.cpp" />
     <ClCompile Include="Skull.cpp" />
     <ClCompile Include="theApp.cpp">

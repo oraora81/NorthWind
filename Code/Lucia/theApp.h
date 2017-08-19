@@ -7,6 +7,8 @@ class Hills;
 class Shapes;
 class Skull;
 class WaveModel;
+class Points;
+class Pyramid;
 
 class TheApp : public nt::app::NtApplication
 {
@@ -29,5 +31,7 @@ private:
 	//Hills* m_model;
     //Shapes* m_model;
 	//Skull* m_model;
-	WaveModel* m_model;
+	//WaveModel* m_model;
+    //Points* m_model;
+    Pyramid* m_model;
 };

@@ -40,7 +40,7 @@ bool NtModel::InitializeModelData(NtPCVertex* vertices, ntInt vertexCount, ntUin
 
 	m_indexBuffer = MakeIndexBuffer(indices, indexCount);
 
-	m_indexCount = m_indexCount;
+	m_indexCount = indexCount;
 
 	m_colorShader->InitializeFx(fx);
 
