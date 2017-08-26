@@ -24,7 +24,18 @@ Box::Box()
 , m_phi(0.25f * NtMath<float>::PI)
 , m_radius(5.0f)
 {
-    XMStoreFloat4x4(&m_world, XMMatrixIdentity());
+    XMMATRIX temp = XMMatrixIdentity();
+    temp = XMMatrixTranslation(5.0f, 0.0f, 0.0f);
+    XMStoreFloat4x4(&m_boxWorld, temp);
+
+    temp = XMMatrixIdentity();
+    temp = XMMatrixTranslation(-5.0f, 0.0f, 0.0f);
+    XMStoreFloat4x4(&m_pyramidWorld, temp);
+
+    m_boxVertexOffset = 0;
+    m_boxIndexOffset = 0;
+    m_pyramidVertexOffset = 0;
+    m_pyramidIndexOffset = 0;
 }
 
 
@@ -40,7 +51,9 @@ void Box::MakeGeometry()
 
 void Box::MakeNormal()
 {
-    NtModel::NtPCVertex vertices[] =
+    std::vector<NtModel::NtPCVertex> vertices;
+
+    NtModel::NtPCVertex box[] =
     {
         { XMFLOAT3(-1.0f, -1.0f, -1.0f), (const float*)&Colors::White },
         { XMFLOAT3(-1.0f, +1.0f, -1.0f), (const float*)&Colors::Black },
@@ -52,7 +65,24 @@ void Box::MakeNormal()
         { XMFLOAT3(+1.0f, -1.0f, +1.0f), (const float*)&Colors::Magenta },
     };
 
-    ntUint indices[] =
+    vertices.assign(std::begin(box), std::end(box));
+    m_boxVertexCount = _countof(box);
+    m_pyramidVertexOffset = vertices.size();
+
+    nt::renderer::NtModel::NtPCVertex pyramid[] =
+    {
+        { XMFLOAT3(-5.0f, -2.0f, -2.0f), (const float*)&Colors::Green },
+        { XMFLOAT3(-5.0f, -2.0f, +2.0f), (const float*)&Colors::Green },
+        { XMFLOAT3(+5.0f, -2.0f, +2.0f), (const float*)&Colors::Green },
+        { XMFLOAT3(+5.0f, -2.0f, -2.0f), (const float*)&Colors::Green },
+        { XMFLOAT3(0.0f, 4.0f, 0.0f), (const float*)&Colors::Red },
+    };
+
+    vertices.insert(vertices.end(), std::begin(pyramid), std::end(pyramid));
+    m_pyramidVertexCount = _countof(pyramid);
+
+    std::vector<UINT> indices;
+    ntUint box_indices[] =
     {
         0, 1, 2,
         0, 2, 3,
@@ -73,7 +103,33 @@ void Box::MakeNormal()
         4, 3, 7
     };
 
-    InitializeModelData(vertices, _countof(vertices), indices, _countof(indices), L"../Code/Lucia/simple_fx.fxo");
+
+    indices.assign(std::begin(box_indices), std::end(box_indices));
+    m_pyramidIndexOffset = indices.size();
+    m_boxIndexCount = indices.size();
+
+    ntUint pyramid_indices[] =
+    {
+        // Á¤¸é
+        0, 4, 3,
+        // ¿·¸é 1
+        1, 4, 0,
+        // ¿·¸é 2
+        2, 4, 1,
+        3, 4, 2,
+
+        1, 0, 3,
+        1, 3, 2,
+    };
+
+    indices.insert(indices.end(), std::begin(pyramid_indices), std::end(pyramid_indices));
+    m_pyramidIndexCount = _countof(pyramid_indices);
+
+    NtModel::NtPCVertex* v = &vertices[0];
+    UINT* i = &indices[0];
+
+    InitializeModelData(v, vertices.size(),
+        i, indices.size(), L"../Code/Lucia/simple_fx.fxo");
 }
 
 void Box::MakeGeometryTwoVertexBuf()
@@ -200,7 +256,8 @@ void Box::Update(float deltaTime)
 
 void Box::RenderColor(XMMATRIX& worldViewProj)
 {
-    RenderNormal(worldViewProj);
+    //RenderNormal(worldViewProj);
+    RenderBoxPyramid(worldViewProj);
 }
 
 void Box::RenderNormal(XMMATRIX& worldViewProj)
@@ -243,10 +300,55 @@ void Box::RenderTwoVertexBuf(XMMATRIX& worldViewProj)
 
     for (UINT p = 0; p < techDesc.Passes; ++p)
     {
-        XMMATRIX world = XMLoadFloat4x4(&m_world);
+        XMMATRIX world = XMLoadFloat4x4(&m_boxWorld);
         effectMatrix->SetMatrix(reinterpret_cast<float*>(&(world * viewProj)));
 
         tech->GetPassByIndex(p)->Apply(0, g_renderer->DeviceContext());
         g_renderer->DeviceContext()->DrawIndexed(m_indexCount, 0, 0);
+    }
+}
+
+void Box::RenderBoxPyramid(XMMATRIX& worldViewProj)
+{
+    UINT stride = sizeof(NtModel::NtPCVertex);
+    UINT offset = 0;
+
+    g_renderInterface->SetPrimitiveTopology(ePrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+    g_renderInterface->SetVertexBuffers(0, 1, &m_vertexBuffer, &stride, &offset);
+
+    g_renderInterface->SetIndexBuffers(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
+
+    g_renderer->DeviceContext()->IASetInputLayout(m_colorShader->GetInputLayout());
+
+    XMMATRIX view;
+    XMMATRIX proj;
+
+    g_renderer->GetViewMatrix(view);
+    g_renderer->GetProjectionMatrix(proj);
+
+    XMMATRIX viewProj = view * proj;
+
+    D3DX11_TECHNIQUE_DESC techDesc;
+
+    ID3DX11EffectTechnique* tech = const_cast<ID3DX11EffectTechnique*>(m_colorShader->GetEffectTechnique());
+    ID3DX11EffectMatrixVariable* effectMatrix = const_cast<ID3DX11EffectMatrixVariable*>(m_colorShader->GetEffectMatrix());
+
+    tech->GetDesc(&techDesc);
+
+    XMMATRIX world;
+    for (UINT p = 0; p < techDesc.Passes; ++p)
+    {
+        world = XMLoadFloat4x4(&m_boxWorld);
+        effectMatrix->SetMatrix(reinterpret_cast<float*>(&(world * viewProj)));
+
+        tech->GetPassByIndex(p)->Apply(0, g_renderer->DeviceContext());
+        g_renderer->DeviceContext()->DrawIndexed(m_boxIndexCount, 0, 0);
+
+        world = XMLoadFloat4x4(&m_pyramidWorld);
+        effectMatrix->SetMatrix(reinterpret_cast<float*>(&(world * viewProj)));
+
+        tech->GetPassByIndex(p)->Apply(0, g_renderer->DeviceContext());
+        g_renderer->DeviceContext()->DrawIndexed(m_pyramidIndexCount, m_pyramidIndexOffset, m_pyramidVertexOffset);
     }
 }
