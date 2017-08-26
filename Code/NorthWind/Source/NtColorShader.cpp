@@ -79,6 +79,36 @@ bool NtColorShader::InitializeFx(const ntWchar* fx)
 	return true;
 }
 
+bool NtColorShader::InitializeFxTwoInputElem(const ntWchar* fx)
+{
+    NtAsserte(fx != nullptr);
+
+    nt::fs::NtFileBuffer fileBuffer(fx);
+
+    HRF(D3DX11CreateEffectFromMemory(fileBuffer.GetData(),
+        fileBuffer.GetBytes(),
+        0,
+        g_renderer->Device(),
+        &m_fx, nullptr));
+
+    m_tech = m_fx->GetTechniqueByName("ColorTech");
+
+    m_fxWorldViewProj = m_fx->GetVariableByName("gWorldViewProj")->AsMatrix();
+
+    D3D11_INPUT_ELEMENT_DESC elems[] = 
+    {
+        {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
+        {"COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 1, 0, D3D11_INPUT_PER_VERTEX_DATA, 0}
+    };
+
+    D3DX11_PASS_DESC passDesc;
+    m_tech->GetPassByIndex(0)->GetDesc(&passDesc);
+    HRF(g_renderer->Device()->CreateInputLayout(elems, 2, passDesc.pIAInputSignature,
+        passDesc.IAInputSignatureSize, &m_layout));
+
+    return true;
+}
+
 void NtColorShader::Release()
 {
 	ReleaseShader();

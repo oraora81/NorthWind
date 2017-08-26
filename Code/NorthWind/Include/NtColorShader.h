@@ -23,6 +23,8 @@ public:
 
 	bool InitializeFx(const ntWchar* fx) override;
 
+    bool InitializeFxTwoInputElem(const ntWchar* fx);
+
 	void Release();
 
 	bool Render(ntInt indexCount, const XMMATRIX& worldMatrix, const XMMATRIX& viewMatrix, const XMMATRIX& projMatrix);

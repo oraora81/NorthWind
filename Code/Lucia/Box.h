@@ -10,8 +10,10 @@ public:
 
 	virtual void Update(float deltaTime) override;
 
-	void MakeGeometry();
+    virtual void RenderColor(XMMATRIX& worldViewProj) override;
 
+	void MakeGeometry();
+    
 	float& Theta()
 	{
 		return m_theta;
@@ -38,7 +40,20 @@ public:
 	}
 
 private:
+    void MakeNormal();
+
+    void MakeGeometryTwoVertexBuf();
+
+    void RenderNormal(XMMATRIX& worldViewProj);
+
+    void RenderTwoVertexBuf(XMMATRIX& worldViewProj);
+
+private:
 	float m_theta;
 	float m_phi;
 	float m_radius;
+    ID3D11Buffer* m_CB;
+    ID3D11Buffer* m_buffers[2];
+    int m_colorCount;
+    XMFLOAT4X4 m_world;
 };
