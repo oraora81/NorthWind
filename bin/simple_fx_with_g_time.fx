@@ -1,0 +1,50 @@
+
+// globals
+
+cbuffer cbPerObject
+{
+	float4x4 gWorldViewProj;
+    float gTime;
+};
+
+struct VertexInputType
+{
+	float3 position : POSITION;
+	float4 color : COLOR;
+};
+
+struct PixelInputType
+{
+	float4 position : SV_POSITION;
+	float4 color : COLOR;
+};
+
+PixelInputType VS(VertexInputType vin)
+{
+	PixelInputType vout;
+
+    vin.position.xy += 0.5f * sin(vin.position.x)*sin(3.0f*gTime);
+    vin.position.z *= 0.6f + 0.4f*sin(2.0f*gTime);
+
+	// 동차 절단 공간으로 변환
+	vout.position = mul(float4(vin.position, 1.0f), gWorldViewProj);
+
+	// 정점 색상을 그대로 픽셸 셰이더에 전달
+	vout.color = vin.color;
+
+	return vout;
+}
+
+float4 PS(PixelInputType pin) : SV_Target
+{
+	return pin.color;
+}
+
+technique11 ColorTech
+{
+	pass p0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS()));
+		SetPixelShader(CompileShader(ps_5_0, PS()));
+	}
+};

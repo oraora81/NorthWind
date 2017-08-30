@@ -51,6 +51,8 @@ bool NtColorShader::InitializeFx(const ntWchar* fx)
 
 	m_fxWorldViewProj = m_fx->GetVariableByName("gWorldViewProj")->AsMatrix();
 
+    //m_fxTime = m_fx->GetVariableByName("gTime")->AsScalar();
+
 	// now setup the layout of the data that goes into the shader
 	// This setup needs to match the NtPCVertex structure in the ModelClass and in the shader.h
 	D3D11_INPUT_ELEMENT_DESC elementLayout[2];
@@ -134,6 +136,8 @@ bool NtColorShader::RenderFx(ntInt indexCount, const XMMATRIX& worldViewProj)
 	g_renderer->DeviceContext()->IASetInputLayout(m_layout);
 	
 	m_fxWorldViewProj->SetMatrix(reinterpret_cast<const float*>(&worldViewProj));
+
+    //m_fxTime->SetFloat(g_app->Timer().TotalTime());
 
 	D3DX11_TECHNIQUE_DESC techDesc;
 	m_tech->GetDesc(&techDesc);

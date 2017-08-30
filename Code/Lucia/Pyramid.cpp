@@ -38,6 +38,8 @@ void Pyramid::MakeGeometry()
         1, 0, 3,
         1, 3, 2,
     };
-
-    InitializeModelData(vertices, _countof(vertices), indices, _countof(indices), L"../Code/Lucia/simple_fx.fxo");
+    
+    const ntWchar* filePath = g_resManager->GetPath(L"simple_fx.fxo");
+    //InitializeModelData(vertices, _countof(vertices), indices, _countof(indices), L"../Code/Lucia/simple_fx.fxo");
+    InitializeModelData(vertices, _countof(vertices), indices, _countof(indices), filePath);
 }

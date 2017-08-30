@@ -56,6 +56,7 @@ private:
 	ID3DX11Effect*      m_fx;
 	ID3DX11EffectTechnique* m_tech;
 	ID3DX11EffectMatrixVariable* m_fxWorldViewProj;
+    //ID3DX11EffectScalarVariable* m_fxTime;
 };
 
 } }
