@@ -16,13 +16,13 @@ RasterizerState WF
 struct VertexInputType
 {
 	float3 position : POSITION;
-	float4 color : COLOR;
+	float color : COLOR;
 };
 
 struct PixelInputType
 {
 	float4 position : SV_POSITION;
-	float4 color : COLOR;
+	float color : COLOR;
 };
 
 PixelInputType VS(VertexInputType vin)
@@ -49,7 +49,7 @@ technique11 ColorTech
 	{
 		SetVertexShader(CompileShader(vs_5_0, VS()));
 		SetPixelShader(CompileShader(ps_5_0, PS()));
-		SetRasterizerState(WF);
+		//SetRasterizerState(WF);
 	}
 };
 

@@ -17,6 +17,12 @@ namespace
     {
         XMFLOAT4 m_color;
     };
+
+    struct sVertexColor
+    {
+        XMFLOAT3 m_pos;
+        XMCOLOR m_color;
+    };
 }
 
 Box::Box()
@@ -46,7 +52,8 @@ Box::~Box()
 
 void Box::MakeGeometry()
 {
-    MakeNormal();
+    //MakeNormal();
+    MakeColor();
 }
 
 void Box::MakeNormal()
@@ -128,8 +135,13 @@ void Box::MakeNormal()
     NtModel::NtPCVertex* v = &vertices[0];
     UINT* i = &indices[0];
 
+    const ntWchar* fileName = 
+    g_resManager->GetPath(L"simple_fx_rs.fxo");
+
     InitializeModelData(v, vertices.size(),
-        i, indices.size(), L"../Code/Lucia/simple_fx.fxo");
+        i, indices.size(),
+        fileName);
+        //L"../Code/Lucia/simple_fx_rs.fxo");
 }
 
 void Box::MakeGeometryTwoVertexBuf()
@@ -237,6 +249,62 @@ void Box::MakeGeometryTwoVertexBuf()
     m_colorShader->InitializeFx(L"../Code/Lucia/simple_fx.fxo");
 }
 
+void Box::MakeColor()
+{
+    std::vector<sVertexColor> vertices;
+
+    sVertexColor box[] =
+    {
+        { XMFLOAT3(-1.0f, -1.0f, -1.0f), Colors::WhiteC },
+        { XMFLOAT3(-1.0f, +1.0f, -1.0f), Colors::BlackC },
+        { XMFLOAT3(+1.0f, +1.0f, -1.0f), Colors::RedC },
+        { XMFLOAT3(+1.0f, -1.0f, -1.0f), Colors::GreenC },
+        { XMFLOAT3(-1.0f, -1.0f, +1.0f), Colors::BlueC },
+        { XMFLOAT3(-1.0f, +1.0f, +1.0f), Colors::YellowC },
+        { XMFLOAT3(+1.0f, +1.0f, +1.0f), Colors::CyanC },
+        { XMFLOAT3(+1.0f, -1.0f, +1.0f), Colors::MagentaC },
+    };
+
+    vertices.assign(std::begin(box), std::end(box));
+    m_boxVertexCount = _countof(box);
+
+    std::for_each(std::begin(vertices), std::end(vertices), [](sVertexColor& unit) {
+        unit.m_color = Colors::ArgbToAbgr(unit.m_color);
+    });
+    
+    std::vector<UINT> indices;
+    ntUint box_indices[] =
+    {
+        0, 1, 2,
+        0, 2, 3,
+
+        4, 6, 5,
+        4, 7, 6,
+
+        4, 5, 1,
+        4, 1, 0,
+
+        3, 2, 6,
+        3, 6, 7,
+
+        1, 5, 6,
+        1, 6, 2,
+
+        4, 0, 3,
+        4, 3, 7
+    };
+
+    indices.assign(std::begin(box_indices), std::end(box_indices));
+    m_boxIndexCount = indices.size();
+
+    sVertexColor* vtxPtr = &vertices[0];
+    UINT* idxPtr = &indices[0];
+
+    const ntWchar* filePath = g_resManager->GetPath(L"simple_fx.fxo");
+    InitializeModelData((void*)vtxPtr, sizeof(sVertexColor), vertices.size(), idxPtr, m_boxIndexCount,
+        filePath);
+}
+
 void Box::Update(float deltaTime)
 {
 	NtModel::Update(deltaTime);
@@ -256,8 +324,8 @@ void Box::Update(float deltaTime)
 
 void Box::RenderColor(XMMATRIX& worldViewProj)
 {
-    //RenderNormal(worldViewProj);
-    RenderBoxPyramid(worldViewProj);
+    RenderNormal(worldViewProj);
+    //RenderBoxPyramid(worldViewProj);
 }
 
 void Box::RenderNormal(XMMATRIX& worldViewProj)

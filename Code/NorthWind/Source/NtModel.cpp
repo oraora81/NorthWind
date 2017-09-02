@@ -47,6 +47,47 @@ bool NtModel::InitializeModelData(NtPCVertex* vertices, ntInt vertexCount, ntUin
 	return true;
 }
 
+bool NtModel::InitializeModelData(void* vertices, ntInt sizeVertex, ntInt vertexCount, ntUint* indices, ntInt indexCount, const ntWchar* fx)
+{
+    NtAsserte(sizeVertex > 0);
+    NtAsserte(vertexCount > 0);
+    NtAsserte(indices > 0);
+
+    D3D11_BUFFER_DESC vd;
+    vd.Usage = (D3D11_USAGE)eBufferUsage::USAGE_DYNAMIC;
+    vd.ByteWidth = sizeVertex * vertexCount;
+    vd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+    vd.CPUAccessFlags = eCpuAccessFlag::CPU_ACCESS_WRITE;
+    vd.MiscFlags = 0;
+    vd.StructureByteStride = 0;
+
+    ID3D11Buffer* vb = nullptr;
+
+    if (vertices != nullptr)
+    {
+        D3D11_SUBRESOURCE_DATA vbData;
+        vbData.pSysMem = vertices;
+
+        HRF(g_renderer->Device()->CreateBuffer(&vd, &vbData, &vb));
+    }
+    else
+    {
+        // use dynamic buffer
+        HRF(g_renderer->Device()->CreateBuffer(&vd, nullptr, &vb));
+    }
+
+    m_vertexBuffer = vb;
+    m_vertexCount = vertexCount;
+
+    m_indexBuffer = MakeIndexBuffer(indices, indexCount);
+
+    m_indexCount = indexCount;
+
+    m_colorShader->InitializeFx32bitColor(fx);
+
+    return true;
+}
+
 bool NtModel::Initialize(const ntWchar* modelName)
 {
 	// load the puppet Data from txt file.

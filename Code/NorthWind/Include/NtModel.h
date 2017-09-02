@@ -32,6 +32,8 @@ public:
 
 	bool InitializeModelData(NtPCVertex* vertices, ntInt vertexCount, ntUint* indices, ntInt indexCount, const ntWchar* fx);
 
+    bool InitializeModelData(void* vertices, ntInt sizeVertex, ntInt vertexCount, ntUint* indices, ntInt indexCount, const ntWchar* fx);
+
 	void Release();
 
 	virtual void Update(float deltaTime);

@@ -44,6 +44,8 @@ private:
 
     void MakeGeometryTwoVertexBuf();
 
+    void MakeColor();
+
     void RenderNormal(XMMATRIX& worldViewProj);
 
     void RenderTwoVertexBuf(XMMATRIX& worldViewProj);

@@ -25,6 +25,8 @@ public:
 
     bool InitializeFxTwoInputElem(const ntWchar* fx);
 
+    bool InitializeFx32bitColor(const ntWchar* fx);
+
 	void Release();
 
 	bool Render(ntInt indexCount, const XMMATRIX& worldMatrix, const XMMATRIX& viewMatrix, const XMMATRIX& projMatrix);
