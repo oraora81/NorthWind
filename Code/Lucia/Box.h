@@ -52,6 +52,8 @@ private:
 
     void RenderBoxPyramid(XMMATRIX& worldViewProj);
 
+    void Render32BitColor(XMMATRIX& worldViewProj);
+
 private:
 	float m_theta;
 	float m_phi;

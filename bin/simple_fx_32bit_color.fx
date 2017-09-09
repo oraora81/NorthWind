@@ -15,8 +15,8 @@ RasterizerState WF
 
 struct VertexInputType
 {
-	float3 position : POSITION;
 	float color : COLOR;
+	float3 position : POSITION;
 };
 
 struct PixelInputType

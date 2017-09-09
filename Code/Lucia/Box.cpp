@@ -255,13 +255,13 @@ void Box::MakeColor()
 
     sVertexColor box[] =
     {
-        { XMFLOAT3(-1.0f, -1.0f, -1.0f), Colors::WhiteC },
-        { XMFLOAT3(-1.0f, +1.0f, -1.0f), Colors::BlackC },
+        { XMFLOAT3(-1.0f, -1.0f, -1.0f), Colors::YellowC },
+        { XMFLOAT3(-1.0f, +1.0f, -1.0f), Colors::YellowC },
         { XMFLOAT3(+1.0f, +1.0f, -1.0f), Colors::RedC },
         { XMFLOAT3(+1.0f, -1.0f, -1.0f), Colors::GreenC },
         { XMFLOAT3(-1.0f, -1.0f, +1.0f), Colors::BlueC },
         { XMFLOAT3(-1.0f, +1.0f, +1.0f), Colors::YellowC },
-        { XMFLOAT3(+1.0f, +1.0f, +1.0f), Colors::CyanC },
+        { XMFLOAT3(+1.0f, +1.0f, +1.0f), Colors::MagentaC },
         { XMFLOAT3(+1.0f, -1.0f, +1.0f), Colors::MagentaC },
     };
 
@@ -324,8 +324,9 @@ void Box::Update(float deltaTime)
 
 void Box::RenderColor(XMMATRIX& worldViewProj)
 {
-    RenderNormal(worldViewProj);
+    //RenderNormal(worldViewProj);
     //RenderBoxPyramid(worldViewProj);
+    Render32BitColor(worldViewProj);
 }
 
 void Box::RenderNormal(XMMATRIX& worldViewProj)
@@ -419,4 +420,19 @@ void Box::RenderBoxPyramid(XMMATRIX& worldViewProj)
         tech->GetPassByIndex(p)->Apply(0, g_renderer->DeviceContext());
         g_renderer->DeviceContext()->DrawIndexed(m_pyramidIndexCount, m_pyramidIndexOffset, m_pyramidVertexOffset);
     }
+}
+
+void Box::Render32BitColor(XMMATRIX& worldViewProj)
+{
+    ntUint stride = sizeof(sVertexColor);
+    ntUint offset = 0;
+
+    g_renderInterface->SetPrimitiveTopology(ePrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+    g_renderInterface->SetVertexBuffers(0, 1, &m_vertexBuffer, &stride, &offset);
+
+    g_renderInterface->SetIndexBuffers(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
+
+    m_colorShader->RenderFx(m_indexCount, worldViewProj);
+
 }
