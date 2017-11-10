@@ -8,10 +8,8 @@
 namespace nt { namespace renderer {
 
 NtTextureShader::NtTextureShader()
-	: m_vertexShader(nullptr)
-	, m_pixelShader(nullptr)
-	, m_layout(nullptr)
-	, m_matrixBuffer(nullptr)
+	: NtShader()
+    , m_matrixBuffer(nullptr)
 	, m_sampleState(nullptr)
 {
 
@@ -20,7 +18,7 @@ NtTextureShader::NtTextureShader()
 
 NtTextureShader::~NtTextureShader()
 {
-	Release();
+	
 }
 
 bool NtTextureShader::Initialize(const ntWchar* vs, const ntWchar* ps)
@@ -38,7 +36,10 @@ bool NtTextureShader::Initialize(const ntWchar* vs, const ntWchar* ps)
 
 void NtTextureShader::Release()
 {
-	ReleaseShader();
+    NtShader::Release();
+
+    SAFE_RELEASE(m_sampleState);
+    SAFE_RELEASE(m_matrixBuffer);
 }
 
 
@@ -185,16 +186,6 @@ bool NtTextureShader::InitializeShader(const ntWchar* vs, const ntWchar* ps)
 
 	return true;
 }
-
-void NtTextureShader::ReleaseShader()
-{
-	SAFE_RELEASE(m_sampleState);
-	SAFE_RELEASE(m_matrixBuffer);
-	SAFE_RELEASE(m_layout);
-	SAFE_RELEASE(m_pixelShader);
-	SAFE_RELEASE(m_vertexShader);
-}
-
 
 bool NtTextureShader::SetShaderParameter(const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj, ntUint handle)
 {

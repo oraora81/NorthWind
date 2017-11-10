@@ -9,12 +9,6 @@ namespace nt {
 
 const ntUint INVALID_TEXTURE_HANDLE = 0xffffffff;
 
-struct NtColorVertex
-{
-	XMFLOAT3A pos;
-	XMFLOAT4A color;
-};
-
 struct NtTexVertex
 {
 	XMFLOAT3 pos;

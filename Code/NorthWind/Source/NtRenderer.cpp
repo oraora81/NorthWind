@@ -182,8 +182,6 @@ bool NtRenderer::Draw()
 	// put the puppet vertex and index buffers on the graphics pipeline to prepare them for drawing
 	//m_puppet->Render(worldMatrix, viewMatrix, projMatrix, m_light);
 
-	//m_colorShader->RenderLine(m_renderEngine, worldMatrix, viewMatrix, projMatrix);
-
 	// present the rendered scene to the screen
 	m_renderEngine->EndScene();
 

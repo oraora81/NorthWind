@@ -393,6 +393,7 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <ClInclude Include="Include\NtIterator.h" />
     <ClInclude Include="Include\NtLight.h" />
     <ClInclude Include="Include\NtLightShader.h" />
+    <ClInclude Include="Include\NtLightType.h" />
     <ClInclude Include="Include\NtLinearAllocator.h" />
     <ClInclude Include="Include\NtList.h" />
     <ClInclude Include="Include\NtLog.h" />

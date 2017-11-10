@@ -206,6 +206,9 @@
     <ClInclude Include="Include\NtGeometryGenerator.h">
       <Filter>render</Filter>
     </ClInclude>
+    <ClInclude Include="Include\NtLightType.h">
+      <Filter>render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\test_cube.ase" />

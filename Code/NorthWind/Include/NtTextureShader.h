@@ -17,10 +17,10 @@ class NtTextureShader : public NtShader
 
 public:
 	NtTextureShader();
-	~NtTextureShader();
+	virtual ~NtTextureShader();
 
-	virtual bool Initialize(const ntWchar* vs, const ntWchar* ps);
-	void Release();
+    bool Initialize(const ntWchar* vs, const ntWchar* ps) override;
+    void Release() override;
 	bool Render(int indexCount, const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj, ntUint handle);
 
 private:
@@ -30,9 +30,6 @@ private:
 	void RenderShader(int indexCount);
 
 private:
-	ID3D11VertexShader*	m_vertexShader;
-	ID3D11PixelShader*	m_pixelShader;
-	ID3D11InputLayout*	m_layout;
 	ID3D11Buffer*		m_matrixBuffer;
 	ID3D11SamplerState*	m_sampleState;
 };

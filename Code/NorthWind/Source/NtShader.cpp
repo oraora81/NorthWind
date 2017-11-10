@@ -40,9 +40,35 @@ static ntChar* g_fxShaderModel[eFxShaderModel::NT_MAX_FXSHADER_MODEL] =
 
 }
 
+NtShader::NtShader()
+    : m_vertexShader(nullptr)
+    , m_pixelShader(nullptr)
+    , m_layout(nullptr)
+    , m_fx(nullptr)
+    , m_tech(nullptr)
+    , m_fxWorldViewProj(nullptr)
+{
+
+}
+
+NtShader::~NtShader()
+{
+    Release();
+}
+
 bool NtShader::InitializeFx(const ntWchar* fx)
 {
 	return true;
+}
+
+void NtShader::Release()
+{
+    SAFE_RELEASE(m_fxWorldViewProj);
+    SAFE_RELEASE(m_tech);
+    SAFE_RELEASE(m_fx);
+    SAFE_RELEASE(m_layout);
+    SAFE_RELEASE(m_pixelShader);
+    SAFE_RELEASE(m_vertexShader);
 }
 
 const ntChar* NtShader::GetVSModel() const
@@ -70,6 +96,25 @@ void NtShader::SetPShaderModel(ePShaderModel ps)
 	ms_psModel = ps;
 }
 
+ID3D11InputLayout* NtShader::GetInputLayout()
+{
+    NtAsserte(m_layout);
 
+    return m_layout;
 }
-}	// namespace nt
+
+const ID3DX11EffectTechnique* NtShader::GetEffectTechnique()
+{
+    NtAsserte(m_tech != nullptr);
+
+    return m_tech;
+}
+
+const ID3DX11EffectMatrixVariable* NtShader::GetEffectMatrix()
+{
+    NtAsserte(m_fxWorldViewProj != nullptr);
+
+    return m_fxWorldViewProj;
+}
+
+} }	// namespace nt

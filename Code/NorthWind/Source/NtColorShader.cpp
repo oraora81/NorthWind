@@ -8,13 +8,8 @@ namespace nt { namespace renderer {
 
 
 NtColorShader::NtColorShader()
-	: m_vertexShader(nullptr)
-	, m_pixelShader(nullptr)
-	, m_layout(nullptr)
+	: NtShader()
 	, m_matrixBuffer(nullptr)
-	, m_fx(nullptr)
-	, m_tech(nullptr)
-	, m_fxWorldViewProj(nullptr)
 {
 
 }
@@ -143,7 +138,9 @@ bool NtColorShader::InitializeFx32bitColor(const ntWchar* fx)
 
 void NtColorShader::Release()
 {
-	ReleaseShader();
+    NtShader::Release();
+
+    SAFE_RELEASE(m_matrixBuffer);
 }
 
 bool NtColorShader::Render(ntInt indexCount, const XMMATRIX& worldMatrix, const XMMATRIX& viewMatrix, const XMMATRIX& projMatrix)
@@ -179,49 +176,6 @@ bool NtColorShader::RenderFx(ntInt indexCount, const XMMATRIX& worldViewProj)
 	}
 
 	return true;
-}
-
-bool NtColorShader::RenderLine(const XMMATRIX& worldMatrix,const XMMATRIX& viewMatrix,const XMMATRIX& projMatrix)
-{
-	// set the shader parameters that it will use for rendering.
-	bool res = SetShaderParameters(worldMatrix, viewMatrix, projMatrix);
-	if (false == res)
-	{
-		return false;
-	}
-
-	// set the vertex input layout
-	g_renderer->DeviceContext()->IASetInputLayout(m_layout);
-
-	// set the vertex and pixel shaders that will be used to render this triangle
-	g_renderer->DeviceContext()->VSSetShader(m_vertexShader, NULL, 0);
-	g_renderer->DeviceContext()->PSSetShader(m_pixelShader, NULL, 0);
-
-	g_renderer->DeviceContext()->Draw(2, 0);
-
-
-	return true;
-}
-
-ID3D11InputLayout* NtColorShader::GetInputLayout()
-{
-	NtAsserte(m_layout);
-
-	return m_layout;
-}
-
-const ID3DX11EffectTechnique* NtColorShader::GetEffectTechnique()
-{
-    NtAsserte(m_tech != nullptr);
-
-    return m_tech;
-}
-
-const ID3DX11EffectMatrixVariable* NtColorShader::GetEffectMatrix()
-{
-    NtAsserte(m_fxWorldViewProj != nullptr);
-
-    return m_fxWorldViewProj;
 }
 
 bool NtColorShader::InitializeShader(const ntWchar* vs, const ntWchar* ps)
@@ -351,15 +305,6 @@ bool NtColorShader::InitializeShader(const ntWchar* vs, const ntWchar* ps)
 
 	return true;
 }
-
-void NtColorShader::ReleaseShader()
-{
-	SAFE_RELEASE(m_matrixBuffer);
-	SAFE_RELEASE(m_layout);
-	SAFE_RELEASE(m_pixelShader);
-	SAFE_RELEASE(m_vertexShader);
-}
-
 
 bool NtColorShader::SetShaderParameters(const XMMATRIX& worldMatrix, const XMMATRIX& viewMatrix, const XMMATRIX& projMatrix)
 {
