@@ -54,4 +54,14 @@ private:
 
 	UINT m_gridIndexCount;
 	Waves m_waves;
+    nt::DirectionalLight m_dirLight;
+    nt::PointLight m_pointLight;
+    nt::SpotLight m_spotLight;
+    nt::Material m_landMaterial;
+    nt::Material m_wavMaterial;
+
+    ID3DX11EffectVariable* m_fxDirLight;
+    ID3DX11EffectVariable* m_fxPointLight;
+    ID3DX11EffectVariable* m_fxSpotLight;
+    ID3DX11EffectVariable* m_fxMaterial;
 };

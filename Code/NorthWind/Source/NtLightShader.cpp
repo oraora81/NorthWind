@@ -6,10 +6,8 @@
 namespace nt { namespace renderer {
 
 NtLightShader::NtLightShader()
-	: m_vertexShader(nullptr)
-	, m_pixelShader(nullptr)
-	, m_layout(nullptr)
-	, m_sampleState(nullptr)
+	: NtShader()
+    , m_sampleState(nullptr)
 	, m_matrixBuffer(nullptr)
 	, m_lightBuffer(nullptr)
 {
@@ -24,6 +22,9 @@ NtLightShader::~NtLightShader()
 
 bool NtLightShader::Initialize(const ntWchar* vs, const ntWchar* ps)
 {
+    NtAsserte(vs != nullptr);
+    NtAsserte(ps != nullptr);
+
 	// init the vertex and pixel shader
 	bool res = InitializeShader(vs, ps);
 	if (false == res)
@@ -37,9 +38,21 @@ bool NtLightShader::Initialize(const ntWchar* vs, const ntWchar* ps)
 
 void NtLightShader::Release()
 {
-	ReleaseShader();
+    NtShader::Release();
 }
 
+bool NtLightShader::InitializeFx(const ntWchar* fx)
+{
+    NtAsserte(fx != nullptr);
+
+    nt::fs::NtFileBuffer fileBuffer(fx);
+
+    HRF(D3DX11CreateEffectFromMemory(fileBuffer.GetData(), fileBuffer.GetBytes(), 0, g_renderer->Device(), &m_fx, nullptr));
+
+    m_tech = m_fx->GetTechniqueByName("LightTech");
+
+    m_fxWorldViewProj = m_fx->GetVariableByName("gWorldViewProj")->AsMatrix();
+}
 
 bool NtLightShader::Render(int indexCount, const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj, NtTexture* texture, const XMFLOAT3A& lightDir, const XMFLOAT4A& diffuse)
 {
@@ -289,7 +302,7 @@ bool NtLightShader::SetShaderParameter(const XMMATRIX& world, const XMMATRIX& vi
 }
 
 
-void NtLightShader::RenderShader(int indexCount)
+void NtLightShader::RenderShader(int indexCount) const
 {
 	// set the vertex input layout.
 	g_renderer->DeviceContext()->IASetInputLayout(m_layout);

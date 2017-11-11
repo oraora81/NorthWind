@@ -26,6 +26,15 @@ WaveModel::WaveModel()
 	XMMATRIX I = XMMatrixIdentity();
 	XMStoreFloat4x4(&m_gridWorld, I);
 	XMStoreFloat4x4(&m_wavesWorld, I);
+
+    m_dirLight.Ambient = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
+    m_dirLight.Diffuse = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
+    m_dirLight.Specular = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
+    m_dirLight.Direction = XMFLOAT3(0.57735f, -0.57735f, 0.57735f);
+
+    // 점광원 - 위치는 애니메이션을 위해 매 프레임 Update에서 갱신된다.
+    m_pointLight.Ambient = XMFLOAT4(0.3f, 0.3f, 0.3f, 1.0f);
+    m_pointLight.Diffuse = XMFLOAT4(0.7f, 0.7f, 0.7f, 1.0f);
 }
 
 WaveModel::~WaveModel()

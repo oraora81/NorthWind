@@ -270,3 +270,5 @@ struct NtPosition
 #include "NtRenderType.inl"
 
 }
+
+#include "NtLightType.h"

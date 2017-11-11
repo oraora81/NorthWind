@@ -49,4 +49,14 @@ namespace nt {
         XMFLOAT3 Att;
         float Pad;
     };
+
+    struct Material
+    {
+        Material() { Crt::MemSet(this, sizeof(this)); }
+
+        XMFLOAT4 Ambient;
+        XMFLOAT4 Diffuse;
+        XMFLOAT4 Specular;  // w = specpower
+        XMFLOAT4 Reflect;
+    };
 }
