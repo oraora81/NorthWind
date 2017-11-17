@@ -25,6 +25,12 @@ public:
 		XMFLOAT4 color;
 	};
 
+    struct NtLVertex
+    {
+        XMFLOAT3 position;
+        XMFLOAT3 normal;
+    };
+
 	NtModel();
 	virtual ~NtModel();
 

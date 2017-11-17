@@ -35,12 +35,6 @@ bool NtLightShader::Initialize(const ntWchar* vs, const ntWchar* ps)
 	return true;
 }
 
-
-void NtLightShader::Release()
-{
-    NtShader::Release();
-}
-
 bool NtLightShader::InitializeFx(const ntWchar* fx)
 {
     NtAsserte(fx != nullptr);
@@ -52,7 +46,15 @@ bool NtLightShader::InitializeFx(const ntWchar* fx)
     m_tech = m_fx->GetTechniqueByName("LightTech");
 
     m_fxWorldViewProj = m_fx->GetVariableByName("gWorldViewProj")->AsMatrix();
+
+
 }
+
+void NtLightShader::Release()
+{
+    NtShader::Release();
+}
+
 
 bool NtLightShader::Render(int indexCount, const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj, NtTexture* texture, const XMFLOAT3A& lightDir, const XMFLOAT4A& diffuse)
 {

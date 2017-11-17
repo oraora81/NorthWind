@@ -22,9 +22,9 @@ NtModel::NtModel()
 	, m_indexCount(0)
 	, m_puppetRawData(nullptr)
 	, m_colorShader(new NtColorShader())
+    , m_lightShader(new NtLightShader())
 {
 	m_textureShader = nullptr;
-	m_lightShader = nullptr;
 }
 
 NtModel::~NtModel()
@@ -42,7 +42,8 @@ bool NtModel::InitializeModelData(NtPCVertex* vertices, ntInt vertexCount, ntUin
 
 	m_indexCount = indexCount;
 
-	m_colorShader->InitializeFx(fx);
+	//m_colorShader->InitializeFx(fx);
+    m_lightShader->InitializeFx(fx);
 
 	return true;
 }

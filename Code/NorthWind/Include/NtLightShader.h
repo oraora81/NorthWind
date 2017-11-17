@@ -34,6 +34,7 @@ public:
 	void Release() override;
 
     bool Render(int indexCount, const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj, NtTexture* texture, const XMFLOAT3A& lightDir, const XMFLOAT4A& diffuse);
+
 private:
 	bool InitializeShader(const ntWchar* vs, const ntWchar* ps);
 
