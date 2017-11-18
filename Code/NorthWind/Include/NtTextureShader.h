@@ -19,9 +19,7 @@ public:
 	NtTextureShader();
 	virtual ~NtTextureShader() override;
 
-    bool Initialize(const ntWchar* vs, const ntWchar* ps) override;
-
-    bool IntializeFx(const ntWchar* fx) override;
+    bool InitializeFx(const ntWchar* fx) override;
 
     void Release() override;
 

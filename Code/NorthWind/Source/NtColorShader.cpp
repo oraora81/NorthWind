@@ -20,21 +20,6 @@ NtColorShader::~NtColorShader()
 
 }
 
-bool NtColorShader::Initialize(const ntWchar* vs, const ntWchar* ps)
-{
-	NtAsserte(vs != nullptr);
-	NtAsserte(ps != nullptr);
-
-	// initialize the vertex and pixel shaders;
-	bool res = InitializeShader(vs, ps);
-	if (false == res)
-	{
-		return false;
-	}
-
-	return true;
-}
-
 bool NtColorShader::InitializeFx(const ntWchar* fx)
 {
 	NtAsserte(fx != nullptr);

@@ -78,5 +78,5 @@ void Points::MakeGeometry()
 		4, 3, 7
 	};
 
-	InitializeModelData(vertices, _countof(vertices), indices, _countof(indices), L"../Code/Lucia/simple_fx.fxo");
+	InitializeModelData(vertices, sizeof(NtPCVertex), _countof(vertices), indices, _countof(indices), L"../Code/Lucia/simple_fx.fxo");
 }

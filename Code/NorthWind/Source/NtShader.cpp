@@ -56,11 +56,6 @@ NtShader::~NtShader()
     Release();
 }
 
-bool NtShader::InitializeFx(const ntWchar* fx)
-{
-	return true;
-}
-
 void NtShader::Release()
 {
     SAFE_RELEASE(m_fxWorldViewProj);

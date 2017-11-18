@@ -77,11 +77,11 @@ bool TheApp::Initialize(bool fullscreen, ntInt width, ntInt height)
 	//Crt::WideStrToMultiStr(buf, Crt::StrLen(buf), fname);
 	//DoImport(buf);
 
-	//m_model = new Box();
+	m_model = new Box();
 	//m_model = new Hills();
     //m_model = new Shapes();
 	//m_model = new Skull();
-	m_model = new WaveModel();
+	//m_model = new WaveModel();
     //m_model = new Points();
     //m_model = new Pyramid();
 	m_model->MakeGeometry();

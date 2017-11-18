@@ -41,5 +41,5 @@ void Pyramid::MakeGeometry()
     
     const ntWchar* filePath = g_resManager->GetPath(L"simple_fx.fxo");
     //InitializeModelData(vertices, _countof(vertices), indices, _countof(indices), L"../Code/Lucia/simple_fx.fxo");
-    InitializeModelData(vertices, _countof(vertices), indices, _countof(indices), filePath);
+    InitializeModelData(vertices, sizeof(NtPCVertex), _countof(vertices), indices, _countof(indices), filePath);
 }

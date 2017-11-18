@@ -32,61 +32,20 @@ NtModel::~NtModel()
 	Release();
 }
 
-bool NtModel::InitializeModelData(NtPCVertex* vertices, ntInt vertexCount, ntUint* indices, ntInt indexCount, const ntWchar* fx)
+bool NtModel::InitializeModelData(void* vertices, ntInt vtxSize, ntInt vtxCount, ntUint* indices, ntInt indexCount, const ntWchar* fx)
 {
-	m_vertexBuffer = MakeVertexBuffer(vertices, vertexCount, eBufferUsage::USAGE_DYNAMIC, eCpuAccessFlag::CPU_ACCESS_WRITE);
+	m_vertexBuffer = MakeVertexBuffer(vertices, vtxSize, vtxCount, eBufferUsage::USAGE_DYNAMIC, eCpuAccessFlag::CPU_ACCESS_WRITE);
 
-	m_vertexCount = vertexCount;
+	m_vertexCount = vtxCount;
 
 	m_indexBuffer = MakeIndexBuffer(indices, indexCount);
 
 	m_indexCount = indexCount;
 
-	//m_colorShader->InitializeFx(fx);
-    m_lightShader->InitializeFx(fx);
+	m_colorShader->InitializeFx(fx);
+    //m_lightShader->InitializeFx(fx);
 
 	return true;
-}
-
-bool NtModel::InitializeModelData(void* vertices, ntInt sizeVertex, ntInt vertexCount, ntUint* indices, ntInt indexCount, const ntWchar* fx)
-{
-    NtAsserte(sizeVertex > 0);
-    NtAsserte(vertexCount > 0);
-    NtAsserte(indices > 0);
-
-    D3D11_BUFFER_DESC vd;
-    vd.Usage = (D3D11_USAGE)eBufferUsage::USAGE_DYNAMIC;
-    vd.ByteWidth = sizeVertex * vertexCount;
-    vd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-    vd.CPUAccessFlags = eCpuAccessFlag::CPU_ACCESS_WRITE;
-    vd.MiscFlags = 0;
-    vd.StructureByteStride = 0;
-
-    ID3D11Buffer* vb = nullptr;
-
-    if (vertices != nullptr)
-    {
-        D3D11_SUBRESOURCE_DATA vbData;
-        vbData.pSysMem = vertices;
-
-        HRF(g_renderer->Device()->CreateBuffer(&vd, &vbData, &vb));
-    }
-    else
-    {
-        // use dynamic buffer
-        HRF(g_renderer->Device()->CreateBuffer(&vd, nullptr, &vb));
-    }
-
-    m_vertexBuffer = vb;
-    m_vertexCount = vertexCount;
-
-    m_indexBuffer = MakeIndexBuffer(indices, indexCount);
-
-    m_indexCount = indexCount;
-
-    m_colorShader->InitializeFx32bitColor(fx);
-
-    return true;
 }
 
 bool NtModel::Initialize(const ntWchar* modelName)
@@ -189,7 +148,6 @@ int NtModel::GetIndexCount()
 {
 	return m_indexCount;
 }
-
 
 bool NtModel::InitializeAse(const ntWchar* puppetName)
 {
@@ -412,12 +370,12 @@ bool NtModel::InitializeAse(const ntWchar* puppetName)
 	return true;
 }
 
-ID3D11Buffer* NtModel::MakeVertexBuffer(NtPCVertex* vertices, ntIndex vtxCount, eBufferUsage usage, eCpuAccessFlag cpuFlag)
+ID3D11Buffer* NtModel::MakeVertexBuffer(void* vertices, ntInt vtxSize, ntIndex vtxCount, eBufferUsage usage, eCpuAccessFlag cpuFlag)
 {
 	// vb
 	D3D11_BUFFER_DESC vd;
 	vd.Usage = (D3D11_USAGE)usage;
-	vd.ByteWidth = sizeof(NtModel::NtPCVertex) * vtxCount;
+	vd.ByteWidth = vtxSize * vtxCount;
 	vd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	vd.CPUAccessFlags = cpuFlag;
 	vd.MiscFlags = 0;

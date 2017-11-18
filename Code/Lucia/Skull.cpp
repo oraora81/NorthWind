@@ -83,8 +83,8 @@ void Skull::MakeGeometry()
 
     fin.close();
 
-	NtModel::NtPCVertex* vtxArray = &vertices[0];
+	NtPCVertex* vtxArray = &vertices[0];
 	UINT* idxArray = &indices[0];
 
-	InitializeModelData(vtxArray, vertices.size(), idxArray, m_skullIndexCount, L"../Code/Lucia/simple_fx.fxo");
+	InitializeModelData(vtxArray, sizeof(NtPCVertex), vertices.size(), idxArray, m_skullIndexCount, L"../Code/Lucia/simple_fx.fxo");
 }

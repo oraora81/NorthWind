@@ -27,8 +27,6 @@ public:
 
 	virtual ~NtLightShader() override;
 
-	bool Initialize(const ntWchar* vs, const ntWchar* ps) override;
-
     bool InitializeFx(const ntWchar* fx) override;
 
 	void Release() override;

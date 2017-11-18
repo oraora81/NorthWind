@@ -13,9 +13,7 @@ public:
 
     virtual ~NtShader();
 
-	virtual bool Initialize(const ntWchar* vs, const ntWchar* ps) = 0;
-
-	virtual bool InitializeFx(const ntWchar* fx);
+	virtual bool InitializeFx(const ntWchar* fx) = 0;
 
     virtual void Release();
 

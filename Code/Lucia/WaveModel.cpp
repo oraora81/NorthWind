@@ -15,7 +15,7 @@ namespace
 		return 0.3f * (z * NtMath<float>::Sin(0.1f * x) * NtMath<float>::Cos(0.1f * z));
 	}
 
-    float GetHillNormal(float x, float z) const
+    XMFLOAT3 GetHillNormal(float x, float z)
     {
         // n = (-df/dx, 1, -df/dz)
         XMFLOAT3 n(
@@ -114,18 +114,18 @@ void WaveModel::Update(float deltaTime)
 	D3D11_MAPPED_SUBRESOURCE mappedData;
 	HR(g_renderer->DeviceContext()->Map(m_waveVB, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedData));
 
-	NtPCVertex* vertices = reinterpret_cast<NtPCVertex*>(mappedData.pData);
+	NtLVertex* vertices = reinterpret_cast<NtLVertex*>(mappedData.pData);
 	for (UINT i = 0; i < m_waves.VertexCount(); i++)
 	{
 		vertices[i].position = m_waves[i];
-		vertices[i].color = XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f);
+		//vertices[i].color = XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f);
 	}
 	g_renderer->DeviceContext()->Unmap(m_waveVB, 0);
 }
 
 void WaveModel::RenderColor(XMMATRIX& worldViewProj)
 {
-	ntUint stride = sizeof(NtPCVertex);
+	ntUint stride = sizeof(NtLVertex);
 	ntUint offset = 0;
 
 	g_renderInterface->SetPrimitiveTopology(ePrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -223,7 +223,7 @@ void WaveModel::MakeGeometry()
 	NtModel::NtLVertex* vtxArray = &vertices[0];
 	UINT* idxArray = &indices[0];
 
-	InitializeModelData(vtxArray, vertices.size(), idxArray, indices.size(), L"../Code/Lucia/simple_fx.fxo");
+	InitializeModelData(vtxArray, sizeof(NtLVertex), vertices.size(), idxArray, indices.size(), L"../Code/Lucia/simple_fx.fxo");
 
 	MakeWave();
 }
@@ -232,7 +232,7 @@ void WaveModel::MakeWave()
 {
 	m_waves.Init(160, 160, 1.0f, 0.03f, 3.25f, 0.4f);
 
-	m_waveVB = MakeVertexBuffer(nullptr, m_waves.VertexCount(), eBufferUsage::USAGE_DYNAMIC, eCpuAccessFlag::CPU_ACCESS_WRITE);
+	m_waveVB = MakeVertexBuffer(nullptr, sizeof(NtLVertex), m_waves.VertexCount(), eBufferUsage::USAGE_DYNAMIC, eCpuAccessFlag::CPU_ACCESS_WRITE);
 
 	std::vector<UINT> indices(3 * m_waves.TrisCount());
 

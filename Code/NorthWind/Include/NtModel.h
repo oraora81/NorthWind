@@ -36,9 +36,7 @@ public:
 
 	bool Initialize(const ntWchar* puppetName);
 
-	bool InitializeModelData(NtPCVertex* vertices, ntInt vertexCount, ntUint* indices, ntInt indexCount, const ntWchar* fx);
-
-    bool InitializeModelData(void* vertices, ntInt sizeVertex, ntInt vertexCount, ntUint* indices, ntInt indexCount, const ntWchar* fx);
+    bool InitializeModelData(void* vertices, ntInt vtxSize, ntInt vtxCount, ntUint* indices, ntInt indexCount, const ntWchar* fx);
 
 	void Release();
 
@@ -66,7 +64,8 @@ public:
 
 	void SetLightShader(NtLightShader* shader);
 
-	ID3D11Buffer* MakeVertexBuffer(NtPCVertex* vertices, ntIndex vtxCount, eBufferUsage usage, eCpuAccessFlag cpuFlag);
+protected:
+	ID3D11Buffer* MakeVertexBuffer(void* vertices, ntInt vtxSize, ntIndex vtxCount, eBufferUsage usage, eCpuAccessFlag cpuFlag);
 
 	ID3D11Buffer* MakeIndexBuffer(ntUint* indices, ntInt indexCount);
 

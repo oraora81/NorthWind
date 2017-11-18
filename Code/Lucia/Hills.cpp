@@ -98,5 +98,5 @@ void Hills::MakeGeometry()
 		indices[i] = grid.Indices[i];
 	}
 	
-	InitializeModelData(vertices, grid.Vertices.size(), indices, grid.Indices.size(), L"../Code/Lucia/simple_fx.fxo");
+	InitializeModelData(vertices, sizeof(NtPCVertex), grid.Vertices.size(), indices, grid.Indices.size(), L"../Code/Lucia/simple_fx.fxo");
 }

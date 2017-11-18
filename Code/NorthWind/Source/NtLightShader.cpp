@@ -20,21 +20,6 @@ NtLightShader::~NtLightShader()
 	Release();
 }
 
-bool NtLightShader::Initialize(const ntWchar* vs, const ntWchar* ps)
-{
-    NtAsserte(vs != nullptr);
-    NtAsserte(ps != nullptr);
-
-	// init the vertex and pixel shader
-	bool res = InitializeShader(vs, ps);
-	if (false == res)
-	{
-		return false;
-	}
-
-	return true;
-}
-
 bool NtLightShader::InitializeFx(const ntWchar* fx)
 {
     NtAsserte(fx != nullptr);

@@ -19,8 +19,6 @@ public:
 
 	virtual ~NtColorShader() override;
 
-	bool Initialize(const ntWchar* vs, const ntWchar* ps) override;
-
     bool InitializeFx(const ntWchar* fx) override;
 
     bool InitializeFxTwoInputElem(const ntWchar* fx);

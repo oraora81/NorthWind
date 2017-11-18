@@ -132,13 +132,15 @@ void Box::MakeNormal()
     indices.insert(indices.end(), std::begin(pyramid_indices), std::end(pyramid_indices));
     m_pyramidIndexCount = _countof(pyramid_indices);
 
-    NtModel::NtPCVertex* v = &vertices[0];
+    NtPCVertex* v = &vertices[0];
     UINT* i = &indices[0];
 
     const ntWchar* fileName = 
     g_resManager->GetPath(L"simple_fx_rs.fxo");
 
-    InitializeModelData(v, vertices.size(),
+    InitializeModelData(v, 
+        sizeof(NtPCVertex),
+        vertices.size(),
         i, indices.size(),
         fileName);
         //L"../Code/Lucia/simple_fx_rs.fxo");

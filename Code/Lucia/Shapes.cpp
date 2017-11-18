@@ -191,8 +191,8 @@ void Shapes::MakeGeometry()
 	indices.insert(indices.end(), sphere.Indices.begin(), sphere.Indices.end());
 	indices.insert(indices.end(), cylinder.Indices.begin(), cylinder.Indices.end());
 
-	NtModel::NtPCVertex* vtxArray = &vertices[0];
+	NtPCVertex* vtxArray = &vertices[0];
 	UINT* idxArray = &indices[0];
 
-	InitializeModelData(vtxArray, vertices.size(), idxArray, indices.size(), L"../Code/Lucia/simple_fx.fxo");
+	InitializeModelData(vtxArray, sizeof(NtPCVertex), vertices.size(), idxArray, indices.size(), L"../Code/Lucia/simple_fx.fxo");
 }

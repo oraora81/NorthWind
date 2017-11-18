@@ -21,21 +21,6 @@ NtTextureShader::~NtTextureShader()
 	
 }
 
-bool NtTextureShader::Initialize(const ntWchar* vs, const ntWchar* ps)
-{
-    NtAsserte(vs != nullptr);
-    NtAsserte(ps != nullptr);
-
-	// init the vertex and pixel shader
-	bool res = InitializeShader(vs, ps);
-	if (false == res)
-	{
-		return false;
-	}
-
-	return true;
-}
-
 bool NtTextureShader::InitializeFx(const ntWchar* fx)
 {
     return true;
