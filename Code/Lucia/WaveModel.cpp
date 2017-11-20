@@ -37,6 +37,7 @@ WaveModel::WaveModel()
 	, m_waveVB(nullptr)
 	, m_waveIB(nullptr)
 {
+    m_eyePosW = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	XMMATRIX I = XMMatrixIdentity();
 	XMStoreFloat4x4(&m_gridWorld, I);
 
@@ -87,6 +88,8 @@ void WaveModel::Update(float deltaTime)
 	float z = m_radius * NtMath<float>::Sin(m_phi) * NtMath<float>::Sin(m_theta);
 	float y = m_radius * NtMath<float>::Cos(m_phi);
 
+    m_eyePosW = XMFLOAT3(x, y, z);
+
 	XMVECTOR pos = XMVectorSet(x, y, z, 1.0f);
 	XMVECTOR target = XMVectorZero();
 	XMVECTOR up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
@@ -119,6 +122,7 @@ void WaveModel::Update(float deltaTime)
 	{
 		vertices[i].position = m_waves[i];
 		//vertices[i].color = XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f);
+        vertices[i].normal = m_waves
 	}
 	g_renderer->DeviceContext()->Unmap(m_waveVB, 0);
 }

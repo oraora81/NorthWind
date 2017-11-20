@@ -42,8 +42,8 @@ bool NtModel::InitializeModelData(void* vertices, ntInt vtxSize, ntInt vtxCount,
 
 	m_indexCount = indexCount;
 
-	m_colorShader->InitializeFx(fx);
-    //m_lightShader->InitializeFx(fx);
+	//m_colorShader->InitializeFx(fx);
+    m_lightShader->InitializeFx(fx);
 
 	return true;
 }

@@ -26,6 +26,8 @@ public:
 
 	void Disturb(UINT i, UINT j, float magnitude);
 
+    const XMFLOAT3& Normal(ntInt i) const { return m_normals[i]; }
+
 private:
 	UINT m_numRow;
 	UINT m_numColumn;
@@ -41,4 +43,6 @@ private:
 
 	XMFLOAT3* m_prevSolution;
 	XMFLOAT3* m_currSolution;
+    XMFLOAT3* m_normals;
+    XMFLOAT3* m_tangentX;
 };

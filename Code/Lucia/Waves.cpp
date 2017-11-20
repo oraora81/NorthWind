@@ -13,16 +13,20 @@ Waves::Waves()
 	, m_k3(0.0f)
 	, m_timeStep(0.0f)
 	, m_spatialStep(0.0f)
-	, m_prevSolution(0)
-	, m_currSolution(0)
+	, m_prevSolution(nullptr)
+	, m_currSolution(nullptr)
+    , m_normals(nullptr)
+    , m_tangentX(nullptr)
 {
 
 }
 
 Waves::~Waves()
 {
-	delete[] m_prevSolution;
-	delete[] m_currSolution;
+	SAFE_DELETE_ARRAY(m_prevSolution;)
+	SAFE_DELETE_ARRAY(m_currSolution);
+    SAFE_DELETE_ARRAY(m_normals);
+    SAFE_DELETE_ARRAY(m_tangentX);
 }
 
 UINT Waves::RowCount() const
@@ -68,6 +72,8 @@ void Waves::Init(UINT m, UINT n, float dx, float dt, float speed, float damping)
 
 	m_prevSolution = new XMFLOAT3[m*n];
 	m_currSolution = new XMFLOAT3[m*n];
+    m_normals = new XMFLOAT3[m*n];
+    m_tangentX = new XMFLOAT3[m*n];
 
 	// generate grid vertices in sys mem
 	float  halfWidth = (n - 1) * dx * 0.5f;
@@ -81,6 +87,8 @@ void Waves::Init(UINT m, UINT n, float dx, float dt, float speed, float damping)
 
 			m_prevSolution[i*n + j] = XMFLOAT3(x, 0.0f, z);
 			m_currSolution[i*n + j] = XMFLOAT3(x, 0.0f, z);
+            m_normals[i*n + j] = XMFLOAT3(0.0f, 1.0f, 0.0f);
+            m_tangentX[i*n + j] = XMFLOAT3(1.0f, 0.0f, 0.0f);
 		}
 	}
 }
@@ -125,6 +133,29 @@ void Waves::Update(float dt)
 		std::swap(m_prevSolution, m_currSolution);
 
 		t = 0.0f;
+
+        // compute normal using finite difference scheme
+        for (ntUint i = 1; i < m_numRow - 1; ++i)
+        {
+            for (ntUint j = 1; j < m_numColumn - 1; ++j)
+            {
+                float l = m_currSolution[i * m_numColumn + j - 1].y;
+                float r = m_currSolution[i * m_numColumn + j + 1].y;
+                float t = m_currSolution[(i - 1) * m_numColumn + j].y;
+                float b = m_currSolution[(i + 1) * m_numColumn + j].y;
+
+                m_normals[i * m_numColumn + j].x = -r + l;
+                m_normals[i * m_numColumn + j].y = 2.0f * m_spatialStep;
+                m_normals[i * m_numColumn + j].z = b - t;
+
+                XMVECTOR n = XMVector3Normalize((XMLoadFloat3(&m_normals[i * m_numColumn + j])));
+                XMStoreFloat3(&m_normals[i*m_numColumn + j], n);
+
+                m_tangentX[i*m_numColumn + j] = XMFLOAT3(2.0f * m_spatialStep, r - l, 0.0f);
+                XMVECTOR T = XMVector3Normalize(XMLoadFloat3(&m_tangentX[i*m_numColumn + j])));
+                XMStoreFloat3(&m_tangentX[i * m_numColumn + j], T);
+            }
+        }
 	}
 }
 

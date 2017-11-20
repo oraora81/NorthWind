@@ -47,6 +47,7 @@ private:
 	float m_phi;
 	float m_radius;
 
+    XMFLOAT3 m_eyePosW;
 	XMFLOAT4X4 m_gridWorld;
 	XMFLOAT4X4 m_wavesWorld;
 	ID3D11Buffer* m_waveVB;
