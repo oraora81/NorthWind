@@ -39,12 +39,12 @@ Shapes::~Shapes()
 
 }
 
-void Shapes::RenderColor(XMMATRIX& worldViewProj)
+void Shapes::Render(XMMATRIX& worldViewProj)
 {
 	ntUint stride = sizeof(NtPCVertex);
 	ntUint offset = 0;
 
-	g_renderInterface->SetPrimitiveTopology(ePrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	g_renderInterface->SetPrimitiveTopology(PrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	g_renderInterface->SetVertexBuffers(0, 1, &m_vertexBuffer, &stride, &offset);
 

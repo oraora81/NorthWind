@@ -8,7 +8,7 @@ public:
 	Points();
 	virtual ~Points();
 
-	virtual void RenderColor(XMMATRIX& worldViewProj) override;
+	virtual void Render(XMMATRIX& worldViewProj) override;
 
 	void MakeGeometry();
 };

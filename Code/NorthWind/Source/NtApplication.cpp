@@ -297,8 +297,8 @@ bool NtApplication::Process(const float deltaTime)
 void NtApplication::Render()
 {
 	CalculateFrame();
-	//m_renderer->Draw();
-	m_renderer->DrawTest();
+
+	m_renderer->Draw();
 }
 
 

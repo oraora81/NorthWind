@@ -10,7 +10,7 @@ public:
 
 	virtual void Update(float deltaTime) override;
 
-    virtual void RenderColor(XMMATRIX& worldViewProj) override;
+    virtual void Render(XMMATRIX& worldViewProj) override;
 
 	void MakeGeometry();
     

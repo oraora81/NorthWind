@@ -31,8 +31,6 @@ bool NtLightShader::InitializeFx(const ntWchar* fx)
     m_tech = m_fx->GetTechniqueByName("LightTech");
 
     m_fxWorldViewProj = m_fx->GetVariableByName("gWorldViewProj")->AsMatrix();
-
-
 }
 
 void NtLightShader::Release()

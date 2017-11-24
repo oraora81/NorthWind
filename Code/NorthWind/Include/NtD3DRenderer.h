@@ -14,7 +14,7 @@ public:
 
 	virtual void Release() = 0;
 
-	virtual void BeginScene(float r, float g, float b, float a) = 0;
+	virtual void BeginScene(const float* color) = 0;
 
 	virtual void EndScene() = 0;
 

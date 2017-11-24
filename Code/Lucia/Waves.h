@@ -28,6 +28,8 @@ public:
 
     const XMFLOAT3& Normal(ntInt i) const { return m_normals[i]; }
 
+    const XMFLOAT3& TangentX(ntInt i) const { return m_tangentX[i]; }
+
 private:
 	UINT m_numRow;
 	UINT m_numColumn;

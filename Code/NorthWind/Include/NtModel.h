@@ -42,7 +42,7 @@ public:
 
 	virtual void Update(float deltaTime);
 
-	virtual void RenderColor(XMMATRIX& worldViewProj);
+	virtual void Render(XMMATRIX& worldViewProj);
 
 	void Render(const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj, const NtLight* light);
 
@@ -65,7 +65,7 @@ public:
 	void SetLightShader(NtLightShader* shader);
 
 protected:
-	ID3D11Buffer* MakeVertexBuffer(void* vertices, ntInt vtxSize, ntIndex vtxCount, eBufferUsage usage, eCpuAccessFlag cpuFlag);
+	ID3D11Buffer* MakeVertexBuffer(void* vertices, ntInt vtxSize, ntIndex vtxCount, BufferUsage usage, eCpuAccessFlag cpuFlag);
 
 	ID3D11Buffer* MakeIndexBuffer(ntUint* indices, ntInt indexCount);
 

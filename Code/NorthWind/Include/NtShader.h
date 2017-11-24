@@ -23,20 +23,22 @@ public:
 
 	const ntChar* GetFXModel() const;
 
+    ID3DX11EffectVariable* GetEffectVariable(ntChar* effectName);
+
     ID3D11InputLayout* GetInputLayout();
 
     const ID3DX11EffectTechnique* GetEffectTechnique();
 
     const ID3DX11EffectMatrixVariable* GetEffectMatrix();
 
-	static void SetVShaderModel(eVShaderModel vs);
+	static void SetVShaderModel(VShaderModel vs);
 
-	static void SetPShaderModel(ePShaderModel ps);
+	static void SetPShaderModel(PShaderModel ps);
 
 public:
-	static eVShaderModel ms_vsModel;
-	static ePShaderModel ms_psModel;
-	static eFxShaderModel ms_fxModel;
+	static VShaderModel ms_vsModel;
+	static PShaderModel ms_psModel;
+	static FxShaderModel ms_fxModel;
 
 protected:
     ID3D11VertexShader*	m_vertexShader;

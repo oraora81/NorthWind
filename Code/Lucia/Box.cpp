@@ -324,7 +324,7 @@ void Box::Update(float deltaTime)
 	g_renderer->SetViewMatrix(v);
 }
 
-void Box::RenderColor(XMMATRIX& worldViewProj)
+void Box::Render(XMMATRIX& worldViewProj)
 {
     //RenderNormal(worldViewProj);
     //RenderBoxPyramid(worldViewProj);
@@ -333,7 +333,7 @@ void Box::RenderColor(XMMATRIX& worldViewProj)
 
 void Box::RenderNormal(XMMATRIX& worldViewProj)
 {
-    NtModel::RenderColor(worldViewProj);
+    NtModel::Render(worldViewProj);
 }
 
 void Box::RenderTwoVertexBuf(XMMATRIX& worldViewProj)
@@ -346,7 +346,7 @@ void Box::RenderTwoVertexBuf(XMMATRIX& worldViewProj)
 
     ntUint offsets[] = { 0, 0 };
 
-    g_renderInterface->SetPrimitiveTopology(ePrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+    g_renderInterface->SetPrimitiveTopology(PrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
     g_renderInterface->SetVertexBuffers(0, 2, m_buffers, strides, offsets);
 
@@ -384,7 +384,7 @@ void Box::RenderBoxPyramid(XMMATRIX& worldViewProj)
     UINT stride = sizeof(NtModel::NtPCVertex);
     UINT offset = 0;
 
-    g_renderInterface->SetPrimitiveTopology(ePrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+    g_renderInterface->SetPrimitiveTopology(PrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
     g_renderInterface->SetVertexBuffers(0, 1, &m_vertexBuffer, &stride, &offset);
 
@@ -429,12 +429,11 @@ void Box::Render32BitColor(XMMATRIX& worldViewProj)
     ntUint stride = sizeof(sVertexColor);
     ntUint offset = 0;
 
-    g_renderInterface->SetPrimitiveTopology(ePrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+    g_renderInterface->SetPrimitiveTopology(PrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
     g_renderInterface->SetVertexBuffers(0, 1, &m_vertexBuffer, &stride, &offset);
 
     g_renderInterface->SetIndexBuffers(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 
     m_colorShader->RenderFx(m_indexCount, worldViewProj);
-
 }

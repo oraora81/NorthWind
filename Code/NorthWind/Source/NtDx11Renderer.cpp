@@ -59,7 +59,7 @@ NtDx11Renderer::~NtDx11Renderer()
 
 	// DXGI_FORMAT_R8G8B8A8_UNORM 표시에 맞는 모드들 가져오기
 	ntUint numMode = 0;
-	HRF(adapterOutput->GetDisplayModeList(g_colorFormat[eColorFormat::NT_FMT_A8R8G8B8], DXGI_ENUM_MODES_INTERLACED, &numMode, NULL));
+	HRF(adapterOutput->GetDisplayModeList(g_colorFormat[ColorFormat::NT_FMT_A8R8G8B8], DXGI_ENUM_MODES_INTERLACED, &numMode, NULL));
 
 	// 비디오와 모니터 조합에 의한 디스플레이 설정수 만큼 생성
 	DXGI_MODE_DESC* displayModeList = new DXGI_MODE_DESC[numMode];
@@ -396,11 +396,8 @@ NtDx11Renderer::~NtDx11Renderer()
 	SAFE_RELEASE(m_swapchain);
 }
 
-/*virtual*/ void NtDx11Renderer::BeginScene(float r, float g, float b, float a)
+/*virtual*/ void NtDx11Renderer::BeginScene(const float* color)
 {
-	// 
-	ntFloat color[4] = {r, g, b, a};
-
 	// back buffer 클리어
 	m_deviceContext->ClearRenderTargetView(m_renderTargetView, color);
 

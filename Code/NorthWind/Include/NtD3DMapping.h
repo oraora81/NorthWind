@@ -3,6 +3,6 @@
 
 namespace nt {
 
-extern NTCOLORFMT	g_colorFormat[eColorFormat::NT_FMT_MAX];
+extern NTCOLORFMT	g_colorFormat[ColorFormat::NT_FMT_MAX];
 
 }

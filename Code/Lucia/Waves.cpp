@@ -2,6 +2,9 @@
 #pragma hdrstop
 
 #include "Waves.h"
+#include "NtTypeManip.h"
+
+using namespace nt;
 
 Waves::Waves()
 	: m_numRow(0)
@@ -23,7 +26,7 @@ Waves::Waves()
 
 Waves::~Waves()
 {
-	SAFE_DELETE_ARRAY(m_prevSolution;)
+    SAFE_DELETE_ARRAY(m_prevSolution);
 	SAFE_DELETE_ARRAY(m_currSolution);
     SAFE_DELETE_ARRAY(m_normals);
     SAFE_DELETE_ARRAY(m_tangentX);
@@ -152,7 +155,7 @@ void Waves::Update(float dt)
                 XMStoreFloat3(&m_normals[i*m_numColumn + j], n);
 
                 m_tangentX[i*m_numColumn + j] = XMFLOAT3(2.0f * m_spatialStep, r - l, 0.0f);
-                XMVECTOR T = XMVector3Normalize(XMLoadFloat3(&m_tangentX[i*m_numColumn + j])));
+                XMVECTOR T = XMVector3Normalize(XMLoadFloat3(&m_tangentX[i*m_numColumn + j]));
                 XMStoreFloat3(&m_tangentX[i * m_numColumn + j], T);
             }
         }

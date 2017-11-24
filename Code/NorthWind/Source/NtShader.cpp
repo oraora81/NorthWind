@@ -4,14 +4,14 @@
 
 namespace nt { namespace renderer {
 
-eVShaderModel NtShader::ms_vsModel = eVShaderModel::NT_MAX_VSHADER_MODEL;
-ePShaderModel NtShader::ms_psModel = ePShaderModel::NT_MAX_PSHADER_MODEL;
-eFxShaderModel NtShader::ms_fxModel = eFxShaderModel::NT_MAX_FXSHADER_MODEL;
+VShaderModel NtShader::ms_vsModel = VShaderModel::NT_MAX_VSHADER_MODEL;
+PShaderModel NtShader::ms_psModel = PShaderModel::NT_MAX_PSHADER_MODEL;
+FxShaderModel NtShader::ms_fxModel = FxShaderModel::NT_MAX_FXSHADER_MODEL;
 
 namespace
 {
 
-static ntChar* g_vsShaderModel[eVShaderModel::NT_MAX_VSHADER_MODEL] = 
+static ntChar* g_vsShaderModel[VShaderModel::NT_MAX_VSHADER_MODEL] = 
 {
 	"vs_1_1",
 	"vs_2_0",
@@ -21,7 +21,7 @@ static ntChar* g_vsShaderModel[eVShaderModel::NT_MAX_VSHADER_MODEL] =
 };
 
 
-static ntChar* g_psShaderModel[ePShaderModel::NT_MAX_PSHADER_MODEL] = 
+static ntChar* g_psShaderModel[PShaderModel::NT_MAX_PSHADER_MODEL] = 
 {
 	"ps_1_1",
 	"ps_2_0",
@@ -30,7 +30,7 @@ static ntChar* g_psShaderModel[ePShaderModel::NT_MAX_PSHADER_MODEL] =
 	"ps_5_0",
 };
 
-static ntChar* g_fxShaderModel[eFxShaderModel::NT_MAX_FXSHADER_MODEL] = 
+static ntChar* g_fxShaderModel[FxShaderModel::NT_MAX_FXSHADER_MODEL] = 
 {
 	"fx_2_0",
 	"fx_4_0",
@@ -39,6 +39,7 @@ static ntChar* g_fxShaderModel[eFxShaderModel::NT_MAX_FXSHADER_MODEL] =
 };
 
 }
+
 
 NtShader::NtShader()
     : m_vertexShader(nullptr)
@@ -81,12 +82,17 @@ const ntChar* NtShader::GetFXModel() const
 	return g_fxShaderModel[NtShader::ms_fxModel];
 }
 
-void NtShader::SetVShaderModel(eVShaderModel vs)
+ID3DX11EffectVariable* NtShader::GetEffectVariable(ntChar* effectName)
+{
+    return m_fx->GetVariableByName(effectName);
+}
+
+void NtShader::SetVShaderModel(VShaderModel vs)
 {
 	ms_vsModel = vs;
 }
 
-void NtShader::SetPShaderModel(ePShaderModel ps)
+void NtShader::SetPShaderModel(PShaderModel ps)
 {
 	ms_psModel = ps;
 }

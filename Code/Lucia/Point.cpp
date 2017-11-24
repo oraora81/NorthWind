@@ -15,12 +15,12 @@ Points::~Points()
 
 }
 
-void Points::RenderColor(XMMATRIX& worldViewProj)
+void Points::Render(XMMATRIX& worldViewProj)
 {
 	ntUint stride = sizeof(NtPCVertex);
 	ntUint offset = 0;
 
-	g_renderInterface->SetPrimitiveTopology(ePrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	g_renderInterface->SetPrimitiveTopology(PrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
 	g_renderInterface->SetVertexBuffers(0, 1, &m_vertexBuffer, &stride, &offset);
 

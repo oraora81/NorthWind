@@ -27,8 +27,6 @@ public:
 
 	bool Draw();
 
-	bool DrawTest();
-
 	bool Resize(ntInt width, ntInt height);
 
 	// 차후 D3D를 상속받은 NtRenderer에서 호출하게끔 수정필요.

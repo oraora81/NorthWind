@@ -11,7 +11,7 @@
 #include "NtLight.h"
 #include "NtModelParser.h"
 #include "NtAse.h"
-
+#include "NtD3dUtil.h"
 
 namespace nt { namespace renderer {
 
@@ -154,43 +154,7 @@ bool NtRenderer::Process(const ntFloat deltaTime)
 
 bool NtRenderer::Draw()
 {
-	XMMATRIX worldMatrix;
-	XMMATRIX viewMatrix;
-	XMMATRIX projMatrix;
-
-	// clear the buffers to begin the scene
-	// r, g, b
-	m_renderEngine->BeginScene(0.0f, 0.0f, 1.0f, 1.0f);
-
-	// generate the view matrix based on the camera and d3d objects
-	m_camera->Render();
-
-	// get the world, view and proj matrices from the camera and d3d objects
-	m_camera->GetViewMatrix(viewMatrix);
-	m_renderEngine->SetWorldMatrix(worldMatrix);
-	m_renderEngine->SetProjectionMatrix(projMatrix);
-
-	//////////////////////////////////////////////////////////////////////////
-
-	// rotate the world matrix by the rotation value so that the triangle will spin
-	//D3DXMatrixRotationZ(&worldMatrix, rot);
-	//D3DXMatrixRotationY(&worldMatrix, rot);
-
-	//////////////////////////////////////////////////////////////////////////
-
-
-	// put the puppet vertex and index buffers on the graphics pipeline to prepare them for drawing
-	//m_puppet->Render(worldMatrix, viewMatrix, projMatrix, m_light);
-
-	// present the rendered scene to the screen
-	m_renderEngine->EndScene();
-
-	return true;
-}
-
-bool NtRenderer::DrawTest()
-{
-	m_renderEngine->BeginScene(0.0f, 0.0f, 1.0f, 1.0f);
+	m_renderEngine->BeginScene(reinterpret_cast<const float*>(&Colors::LightSteelBlue));
 
 	XMMATRIX tm;
 	m_renderEngine->Transform(tm);
@@ -199,7 +163,7 @@ bool NtRenderer::DrawTest()
 	for (; itor != m_models.end(); ++itor)
 	{
 		NtModel* model = (*itor);
-		model->RenderColor(tm);
+		model->Render(tm);
 	}
 
 	m_renderEngine->EndScene();

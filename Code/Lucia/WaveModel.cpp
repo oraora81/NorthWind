@@ -5,6 +5,7 @@
 #include "NtMath.h"
 #include "NtGeometryGenerator.h"
 #include "NtColorShader.h"
+#include "NtLightShader.h"
 
 using namespace nt;
 
@@ -122,19 +123,28 @@ void WaveModel::Update(float deltaTime)
 	{
 		vertices[i].position = m_waves[i];
 		//vertices[i].color = XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f);
-        vertices[i].normal = m_waves
+        vertices[i].normal = m_waves.Normal(i);
 	}
 	g_renderer->DeviceContext()->Unmap(m_waveVB, 0);
+
+    // animate the lights
+    // circle light over the land surface
+    m_pointLight.Position.x = 70.0f * NtMathf::Cos(0.2f * g_app->Timer().TotalTime());
+    m_pointLight.Position.z = 70.0f * NtMathf::Sin(0.2f * g_app->Timer().TotalTime());
+    m_pointLight.Position.y = NtMathf::Max(GetHeight(m_pointLight.Position.x, m_pointLight.Position.z), -3.0f) + 10.0f;
+
+    m_spotLight.Position = m_eyePosW;
+    XMStoreFloat3(&m_spotLight.Direction, XMVector3Normalize(target - pos));
 }
 
-void WaveModel::RenderColor(XMMATRIX& worldViewProj)
+void WaveModel::Render(XMMATRIX& worldViewProj)
 {
 	ntUint stride = sizeof(NtLVertex);
 	ntUint offset = 0;
 
-	g_renderInterface->SetPrimitiveTopology(ePrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	g_renderInterface->SetPrimitiveTopology(PrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	g_renderer->DeviceContext()->IASetInputLayout(m_colorShader->GetInputLayout());
+	g_renderer->DeviceContext()->IASetInputLayout(m_lightShader->GetInputLayout());
 
 	XMMATRIX view;
 	XMMATRIX proj;
@@ -144,6 +154,11 @@ void WaveModel::RenderColor(XMMATRIX& worldViewProj)
 	XMMATRIX viewProj = view * proj;
 
 	D3DX11_TECHNIQUE_DESC techDesc;
+
+    m_fxDirLight->SetRawValue(&m_dirLight, 0, sizeof(m_dirLight));
+    m_fxPointLight->SetRawValue(&m_pointLight, 0, sizeof(m_pointLight));
+    m_fxSpotLight->SetRawValue(&m_spotLight, 0, sizeof(m_spotLight));
+    
 
 	ID3DX11EffectTechnique* tech = const_cast<ID3DX11EffectTechnique*>(m_colorShader->GetEffectTechnique());
 	ID3DX11EffectMatrixVariable* effectMatrix = const_cast<ID3DX11EffectMatrixVariable*>(m_colorShader->GetEffectMatrix());
@@ -227,7 +242,12 @@ void WaveModel::MakeGeometry()
 	NtModel::NtLVertex* vtxArray = &vertices[0];
 	UINT* idxArray = &indices[0];
 
-	InitializeModelData(vtxArray, sizeof(NtLVertex), vertices.size(), idxArray, indices.size(), L"../Code/Lucia/simple_fx.fxo");
+	InitializeModelData(vtxArray, sizeof(NtLVertex), vertices.size(), idxArray, indices.size(), L"../Code/Lucia/light.fxo");
+
+    m_fxDirLight = m_lightShader->GetEffectVariable("gDirLight");
+    m_fxPointLight = m_lightShader->GetEffectVariable("gPointLight");
+    m_fxSpotLight = m_lightShader->GetEffectVariable("gSpotLight");
+    m_fxMaterial = m_lightShader->GetEffectVariable("gMaterial");
 
 	MakeWave();
 }
@@ -236,7 +256,7 @@ void WaveModel::MakeWave()
 {
 	m_waves.Init(160, 160, 1.0f, 0.03f, 3.25f, 0.4f);
 
-	m_waveVB = MakeVertexBuffer(nullptr, sizeof(NtLVertex), m_waves.VertexCount(), eBufferUsage::USAGE_DYNAMIC, eCpuAccessFlag::CPU_ACCESS_WRITE);
+	m_waveVB = MakeVertexBuffer(nullptr, sizeof(NtLVertex), m_waves.VertexCount(), BufferUsage::USAGE_DYNAMIC, eCpuAccessFlag::CPU_ACCESS_WRITE);
 
 	std::vector<UINT> indices(3 * m_waves.TrisCount());
 

@@ -13,7 +13,7 @@ public:
 
 	virtual void Release() override;
 
-	virtual void BeginScene(float r, float g, float b, float a) override;
+	virtual void BeginScene(const float* color) override;
 
 	virtual void EndScene() override;
 

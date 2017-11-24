@@ -22,8 +22,7 @@
 
 #endif	// USE_DIRECTX
 
-
-	enum eColorFormat
+	enum ColorFormat
 	{
 		NT_FMT_NONE,			// D3DFMT_UNKNOWN	DXGI_FORMAT_UNKNOWN
 		NT_FMT_A8R8G8B8,		// D3DFMT_A8R8G8B8	DXGI_FORMAT_B8G8R8A8_UNORM & DXGI_FORMAT_B8G8R8A8_UNORM_SRGB1
@@ -33,7 +32,7 @@
 		NT_FMT_MAX,
 	};
 		
-	enum eVShaderModel
+	enum VShaderModel
 	{
 		NT_VS_1_1,
 		NT_VS_2_0,
@@ -44,7 +43,7 @@
 		NT_MAX_VSHADER_MODEL,
 	};
 
-	enum ePShaderModel
+	enum PShaderModel
 	{
 		NT_PS_1_1,
 		NT_PS_2_0,
@@ -55,7 +54,7 @@
 		NT_MAX_PSHADER_MODEL,
 	};
 
-	enum eFxShaderModel
+	enum FxShaderModel
 	{
 		NT_FX_2_0,
 		NT_FX_4_0,
@@ -66,7 +65,7 @@
 	};
 
 #ifdef USE_DIRECTX
-	enum ePrimitiveTopology
+	enum PrimitiveTopology
 	{
 		PRIMITIVE_TOPOLOGY_POINTLIST     = D3D11_PRIMITIVE_TOPOLOGY_POINTLIST,
 		PRIMITIVE_TOPOLOGY_LINELIST      = D3D11_PRIMITIVE_TOPOLOGY_LINELIST,
@@ -75,7 +74,7 @@
 		PRIMITIVE_TOPOLOGY_TRIANGLESTRIP = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP,
 	};
 
-	enum eBufferUsage
+	enum BufferUsage
 	{
 		USAGE_IMMUTABLE = D3D11_USAGE_IMMUTABLE,
 		USAGE_DYNAMIC = D3D11_USAGE_DYNAMIC,

@@ -34,7 +34,7 @@ NtModel::~NtModel()
 
 bool NtModel::InitializeModelData(void* vertices, ntInt vtxSize, ntInt vtxCount, ntUint* indices, ntInt indexCount, const ntWchar* fx)
 {
-	m_vertexBuffer = MakeVertexBuffer(vertices, vtxSize, vtxCount, eBufferUsage::USAGE_DYNAMIC, eCpuAccessFlag::CPU_ACCESS_WRITE);
+	m_vertexBuffer = MakeVertexBuffer(vertices, vtxSize, vtxCount, BufferUsage::USAGE_DYNAMIC, eCpuAccessFlag::CPU_ACCESS_WRITE);
 
 	m_vertexCount = vtxCount;
 
@@ -105,7 +105,7 @@ void NtModel::Render(const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX
 	// set the type of primitive that should be rendered from this vertex buffer, in this case triangles.
 	//renderer->SetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
 
-	g_renderInterface->SetPrimitiveTopology(ePrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	g_renderInterface->SetPrimitiveTopology(PrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	ntSize size = (ntSize)m_meshVector.size();
 	for (ntSize i = 0; i < size; ++i)
@@ -130,12 +130,12 @@ void NtModel::Render(const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX
 	}
 }
 
-void NtModel::RenderColor(XMMATRIX& worldViewProj)
+void NtModel::Render(XMMATRIX& worldViewProj)
 {
 	ntUint stride = sizeof(NtPCVertex);
 	ntUint offset = 0;
 
-	g_renderInterface->SetPrimitiveTopology(ePrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	g_renderInterface->SetPrimitiveTopology(PrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	g_renderInterface->SetVertexBuffers(0, 1, &m_vertexBuffer, &stride, &offset);
 
@@ -370,7 +370,7 @@ bool NtModel::InitializeAse(const ntWchar* puppetName)
 	return true;
 }
 
-ID3D11Buffer* NtModel::MakeVertexBuffer(void* vertices, ntInt vtxSize, ntIndex vtxCount, eBufferUsage usage, eCpuAccessFlag cpuFlag)
+ID3D11Buffer* NtModel::MakeVertexBuffer(void* vertices, ntInt vtxSize, ntIndex vtxCount, BufferUsage usage, eCpuAccessFlag cpuFlag)
 {
 	// vb
 	D3D11_BUFFER_DESC vd;
