@@ -31,6 +31,19 @@ bool NtLightShader::InitializeFx(const ntWchar* fx)
     m_tech = m_fx->GetTechniqueByName("LightTech");
 
     m_fxWorldViewProj = m_fx->GetVariableByName("gWorldViewProj")->AsMatrix();
+
+    D3D11_INPUT_ELEMENT_DESC elementLayout[2] =
+    {
+        { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+        { "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+    };
+
+    D3DX11_PASS_DESC passDesc;
+    m_tech->GetPassByIndex(0)->GetDesc(&passDesc);
+
+    HRF(g_renderer->Device()->CreateInputLayout(elementLayout, 2, passDesc.pIAInputSignature, passDesc.IAInputSignatureSize, &m_layout));
+
+    return true;
 }
 
 void NtLightShader::Release()
@@ -38,14 +51,13 @@ void NtLightShader::Release()
     NtShader::Release();
 }
 
-
 bool NtLightShader::Render(int indexCount, const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj, NtTexture* texture, const XMFLOAT3A& lightDir, const XMFLOAT4A& diffuse)
 {
 	// set the shader parameters that it will use for rendering
 	bool res = SetShaderParameter(world, view, proj, texture, lightDir, diffuse);
 	if (false == res)
 	{
-		return  false;
+		return false;
 	}
 
 	// now render the prepared buffers with the shader

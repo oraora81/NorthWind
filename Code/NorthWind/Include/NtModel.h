@@ -34,8 +34,6 @@ public:
 	NtModel();
 	virtual ~NtModel();
 
-	bool Initialize(const ntWchar* puppetName);
-
     bool InitializeModelData(void* vertices, ntInt vtxSize, ntInt vtxCount, ntUint* indices, ntInt indexCount, const ntWchar* fx);
 
 	void Release();
@@ -43,12 +41,6 @@ public:
 	virtual void Update(float deltaTime);
 
 	virtual void Render(XMMATRIX& worldViewProj);
-
-	void Render(const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj, const NtLight* light);
-
-	int GetIndexCount();
-
-	void SetVertexCount(ntInt count);
 
 	ntInt GetVertexCount() const;
 

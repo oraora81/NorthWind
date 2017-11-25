@@ -124,7 +124,7 @@ bool NtModelParser::ProcessVertexNum()
 			return false;
 		}
 
-		m_linkPuppet->SetVertexCount(vertexCount);
+		//m_linkPuppet->SetVertexCount(vertexCount);
 
 		if (FindKeyword(PARSE_BODY_END) == false)
 		{

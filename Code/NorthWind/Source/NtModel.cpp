@@ -48,26 +48,6 @@ bool NtModel::InitializeModelData(void* vertices, ntInt vtxSize, ntInt vtxCount,
 	return true;
 }
 
-bool NtModel::Initialize(const ntWchar* modelName)
-{
-	// load the puppet Data from txt file.
-	//bool res = InitializeAse(modelName);
-	//if (false == res)
-	//{
-	//	return false;
-	//}
-
-	// init the vertex and index buffer that hold the geometry for the triangle.
-	//res = InitializeBuffer(renderer);
-	//if (false == res)
-	//{
-	//	return false;
-	//}
-
-	return true;
-}
-
-
 void NtModel::Release()
 {
 	ReleaseBuffer();
@@ -76,58 +56,6 @@ void NtModel::Release()
 void NtModel::Update(float deltaTime)
 {
 
-}
-
-void NtModel::Render(const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj, const NtLight* light)
-{
-	ntUint stride = sizeof(NtTexVertex);
-	ntUint offset = 0;
-
-	/*
-	// set the vertex buffer to active in the input assembler so it can be rendered.
-	renderer->SetVertexBuffers(0, 1, &m_vertexBuffer, &stride, &offset);
-
-	// set the index buffer to active in the input assembler so it can be rendered.
-	renderer->SetIndexBuffers(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
-
-	// set the type of primitive that should be rendered from this vertex buffer, in this case triangles.
-	renderer->SetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	
-
-	//m_lightShader->Render(renderer, m_indexCount, world, view, proj, GetTexture(), light->GetDirection(), light->GetDiffuse());
-	m_textureShader->Render(renderer->GetD3DRenderer(), 3, world, view, proj, m_texhandle);
-	*/
-	
-
-
-	// draw Mesh
-
-	// set the type of primitive that should be rendered from this vertex buffer, in this case triangles.
-	//renderer->SetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
-
-	g_renderInterface->SetPrimitiveTopology(PrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-	ntSize size = (ntSize)m_meshVector.size();
-	for (ntSize i = 0; i < size; ++i)
-	{
-		NtMeshObj& mesh = m_meshVector[i];
-		g_renderInterface->SetVertexBuffers(0, 1, &mesh.vtxBuffer, &stride, &offset);
-
-		g_renderInterface->SetIndexBuffers(mesh.idxBuffer, DXGI_FORMAT_R32_UINT, 0);
-
-		//bool res = m_colorShader->Render(renderer->GetD3DRenderer(), mesh.idxCount, world, view, proj);
-		//if (res == false)
-		//{
-		//	return;
-		//}
-
-
-		bool res = m_textureShader->Render(mesh.idxCount, world, view, proj, mesh.texHandle);
-		if (res == false)
-		{
-			return;
-		}
-	}
 }
 
 void NtModel::Render(XMMATRIX& worldViewProj)
@@ -142,11 +70,6 @@ void NtModel::Render(XMMATRIX& worldViewProj)
 	g_renderInterface->SetIndexBuffers(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 
 	m_colorShader->RenderFx(m_indexCount, worldViewProj);
-}
-
-int NtModel::GetIndexCount()
-{
-	return m_indexCount;
 }
 
 bool NtModel::InitializeAse(const ntWchar* puppetName)
@@ -218,9 +141,6 @@ bool NtModel::InitializeAse(const ntWchar* puppetName)
 
 	m_texhandle = g_resManager->LoadTexture(L"test_cube.jpg");
 	*/
-
-
-
 
 
 	// ¸ðµ¨ ASE ·Îµù
@@ -423,13 +343,6 @@ void NtModel::ReleaseBuffer()
 {
 	SAFE_RELEASE(m_indexBuffer);
 	SAFE_RELEASE(m_vertexBuffer);
-}
-
-void NtModel::SetVertexCount( ntInt count )
-{
-	NtAsserte(count > 0);
-
-	m_vertexCount = count;
 }
 
 ntInt NtModel::GetVertexCount() const
