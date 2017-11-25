@@ -15,6 +15,10 @@ public:
 
 	UINT TrisCount() const;
 
+    float Width() const;
+
+    float Depth() const;
+
 	const XMFLOAT3 operator[](int i) const
 	{
 		return m_currSolution[i];

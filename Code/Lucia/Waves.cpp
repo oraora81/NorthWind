@@ -52,6 +52,16 @@ UINT Waves::TrisCount() const
 	return m_trisCount;
 }
 
+float Waves::Width() const
+{
+    return m_numColumn * m_spatialStep;
+}
+
+float Waves::Depth() const
+{
+    return m_numRow * m_spatialStep;
+}
+
 void Waves::Init(UINT m, UINT n, float dx, float dt, float speed, float damping)
 {
 	m_numRow = m;
@@ -72,6 +82,8 @@ void Waves::Init(UINT m, UINT n, float dx, float dt, float speed, float damping)
 	// in case init() called again
 	delete[] m_prevSolution;
 	delete[] m_currSolution;
+    delete[] m_normals;
+    delete[] m_tangentX;
 
 	m_prevSolution = new XMFLOAT3[m*n];
 	m_currSolution = new XMFLOAT3[m*n];

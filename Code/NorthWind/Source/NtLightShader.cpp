@@ -54,6 +54,11 @@ bool NtLightShader::Render(int indexCount, const XMMATRIX& world, const XMMATRIX
 	return true;
 }
 
+bool NtLightShader::RenderFx(ntInt indexCount, const XMMATRIX& worldViewProj)
+{
+    return true;
+}
+
 
 bool NtLightShader::InitializeShader(const ntWchar* vs, const ntWchar* ps)
 {

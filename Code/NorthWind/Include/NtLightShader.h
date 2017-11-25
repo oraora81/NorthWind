@@ -33,6 +33,8 @@ public:
 
     bool Render(int indexCount, const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj, NtTexture* texture, const XMFLOAT3A& lightDir, const XMFLOAT4A& diffuse);
 
+    bool RenderFx(ntInt indexCount, const XMMATRIX& worldViewProj);
+
 private:
 	bool InitializeShader(const ntWchar* vs, const ntWchar* ps);
 

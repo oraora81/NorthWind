@@ -29,6 +29,19 @@ namespace
 
         return n;
     }
+
+    XMMATRIX InverseTranspose(CXMMATRIX M)
+    {
+        // Inverse-transpose is just applied to normals.
+        // So zero out translation row so that it doesn't
+        // get into out inverse-transpose calculation--we
+        // don't want the inverse-transpose of the translation.
+        XMMATRIX A = M;
+        A.r[3] = XMVectorSet(0.0f, 0.0f, 0.0f, 1.0f);
+
+        XMVECTOR det = XMMatrixDeterminant(A);
+        return XMMatrixTranspose(XMMatrixInverse(&det, A));
+    }
 }
 
 WaveModel::WaveModel()
@@ -37,6 +50,13 @@ WaveModel::WaveModel()
 	, m_radius(5.0f)
 	, m_waveVB(nullptr)
 	, m_waveIB(nullptr)
+    , m_fxDirLight(nullptr)
+    , m_fxPointLight(nullptr)
+    , m_fxSpotLight(nullptr)
+    , m_fxMaterial(nullptr)
+    , m_fxEyePosW(nullptr)
+    , m_fxWorld(nullptr)
+    , m_fxWorldInvTranspose(nullptr)
 {
     m_eyePosW = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	XMMATRIX I = XMMatrixIdentity();
@@ -105,8 +125,8 @@ void WaveModel::Update(float deltaTime)
 	{
 		timeBase += 0.25f;
 
-		DWORD i = 5 + rand() % 190;
-		DWORD j = 5 + rand() % 190;
+		DWORD i = 5 + rand() % (m_waves.RowCount() - 10);
+		DWORD j = 5 + rand() % (m_waves.ColumnCount() - 10);
 
 		float r = NtMathf::Rand(1.0f, 2.0f);
 
@@ -153,15 +173,16 @@ void WaveModel::Render(XMMATRIX& worldViewProj)
 
 	XMMATRIX viewProj = view * proj;
 
-	D3DX11_TECHNIQUE_DESC techDesc;
 
     m_fxDirLight->SetRawValue(&m_dirLight, 0, sizeof(m_dirLight));
     m_fxPointLight->SetRawValue(&m_pointLight, 0, sizeof(m_pointLight));
     m_fxSpotLight->SetRawValue(&m_spotLight, 0, sizeof(m_spotLight));
+    m_fxEyePosW->SetRawValue(&m_eyePosW, 0, sizeof(m_eyePosW));
     
 
-	ID3DX11EffectTechnique* tech = const_cast<ID3DX11EffectTechnique*>(m_colorShader->GetEffectTechnique());
-	ID3DX11EffectMatrixVariable* effectMatrix = const_cast<ID3DX11EffectMatrixVariable*>(m_colorShader->GetEffectMatrix());
+    D3DX11_TECHNIQUE_DESC techDesc;
+	ID3DX11EffectTechnique* tech = const_cast<ID3DX11EffectTechnique*>(m_lightShader->GetEffectTechnique());
+	//ID3DX11EffectMatrixVariable* effectMatrix = const_cast<ID3DX11EffectMatrixVariable*>(m_colorShader->GetEffectMatrix());
 
 	tech->GetDesc(&techDesc);
 
@@ -171,9 +192,21 @@ void WaveModel::Render(XMMATRIX& worldViewProj)
 
 		g_renderInterface->SetIndexBuffers(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 
+        // set per object constant.
+        XMMATRIX world = XMLoadFloat4x4(&m_gridWorld);
+        XMMATRIX worldInvTranspose = InverseTranspose(world);
+        XMMATRIX goWorldViewProj = world * viewProj;
+
+        m_fxWorld->SetMatrix(reinterpret_cast<float*>(&world));
+        m_fxWorldInvTranspose->SetMatrix(reinterpret_cast<float*>(&worldInvTranspose));
+        
+        ID3DX11EffectMatrixVariable* fxWorldViewProj = const_cast<ID3DX11EffectMatrixVariable*>(m_lightShader->GetEffectMatrix());
+        fxWorldViewProj->SetMatrix(reinterpret_cast<float*>(&goWorldViewProj));
+        m_fxMaterial->SetRawValue(&m_landMaterial, 0, sizeof(m_landMaterial));
+
 		// draw the grid
-		XMMATRIX world = XMLoadFloat4x4(&m_gridWorld);
-		effectMatrix->SetMatrix(reinterpret_cast<float*>(&(world * viewProj)));
+		
+		//effectMatrix->SetMatrix(reinterpret_cast<float*>(&(world * viewProj)));
 		tech->GetPassByIndex(p)->Apply(0, g_renderer->DeviceContext());
 		g_renderer->DeviceContext()->DrawIndexed(m_gridIndexCount, 0, 0);
 
@@ -183,7 +216,15 @@ void WaveModel::Render(XMMATRIX& worldViewProj)
 		g_renderInterface->SetIndexBuffers(m_waveIB, DXGI_FORMAT_R32_UINT, 0);
 
 		world = XMLoadFloat4x4(&m_wavesWorld);
-		effectMatrix->SetMatrix(reinterpret_cast<float*>(&(world * viewProj)));
+        worldInvTranspose = InverseTranspose(world);
+        goWorldViewProj = world * viewProj;
+
+        m_fxWorld->SetMatrix(reinterpret_cast<float*>(&world));
+        m_fxWorldInvTranspose->SetMatrix(reinterpret_cast<float*>(&worldInvTranspose));
+        fxWorldViewProj->SetMatrix(reinterpret_cast<float*>(&goWorldViewProj));
+        m_fxMaterial->SetRawValue(&m_wavMaterial, 0, sizeof(m_wavMaterial));
+
+		//effectMatrix->SetMatrix(reinterpret_cast<float*>(&(world * viewProj)));
 		tech->GetPassByIndex(p)->Apply(0, g_renderer->DeviceContext());
 		g_renderer->DeviceContext()->DrawIndexed(3 * m_waves.TrisCount(), 0, 0);
 	}
@@ -242,12 +283,16 @@ void WaveModel::MakeGeometry()
 	NtModel::NtLVertex* vtxArray = &vertices[0];
 	UINT* idxArray = &indices[0];
 
-	InitializeModelData(vtxArray, sizeof(NtLVertex), vertices.size(), idxArray, indices.size(), L"../Code/Lucia/light.fxo");
+	InitializeModelData(vtxArray, sizeof(NtLVertex), vertices.size(), idxArray, indices.size(), L"../bin/light.fxo");
 
     m_fxDirLight = m_lightShader->GetEffectVariable("gDirLight");
     m_fxPointLight = m_lightShader->GetEffectVariable("gPointLight");
     m_fxSpotLight = m_lightShader->GetEffectVariable("gSpotLight");
     m_fxMaterial = m_lightShader->GetEffectVariable("gMaterial");
+
+    m_fxEyePosW = m_lightShader->GetEffectVariable("gEyePosW")->AsVector();
+    m_fxWorld = m_lightShader->GetEffectVariable("gWorld")->AsMatrix();
+    m_fxWorldInvTranspose = m_lightShader->GetEffectVariable("gWorldInvTranspose")->AsMatrix();
 
 	MakeWave();
 }
