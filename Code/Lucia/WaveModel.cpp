@@ -29,19 +29,6 @@ namespace
 
         return n;
     }
-
-    XMMATRIX InverseTranspose(CXMMATRIX M)
-    {
-        // Inverse-transpose is just applied to normals.
-        // So zero out translation row so that it doesn't
-        // get into out inverse-transpose calculation--we
-        // don't want the inverse-transpose of the translation.
-        XMMATRIX A = M;
-        A.r[3] = XMVectorSet(0.0f, 0.0f, 0.0f, 1.0f);
-
-        XMVECTOR det = XMMatrixDeterminant(A);
-        return XMMatrixTranspose(XMMatrixInverse(&det, A));
-    }
 }
 
 WaveModel::WaveModel()
@@ -138,7 +125,7 @@ void WaveModel::Update(float deltaTime)
 	D3D11_MAPPED_SUBRESOURCE mappedData;
 	HR(g_renderer->DeviceContext()->Map(m_waveVB, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedData));
 
-	NtLVertex* vertices = reinterpret_cast<NtLVertex*>(mappedData.pData);
+	Vertex::NtLVertex* vertices = reinterpret_cast<Vertex::NtLVertex*>(mappedData.pData);
 	for (UINT i = 0; i < m_waves.VertexCount(); i++)
 	{
 		vertices[i].position = m_waves[i];
@@ -159,7 +146,7 @@ void WaveModel::Update(float deltaTime)
 
 void WaveModel::Render(XMMATRIX& worldViewProj)
 {
-	ntUint stride = sizeof(NtLVertex);
+	ntUint stride = sizeof(Vertex::NtLVertex);
 	ntUint offset = 0;
 
 	g_renderInterface->SetPrimitiveTopology(PrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -194,7 +181,7 @@ void WaveModel::Render(XMMATRIX& worldViewProj)
 
         // set per object constant.
         XMMATRIX world = XMLoadFloat4x4(&m_gridWorld);
-        XMMATRIX worldInvTranspose = InverseTranspose(world);
+        XMMATRIX worldInvTranspose = NtD3dUtil::InverseTranspose(world);
         XMMATRIX goWorldViewProj = world * viewProj;
 
         m_fxWorld->SetMatrix(reinterpret_cast<float*>(&world));
@@ -216,7 +203,7 @@ void WaveModel::Render(XMMATRIX& worldViewProj)
 		g_renderInterface->SetIndexBuffers(m_waveIB, DXGI_FORMAT_R32_UINT, 0);
 
 		world = XMLoadFloat4x4(&m_wavesWorld);
-        worldInvTranspose = InverseTranspose(world);
+        worldInvTranspose = NtD3dUtil::InverseTranspose(world);
         goWorldViewProj = world * viewProj;
 
         m_fxWorld->SetMatrix(reinterpret_cast<float*>(&world));
@@ -238,7 +225,7 @@ void WaveModel::MakeGeometry()
 
 	gen.CreateGrid(160.0f, 160.0f, 50, 50, grid);
 
-	std::vector<NtModel::NtLVertex> vertices(grid.Vertices.size());
+	std::vector<Vertex::NtLVertex> vertices(grid.Vertices.size());
 	for (size_t i = 0; i < grid.Vertices.size(); i++)
 	{
 		XMFLOAT3 p = grid.Vertices[i].Position;
@@ -280,10 +267,10 @@ void WaveModel::MakeGeometry()
 	std::vector<UINT> indices;
 	indices.insert(indices.end(), grid.Indices.begin(), grid.Indices.end());
 
-	NtModel::NtLVertex* vtxArray = &vertices[0];
+    Vertex::NtLVertex* vtxArray = &vertices[0];
 	UINT* idxArray = &indices[0];
 
-	InitializeModelData(vtxArray, sizeof(NtLVertex), vertices.size(), idxArray, indices.size(), L"../bin/light.fxo");
+	InitializeModelData(vtxArray, sizeof(Vertex::NtLVertex), vertices.size(), idxArray, indices.size(), L"../bin/light.fxo", ShaderType::kLight);
 
     m_fxDirLight = m_lightShader->GetEffectVariable("gDirLight");
     m_fxPointLight = m_lightShader->GetEffectVariable("gPointLight");
@@ -301,7 +288,7 @@ void WaveModel::MakeWave()
 {
 	m_waves.Init(160, 160, 1.0f, 0.03f, 3.25f, 0.4f);
 
-	m_waveVB = MakeVertexBuffer(nullptr, sizeof(NtLVertex), m_waves.VertexCount(), BufferUsage::USAGE_DYNAMIC, eCpuAccessFlag::CPU_ACCESS_WRITE);
+	m_waveVB = MakeVertexBuffer(nullptr, sizeof(Vertex::NtLVertex), m_waves.VertexCount(), BufferUsage::USAGE_DYNAMIC, eCpuAccessFlag::CPU_ACCESS_WRITE);
 
 	std::vector<UINT> indices(3 * m_waves.TrisCount());
 

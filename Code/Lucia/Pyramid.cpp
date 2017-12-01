@@ -3,6 +3,8 @@
 
 #include "Pyramid.h"
 
+using namespace nt;
+
 Pyramid::Pyramid()
     : BaseShape()
 {
@@ -16,7 +18,7 @@ Pyramid::~Pyramid()
 
 void Pyramid::MakeGeometry()
 {
-    nt::renderer::NtModel::NtPCVertex vertices[] =
+    Vertex::NtPCVertex vertices[] =
     {
         { XMFLOAT3(-5.0f, -2.0f, -2.0f), (const float*)&Colors::Green },
         { XMFLOAT3(-5.0f, -2.0f, +2.0f), (const float*)&Colors::Green },
@@ -40,6 +42,5 @@ void Pyramid::MakeGeometry()
     };
     
     const ntWchar* filePath = g_resManager->GetPath(L"simple_fx.fxo");
-    //InitializeModelData(vertices, _countof(vertices), indices, _countof(indices), L"../Code/Lucia/simple_fx.fxo");
-    InitializeModelData(vertices, sizeof(NtPCVertex), _countof(vertices), indices, _countof(indices), filePath);
+    InitializeModelData(vertices, sizeof(Vertex::NtPCVertex), _countof(vertices), indices, _countof(indices), filePath, ShaderType::kColor);
 }

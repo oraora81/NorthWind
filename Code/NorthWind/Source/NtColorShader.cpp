@@ -72,7 +72,8 @@ bool NtColorShader::InitializeFxTwoInputElem(const ntWchar* fx)
         fileBuffer.GetBytes(),
         0,
         g_renderer->Device(),
-        &m_fx, nullptr));
+        &m_fx, 
+        nullptr));
 
     m_tech = m_fx->GetTechniqueByName("ColorTech");
 
@@ -86,8 +87,8 @@ bool NtColorShader::InitializeFxTwoInputElem(const ntWchar* fx)
 
     D3DX11_PASS_DESC passDesc;
     m_tech->GetPassByIndex(0)->GetDesc(&passDesc);
-    HRF(g_renderer->Device()->CreateInputLayout(elems, 2, passDesc.pIAInputSignature,
-        passDesc.IAInputSignatureSize, &m_layout));
+
+    HRF(g_renderer->Device()->CreateInputLayout(elems, 2, passDesc.pIAInputSignature, passDesc.IAInputSignatureSize, &m_layout));
 
     return true;
 }

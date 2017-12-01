@@ -6,6 +6,8 @@
 #include "NtGeometryGenerator.h"
 #include "NtColorShader.h"
 
+using namespace nt;
+
 Shapes::Shapes()
 	: BaseShape()
 {
@@ -41,7 +43,7 @@ Shapes::~Shapes()
 
 void Shapes::Render(XMMATRIX& worldViewProj)
 {
-	ntUint stride = sizeof(NtPCVertex);
+	ntUint stride = sizeof(Vertex::NtPCVertex);
 	ntUint offset = 0;
 
 	g_renderInterface->SetPrimitiveTopology(PrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -154,7 +156,7 @@ void Shapes::MakeGeometry()
 	// extract the vertex elements we are interested in and pack the
 	// vertices of all the meshes into one vertex buffer
 
-	std::vector<NtModel::NtPCVertex> vertices(totalVertexCount);
+	std::vector<Vertex::NtPCVertex> vertices(totalVertexCount);
 
 	XMFLOAT4 black(0.0f, 0.0f, 0.0f, 1.0f);
 
@@ -191,8 +193,8 @@ void Shapes::MakeGeometry()
 	indices.insert(indices.end(), sphere.Indices.begin(), sphere.Indices.end());
 	indices.insert(indices.end(), cylinder.Indices.begin(), cylinder.Indices.end());
 
-	NtPCVertex* vtxArray = &vertices[0];
+    Vertex::NtPCVertex* vtxArray = &vertices[0];
 	UINT* idxArray = &indices[0];
 
-	InitializeModelData(vtxArray, sizeof(NtPCVertex), vertices.size(), idxArray, indices.size(), L"../Code/Lucia/simple_fx.fxo");
+	InitializeModelData(vtxArray, sizeof(Vertex::NtPCVertex), vertices.size(), idxArray, indices.size(), L"../Code/Lucia/simple_fx.fxo", ShaderType::kColor);
 }

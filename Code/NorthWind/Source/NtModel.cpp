@@ -32,7 +32,7 @@ NtModel::~NtModel()
 	Release();
 }
 
-bool NtModel::InitializeModelData(void* vertices, ntInt vtxSize, ntInt vtxCount, ntUint* indices, ntInt indexCount, const ntWchar* fx)
+bool NtModel::InitializeModelData(void* vertices, ntInt vtxSize, ntInt vtxCount, ntUint* indices, ntInt indexCount, const ntWchar* fx, ShaderType shaderType)
 {
 	m_vertexBuffer = MakeVertexBuffer(vertices, vtxSize, vtxCount, BufferUsage::USAGE_DYNAMIC, eCpuAccessFlag::CPU_ACCESS_WRITE);
 
@@ -42,9 +42,16 @@ bool NtModel::InitializeModelData(void* vertices, ntInt vtxSize, ntInt vtxCount,
 
 	m_indexCount = indexCount;
 
-	//m_colorShader->InitializeFx(fx);
-    m_lightShader->InitializeFx(fx);
-
+    switch (shaderType)
+    {
+    case ShaderType::kColor:
+        m_colorShader->InitializeFx(fx);
+        break;
+    case ShaderType::kLight:
+        m_lightShader->InitializeFx(fx);
+        break;;
+    }
+    
 	return true;
 }
 
@@ -60,7 +67,7 @@ void NtModel::Update(float deltaTime)
 
 void NtModel::Render(XMMATRIX& worldViewProj)
 {
-	ntUint stride = sizeof(NtPCVertex);
+	ntUint stride = sizeof(Vertex::NtPCVertex);
 	ntUint offset = 0;
 
 	g_renderInterface->SetPrimitiveTopology(PrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);

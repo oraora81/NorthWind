@@ -30,8 +30,8 @@ private:
 	//Box* m_model;
 	//Hills* m_model;
     //Shapes* m_model;
-	//Skull* m_model;
-	WaveModel* m_model;
+	Skull* m_model;
+	//WaveModel* m_model;
     //Points* m_model;
     //Pyramid* m_model;
 };

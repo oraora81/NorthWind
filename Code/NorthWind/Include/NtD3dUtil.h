@@ -76,4 +76,10 @@ namespace Colors
     }
 }
 
+class NtD3dUtil
+{
+public:
+    static XMMATRIX InverseTranspose(CXMMATRIX M);
+};
+
 #endif // USE_DIRECTX

@@ -19,22 +19,10 @@ class NtLight;
 class NtModel
 {
 public:
-	struct NtPCVertex
-	{
-		XMFLOAT3 position;
-		XMFLOAT4 color;
-	};
-
-    struct NtLVertex
-    {
-        XMFLOAT3 position;
-        XMFLOAT3 normal;
-    };
-
 	NtModel();
 	virtual ~NtModel();
 
-    bool InitializeModelData(void* vertices, ntInt vtxSize, ntInt vtxCount, ntUint* indices, ntInt indexCount, const ntWchar* fx);
+    bool InitializeModelData(void* vertices, ntInt vtxSize, ntInt vtxCount, ntUint* indices, ntInt indexCount, const ntWchar* fx, ShaderType shaderType);
 
 	void Release();
 

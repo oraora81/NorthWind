@@ -100,3 +100,9 @@
 		NT_RS_WIRE_FRAME,
 #endif
 	};
+
+    enum ShaderType
+    {
+        kColor,
+        kLight,
+    };

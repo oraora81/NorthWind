@@ -209,6 +209,9 @@
     <ClInclude Include="Include\NtLightType.h">
       <Filter>render</Filter>
     </ClInclude>
+    <ClInclude Include="Include\NtInputLayouts.h">
+      <Filter>render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\test_cube.ase" />
@@ -396,6 +399,9 @@
       <Filter>render</Filter>
     </ClCompile>
     <ClCompile Include="Source\NtGeometryGenerator.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\NtInputLayouts.cpp">
       <Filter>render</Filter>
     </ClCompile>
   </ItemGroup>

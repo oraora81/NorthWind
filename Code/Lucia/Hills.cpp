@@ -53,7 +53,7 @@ void Hills::MakeGeometry()
 
 	m_indexCount = grid.Indices.size();
 
-	NtModel::NtPCVertex* vertices = new NtModel::NtPCVertex[grid.Vertices.size()];
+    Vertex::NtPCVertex* vertices = new Vertex::NtPCVertex[grid.Vertices.size()];
 
 	for (int i = 0; i < (int)grid.Vertices.size(); ++i)
 	{
@@ -98,5 +98,5 @@ void Hills::MakeGeometry()
 		indices[i] = grid.Indices[i];
 	}
 	
-	InitializeModelData(vertices, sizeof(NtPCVertex), grid.Vertices.size(), indices, grid.Indices.size(), L"../Code/Lucia/simple_fx.fxo");
+	InitializeModelData(vertices, sizeof(Vertex::NtPCVertex), grid.Vertices.size(), indices, grid.Indices.size(), L"../Code/Lucia/simple_fx.fxo", ShaderType::kColor);
 }

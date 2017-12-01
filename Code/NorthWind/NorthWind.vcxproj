@@ -361,6 +361,7 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
   <ItemGroup>
     <ClInclude Include="Include\dds.h" />
     <ClInclude Include="Include\dxerr.h" />
+    <ClInclude Include="Include\NtInputLayouts.h" />
     <ClInclude Include="Include\NtAllocator.h" />
     <ClInclude Include="Include\NtApplication.h" />
     <ClInclude Include="Include\NtArray.h" />
@@ -472,6 +473,7 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <ClCompile Include="Source\NtGeometryGenerator.cpp" />
     <ClCompile Include="Source\NtImage.cpp" />
     <ClCompile Include="Source\NtInitDelegator.cpp" />
+    <ClCompile Include="Source\NtInputLayouts.cpp" />
     <ClCompile Include="Source\NtInputManager.cpp" />
     <ClCompile Include="Source\NtLight.cpp" />
     <ClCompile Include="Source\NtLightShader.cpp" />

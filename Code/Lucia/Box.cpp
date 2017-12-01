@@ -58,9 +58,9 @@ void Box::MakeGeometry()
 
 void Box::MakeNormal()
 {
-    std::vector<NtModel::NtPCVertex> vertices;
+    std::vector<Vertex::NtPCVertex> vertices;
 
-    NtModel::NtPCVertex box[] =
+    Vertex::NtPCVertex box[] =
     {
         { XMFLOAT3(-1.0f, -1.0f, -1.0f), (const float*)&Colors::White },
         { XMFLOAT3(-1.0f, +1.0f, -1.0f), (const float*)&Colors::Black },
@@ -76,7 +76,7 @@ void Box::MakeNormal()
     m_boxVertexCount = _countof(box);
     m_pyramidVertexOffset = vertices.size();
 
-    nt::renderer::NtModel::NtPCVertex pyramid[] =
+    Vertex::NtPCVertex pyramid[] =
     {
         { XMFLOAT3(-5.0f, -2.0f, -2.0f), (const float*)&Colors::Green },
         { XMFLOAT3(-5.0f, -2.0f, +2.0f), (const float*)&Colors::Green },
@@ -132,18 +132,18 @@ void Box::MakeNormal()
     indices.insert(indices.end(), std::begin(pyramid_indices), std::end(pyramid_indices));
     m_pyramidIndexCount = _countof(pyramid_indices);
 
-    NtPCVertex* v = &vertices[0];
+    Vertex::NtPCVertex* v = &vertices[0];
     UINT* i = &indices[0];
 
     const ntWchar* fileName = 
     g_resManager->GetPath(L"simple_fx_rs.fxo");
 
     InitializeModelData(v, 
-        sizeof(NtPCVertex),
+        sizeof(Vertex::NtPCVertex),
         vertices.size(),
         i, indices.size(),
-        fileName);
-        //L"../Code/Lucia/simple_fx_rs.fxo");
+        fileName,
+        ShaderType::kColor);
 }
 
 void Box::MakeGeometryTwoVertexBuf()
@@ -303,8 +303,7 @@ void Box::MakeColor()
     UINT* idxPtr = &indices[0];
 
     const ntWchar* filePath = g_resManager->GetPath(L"simple_fx.fxo");
-    InitializeModelData((void*)vtxPtr, sizeof(sVertexColor), vertices.size(), idxPtr, m_boxIndexCount,
-        filePath);
+    InitializeModelData((void*)vtxPtr, sizeof(sVertexColor), vertices.size(), idxPtr, m_boxIndexCount, filePath, ShaderType::kColor);
 }
 
 void Box::Update(float deltaTime)
@@ -381,7 +380,7 @@ void Box::RenderTwoVertexBuf(XMMATRIX& worldViewProj)
 
 void Box::RenderBoxPyramid(XMMATRIX& worldViewProj)
 {
-    UINT stride = sizeof(NtModel::NtPCVertex);
+    UINT stride = sizeof(Vertex::NtPCVertex);
     UINT offset = 0;
 
     g_renderInterface->SetPrimitiveTopology(PrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);

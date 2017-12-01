@@ -4,6 +4,8 @@
 #include "Point.h"
 #include "NtColorShader.h"
 
+using namespace nt;
+
 Points::Points()
     : BaseShape()
 {
@@ -17,7 +19,7 @@ Points::~Points()
 
 void Points::Render(XMMATRIX& worldViewProj)
 {
-	ntUint stride = sizeof(NtPCVertex);
+	ntUint stride = sizeof(Vertex::NtPCVertex);
 	ntUint offset = 0;
 
 	g_renderInterface->SetPrimitiveTopology(PrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
@@ -45,7 +47,7 @@ void Points::Render(XMMATRIX& worldViewProj)
 
 void Points::MakeGeometry()
 {
-	NtModel::NtPCVertex vertices[] =
+    Vertex::NtPCVertex vertices[] =
 	{
 		{ XMFLOAT3(-5.0f, -2.0f, +1.0f), (const float*)&Colors::White },
 		{ XMFLOAT3(-4.0f, +2.0f, +1.0f), (const float*)&Colors::Black },
@@ -78,5 +80,5 @@ void Points::MakeGeometry()
 		4, 3, 7
 	};
 
-	InitializeModelData(vertices, sizeof(NtPCVertex), _countof(vertices), indices, _countof(indices), L"../Code/Lucia/simple_fx.fxo");
+	InitializeModelData(vertices, sizeof(Vertex::NtPCVertex), _countof(vertices), indices, _countof(indices), L"../Code/Lucia/simple_fx.fxo", ShaderType::kColor);
 }

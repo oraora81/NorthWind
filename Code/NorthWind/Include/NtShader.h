@@ -13,7 +13,7 @@ public:
 
     virtual ~NtShader();
 
-	virtual bool InitializeFx(const ntWchar* fx) = 0;
+	virtual bool InitializeFx(const ntWchar* fx);
 
     virtual void Release();
 
@@ -34,6 +34,10 @@ public:
 	static void SetVShaderModel(VShaderModel vs);
 
 	static void SetPShaderModel(PShaderModel ps);
+
+private:
+    NtShader(const NtShader& shader);
+    NtShader& operator=(const NtShader& shader);
 
 public:
 	static VShaderModel ms_vsModel;

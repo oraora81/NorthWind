@@ -26,7 +26,12 @@ bool NtLightShader::InitializeFx(const ntWchar* fx)
 
     nt::fs::NtFileBuffer fileBuffer(fx);
 
-    HRF(D3DX11CreateEffectFromMemory(fileBuffer.GetData(), fileBuffer.GetBytes(), 0, g_renderer->Device(), &m_fx, nullptr));
+    HRF(D3DX11CreateEffectFromMemory(fileBuffer.GetData(), 
+        fileBuffer.GetBytes(), 
+        0, 
+        g_renderer->Device(), 
+        &m_fx, 
+        nullptr));
 
     m_tech = m_fx->GetTechniqueByName("LightTech");
 
@@ -70,7 +75,6 @@ bool NtLightShader::RenderFx(ntInt indexCount, const XMMATRIX& worldViewProj)
 {
     return true;
 }
-
 
 bool NtLightShader::InitializeShader(const ntWchar* vs, const ntWchar* ps)
 {

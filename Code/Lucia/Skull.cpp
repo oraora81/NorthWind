@@ -4,6 +4,8 @@
 #include "Skull.h"
 #include "NtMath.h"
 
+using namespace nt;
+
 Skull::Skull()
     : m_theta(1.5f * nt::NtMath<float>::PI)
     , m_phi(0.25f * nt::NtMath<float>::PI)
@@ -36,7 +38,7 @@ void Skull::Update(float deltaTime)
 
 void Skull::MakeGeometry()
 {
-	const ntWchar* fileName = L"car.txt";
+	const ntWchar* fileName = L"skull.txt";
 
 	const ntWchar* path = g_resManager->GetPath(fileName);
 
@@ -59,7 +61,7 @@ void Skull::MakeGeometry()
     float nx, ny, nz;
     XMFLOAT4 black(0.0f, 0.0f, 0.0f, 1.0f);
 
-    std::vector<NtPCVertex> vertices(vcount);
+    std::vector<Vertex::NtPCVertex> vertices(vcount);
     for (UINT i = 0; i < vcount; ++i)
     {
         fin >> vertices[i].position.x >> vertices[i].position.y >> vertices[i].position.z;
@@ -83,8 +85,8 @@ void Skull::MakeGeometry()
 
     fin.close();
 
-	NtPCVertex* vtxArray = &vertices[0];
+    Vertex::NtPCVertex* vtxArray = &vertices[0];
 	UINT* idxArray = &indices[0];
 
-	InitializeModelData(vtxArray, sizeof(NtPCVertex), vertices.size(), idxArray, m_skullIndexCount, L"../Code/Lucia/simple_fx.fxo");
+	InitializeModelData(vtxArray, sizeof(Vertex::NtPCVertex), vertices.size(), idxArray, m_skullIndexCount, L"../Code/Lucia/simple_fx.fxo", ShaderType::kColor);
 }
