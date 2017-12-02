@@ -28,7 +28,7 @@ bool NtColorShader::InitializeFx(const ntWchar* fx)
 
 	HRF(D3DX11CreateEffectFromMemory(fileBuffer.GetData(), fileBuffer.GetBytes(), 0, g_renderer->Device(), &m_fx, nullptr));
 
-	m_tech = m_fx->GetTechniqueByName("ColorTech");
+	ColorTech = m_fx->GetTechniqueByName("ColorTech");
 
 	m_fxWorldViewProj = m_fx->GetVariableByName("gWorldViewProj")->AsMatrix();
 

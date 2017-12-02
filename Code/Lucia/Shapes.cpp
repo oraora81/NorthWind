@@ -63,7 +63,7 @@ void Shapes::Render(XMMATRIX& worldViewProj)
 
 	D3DX11_TECHNIQUE_DESC techDesc;
 	
-	ID3DX11EffectTechnique* tech = const_cast<ID3DX11EffectTechnique*>(m_colorShader->GetEffectTechnique());
+	ID3DX11EffectTechnique* tech = const_cast<ID3DX11EffectTechnique*>(m_colorShader->ColorTech);
 	ID3DX11EffectMatrixVariable* effectMatrix = const_cast<ID3DX11EffectMatrixVariable*>(m_colorShader->GetEffectMatrix());
 
 	tech->GetDesc(&techDesc);

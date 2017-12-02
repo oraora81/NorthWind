@@ -57,6 +57,11 @@ NtShader::~NtShader()
     Release();
 }
 
+bool NtShader::InitializeFx(const ntWchar* fx)
+{
+
+}
+
 void NtShader::Release()
 {
     SAFE_RELEASE(m_fxWorldViewProj);
@@ -65,21 +70,6 @@ void NtShader::Release()
     SAFE_RELEASE(m_layout);
     SAFE_RELEASE(m_pixelShader);
     SAFE_RELEASE(m_vertexShader);
-}
-
-const ntChar* NtShader::GetVSModel() const
-{
-	return g_vsShaderModel[NtShader::ms_vsModel];
-}
-
-const ntChar* NtShader::GetPSModel() const
-{
-	return g_psShaderModel[NtShader::ms_psModel];
-}
-
-const ntChar* NtShader::GetFXModel() const
-{
-	return g_fxShaderModel[NtShader::ms_fxModel];
 }
 
 ID3DX11EffectVariable* NtShader::GetEffectVariable(ntChar* effectName)
@@ -103,13 +93,13 @@ ID3D11InputLayout* NtShader::GetInputLayout()
 
     return m_layout;
 }
-
-const ID3DX11EffectTechnique* NtShader::GetEffectTechnique()
-{
-    NtAsserte(m_tech != nullptr);
-
-    return m_tech;
-}
+//
+//const ID3DX11EffectTechnique* NtShader::GetEffectTechnique()
+//{
+//    NtAsserte(m_tech != nullptr);
+//
+//    return m_tech;
+//}
 
 const ID3DX11EffectMatrixVariable* NtShader::GetEffectMatrix()
 {
@@ -118,4 +108,18 @@ const ID3DX11EffectMatrixVariable* NtShader::GetEffectMatrix()
     return m_fxWorldViewProj;
 }
 
+const ntChar* NtShader::GetVSModel() const
+{
+    return g_vsShaderModel[NtShader::ms_vsModel];
+}
+
+const ntChar* NtShader::GetPSModel() const
+{
+    return g_psShaderModel[NtShader::ms_psModel];
+}
+
+const ntChar* NtShader::GetFXModel() const
+{
+    return g_fxShaderModel[NtShader::ms_fxModel];
+}
 } }	// namespace nt

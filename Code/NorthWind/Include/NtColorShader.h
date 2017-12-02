@@ -38,6 +38,9 @@ private:
 
 	void RenderShader(int indexCount) const;
 
+public:
+    ID3DX11EffectTechnique* ColorTech;
+
 private:
 	ID3D11Buffer*		m_matrixBuffer;
     //ID3DX11EffectScalarVariable* m_fxTime;

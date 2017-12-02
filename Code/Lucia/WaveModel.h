@@ -61,11 +61,8 @@ private:
     nt::Material m_landMaterial;
     nt::Material m_wavMaterial;
 
-    ID3DX11EffectVariable* m_fxDirLight;
+    
     ID3DX11EffectVariable* m_fxPointLight;
     ID3DX11EffectVariable* m_fxSpotLight;
-    ID3DX11EffectVariable* m_fxMaterial;
-    ID3DX11EffectVectorVariable* m_fxEyePosW;
-    ID3DX11EffectMatrixVariable* m_fxWorld;
-    ID3DX11EffectMatrixVariable* m_fxWorldInvTranspose;
+    
 };

@@ -209,7 +209,10 @@
     <ClInclude Include="Include\NtLightType.h">
       <Filter>render</Filter>
     </ClInclude>
-    <ClInclude Include="Include\NtInputLayouts.h">
+    <ClInclude Include="Include\NtInputLayout.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\NtShaderHandler.h">
       <Filter>render</Filter>
     </ClInclude>
   </ItemGroup>
@@ -250,6 +253,9 @@
     </None>
     <None Include="Include\NtTree.inl">
       <Filter>container</Filter>
+    </None>
+    <None Include="Include\NtLightShader.inl">
+      <Filter>render</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -401,7 +407,10 @@
     <ClCompile Include="Source\NtGeometryGenerator.cpp">
       <Filter>render</Filter>
     </ClCompile>
-    <ClCompile Include="Source\NtInputLayouts.cpp">
+    <ClCompile Include="Source\NtInputLayout.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\NtShaderHandler.cpp">
       <Filter>render</Filter>
     </ClCompile>
   </ItemGroup>

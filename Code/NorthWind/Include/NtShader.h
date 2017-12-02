@@ -17,23 +17,27 @@ public:
 
     virtual void Release();
 
-	const ntChar* GetVSModel() const;
-
-	const ntChar* GetPSModel() const;
-
-	const ntChar* GetFXModel() const;
-
     ID3DX11EffectVariable* GetEffectVariable(ntChar* effectName);
 
     ID3D11InputLayout* GetInputLayout();
 
-    const ID3DX11EffectTechnique* GetEffectTechnique();
-
     const ID3DX11EffectMatrixVariable* GetEffectMatrix();
+
+    const ntChar* GetVSModel() const;
+
+    const ntChar* GetPSModel() const;
+
+    const ntChar* GetFXModel() const;
 
 	static void SetVShaderModel(VShaderModel vs);
 
 	static void SetPShaderModel(PShaderModel ps);
+
+public:
+    inline void SetWorldViewProj(CXMMATRIX m)
+    {
+        m_fxWorldViewProj->SetMatrix(reinterpret_cast<const float*>(&m));
+    }
 
 private:
     NtShader(const NtShader& shader);
@@ -49,7 +53,6 @@ protected:
     ID3D11PixelShader*	m_pixelShader;
     ID3D11InputLayout*	m_layout;
     ID3DX11Effect*      m_fx;
-    ID3DX11EffectTechnique* m_tech;
     ID3DX11EffectMatrixVariable* m_fxWorldViewProj;
 };
 

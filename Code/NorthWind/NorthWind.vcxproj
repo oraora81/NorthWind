@@ -361,7 +361,6 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
   <ItemGroup>
     <ClInclude Include="Include\dds.h" />
     <ClInclude Include="Include\dxerr.h" />
-    <ClInclude Include="Include\NtInputLayouts.h" />
     <ClInclude Include="Include\NtAllocator.h" />
     <ClInclude Include="Include\NtApplication.h" />
     <ClInclude Include="Include\NtArray.h" />
@@ -390,6 +389,7 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <ClInclude Include="Include\NtHashTable.h" />
     <ClInclude Include="Include\NtImage.h" />
     <ClInclude Include="Include\NtInitDelegator.h" />
+    <ClInclude Include="Include\NtInputLayout.h" />
     <ClInclude Include="Include\NtInputManager.h" />
     <ClInclude Include="Include\NtIterator.h" />
     <ClInclude Include="Include\NtLight.h" />
@@ -414,6 +414,7 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <ClInclude Include="Include\NtSearch.h" />
     <ClInclude Include="Include\NtSetup.h" />
     <ClInclude Include="Include\NtShader.h" />
+    <ClInclude Include="Include\NtShaderHandler.h" />
     <ClInclude Include="Include\NtSingleton.h" />
     <ClInclude Include="Include\NtString.h" />
     <ClInclude Include="Include\NtSystem.h" />
@@ -440,6 +441,7 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <None Include="Include\NtObject.inl" />
     <None Include="Include\NtRenderType.inl" />
     <None Include="Include\NtSearch.inl" />
+    <None Include="Include\NtLightShader.inl" />
     <None Include="Include\NtSystem.inl" />
     <None Include="Include\NtTree.inl" />
     <None Include="Include\NtVector2.inl" />
@@ -473,7 +475,7 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <ClCompile Include="Source\NtGeometryGenerator.cpp" />
     <ClCompile Include="Source\NtImage.cpp" />
     <ClCompile Include="Source\NtInitDelegator.cpp" />
-    <ClCompile Include="Source\NtInputLayouts.cpp" />
+    <ClCompile Include="Source\NtInputLayout.cpp" />
     <ClCompile Include="Source\NtInputManager.cpp" />
     <ClCompile Include="Source\NtLight.cpp" />
     <ClCompile Include="Source\NtLightShader.cpp" />
@@ -493,6 +495,7 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <ClCompile Include="Source\NtSearch.cpp" />
     <ClCompile Include="Source\NtSetup.cpp" />
     <ClCompile Include="Source\NtShader.cpp" />
+    <ClCompile Include="Source\NtShaderHandler.cpp" />
     <ClCompile Include="Source\NtString.cpp" />
     <ClCompile Include="Source\NtSystem.cpp" />
     <ClCompile Include="Source\NtTexture.cpp" />
