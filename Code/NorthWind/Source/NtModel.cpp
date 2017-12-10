@@ -32,7 +32,7 @@ NtModel::~NtModel()
 	Release();
 }
 
-bool NtModel::InitializeModelData(void* vertices, ntInt vtxSize, ntInt vtxCount, ntUint* indices, ntInt indexCount, const ntWchar* fx, ShaderType shaderType)
+bool NtModel::InitializeModelData(void* vertices, ntInt vtxSize, ntInt vtxCount, ntUint* indices, ntInt indexCount)
 {
 	m_vertexBuffer = MakeVertexBuffer(vertices, vtxSize, vtxCount, BufferUsage::USAGE_DYNAMIC, eCpuAccessFlag::CPU_ACCESS_WRITE);
 
@@ -41,16 +41,6 @@ bool NtModel::InitializeModelData(void* vertices, ntInt vtxSize, ntInt vtxCount,
 	m_indexBuffer = MakeIndexBuffer(indices, indexCount);
 
 	m_indexCount = indexCount;
-
-    switch (shaderType)
-    {
-    case ShaderType::kColor:
-        m_colorShader->InitializeFx(fx);
-        break;
-    case ShaderType::kLight:
-        m_lightShader->InitializeFx(fx);
-        break;;
-    }
     
 	return true;
 }

@@ -169,6 +169,7 @@ bool NtApplication::Initialize(bool fullscreen, ntInt width, ntInt height)
 	{
 		return false;
 	}
+    
 	
 	return true;
 }

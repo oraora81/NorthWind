@@ -88,5 +88,5 @@ void Skull::MakeGeometry()
     Vertex::NtPCVertex* vtxArray = &vertices[0];
 	UINT* idxArray = &indices[0];
 
-	InitializeModelData(vtxArray, sizeof(Vertex::NtPCVertex), vertices.size(), idxArray, m_skullIndexCount, L"../Code/Lucia/simple_fx.fxo", ShaderType::kColor);
+	InitializeModelData(vtxArray, sizeof(Vertex::NtPCVertex), vertices.size(), idxArray, m_skullIndexCount);
 }

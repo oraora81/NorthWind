@@ -10,6 +10,7 @@ public:
 
 public:
     static std::unique_ptr<NtLightShader> LightShader;
+    static std::unique_ptr<NtColorShader> ColorShader;
 };
 
 } }

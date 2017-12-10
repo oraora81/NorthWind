@@ -46,7 +46,6 @@ NtShader::NtShader()
     , m_pixelShader(nullptr)
     , m_layout(nullptr)
     , m_fx(nullptr)
-    , m_tech(nullptr)
     , m_fxWorldViewProj(nullptr)
 {
 
@@ -59,13 +58,19 @@ NtShader::~NtShader()
 
 bool NtShader::InitializeFx(const ntWchar* fx)
 {
+    nt::fs::NtFileBuffer fileBuffer(fx);
 
+    HRF(D3DX11CreateEffectFromMemory(fileBuffer.GetData(),
+        fileBuffer.GetBytes(),
+        0,
+        g_renderer->Device(),
+        &m_fx,
+        nullptr));
 }
 
 void NtShader::Release()
 {
     SAFE_RELEASE(m_fxWorldViewProj);
-    SAFE_RELEASE(m_tech);
     SAFE_RELEASE(m_fx);
     SAFE_RELEASE(m_layout);
     SAFE_RELEASE(m_pixelShader);
@@ -93,13 +98,6 @@ ID3D11InputLayout* NtShader::GetInputLayout()
 
     return m_layout;
 }
-//
-//const ID3DX11EffectTechnique* NtShader::GetEffectTechnique()
-//{
-//    NtAsserte(m_tech != nullptr);
-//
-//    return m_tech;
-//}
 
 const ID3DX11EffectMatrixVariable* NtShader::GetEffectMatrix()
 {

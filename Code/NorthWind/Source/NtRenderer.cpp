@@ -5,13 +5,13 @@
 #include "NtD3DRenderer.h"
 #include "NtCamera.h"
 #include "NtModel.h"
-#include "NtColorShader.h"
-#include "NtTextureShader.h"
-#include "NtLightShader.h"
 #include "NtLight.h"
 #include "NtModelParser.h"
 #include "NtAse.h"
 #include "NtD3dUtil.h"
+#include "NtColorShader.h"
+#include "NtTextureShader.h"
+#include "NtLightShader.h"
 
 namespace nt { namespace renderer {
 
@@ -50,7 +50,20 @@ bool NtRenderer::Initialize(HWND hwnd, ntInt width, ntInt height, bool fullScree
 		return false;
 	}
 
-	g_renderer = m_renderEngine;
+    g_renderer = std::make_shared(m_renderEngine);
+
+    // init shaders
+    if (NtShaderHandler::Initialize() == false)
+    {
+        return false;
+    }
+
+    // init inputLayouts
+    if (NtInputLayoutHandler::Initialize() == false)
+    {
+        MessageBox(hwnd, L"Input Layout initialize failed", L"Error", MB_OK);
+        return false;
+    }
 
 	// create the camera object
 	m_camera = new NtCamera;
@@ -58,64 +71,6 @@ bool NtRenderer::Initialize(HWND hwnd, ntInt width, ntInt height, bool fullScree
 
 	// set the initial position of the camera
 	m_camera->SetPosition(0.0f, 20.0f, -100.0f);
-
-	
-	// create the light shader object
-	//m_lightShader = new NtLightShader;
-	//NtAsserte(m_lightShader != nullptr);
-
-	// init the light shader obj
-	//res = m_lightShader->Initialize(m_renderEngine, hwnd, L"light_vs.hlsl", L"light_ps.hlsl");
-	//if (false == res)
-	//{
-	//	MessageBox(hwnd, L"Could not initialize the light shader object", L"Error", MB_OK);
-	//	return false;
-	//}
-
-	// create the light obj
-	//m_light = new NtLight;
-	//NtAsserte(m_light != nullptr);
-
-	//m_light->SetDiffuse(1.0f, 1.0f, 1.0f, 1.0f);
-	//m_light->SetDirection(0.0f, 0.0f, 1.0f);
-
-	// create the color shader object
-	//m_colorShader = new NtColorShader;
-	//NtAsserte(m_colorShader != nullptr);
-
-	//res = m_colorShader->Initialize(L"color_vs.hlsl", L"color_ps.hlsl");
-	//if (res == false)
-	//{
-	//	MessageBox(hwnd, L"Could not initialize the color shader object", L"Error", MB_OK);
-	//	return false;
-	//}
-
-	// create the texture shader object
-	//m_textureShader = new NtTextureShader;
-	//NtAsserte(m_textureShader != nullptr);
-
-	// initialize the texture shader object
-	//res = m_textureShader->Initialize(L"texture_vs.hlsl", L"texture_ps.hlsl");
-	//if (false == res)
-	//{
-	//	MessageBox(hwnd, L"Could not initialize the texture shader object", L"Error", MB_OK);
-	//	return false;
-	//}
-
-	// create the puppet model object
-	//m_puppet = new NtPuppet;
-	//NtAsserte(m_puppet != nullptr);
-
-	//res = m_puppet->Initialize(L"test_cube.ase");
-	//if (res == false)
-	//{
-	//	MessageBox(hwnd, L"Could not initialize the puppet object", L"Error", MB_OK);
-	//	return false;
-	//}
-
-	////m_puppet->SetLightShader(m_lightShader);
-	//m_puppet->SetColorShader(m_colorShader);
-	//m_puppet->SetTextureShader(m_textureShader);
 
 	return true;
 }

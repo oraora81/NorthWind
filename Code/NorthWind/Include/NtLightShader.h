@@ -31,8 +31,6 @@ public:
 
 	void Release() override;
 
-    bool Render(int indexCount, const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj, NtTexture* texture, const XMFLOAT3A& lightDir, const XMFLOAT4A& diffuse);
-
     bool RenderFx(ntInt indexCount, const XMMATRIX& worldViewProj);
 
 public:
@@ -41,15 +39,12 @@ public:
     inline void SetEyePosW(XMFLOAT3 eyePosW);
     inline void SetDirLights(const DirectionalLight* light);
     inline void SetMatrial(const Material& mat);
+    inline const ID3DX11EffectTechnique* Light1Tech() const;
+    inline const ID3DX11EffectTechnique* Light2Tech() const;
+    inline const ID3DX11EffectTechnique* Light3Tech() const;
 
 private:
-	bool InitializeShader(const ntWchar* vs, const ntWchar* ps);
-
     void ReleaseShader();
-
-	bool SetShaderParameter(const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj, NtTexture* texture, const XMFLOAT3A& lightDir, const XMFLOAT4A& diffuse);
-
-    void RenderShader(int indexCount) const;
 
 private:
     ID3DX11EffectTechnique* m_light1;

@@ -98,5 +98,5 @@ void Hills::MakeGeometry()
 		indices[i] = grid.Indices[i];
 	}
 	
-	InitializeModelData(vertices, sizeof(Vertex::NtPCVertex), grid.Vertices.size(), indices, grid.Indices.size(), L"../Code/Lucia/simple_fx.fxo", ShaderType::kColor);
+	InitializeModelData(vertices, sizeof(Vertex::NtPCVertex), grid.Vertices.size(), indices, grid.Indices.size());
 }

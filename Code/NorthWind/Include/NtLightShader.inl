@@ -1,12 +1,12 @@
 
 void NtLightShader::SetWorld(CXMMATRIX m)
 {
-    m_fxWorld->SetMatrix(reinterpret_cast<const float*>(m));
+    m_fxWorld->SetMatrix(reinterpret_cast<const float*>(&m));
 }
 
 void NtLightShader::SetWorldInvTranspose(CXMMATRIX m)
 {
-    m_fxWorldInvTranspose->SetMatrix(reinterpret_cast<const float*>(m));
+    m_fxWorldInvTranspose->SetMatrix(reinterpret_cast<const float*>(&m));
 }
 
 void NtLightShader::SetEyePosW(XMFLOAT3 eyePosW)
@@ -22,4 +22,19 @@ void NtLightShader::SetDirLights(const DirectionalLight* light)
 void NtLightShader::SetMatrial(const Material& mat)
 {
     m_fxMaterial->SetRawValue(&mat, 0, sizeof(Material));
+}
+
+const ID3DX11EffectTechnique* NtLightShader::Light1Tech() const
+{
+    return m_light1;
+}
+
+const ID3DX11EffectTechnique* NtLightShader::Light2Tech() const
+{
+    return m_light2;
+}
+
+const ID3DX11EffectTechnique* NtLightShader::Light3Tech() const
+{
+    return m_light3;
 }

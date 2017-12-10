@@ -270,7 +270,7 @@ void WaveModel::MakeGeometry()
     Vertex::NtLVertex* vtxArray = &vertices[0];
 	UINT* idxArray = &indices[0];
 
-	InitializeModelData(vtxArray, sizeof(Vertex::NtLVertex), vertices.size(), idxArray, indices.size(), L"../bin/light.fxo", ShaderType::kLight);
+	InitializeModelData(vtxArray, sizeof(Vertex::NtLVertex), vertices.size(), idxArray, indices.size());
 
     m_fxDirLight = m_lightShader->GetEffectVariable("gDirLight");
     m_fxPointLight = m_lightShader->GetEffectVariable("gPointLight");

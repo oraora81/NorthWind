@@ -135,15 +135,7 @@ void Box::MakeNormal()
     Vertex::NtPCVertex* v = &vertices[0];
     UINT* i = &indices[0];
 
-    const ntWchar* fileName = 
-    g_resManager->GetPath(L"simple_fx_rs.fxo");
-
-    InitializeModelData(v, 
-        sizeof(Vertex::NtPCVertex),
-        vertices.size(),
-        i, indices.size(),
-        fileName,
-        ShaderType::kColor);
+    InitializeModelData(v, sizeof(Vertex::NtPCVertex), vertices.size(), i, indices.size());
 }
 
 void Box::MakeGeometryTwoVertexBuf()
@@ -302,8 +294,7 @@ void Box::MakeColor()
     sVertexColor* vtxPtr = &vertices[0];
     UINT* idxPtr = &indices[0];
 
-    const ntWchar* filePath = g_resManager->GetPath(L"simple_fx.fxo");
-    InitializeModelData((void*)vtxPtr, sizeof(sVertexColor), vertices.size(), idxPtr, m_boxIndexCount, filePath, ShaderType::kColor);
+    InitializeModelData((void*)vtxPtr, sizeof(sVertexColor), vertices.size(), idxPtr, m_boxIndexCount);
 }
 
 void Box::Update(float deltaTime)
@@ -401,7 +392,7 @@ void Box::RenderBoxPyramid(XMMATRIX& worldViewProj)
 
     D3DX11_TECHNIQUE_DESC techDesc;
 
-    ID3DX11EffectTechnique* tech = const_cast<ID3DX11EffectTechnique*>(m_colorShader->ColorTech);
+    ID3DX11EffectTechnique* tech = const_cast<ID3DX11EffectTechnique*>(NtShaderHandler->ColorTech);
     ID3DX11EffectMatrixVariable* effectMatrix = const_cast<ID3DX11EffectMatrixVariable*>(m_colorShader->GetEffectMatrix());
 
     tech->GetDesc(&techDesc);
