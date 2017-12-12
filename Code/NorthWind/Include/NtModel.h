@@ -22,7 +22,7 @@ public:
 	NtModel();
 	virtual ~NtModel();
 
-    bool InitializeModelData(void* vertices, ntInt vtxSize, ntInt vtxCount, ntUint* indices, ntInt indexCount, const ntWchar* fx, ShaderType shaderType);
+    bool InitializeModelData(void* vertices, ntInt vtxSize, ntInt vtxCount, ntUint* indices, ntInt indexCount);
 
 	void Release();
 

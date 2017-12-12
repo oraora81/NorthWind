@@ -24,7 +24,7 @@ void NtLightShader::SetMatrial(const Material& mat)
     m_fxMaterial->SetRawValue(&mat, 0, sizeof(Material));
 }
 
-const ID3DX11EffectTechnique* NtLightShader::Light1Tech() const
+ID3DX11EffectTechnique* NtLightShader::Light1Tech() const
 {
     return m_light1;
 }

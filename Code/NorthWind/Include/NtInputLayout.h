@@ -20,10 +20,10 @@ public:
     static bool Initialize();
     static void Release();
 
-    static D3D11_INPUT_ELEMENT_DESC* PCLayout;
-    static D3D11_INPUT_ELEMENT_DESC* PNLayout;
-    static D3D11_INPUT_ELEMENT_DESC* PCLayoutEachSlot;
-    static D3D11_INPUT_ELEMENT_DESC* PCLayout32bitColor;
+    static ID3D11InputLayout* PCInputLayout;
+    static ID3D11InputLayout* PNInputLayout;
+    static ID3D11InputLayout* PCInputLayoutEachSlot;
+    static ID3D11InputLayout* PCInputLayout32bitColor;
 };
 
 }

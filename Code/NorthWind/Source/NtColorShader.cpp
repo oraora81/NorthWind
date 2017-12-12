@@ -1,9 +1,9 @@
-
-
 #include "NtCoreLib.h"
-#include "NtColorShader.h"
+#pragma hdrstop
 
+#include "NtColorShader.h"
 #include "NtD3DRenderer.h"
+#include "NtShaderHandler.h"
 
 namespace nt { namespace renderer {
 
@@ -53,10 +53,10 @@ bool NtColorShader::RenderFx(ntInt indexCount, const XMMATRIX& worldViewProj)
     //m_fxTime->SetFloat(g_app->Timer().TotalTime());
 
 	D3DX11_TECHNIQUE_DESC techDesc;
-    NtShaderHandler::ColorShader->GetDesc(&techDesc);
+    NtShaderHandler::ColorShader->ColorTech->GetDesc(&techDesc);
 	for (ntUint i = 0; i < techDesc.Passes; i++)
 	{
-        NtShaderHandler::ColorShader->GetPassByIndex(i)->Apply(0, g_renderer->DeviceContext());
+        NtShaderHandler::ColorShader->ColorTech->GetPassByIndex(i)->Apply(0, g_renderer->DeviceContext());
 
 		g_renderer->DeviceContext()->DrawIndexed(indexCount, 0, 0);
 	}

@@ -39,7 +39,7 @@ public:
     inline void SetEyePosW(XMFLOAT3 eyePosW);
     inline void SetDirLights(const DirectionalLight* light);
     inline void SetMatrial(const Material& mat);
-    inline const ID3DX11EffectTechnique* Light1Tech() const;
+    inline ID3DX11EffectTechnique* Light1Tech() const;
     inline const ID3DX11EffectTechnique* Light2Tech() const;
     inline const ID3DX11EffectTechnique* Light3Tech() const;
 
