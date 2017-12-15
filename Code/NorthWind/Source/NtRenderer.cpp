@@ -12,6 +12,8 @@
 #include "NtColorShader.h"
 #include "NtTextureShader.h"
 #include "NtLightShader.h"
+#include "NtShaderHandler.h"
+#include "NtInputLayout.h"
 
 namespace nt { namespace renderer {
 
@@ -50,7 +52,7 @@ bool NtRenderer::Initialize(HWND hwnd, ntInt width, ntInt height, bool fullScree
 		return false;
 	}
 
-    g_renderer = std::make_shared(m_renderEngine);
+    g_renderer = m_renderEngine;
 
     // init shaders
     if (NtShaderHandler::Initialize() == false)

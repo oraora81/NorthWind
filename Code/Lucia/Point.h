@@ -2,7 +2,7 @@
 
 #include "BaseShape.h"
 
-class Points : public BaseShape
+class Points : public nt::renderer::NtModel
 {
 public:
 	Points();

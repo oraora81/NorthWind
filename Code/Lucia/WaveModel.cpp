@@ -6,6 +6,7 @@
 #include "NtGeometryGenerator.h"
 #include "NtColorShader.h"
 #include "NtLightShader.h"
+#include "NtShaderHandler.h"
 
 using namespace nt;
 
@@ -32,20 +33,11 @@ namespace
 }
 
 WaveModel::WaveModel()
-	: m_theta(1.5f * NtMath<float>::PI)
-	, m_phi(0.25f * NtMath<float>::PI)
-	, m_radius(5.0f)
-	, m_waveVB(nullptr)
+	: m_waveVB(nullptr)
 	, m_waveIB(nullptr)
-    , m_fxDirLight(nullptr)
     , m_fxPointLight(nullptr)
     , m_fxSpotLight(nullptr)
-    , m_fxMaterial(nullptr)
-    , m_fxEyePosW(nullptr)
-    , m_fxWorld(nullptr)
-    , m_fxWorldInvTranspose(nullptr)
 {
-    m_eyePosW = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	XMMATRIX I = XMMatrixIdentity();
 	XMStoreFloat4x4(&m_gridWorld, I);
 
@@ -92,20 +84,6 @@ void WaveModel::Update(float deltaTime)
 {
 	NtModel::Update(deltaTime);
 
-	float x = m_radius * NtMath<float>::Sin(m_phi) * NtMath<float>::Cos(m_theta);
-	float z = m_radius * NtMath<float>::Sin(m_phi) * NtMath<float>::Sin(m_theta);
-	float y = m_radius * NtMath<float>::Cos(m_phi);
-
-    m_eyePosW = XMFLOAT3(x, y, z);
-
-	XMVECTOR pos = XMVectorSet(x, y, z, 1.0f);
-	XMVECTOR target = XMVectorZero();
-	XMVECTOR up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
-
-	XMMATRIX v = XMMatrixLookAtLH(pos, target, up);
-
-	g_renderer->SetViewMatrix(v);
-
 	static float timeBase = 0.0f;
 
 	if (g_app->Timer().TotalTime() - timeBase >= 0.25f)
@@ -141,7 +119,8 @@ void WaveModel::Update(float deltaTime)
     m_pointLight.Position.y = NtMathf::Max(GetHeight(m_pointLight.Position.x, m_pointLight.Position.z), -3.0f) + 10.0f;
 
     m_spotLight.Position = m_eyePosW;
-    XMStoreFloat3(&m_spotLight.Direction, XMVector3Normalize(target - pos));
+    XMVECTOR pos = XMVectorSet(m_eyePosW.x, m_eyePosW.y, m_eyePosW.z, 1.0f);
+    XMStoreFloat3(&m_spotLight.Direction, XMVector3Normalize(XMVectorZero() - pos));
 }
 
 void WaveModel::Render(XMMATRIX& worldViewProj)
@@ -151,7 +130,7 @@ void WaveModel::Render(XMMATRIX& worldViewProj)
 
 	g_renderInterface->SetPrimitiveTopology(PrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	g_renderer->DeviceContext()->IASetInputLayout(m_lightShader->GetInputLayout());
+	g_renderer->DeviceContext()->IASetInputLayout(NtShaderHandler::LightShader->GetInputLayout());
 
 	XMMATRIX view;
 	XMMATRIX proj;

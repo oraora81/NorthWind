@@ -38,16 +38,35 @@ public:
 
 	void SetVertexInfo(ntFloat* vtxInfo);
 
-	void SetColorShader(NtColorShader* shader);
-
-	void SetTextureShader(NtTextureShader* shader);
-
-	void SetLightShader(NtLightShader* shader);
-
 protected:
 	ID3D11Buffer* MakeVertexBuffer(void* vertices, ntInt vtxSize, ntIndex vtxCount, BufferUsage usage, eCpuAccessFlag cpuFlag);
 
 	ID3D11Buffer* MakeIndexBuffer(ntUint* indices, ntInt indexCount);
+
+    float& Theta()
+    {
+        return m_theta;
+    }
+
+    float& Phi()
+    {
+        return m_phi;
+    }
+
+    void Phi(float p)
+    {
+        m_phi = p;
+    }
+
+    float Radius()
+    {
+        return m_radius;
+    }
+
+    void Radius(float r)
+    {
+        m_radius = r;
+    }
 
 private:
 	bool InitializeAse(const ntWchar* puppetName);
@@ -64,12 +83,14 @@ protected:
 	NtVertexFormat m_vertexFormat;
 	ntFloat*	m_puppetRawData;
 
-	std::shared_ptr<NtColorShader> m_colorShader;
-	NtTextureShader* m_textureShader;
-	NtLightShader* m_lightShader;
-
 	typedef std::vector<NtMeshObj>	MESH_VECTOR;
 	MESH_VECTOR m_meshVector;
+
+    XMFLOAT3 m_eyePosW;
+
+    float m_theta;
+    float m_phi;
+    float m_radius;
 };
 
 

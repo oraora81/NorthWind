@@ -7,7 +7,7 @@
 using namespace nt;
 
 Points::Points()
-    : BaseShape()
+    : NtModel()
 {
 
 }

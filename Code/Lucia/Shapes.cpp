@@ -9,7 +9,7 @@
 using namespace nt;
 
 Shapes::Shapes()
-	: BaseShape()
+	: NtModel()
 {
 	const XMMATRIX I = XMMatrixIdentity();
 

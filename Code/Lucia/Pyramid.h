@@ -2,7 +2,7 @@
 
 #include "BaseShape.h"
 
-class Pyramid : public BaseShape
+class Pyramid : public nt::renderer::NtModel
 {
 public:
     Pyramid();

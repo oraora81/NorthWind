@@ -18,13 +18,15 @@ namespace nt { namespace renderer {
 NtModel::NtModel()
 	: m_vertexBuffer(nullptr)
 	, m_indexBuffer(nullptr)
+    , m_texhandle(0)
 	, m_vertexCount(0)
 	, m_indexCount(0)
 	, m_puppetRawData(nullptr)
-	, m_colorShader(new NtColorShader())
-    , m_lightShader(new NtLightShader())
+    , m_theta(1.5f * NtMath<float>::PI)
+    , m_phi(0.25f * NtMath<float>::PI)
+    , m_radius(5.0f)
 {
-	m_textureShader = nullptr;
+    m_eyePosW = XMFLOAT3(0.0f, 0.0f, 0.0f);
 }
 
 NtModel::~NtModel()
@@ -52,7 +54,19 @@ void NtModel::Release()
 
 void NtModel::Update(float deltaTime)
 {
+    float x = m_radius * NtMath<float>::Sin(m_phi) * NtMath<float>::Cos(m_theta);
+    float z = m_radius * NtMath<float>::Sin(m_phi) * NtMath<float>::Sin(m_theta);
+    float y = m_radius * NtMath<float>::Cos(m_phi);
 
+    m_eyePosW = XMFLOAT3(x, y, z);
+
+    XMVECTOR pos = XMVectorSet(x, y, z, 1.0f);
+    XMVECTOR target = XMVectorZero();
+    XMVECTOR up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+
+    XMMATRIX v = XMMatrixLookAtLH(pos, target, up);
+
+    g_renderer->SetViewMatrix(v);
 }
 
 void NtModel::Render(XMMATRIX& worldViewProj)
@@ -66,7 +80,7 @@ void NtModel::Render(XMMATRIX& worldViewProj)
 
 	g_renderInterface->SetIndexBuffers(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 
-	m_colorShader->RenderFx(m_indexCount, worldViewProj);
+	//m_colorShader->RenderFx(m_indexCount, worldViewProj);
 }
 
 bool NtModel::InitializeAse(const ntWchar* puppetName)
@@ -365,21 +379,4 @@ void NtModel::SetVertexInfo( ntFloat* vtxInfo )
 }
 
 
-void NtModel::SetColorShader(NtColorShader* shader)
-{
-	//m_colorShader = shader;
-	//m_colorShader.reset()
-}
-
-void NtModel::SetTextureShader(NtTextureShader* shader)
-{
-	m_textureShader = shader;
-}
-
-void NtModel::SetLightShader(NtLightShader* shader)
-{
-	m_lightShader = shader;
-}
-
 } }
-

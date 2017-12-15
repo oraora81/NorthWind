@@ -6,7 +6,7 @@
 using namespace nt;
 
 Pyramid::Pyramid()
-    : BaseShape()
+    : NtModel()
 {
 
 }
