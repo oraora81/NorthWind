@@ -55,10 +55,6 @@ public:
 private:
 	std::shared_ptr<NtDx11Renderer> m_renderEngine;
 	NtCamera*			m_camera;
-	NtModel*			m_puppet;
-	NtColorShader*		m_colorShader;
-	NtTextureShader*	m_textureShader;
-	NtLightShader*		m_lightShader;
 	NtLight*			m_light;
 
 	std::vector<NtModel*> m_models;

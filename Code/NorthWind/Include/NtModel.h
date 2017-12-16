@@ -38,11 +38,6 @@ public:
 
 	void SetVertexInfo(ntFloat* vtxInfo);
 
-protected:
-	ID3D11Buffer* MakeVertexBuffer(void* vertices, ntInt vtxSize, ntIndex vtxCount, BufferUsage usage, eCpuAccessFlag cpuFlag);
-
-	ID3D11Buffer* MakeIndexBuffer(ntUint* indices, ntInt indexCount);
-
     float& Theta()
     {
         return m_theta;
@@ -53,20 +48,25 @@ protected:
         return m_phi;
     }
 
-    void Phi(float p)
-    {
-        m_phi = p;
-    }
-
     float Radius()
     {
         return m_radius;
+    }
+
+    void Phi(float p)
+    {
+        m_phi = p;
     }
 
     void Radius(float r)
     {
         m_radius = r;
     }
+
+protected:
+	ID3D11Buffer* MakeVertexBuffer(void* vertices, ntInt vtxSize, ntIndex vtxCount, BufferUsage usage, eCpuAccessFlag cpuFlag);
+
+	ID3D11Buffer* MakeIndexBuffer(ntUint* indices, ntInt indexCount);
 
 private:
 	bool InitializeAse(const ntWchar* puppetName);

@@ -99,7 +99,7 @@ ID3D11InputLayout* NtShader::GetInputLayout()
     return m_layout;
 }
 
-const ID3DX11EffectMatrixVariable* NtShader::GetEffectMatrix()
+const ID3DX11EffectMatrixVariable* NtShader::GetWorldViewProj()
 {
     NtAsserte(m_fxWorldViewProj != nullptr);
 

@@ -5,6 +5,7 @@
 #include "NtMath.h"
 #include "NtGeometryGenerator.h"
 #include "NtColorShader.h"
+#include "NtShaderHandler.h"
 
 using namespace nt;
 
@@ -52,7 +53,9 @@ void Shapes::Render(XMMATRIX& worldViewProj)
 
 	g_renderInterface->SetIndexBuffers(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 
-	g_renderer->DeviceContext()->IASetInputLayout(m_colorShader->GetInputLayout());
+    auto& colorShader = NtShaderHandler::ColorShader;
+
+	g_renderer->DeviceContext()->IASetInputLayout(colorShader->GetInputLayout());
 
 	XMMATRIX view;
 	XMMATRIX proj;
@@ -63,8 +66,8 @@ void Shapes::Render(XMMATRIX& worldViewProj)
 
 	D3DX11_TECHNIQUE_DESC techDesc;
 	
-	ID3DX11EffectTechnique* tech = const_cast<ID3DX11EffectTechnique*>(m_colorShader->ColorTech);
-	ID3DX11EffectMatrixVariable* effectMatrix = const_cast<ID3DX11EffectMatrixVariable*>(m_colorShader->GetEffectMatrix());
+	ID3DX11EffectTechnique* tech = const_cast<ID3DX11EffectTechnique*>(colorShader->ColorTech);
+    ID3DX11EffectMatrixVariable* effectMatrix = const_cast<ID3DX11EffectMatrixVariable*>(colorShader->GetWorldViewProj());
 
 	tech->GetDesc(&techDesc);
 
@@ -125,15 +128,15 @@ void Shapes::MakeGeometry()
 
 	// cache the vertex offsets to each object in the concatenated vertex buffer
 	m_boxVertexOffset = 0;
-	m_gridVertexOffset = box.Vertices.size();
-	m_sphereVertexOffset = m_gridVertexOffset + grid.Vertices.size();
-	m_cylinderVertexOffset = m_sphereVertexOffset + sphere.Vertices.size();
+	m_gridVertexOffset = (ntInt)box.Vertices.size();
+	m_sphereVertexOffset = m_gridVertexOffset + (ntInt)grid.Vertices.size();
+	m_cylinderVertexOffset = m_sphereVertexOffset + (ntInt)sphere.Vertices.size();
 
 	// cache the index count of each object
-	m_boxIndexCount = box.Indices.size();
-	m_gridIndexCount = grid.Indices.size();
-	m_sphereIndexCount = sphere.Indices.size();
-	m_cylinderIndexCount = cylinder.Indices.size();
+	m_boxIndexCount = (ntInt)box.Indices.size();
+	m_gridIndexCount = (ntInt)grid.Indices.size();
+	m_sphereIndexCount = (ntInt)sphere.Indices.size();
+	m_cylinderIndexCount = (ntInt)cylinder.Indices.size();
 
 	// cache the index count of each object in the concatenated index buffer
 	m_boxIndexOffset = 0;
@@ -141,13 +144,13 @@ void Shapes::MakeGeometry()
 	m_sphereIndexOffset = m_gridIndexOffset + m_gridIndexCount;
 	m_cylinderIndexOffset = m_sphereIndexOffset + m_sphereIndexCount;
 
-	UINT totalVertexCount =
+	UINT totalVertexCount = (ntInt)(
 		box.Vertices.size() +
 		grid.Vertices.size() +
 		sphere.Vertices.size() +
-		cylinder.Vertices.size();
+		cylinder.Vertices.size());
 
-	UINT totalIndexCount =
+	UINT totalIndexCount = 
 		m_boxIndexCount +
 		m_gridIndexCount +
 		m_sphereIndexCount +
@@ -196,5 +199,5 @@ void Shapes::MakeGeometry()
     Vertex::NtPCVertex* vtxArray = &vertices[0];
 	UINT* idxArray = &indices[0];
 
-	InitializeModelData(vtxArray, sizeof(Vertex::NtPCVertex), vertices.size(), idxArray, indices.size());
+	InitializeModelData(vtxArray, sizeof(Vertex::NtPCVertex), (ntInt)vertices.size(), idxArray, (ntInt)indices.size());
 }

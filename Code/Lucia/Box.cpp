@@ -3,6 +3,8 @@
 
 #include "Box.h"
 #include "NtColorShader.h"
+#include "NtShaderHandler.h"
+#include "NtInputLayout.h"
 
 using namespace nt;
 
@@ -71,7 +73,7 @@ void Box::MakeNormal()
 
     vertices.assign(std::begin(box), std::end(box));
     m_boxVertexCount = _countof(box);
-    m_pyramidVertexOffset = vertices.size();
+    m_pyramidVertexOffset = (UINT)vertices.size();
 
     Vertex::NtPCVertex pyramid[] =
     {
@@ -109,8 +111,8 @@ void Box::MakeNormal()
 
 
     indices.assign(std::begin(box_indices), std::end(box_indices));
-    m_pyramidIndexOffset = indices.size();
-    m_boxIndexCount = indices.size();
+    m_pyramidIndexOffset = (UINT)indices.size();
+    m_boxIndexCount = (UINT)indices.size();
 
     ntUint pyramid_indices[] =
     {
@@ -132,7 +134,7 @@ void Box::MakeNormal()
     Vertex::NtPCVertex* v = &vertices[0];
     UINT* i = &indices[0];
 
-    InitializeModelData(v, sizeof(Vertex::NtPCVertex), vertices.size(), i, indices.size());
+    InitializeModelData(v, sizeof(Vertex::NtPCVertex), (ntInt)vertices.size(), i, (ntInt)indices.size());
 }
 
 void Box::MakeGeometryTwoVertexBuf()
@@ -236,8 +238,6 @@ void Box::MakeGeometryTwoVertexBuf()
 
     m_indexBuffer = ib;
     m_indexCount = _countof(indices);
-
-    m_colorShader->InitializeFx(L"../Code/Lucia/simple_fx.fxo");
 }
 
 void Box::MakeColor()
@@ -286,12 +286,12 @@ void Box::MakeColor()
     };
 
     indices.assign(std::begin(box_indices), std::end(box_indices));
-    m_boxIndexCount = indices.size();
+    m_boxIndexCount = (ntInt)indices.size();
 
     sVertexColor* vtxPtr = &vertices[0];
     UINT* idxPtr = &indices[0];
 
-    InitializeModelData((void*)vtxPtr, sizeof(sVertexColor), vertices.size(), idxPtr, m_boxIndexCount);
+    InitializeModelData((void*)vtxPtr, sizeof(sVertexColor), (ntInt)vertices.size(), idxPtr, m_boxIndexCount);
 }
 
 void Box::Render(XMMATRIX& worldViewProj)
@@ -322,7 +322,9 @@ void Box::RenderTwoVertexBuf(XMMATRIX& worldViewProj)
 
     g_renderInterface->SetIndexBuffers(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 
-    g_renderer->DeviceContext()->IASetInputLayout(m_colorShader->GetInputLayout());
+    auto& colorShader = NtShaderHandler::ColorShader;
+
+    g_renderer->DeviceContext()->IASetInputLayout(NtInputLayoutHandler::PCInputLayout);
 
     XMMATRIX view;
     XMMATRIX proj;
@@ -334,8 +336,8 @@ void Box::RenderTwoVertexBuf(XMMATRIX& worldViewProj)
 
     D3DX11_TECHNIQUE_DESC techDesc;
 
-    ID3DX11EffectTechnique* tech = const_cast<ID3DX11EffectTechnique*>(m_colorShader->ColorTech);
-    ID3DX11EffectMatrixVariable* effectMatrix = const_cast<ID3DX11EffectMatrixVariable*>(m_colorShader->GetEffectMatrix());
+    ID3DX11EffectTechnique* tech = const_cast<ID3DX11EffectTechnique*>(colorShader->ColorTech);
+    ID3DX11EffectMatrixVariable* effectMatrix = const_cast<ID3DX11EffectMatrixVariable*>(colorShader->GetWorldViewProj());
 
     tech->GetDesc(&techDesc);
 
@@ -360,7 +362,9 @@ void Box::RenderBoxPyramid(XMMATRIX& worldViewProj)
 
     g_renderInterface->SetIndexBuffers(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 
-    g_renderer->DeviceContext()->IASetInputLayout(m_colorShader->GetInputLayout());
+    auto& colorShader = NtShaderHandler::ColorShader;
+
+    g_renderer->DeviceContext()->IASetInputLayout(NtInputLayoutHandler::PCInputLayout);
 
     XMMATRIX view;
     XMMATRIX proj;
@@ -372,8 +376,8 @@ void Box::RenderBoxPyramid(XMMATRIX& worldViewProj)
 
     D3DX11_TECHNIQUE_DESC techDesc;
 
-    ID3DX11EffectTechnique* tech = const_cast<ID3DX11EffectTechnique*>(NtShaderHandler->ColorTech);
-    ID3DX11EffectMatrixVariable* effectMatrix = const_cast<ID3DX11EffectMatrixVariable*>(m_colorShader->GetEffectMatrix());
+    ID3DX11EffectTechnique* tech = const_cast<ID3DX11EffectTechnique*>(colorShader->ColorTech);
+    ID3DX11EffectMatrixVariable* effectMatrix = const_cast<ID3DX11EffectMatrixVariable*>(colorShader->GetWorldViewProj());
 
     tech->GetDesc(&techDesc);
 
@@ -405,5 +409,7 @@ void Box::Render32BitColor(XMMATRIX& worldViewProj)
 
     g_renderInterface->SetIndexBuffers(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 
-    m_colorShader->RenderFx(m_indexCount, worldViewProj);
+    auto& colorShader = NtShaderHandler::ColorShader;
+
+    colorShader->RenderFx(m_indexCount, worldViewProj);
 }

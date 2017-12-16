@@ -38,13 +38,10 @@ public:
     inline void SetWorldInvTranspose(CXMMATRIX m);
     inline void SetEyePosW(XMFLOAT3 eyePosW);
     inline void SetDirLights(const DirectionalLight* light);
-    inline void SetMatrial(const Material& mat);
+    inline void SetMaterial(const Material& mat);
     inline ID3DX11EffectTechnique* Light1Tech() const;
     inline const ID3DX11EffectTechnique* Light2Tech() const;
     inline const ID3DX11EffectTechnique* Light3Tech() const;
-
-private:
-    void ReleaseShader();
 
 private:
     ID3DX11EffectTechnique* m_light1;

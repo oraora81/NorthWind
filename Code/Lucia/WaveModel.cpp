@@ -45,25 +45,36 @@ WaveModel::WaveModel()
     XMMATRIX wavOffset = XMMatrixTranslation(0.0f, -3.0f, 0.0f);
     XMStoreFloat4x4(&m_wavesWorld, wavOffset);
 
-    m_dirLight.Ambient = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
-    m_dirLight.Diffuse = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
-    m_dirLight.Specular = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
-    m_dirLight.Direction = XMFLOAT3(0.57735f, -0.57735f, 0.57735f);
+    m_dirLight[0].Ambient = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
+    m_dirLight[0].Diffuse = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
+    m_dirLight[0].Specular = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
+    m_dirLight[0].Direction = XMFLOAT3(0.57735f, -0.57735f, 0.57735f);
+
+    m_dirLight[1].Ambient = XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f);
+    m_dirLight[1].Diffuse = XMFLOAT4(0.20f, 0.20f, 0.20f, 1.0f);
+    m_dirLight[1].Specular = XMFLOAT4(0.25f, 0.25f, 0.25f, 1.0f);
+    m_dirLight[1].Direction = XMFLOAT3(-0.57735f, -0.57735f, 0.57735f);
+
+    m_dirLight[2].Ambient = XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f);
+    m_dirLight[2].Diffuse = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
+    m_dirLight[2].Specular = XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f);
+    m_dirLight[2].Direction = XMFLOAT3(0.0f, -0.707f, -0.707f);
+
 
     // 점광원 - 위치는 애니메이션을 위해 매 프레임 Update에서 갱신된다.
-    m_pointLight.Ambient = XMFLOAT4(0.3f, 0.3f, 0.3f, 1.0f);
+    /*m_pointLight.Ambient = XMFLOAT4(0.3f, 0.3f, 0.3f, 1.0f);
     m_pointLight.Diffuse = XMFLOAT4(0.7f, 0.7f, 0.7f, 1.0f);
     m_pointLight.Specular = XMFLOAT4(0.7f, 0.7f, 0.7f, 1.0f);
     m_pointLight.Att = XMFLOAT3(0.0f, 0.1f, 0.0f);
-    m_pointLight.Range = 25.0f;
+    m_pointLight.Range = 25.0f;*/
 
     // 점적광원 설정 - 위치는 애니메이션을 위해 매 프레임 갱신
-    m_spotLight.Ambient = XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f);
+    /*m_spotLight.Ambient = XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f);
     m_spotLight.Diffuse = XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f);
     m_spotLight.Specular = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
     m_spotLight.Att = XMFLOAT3(1.0f, 0.0f, 0.0f);
     m_spotLight.Spot = 96.0f;
-    m_spotLight.Range = 10000.0f;
+    m_spotLight.Range = 10000.0f;*/
 
     m_landMaterial.Ambient = XMFLOAT4(0.48f, 0.77f, 0.46f, 1.0f);
     m_landMaterial.Diffuse = XMFLOAT4(0.48f, 0.77f, 0.46f, 1.0f);
@@ -114,13 +125,13 @@ void WaveModel::Update(float deltaTime)
 
     // animate the lights
     // circle light over the land surface
-    m_pointLight.Position.x = 70.0f * NtMathf::Cos(0.2f * g_app->Timer().TotalTime());
-    m_pointLight.Position.z = 70.0f * NtMathf::Sin(0.2f * g_app->Timer().TotalTime());
-    m_pointLight.Position.y = NtMathf::Max(GetHeight(m_pointLight.Position.x, m_pointLight.Position.z), -3.0f) + 10.0f;
+    //m_pointLight.Position.x = 70.0f * NtMathf::Cos(0.2f * g_app->Timer().TotalTime());
+    //m_pointLight.Position.z = 70.0f * NtMathf::Sin(0.2f * g_app->Timer().TotalTime());
+    //m_pointLight.Position.y = NtMathf::Max(GetHeight(m_pointLight.Position.x, m_pointLight.Position.z), -3.0f) + 10.0f;
 
-    m_spotLight.Position = m_eyePosW;
-    XMVECTOR pos = XMVectorSet(m_eyePosW.x, m_eyePosW.y, m_eyePosW.z, 1.0f);
-    XMStoreFloat3(&m_spotLight.Direction, XMVector3Normalize(XMVectorZero() - pos));
+    //m_spotLight.Position = m_eyePosW;
+    //XMVECTOR pos = XMVectorSet(m_eyePosW.x, m_eyePosW.y, m_eyePosW.z, 1.0f);
+    //XMStoreFloat3(&m_spotLight.Direction, XMVector3Normalize(XMVectorZero() - pos));
 }
 
 void WaveModel::Render(XMMATRIX& worldViewProj)
@@ -139,58 +150,51 @@ void WaveModel::Render(XMMATRIX& worldViewProj)
 
 	XMMATRIX viewProj = view * proj;
 
+    auto& LightShader = NtShaderHandler::LightShader;
 
-    m_fxDirLight->SetRawValue(&m_dirLight, 0, sizeof(m_dirLight));
-    m_fxPointLight->SetRawValue(&m_pointLight, 0, sizeof(m_pointLight));
-    m_fxSpotLight->SetRawValue(&m_spotLight, 0, sizeof(m_spotLight));
-    m_fxEyePosW->SetRawValue(&m_eyePosW, 0, sizeof(m_eyePosW));
+    LightShader->SetDirLights(m_dirLight);
+    LightShader->SetEyePosW(m_eyePosW);
+
+    //m_fxPointLight->SetRawValue(&m_pointLight, 0, sizeof(m_pointLight));
+    //m_fxSpotLight->SetRawValue(&m_spotLight, 0, sizeof(m_spotLight));
     
-
     D3DX11_TECHNIQUE_DESC techDesc;
-	ID3DX11EffectTechnique* tech = const_cast<ID3DX11EffectTechnique*>(m_lightShader->GetEffectTechnique());
-	//ID3DX11EffectMatrixVariable* effectMatrix = const_cast<ID3DX11EffectMatrixVariable*>(m_colorShader->GetEffectMatrix());
+    ID3DX11EffectTechnique* tech = LightShader->Light1Tech();
 
 	tech->GetDesc(&techDesc);
 
 	for (UINT p = 0; p < techDesc.Passes; ++p)
 	{
 		g_renderInterface->SetVertexBuffers(0, 1, &m_vertexBuffer, &stride, &offset);
-
 		g_renderInterface->SetIndexBuffers(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 
         // set per object constant.
+        // draw the grid
         XMMATRIX world = XMLoadFloat4x4(&m_gridWorld);
         XMMATRIX worldInvTranspose = NtD3dUtil::InverseTranspose(world);
         XMMATRIX goWorldViewProj = world * viewProj;
 
-        m_fxWorld->SetMatrix(reinterpret_cast<float*>(&world));
-        m_fxWorldInvTranspose->SetMatrix(reinterpret_cast<float*>(&worldInvTranspose));
-        
-        ID3DX11EffectMatrixVariable* fxWorldViewProj = const_cast<ID3DX11EffectMatrixVariable*>(m_lightShader->GetEffectMatrix());
-        fxWorldViewProj->SetMatrix(reinterpret_cast<float*>(&goWorldViewProj));
-        m_fxMaterial->SetRawValue(&m_landMaterial, 0, sizeof(m_landMaterial));
+        LightShader->SetWorld(world);
+        LightShader->SetWorldInvTranspose(worldInvTranspose);
+        LightShader->SetWorldViewProj(goWorldViewProj);
+        LightShader->SetMaterial(m_landMaterial);
 
-		// draw the grid
-		
-		//effectMatrix->SetMatrix(reinterpret_cast<float*>(&(world * viewProj)));
 		tech->GetPassByIndex(p)->Apply(0, g_renderer->DeviceContext());
 		g_renderer->DeviceContext()->DrawIndexed(m_gridIndexCount, 0, 0);
 
 		// draw the waves
 		g_renderInterface->SetVertexBuffers(0, 1, &m_waveVB, &stride, &offset);
-
 		g_renderInterface->SetIndexBuffers(m_waveIB, DXGI_FORMAT_R32_UINT, 0);
 
 		world = XMLoadFloat4x4(&m_wavesWorld);
         worldInvTranspose = NtD3dUtil::InverseTranspose(world);
         goWorldViewProj = world * viewProj;
 
-        m_fxWorld->SetMatrix(reinterpret_cast<float*>(&world));
-        m_fxWorldInvTranspose->SetMatrix(reinterpret_cast<float*>(&worldInvTranspose));
-        fxWorldViewProj->SetMatrix(reinterpret_cast<float*>(&goWorldViewProj));
-        m_fxMaterial->SetRawValue(&m_wavMaterial, 0, sizeof(m_wavMaterial));
+        LightShader->SetWorld(world);
+        LightShader->SetWorldInvTranspose(worldInvTranspose);
+        LightShader->SetWorldViewProj(goWorldViewProj);
+        LightShader->SetMaterial(m_wavMaterial);
 
-		//effectMatrix->SetMatrix(reinterpret_cast<float*>(&(world * viewProj)));
 		tech->GetPassByIndex(p)->Apply(0, g_renderer->DeviceContext());
 		g_renderer->DeviceContext()->DrawIndexed(3 * m_waves.TrisCount(), 0, 0);
 	}
@@ -249,16 +253,7 @@ void WaveModel::MakeGeometry()
     Vertex::NtLVertex* vtxArray = &vertices[0];
 	UINT* idxArray = &indices[0];
 
-	InitializeModelData(vtxArray, sizeof(Vertex::NtLVertex), vertices.size(), idxArray, indices.size());
-
-    m_fxDirLight = m_lightShader->GetEffectVariable("gDirLight");
-    m_fxPointLight = m_lightShader->GetEffectVariable("gPointLight");
-    m_fxSpotLight = m_lightShader->GetEffectVariable("gSpotLight");
-    m_fxMaterial = m_lightShader->GetEffectVariable("gMaterial");
-
-    m_fxEyePosW = m_lightShader->GetEffectVariable("gEyePosW")->AsVector();
-    m_fxWorld = m_lightShader->GetEffectVariable("gWorld")->AsMatrix();
-    m_fxWorldInvTranspose = m_lightShader->GetEffectVariable("gWorldInvTranspose")->AsMatrix();
+	InitializeModelData(vtxArray, sizeof(Vertex::NtLVertex), (ntInt)vertices.size(), idxArray, (ntInt)indices.size());
 
 	MakeWave();
 }
@@ -294,6 +289,6 @@ void WaveModel::MakeWave()
 	}
 
 	UINT* idxArray = &indices[0];
-	m_waveIB = MakeIndexBuffer(idxArray, indices.size());
+	m_waveIB = MakeIndexBuffer(idxArray, (ntInt)indices.size());
 }
 

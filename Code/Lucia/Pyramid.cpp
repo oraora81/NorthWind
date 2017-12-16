@@ -41,6 +41,5 @@ void Pyramid::MakeGeometry()
         1, 3, 2,
     };
     
-    const ntWchar* filePath = g_resManager->GetPath(L"simple_fx.fxo");
-    InitializeModelData(vertices, sizeof(Vertex::NtPCVertex), _countof(vertices), indices, _countof(indices), filePath, ShaderType::kColor);
+    InitializeModelData(vertices, sizeof(Vertex::NtPCVertex), _countof(vertices), indices, _countof(indices));
 }

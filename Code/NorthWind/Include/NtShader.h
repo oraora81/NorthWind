@@ -21,7 +21,7 @@ public:
 
     ID3D11InputLayout* GetInputLayout();
 
-    const ID3DX11EffectMatrixVariable* GetEffectMatrix();
+    const ID3DX11EffectMatrixVariable* GetWorldViewProj();
 
     const ntChar* GetVSModel() const;
 

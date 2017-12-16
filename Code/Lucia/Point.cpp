@@ -3,6 +3,8 @@
 
 #include "Point.h"
 #include "NtColorShader.h"
+#include "NtShaderHandler.h"
+#include "NtInputLayout.h"
 
 using namespace nt;
 
@@ -28,12 +30,14 @@ void Points::Render(XMMATRIX& worldViewProj)
 
 	g_renderInterface->SetIndexBuffers(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 
-	g_renderer->DeviceContext()->IASetInputLayout(m_colorShader->GetInputLayout());
+    auto& colorShader = NtShaderHandler::ColorShader;
+
+	g_renderer->DeviceContext()->IASetInputLayout(NtInputLayoutHandler::PCInputLayout);
 
 	D3DX11_TECHNIQUE_DESC techDesc;
 
-	ID3DX11EffectTechnique* tech = const_cast<ID3DX11EffectTechnique*>(m_colorShader->ColorTech);
-	ID3DX11EffectMatrixVariable* effectMatrix = const_cast<ID3DX11EffectMatrixVariable*>(m_colorShader->GetEffectMatrix());
+    ID3DX11EffectTechnique* tech = colorShader->ColorTech;
+	ID3DX11EffectMatrixVariable* effectMatrix = const_cast<ID3DX11EffectMatrixVariable*>(colorShader->GetWorldViewProj());
 
 	tech->GetDesc(&techDesc);
 
@@ -80,5 +84,5 @@ void Points::MakeGeometry()
 		4, 3, 7
 	};
 
-	InitializeModelData(vertices, sizeof(Vertex::NtPCVertex), _countof(vertices), indices, _countof(indices), L"../Code/Lucia/simple_fx.fxo", ShaderType::kColor);
+	InitializeModelData(vertices, sizeof(Vertex::NtPCVertex), _countof(vertices), indices, _countof(indices));
 }

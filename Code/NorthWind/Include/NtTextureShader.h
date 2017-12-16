@@ -28,11 +28,9 @@ public:
 private:
 	bool InitializeShader(const ntWchar* vs, const ntWchar* ps);
 
-	void ReleaseShader();
-
 	bool SetShaderParameter(const XMMATRIX& world, const XMMATRIX& view, const XMMATRIX& proj, ntUint handle);
 
-	void RenderShader(int indexCount);
+	void RenderShader(ntInt indexCount);
 
 private:
 	ID3D11Buffer*		m_matrixBuffer;

@@ -23,10 +23,6 @@ bool VSYNC_ENABLED = true;
 NtRenderer::NtRenderer()
 	: m_renderEngine(nullptr)
 	, m_camera(nullptr)
-	, m_puppet(nullptr)
-	, m_colorShader(nullptr)
-	, m_textureShader(nullptr)
-	, m_lightShader(nullptr)
 	, m_light(nullptr)
 {
 
@@ -91,10 +87,7 @@ void WholeReleaseObject(MEM_OBJ& obj)
 
 void NtRenderer::Release()
 {
-	//WholeReleaseObject(m_lightShader);
-	//WholeReleaseObject(m_textureShader);
-	//WholeReleaseObject(m_colorShader);
-	//WholeReleaseObject(m_puppet);
+
 }
 
 bool NtRenderer::Process(const ntFloat deltaTime)
