@@ -35,7 +35,10 @@ const D3D11_INPUT_ELEMENT_DESC NtInputLayout::PCLayout32bitColor[2] =
 };
 
 
-
+ID3D11InputLayout* NtInputLayoutHandler::PCInputLayout;
+ID3D11InputLayout* NtInputLayoutHandler::PNInputLayout;
+ID3D11InputLayout* NtInputLayoutHandler::PCInputLayoutEachSlot;
+ID3D11InputLayout* NtInputLayoutHandler::PCInputLayout32bitColor;
 
 bool NtInputLayoutHandler::Initialize()
 {

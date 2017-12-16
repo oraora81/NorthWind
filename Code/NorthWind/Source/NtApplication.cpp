@@ -7,7 +7,7 @@
 // 
 //----------------------------------------------------------------------------
 nt::app::NtApplication* g_app = nullptr;
-nt::fs::NtResourceManager* g_resManager = nullptr;
+nt::fs::NtResourceManager* g_resMgr = nullptr;
 nt::memory::NtLinearAllocator* g_liAllocator = nullptr;
 
 #if _NT_DX11
@@ -153,7 +153,7 @@ bool NtApplication::Initialize(bool fullscreen, ntInt width, ntInt height)
 		return false;
 	}
 
-	g_resManager = m_resManager;
+	g_resMgr = m_resManager;
 
 	// 
 	m_inputManager = new nt::input::NtInputManager;

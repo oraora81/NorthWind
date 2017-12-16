@@ -1388,7 +1388,7 @@ bool NtDDSLoader::LoadTextureDataFromFile(const ntWchar* fileName, std::unique_p
 		return false;
 	}
 
-	const ntWchar* fullPath = g_resManager->GetPath(fileName);
+	const ntWchar* fullPath = g_resMgr->GetPath(fileName);
 	if (nullptr == fullPath)
 	{
 		return false;

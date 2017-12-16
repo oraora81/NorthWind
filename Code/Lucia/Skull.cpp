@@ -40,7 +40,7 @@ void Skull::MakeGeometry()
 {
 	const ntWchar* fileName = L"skull.txt";
 
-	const ntWchar* path = g_resManager->GetPath(fileName);
+	const ntWchar* path = g_resMgr->GetPath(fileName);
 
     std::ifstream fin(path);
 
@@ -88,5 +88,5 @@ void Skull::MakeGeometry()
     Vertex::NtPCVertex* vtxArray = &vertices[0];
 	UINT* idxArray = &indices[0];
 
-	InitializeModelData(vtxArray, sizeof(Vertex::NtPCVertex), vertices.size(), idxArray, m_skullIndexCount);
+	InitializeModelData(vtxArray, sizeof(Vertex::NtPCVertex), (ntInt)vertices.size(), idxArray, m_skullIndexCount);
 }

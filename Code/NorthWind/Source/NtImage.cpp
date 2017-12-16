@@ -25,7 +25,7 @@ NtImage::~NtImage()
 
 bool NtImage::Initialize(const ntWchar* fileName, ntInt screenWidth, ntInt screenHeight)
 {
-	m_texHandle = g_resManager->LoadTexture(fileName);
+	m_texHandle = g_resMgr->LoadTexture(fileName);
 	if (m_texHandle == INVALID_TEXTURE_HANDLE)
 	{
 		return false;
@@ -53,7 +53,7 @@ bool NtImage::Initialize(const ntWchar* fileName, ntInt screenWidth, ntInt scree
 
 void NtImage::Release()
 {
-	g_resManager->ReleaseTexture(m_texHandle);
+	g_resMgr->ReleaseTexture(m_texHandle);
 }
 
 

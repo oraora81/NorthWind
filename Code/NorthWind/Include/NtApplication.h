@@ -98,7 +98,7 @@ namespace fs {
 
 
 extern nt::app::NtApplication* g_app;
-extern nt::fs::NtResourceManager* g_resManager;
+extern nt::fs::NtResourceManager* g_resMgr;
 extern nt::memory::NtLinearAllocator* g_liAllocator;
 extern nt::renderer::NtRenderer* g_renderInterface;
 extern std::shared_ptr<nt::renderer::NtDx11Renderer> g_renderer;

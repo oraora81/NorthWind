@@ -909,7 +909,7 @@ void NtAse::ParseMapDiffuse(NtMaterial* material)
 			NtString fileName(material->m_bitmapName.Buffer(), static_cast<ntInt>(lastPos+1), static_cast<ntInt>(material->m_bitmapName.Size()));
 			material->m_bitmapName = fileName;
 
-			ntUint handle = g_resManager->LoadTexture(fileName.Buffer());
+			ntUint handle = g_resMgr->LoadTexture(fileName.Buffer());
 			if (INVALID_TEXTURE_HANDLE == handle)
 			{
 				OutputErrorMsg(Crt::MakeString(L"Texture found failed! : %s", fileName.Buffer()));

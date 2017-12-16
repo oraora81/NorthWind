@@ -93,7 +93,7 @@ bool NtTexture::CreateTextureFromDDSFile(const ntWchar* fileName)
 
 bool NtTexture::CreateTextureFromResourceFile(const ntWchar* fileName)
 {
-	const ntWchar* fullPath = g_resManager->GetPath(fileName);
+	const ntWchar* fullPath = g_resMgr->GetPath(fileName);
 	if (nullptr == fullPath)
 	{
 		return false;

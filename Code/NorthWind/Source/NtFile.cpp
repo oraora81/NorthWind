@@ -23,7 +23,7 @@ NtFile::~NtFile()
 
 bool NtFile::Execute(const ntWchar* fileName, IO_MODE mode /*= IO_READ*/)
 {
-	const ntWchar* fullPath = g_resManager->GetPath(fileName);
+	const ntWchar* fullPath = g_resMgr->GetPath(fileName);
 	if (nullptr == fullPath)
 	{
 		return false;
