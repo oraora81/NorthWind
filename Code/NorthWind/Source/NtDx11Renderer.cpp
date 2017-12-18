@@ -371,7 +371,7 @@ NtDx11Renderer::~NtDx11Renderer()
 	SAFE_RELEASE(m_swapchain);
 }
 
-/*virtual*/ void NtDx11Renderer::BeginScene(const float* color)
+/*virtual*/ void NtDx11Renderer::BeginScene(const ntFloat* color)
 {
 	// back buffer Å¬¸®¾î
 	m_deviceContext->ClearRenderTargetView(m_renderTargetView, color);
@@ -502,4 +502,3 @@ bool NtDx11Renderer::CreateShaderResourceView(ID3D11Texture3D* tex,D3D11_SHADER_
 }
 
 } }
-
