@@ -14,16 +14,16 @@ namespace
 {
 	float GetHeight(float x, float z)
 	{
-		return 0.3f * (z * NtMath<float>::Sin(0.1f * x) * NtMath<float>::Cos(0.1f * z));
+		return 0.3f * (z * NtMathf::Sin(0.1f * x) * NtMathf::Cos(0.1f * z));
 	}
 
     XMFLOAT3 GetHillNormal(float x, float z)
     {
         // n = (-df/dx, 1, -df/dz)
         XMFLOAT3 n(
-            -0.03f* z * NtMath<float>::Cos(0.1f * x) - 0.3f * NtMath<float>::Cos(0.1f * z),
+            -0.03f* z * NtMathf::Cos(0.1f * x) - 0.3f * NtMathf::Cos(0.1f * z),
             1.0f,
-            -0.3f* NtMath<float>::Sin(0.1f * x) + 0.03f * x * NtMath<float>::Sin(0.1f * z));
+            -0.3f* NtMathf::Sin(0.1f * x) + 0.03f * x * NtMathf::Sin(0.1f * z));
 
         XMVECTOR unitNormal = XMVector3Normalize(XMLoadFloat3(&n));
         XMStoreFloat3(&n, unitNormal);

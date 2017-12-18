@@ -42,12 +42,6 @@ public:
 
 	void GetDeviceCardInfo(NtString& cardName, ntInt& memory);
 
-	const ntChar* GetVShaderModel() const;
-
-	const ntChar* GetPShaderModel() const;
-
-	const ntChar* GetFxShaderModel() const;
-
 	ntInt VideoMemory() const;
 
 	// error Report
@@ -62,8 +56,7 @@ private:
 protected:
 	ntInt m_videoCardMemory;
 	NtString m_videoCardDescription;
-	ntChar*	m_shaderModel[3];
-
+	
 	XMFLOAT4X4 m_world;
 	XMFLOAT4X4 m_view;
 	XMFLOAT4X4 m_proj;

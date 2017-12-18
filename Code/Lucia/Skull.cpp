@@ -7,8 +7,8 @@
 using namespace nt;
 
 Skull::Skull()
-    : m_theta(1.5f * nt::NtMath<float>::PI)
-    , m_phi(0.25f * nt::NtMath<float>::PI)
+    : m_theta(1.5f * nt::NtMathf::PI)
+    , m_phi(0.25f * nt::NtMathf::PI)
     , m_radius(5.0f)
 {
 
@@ -23,9 +23,9 @@ void Skull::Update(float deltaTime)
 {
     NtModel::Update(deltaTime);
 
-    float x = m_radius * nt::NtMath<float>::Sin(m_phi) * nt::NtMath<float>::Cos(m_theta);
-    float z = m_radius * nt::NtMath<float>::Sin(m_phi) * nt::NtMath<float>::Sin(m_theta);
-    float y = m_radius * nt::NtMath<float>::Cos(m_phi);
+    float x = m_radius * nt::NtMathf::Sin(m_phi) * nt::NtMathf::Cos(m_theta);
+    float z = m_radius * nt::NtMathf::Sin(m_phi) * nt::NtMathf::Sin(m_theta);
+    float y = m_radius * nt::NtMathf::Cos(m_phi);
 
     XMVECTOR pos = XMVectorSet(x, y, z, 1.0f);
     XMVECTOR target = XMVectorZero();

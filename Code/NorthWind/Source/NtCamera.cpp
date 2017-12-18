@@ -56,9 +56,9 @@ void NtCamera::Render()
 	XMVECTOR look = XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f);
 
 	// yaw(Y axis), pitch(X), roll(Z) 라디안으로 회전값 설정
-	ntFloat pitch = m_rot[0] * NtMath<float>::DEG_TO_RAD;
-	ntFloat yaw = m_rot[1] * NtMath<float>::DEG_TO_RAD;
-	ntFloat roll = m_rot[2] * NtMath<float>::DEG_TO_RAD;
+	ntFloat pitch = m_rot[0] * NtMathf::DEG_TO_RAD;
+	ntFloat yaw = m_rot[1] * NtMathf::DEG_TO_RAD;
+	ntFloat roll = m_rot[2] * NtMathf::DEG_TO_RAD;
 
 	// yaw, pitch, roll 값으로 회전 행렬 설정
 	XMMATRIX rotationMatrix = XMMatrixRotationRollPitchYaw(pitch, yaw, roll);

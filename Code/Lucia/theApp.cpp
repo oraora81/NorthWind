@@ -118,7 +118,7 @@ void TheApp::OnMouseMove(WPARAM buttonState, ntInt x, ntInt y)
 		m_model->Theta() += dx;
 		m_model->Phi() += dy;
 
-		float phi = NtMath<float>::Clamp(m_model->Phi(), 0.1f, NtMath<float>::PI - 0.1f);
+		float phi = NtMathf::Clamp(m_model->Phi(), 0.1f, NtMathf::PI - 0.1f);
 		m_model->Phi(phi);
 	}
 	else if ((buttonState & MK_RBUTTON) != 0)
@@ -129,7 +129,7 @@ void TheApp::OnMouseMove(WPARAM buttonState, ntInt x, ntInt y)
 
 		float r = m_model->Radius();
 		r += (dx - dy);
-		r = NtMath<float>::Clamp(r, 50.0f, 500.0f);
+		r = NtMathf::Clamp(r, 50.0f, 500.0f);
 		m_model->Radius(r);
 	}
 

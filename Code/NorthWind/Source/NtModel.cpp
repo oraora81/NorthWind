@@ -22,8 +22,8 @@ NtModel::NtModel()
 	, m_vertexCount(0)
 	, m_indexCount(0)
 	, m_puppetRawData(nullptr)
-    , m_theta(1.5f * NtMath<float>::PI)
-    , m_phi(0.25f * NtMath<float>::PI)
+    , m_theta(1.5f * NtMathf::PI)
+    , m_phi(0.25f * NtMathf::PI)
     , m_radius(5.0f)
 {
     m_eyePosW = XMFLOAT3(0.0f, 0.0f, 0.0f);
@@ -54,9 +54,9 @@ void NtModel::Release()
 
 void NtModel::Update(float deltaTime)
 {
-    float x = m_radius * NtMath<float>::Sin(m_phi) * NtMath<float>::Cos(m_theta);
-    float z = m_radius * NtMath<float>::Sin(m_phi) * NtMath<float>::Sin(m_theta);
-    float y = m_radius * NtMath<float>::Cos(m_phi);
+    float x = m_radius * NtMathf::Sin(m_phi) * NtMathf::Cos(m_theta);
+    float z = m_radius * NtMathf::Sin(m_phi) * NtMathf::Sin(m_theta);
+    float y = m_radius * NtMathf::Cos(m_phi);
 
     m_eyePosW = XMFLOAT3(x, y, z);
 

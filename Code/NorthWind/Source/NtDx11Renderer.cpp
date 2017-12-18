@@ -205,31 +205,6 @@ NtDx11Renderer::~NtDx11Renderer()
 		D3D11_SDK_VERSION, 
 		&swapChainDesc, &m_swapchain, &m_device, &featureLevel, &m_deviceContext));
 
-	switch(featureLevel)
-	{
-	case D3D_FEATURE_LEVEL_9_1:
-	case D3D_FEATURE_LEVEL_9_2:
-	case D3D_FEATURE_LEVEL_9_3:
-		m_shaderModel[0] = "vs_2_0";
-		m_shaderModel[1] = "ps_2_0";
-		m_shaderModel[2] = "fx_2_0";
-		break;
-	case D3D_FEATURE_LEVEL_10_0:
-	case D3D_FEATURE_LEVEL_10_1:
-		m_shaderModel[0] = "vs_4_0";
-		m_shaderModel[1] = "ps_4_0";
-		m_shaderModel[2] = "fx_4_0";
-		break;
-	case D3D_FEATURE_LEVEL_11_0:
-		m_shaderModel[0] = "vs_5_0";
-		m_shaderModel[1] = "ps_5_0";
-		m_shaderModel[2] = "fx_5_0";
-		break;
-
-	default:
-		return false;
-	}
-
 	// release tools
 	SAFE_DELETE_ARRAY(displayModeList);
 	SAFE_RELEASE(adapterOutput);
@@ -360,7 +335,7 @@ NtDx11Renderer::~NtDx11Renderer()
 	m_deviceContext->RSSetViewports(1, &viewport);
 
 	// 橇肺璃记 青纺 积己
-	float fov = (ntFloat)NtMath<float>::PI * 0.25f;
+	float fov = (ntFloat)NtMathf::PI * 0.25f;
 	
 	// 
 	XMMATRIX p = XMMatrixPerspectiveFovLH(fov, g_app->AspectRatio(), screenNear, screenDepth);
@@ -477,7 +452,7 @@ NtDx11Renderer::~NtDx11Renderer()
 
 	m_deviceContext->RSSetViewports(1, &viewport);
 
-	float fov = (ntFloat)NtMath<float>::PI * 0.25f;
+	float fov = (ntFloat)NtMathf::PI * 0.25f;
 	XMMATRIX p = XMMatrixPerspectiveFovLH(fov, g_app->AspectRatio(), 1.0f, 1000.0f);
 	XMStoreFloat4x4(&m_proj, p);
 

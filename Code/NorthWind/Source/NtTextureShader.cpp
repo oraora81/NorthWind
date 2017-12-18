@@ -58,7 +58,7 @@ bool NtTextureShader::InitializeShader(const ntWchar* vs, const ntWchar* ps)
 	ID3D10Blob* vertexShaderBuffer = nullptr;
 	ID3D10Blob* pixelShaderBuffer = nullptr;
 
-	HRESULT res = D3DX11CompileFromFile(g_resMgr->GetPath(vs), NULL, NULL, "TextureVertexShader", g_renderer->GetVShaderModel(), D3D10_SHADER_ENABLE_STRICTNESS, 0, NULL, &vertexShaderBuffer, &errMsg, NULL);
+	HRESULT res = D3DX11CompileFromFile(g_resMgr->GetPath(vs), NULL, NULL, "TextureVertexShader", "vs_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, NULL, &vertexShaderBuffer, &errMsg, NULL);
 	if (FAILED(res))
 	{
 		// if the shader failed to compile it should have written something to the error msg
@@ -76,7 +76,7 @@ bool NtTextureShader::InitializeShader(const ntWchar* vs, const ntWchar* ps)
 
 	
 	// compile pixel shader
-	res = D3DX11CompileFromFile(g_resMgr->GetPath(ps), NULL, NULL, "TexturePixelShader", g_renderer->GetPShaderModel(), D3D10_SHADER_ENABLE_STRICTNESS, 0, NULL, &pixelShaderBuffer, &errMsg, NULL);
+	res = D3DX11CompileFromFile(g_resMgr->GetPath(ps), NULL, NULL, "TexturePixelShader", "ps_5_0", D3D10_SHADER_ENABLE_STRICTNESS, 0, NULL, &pixelShaderBuffer, &errMsg, NULL);
 	if (FAILED(res))
 	{
 		if (errMsg)

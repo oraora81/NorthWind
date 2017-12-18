@@ -111,9 +111,9 @@ void NtGeometryGenerator::CreateSphere(ntFloat radius, ntUint slideCount, ntUint
 			gVertex v;
 
 			// spherical to cartesian
-			v.Position.x = radius * NtMath<float>::Sin(phi) * NtMath<ntFloat>::Cos(theta);
-			v.Position.y = radius * NtMath<ntFloat>::Cos(phi);
-			v.Position.z = radius * NtMath<ntFloat>::Sin(phi) * NtMath<ntFloat>::Sin(theta);
+			v.Position.x = radius * NtMathf::Sin(phi) * NtMath<ntFloat>::Cos(theta);
+			v.Position.y = radius * NtMathf::Cos(phi);
+			v.Position.z = radius * NtMathf::Sin(phi) * NtMath<ntFloat>::Sin(theta);
 
 			// Partial derivative of P with respect to theta
 			v.TangentU.x = -radius * NtMath<ntFloat>::Sin(phi) * NtMath<ntFloat>::Sin(theta);
@@ -241,7 +241,7 @@ void NtGeometryGenerator::CreateGeosphere(ntFloat radius, ntUint numSubdivision,
 		XMStoreFloat3(&meshData.Vertices[i].Normal, n);
 
 		// Derive texture coordinates from spherical coordinates.
-		ntFloat theta = NtMath<float>::Angle(
+		ntFloat theta = NtMathf::Angle(
 			meshData.Vertices[i].Position.x,
 			meshData.Vertices[i].Position.z);
 

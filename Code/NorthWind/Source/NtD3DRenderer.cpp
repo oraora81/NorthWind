@@ -77,21 +77,6 @@ void NtD3DRenderer::GetDeviceCardInfo(NtString& cardName, ntInt& memory)
 	memory = m_videoCardMemory;
 }
 
-const ntChar* NtD3DRenderer::GetVShaderModel() const
-{
-	return m_shaderModel[0];
-}
-
-const ntChar* NtD3DRenderer::GetPShaderModel() const
-{
-	return m_shaderModel[1];
-}
-
-const ntChar* NtD3DRenderer::GetFxShaderModel() const
-{
-	return m_shaderModel[2];
-}
-
 ntInt NtD3DRenderer::VideoMemory() const
 {
 	return m_videoCardMemory;
