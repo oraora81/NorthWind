@@ -17,12 +17,14 @@ bool NtShaderHandler::Initialize()
     LightShader = std::make_unique<NtLightShader>();
     ColorShader = std::make_unique<NtColorShader>();
 
-    if (ColorShader->InitializeFx(L"../bin/simple_fx.fxo") == false)
+    const ntWchar* filePath = g_resMgr->GetPath(L"simple_fx.fxo");
+    if (ColorShader->InitializeFx(filePath) == false)
     {
         return false;
     }
 
-    if (LightShader->InitializeFx(L"../bin/light.fxo") == false)
+    filePath = g_resMgr->GetPath(L"light.fxo");
+    if (LightShader->InitializeFx(filePath) == false)
     {
         return false;
     }

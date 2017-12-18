@@ -9,7 +9,6 @@ namespace nt { namespace renderer {
 
 NtTextureShader::NtTextureShader()
 	: NtShader()
-	, m_matrixBuffer(nullptr)
 	, m_sampleState(nullptr)
 {
 
@@ -32,7 +31,6 @@ void NtTextureShader::Release()
 	NtShader::Release();
 
 	SAFE_RELEASE(m_sampleState);
-	SAFE_RELEASE(m_matrixBuffer);
 }
 
 void NtTextureShader::RenderShader(ntInt indexCount)
