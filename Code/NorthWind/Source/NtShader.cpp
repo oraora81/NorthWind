@@ -66,6 +66,8 @@ bool NtShader::InitializeFx(const ntWchar* fx)
         g_renderer->Device(),
         &m_fx,
         nullptr));
+
+    return true;
 }
 
 void NtShader::Release()
