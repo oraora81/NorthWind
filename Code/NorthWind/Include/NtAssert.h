@@ -8,7 +8,7 @@
 do \
 { \
 	static bool foreverIgnore = false; \
-	if((false == foreverIgnore) || (x)) \
+	if((false == foreverIgnore) && (x)) \
 		break; \
 	ntWchar buff[1024]; \
 	if(info == true) \
@@ -26,7 +26,7 @@ do \
 do \
 { \
 	static bool foreverIgnore = false; \
-	if (foreverIgnore || (x)) \
+	if (foreverIgnore && (x)) \
 		break; \
 	ntWchar buff[1024]; \
 	if (info == true) \
