@@ -6,6 +6,7 @@
 #include "NtGeometryGenerator.h"
 #include "NtColorShader.h"
 #include "NtShaderHandler.h"
+#include "NtInputLayout.h"
 
 using namespace nt;
 
@@ -55,7 +56,7 @@ void Shapes::Render(XMMATRIX& worldViewProj)
 
     auto& colorShader = NtShaderHandler::ColorShader;
 
-	g_renderer->DeviceContext()->IASetInputLayout(colorShader->GetInputLayout());
+	g_renderer->DeviceContext()->IASetInputLayout(NtInputLayoutHandler::PCInputLayout);
 
 	XMMATRIX view;
 	XMMATRIX proj;

@@ -19,8 +19,6 @@ public:
 
     ID3DX11EffectVariable* GetEffectVariable(ntChar* effectName);
 
-    ID3D11InputLayout* GetInputLayout();
-
     const ID3DX11EffectMatrixVariable* GetWorldViewProj();
 
     const ntChar* GetVSModel() const;
@@ -51,7 +49,6 @@ public:
 protected:
     ID3D11VertexShader*	m_vertexShader;
     ID3D11PixelShader*	m_pixelShader;
-    ID3D11InputLayout*	m_layout;
     ID3DX11Effect*      m_fx;
     ID3DX11EffectMatrixVariable* m_fxWorldViewProj;
 };

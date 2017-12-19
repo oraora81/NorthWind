@@ -7,6 +7,7 @@
 #include "NtColorShader.h"
 #include "NtLightShader.h"
 #include "NtShaderHandler.h"
+#include "NtInputLayout.h"
 
 using namespace nt;
 
@@ -141,7 +142,7 @@ void WaveModel::Render(XMMATRIX& worldViewProj)
 
 	g_renderInterface->SetPrimitiveTopology(PrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	g_renderer->DeviceContext()->IASetInputLayout(NtShaderHandler::LightShader->GetInputLayout());
+    g_renderer->DeviceContext()->IASetInputLayout(NtInputLayoutHandler::PNInputLayout);
 
 	XMMATRIX view;
 	XMMATRIX proj;

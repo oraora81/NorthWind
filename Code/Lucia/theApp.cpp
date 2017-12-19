@@ -78,8 +78,8 @@ bool TheApp::Initialize(bool fullscreen, ntInt width, ntInt height)
 	//DoImport(buf);
 
 	//m_model = new Box();
-	m_model = new Hills();
-	//m_model = new Shapes();
+	//m_model = new Hills();
+	m_model = new Shapes();
 	//model = new Skull();
 	//m_model = new WaveModel();
 	//m_model = new Points();

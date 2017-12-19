@@ -44,7 +44,6 @@ static ntChar* g_fxShaderModel[FxShaderModel::NT_MAX_FXSHADER_MODEL] =
 NtShader::NtShader()
     : m_vertexShader(nullptr)
     , m_pixelShader(nullptr)
-    , m_layout(nullptr)
     , m_fx(nullptr)
     , m_fxWorldViewProj(nullptr)
 {
@@ -74,7 +73,6 @@ void NtShader::Release()
 {
     SAFE_RELEASE(m_fxWorldViewProj);
     SAFE_RELEASE(m_fx);
-    SAFE_RELEASE(m_layout);
     SAFE_RELEASE(m_pixelShader);
     SAFE_RELEASE(m_vertexShader);
 }
@@ -92,13 +90,6 @@ void NtShader::SetVShaderModel(VShaderModel vs)
 void NtShader::SetPShaderModel(PShaderModel ps)
 {
 	ms_psModel = ps;
-}
-
-ID3D11InputLayout* NtShader::GetInputLayout()
-{
-    NtAsserte(m_layout);
-
-    return m_layout;
 }
 
 const ID3DX11EffectMatrixVariable* NtShader::GetWorldViewProj()

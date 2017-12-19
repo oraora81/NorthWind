@@ -398,9 +398,9 @@ NtDx11Renderer::~NtDx11Renderer()
 
 /*virtual*/ bool NtDx11Renderer::Resize(ntInt width, ntInt height)
 {
-	NtAsserte(m_deviceContext);
-	NtAsserte(m_device);
-	NtAsserte(m_swapchain);
+	NtAsserte(m_deviceContext != nullptr);
+	NtAsserte(m_device != nullptr);
+	NtAsserte(m_swapchain != nullptr);
 
 	//
 	SAFE_RELEASE(m_renderTargetView);

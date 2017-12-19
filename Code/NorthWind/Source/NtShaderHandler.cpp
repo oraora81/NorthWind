@@ -23,7 +23,7 @@ bool NtShaderHandler::Initialize()
         return false;
     }
 
-    filePath = g_resMgr->GetPath(L"light.fxo");
+    filePath = g_resMgr->GetPath(L"basic.fxo");
     if (LightShader->InitializeFx(filePath) == false)
     {
         return false;

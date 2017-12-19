@@ -17,7 +17,7 @@ void NtInitDelegator::AddInitDelegator(InitDelegator func)
 	}
 	else
 	{
-		NtAsserte(0);
+		NtAsserte(false);
 	}
 }
 
@@ -38,7 +38,7 @@ void NtInitDelegator::AddReleaseDelegator(ReleaseDelegator func)
 	}
 	else
 	{
-		NtAsserte(0);
+		NtAsserte(false);
 	}
 }
 

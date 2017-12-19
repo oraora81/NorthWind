@@ -39,7 +39,7 @@ struct VertexIn
 struct VertexOut
 {
     float4 PosH : SV_POSITION;
-    float3 POsW : POSITION;
+    float3 PosW : POSITION;
     float3 NormalW : NORMAL;
 };
 
@@ -63,7 +63,7 @@ float4 PS(VertexOut pin, uniform int gLightCount) : SV_Target
     pin.NormalW = normalize(pin.NormalW);
     
     // The toEye vector is used in lighting.
-    float3 toEye = gEyePos - pin.PosW;
+    float3 toEye = gEyePosW - pin.PosW;
 
     // Cache the distance to the eye from this surface point
     float distToEye = length(toEye);
@@ -107,7 +107,7 @@ technique11 Light1
         SetVertexShader(CompileShader(vs_5_0, VS()));
         SetGeometryShader(NULL);
         SetPixelShader(CompileShader(ps_5_0, PS(1)));
-    };
+    }
 };
 
 technique11 Light2
@@ -117,7 +117,7 @@ technique11 Light2
         SetVertexShader(CompileShader(vs_5_0, VS()));
         SetGeometryShader(NULL);
         SetPixelShader(CompileShader(ps_5_0, PS(2)));
-    };
+    }
 };
 
 technique11 Light3
@@ -127,5 +127,10 @@ technique11 Light3
         SetVertexShader(CompileShader(vs_5_0, VS()));
         SetGeometryShader(NULL);
         SetPixelShader(CompileShader(ps_5_0, PS(3)));
-    };
+    }
 };
+
+// Debug
+// fxc /Fc /Od /Zi /T fx_5_0 /Fo ...fxo ...
+// Release
+// fxc /T fx_5_0 /Fo ...fxo ...

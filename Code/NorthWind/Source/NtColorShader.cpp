@@ -4,6 +4,7 @@
 #include "NtColorShader.h"
 #include "NtD3DRenderer.h"
 #include "NtShaderHandler.h"
+#include "NtInputLayout.h"
 
 namespace nt { namespace renderer {
 
@@ -38,7 +39,7 @@ bool NtColorShader::InitializeFx(const ntWchar* fx)
 
 bool NtColorShader::RenderFx(ntInt indexCount, const XMMATRIX& worldViewProj)
 {
-	g_renderer->DeviceContext()->IASetInputLayout(m_layout);
+	g_renderer->DeviceContext()->IASetInputLayout(NtInputLayoutHandler::PCInputLayout);
 	
 	m_fxWorldViewProj->SetMatrix(reinterpret_cast<const float*>(&worldViewProj));
 

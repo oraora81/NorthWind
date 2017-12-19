@@ -36,7 +36,7 @@ void NtTextureShader::Release()
 void NtTextureShader::RenderShader(ntInt indexCount)
 {
 	// set the vertex input layout.
-	g_renderer->DeviceContext()->IASetInputLayout(m_layout);
+	//g_renderer->DeviceContext()->IASetInputLayout(m_layout);
 
 	// set the vertex and pixel shaders that will be used to render this triangle.
 	g_renderer->DeviceContext()->VSSetShader(m_vertexShader, NULL, 0);
