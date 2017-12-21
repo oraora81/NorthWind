@@ -38,6 +38,7 @@ WaveModel::WaveModel()
 	, m_waveIB(nullptr)
     , m_fxPointLight(nullptr)
     , m_fxSpotLight(nullptr)
+    , m_gridIndexCount(0)
 {
 	XMMATRIX I = XMMatrixIdentity();
 	XMStoreFloat4x4(&m_gridWorld, I);
@@ -160,7 +161,7 @@ void WaveModel::Render(XMMATRIX& worldViewProj)
     //m_fxSpotLight->SetRawValue(&m_spotLight, 0, sizeof(m_spotLight));
     
     D3DX11_TECHNIQUE_DESC techDesc;
-    ID3DX11EffectTechnique* tech = LightShader->Light1Tech();
+    ID3DX11EffectTechnique* tech = LightShader->Light3Tech();
 
 	tech->GetDesc(&techDesc);
 
@@ -250,6 +251,7 @@ void WaveModel::MakeGeometry()
 
 	std::vector<UINT> indices;
 	indices.insert(indices.end(), grid.Indices.begin(), grid.Indices.end());
+    m_gridIndexCount = (ntInt)grid.Indices.size();
 
     Vertex::NtLVertex* vtxArray = &vertices[0];
 	UINT* idxArray = &indices[0];

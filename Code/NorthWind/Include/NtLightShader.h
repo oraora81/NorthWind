@@ -33,8 +33,8 @@ public:
 	inline void SetDirLights(const DirectionalLight* light);
 	inline void SetMaterial(const Material& mat);
 	inline ID3DX11EffectTechnique* Light1Tech() const;
-	inline const ID3DX11EffectTechnique* Light2Tech() const;
-	inline const ID3DX11EffectTechnique* Light3Tech() const;
+	inline ID3DX11EffectTechnique* Light2Tech() const;
+	inline ID3DX11EffectTechnique* Light3Tech() const;
 
 private:
 	ID3DX11EffectTechnique* m_light1;

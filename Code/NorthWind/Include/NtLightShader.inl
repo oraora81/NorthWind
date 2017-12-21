@@ -29,12 +29,12 @@ ID3DX11EffectTechnique* NtLightShader::Light1Tech() const
     return m_light1;
 }
 
-const ID3DX11EffectTechnique* NtLightShader::Light2Tech() const
+ID3DX11EffectTechnique* NtLightShader::Light2Tech() const
 {
     return m_light2;
 }
 
-const ID3DX11EffectTechnique* NtLightShader::Light3Tech() const
+ID3DX11EffectTechnique* NtLightShader::Light3Tech() const
 {
     return m_light3;
 }
