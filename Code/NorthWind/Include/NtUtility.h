@@ -35,12 +35,4 @@ inline NtDuet<T1, T2> make_duet(const T1& type1, const T2& type2)
 	return NtDuet<T1, T2>(type1, type2);
 }
 
-template <typename MAT, typename EV>
-void SetMatrix(MAT m, EV fxVarialble)
-{
-    NtAsserte(fxVarialble != nullptr);
-
-    fxVarialble->SetMatrix(reinterpret_cast<const float*>(&m));
-}
-
 } // namespace nt

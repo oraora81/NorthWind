@@ -8,6 +8,7 @@
 #include "NtLightShader.h"
 #include "NtShaderHandler.h"
 #include "NtInputLayout.h"
+#include "NtSampleShader.h"
 
 using namespace nt;
 
@@ -156,17 +157,14 @@ void WaveModel::Render(XMMATRIX& worldViewProj)
 
     auto& LightShader = NtShaderHandler::SampleLightShader;
 
-    nt::SetMatrix(m_dirLight, NtShaderHandler::LightShader->FxWorld());
-
-    LightShader->SetDirLights(m_dirLight);
+    LightShader->SetDirLight(&m_dirLight);
+    LightShader->SetPointLight(&m_pointLight);
+    LightShader->SetSpotLight(&m_spotLight);
     LightShader->SetEyePosW(m_eyePosW);
 
-    //m_fxPointLight->SetRawValue(&m_pointLight, 0, sizeof(m_pointLight));
-    //m_fxSpotLight->SetRawValue(&m_spotLight, 0, sizeof(m_spotLight));
-    
     D3DX11_TECHNIQUE_DESC techDesc;
-    ID3DX11EffectTechnique* tech;
-    switch (m_lightCount)
+    ID3DX11EffectTechnique* tech = LightShader->LightTech();
+    /*switch (m_lightCount)
     {
     case 1:
         tech = LightShader->Light1Tech();
@@ -177,7 +175,7 @@ void WaveModel::Render(XMMATRIX& worldViewProj)
     case 3:
         tech = LightShader->Light3Tech();
         break;
-    }
+    }*/
     
 
 	tech->GetDesc(&techDesc);

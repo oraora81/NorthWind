@@ -33,7 +33,7 @@ bool NtSampleShader::InitializeFx(const ntWchar* fx)
         return false;
     }
 
-    m_lightTech = m_fx->GetTechniqueByName("");
+    m_lightTech = m_fx->GetTechniqueByName("LightTech");
     m_fxWorldViewProj = m_fx->GetVariableByName("gWorldViewProj")->AsMatrix();
     m_fxWorld = m_fx->GetVariableByName("gWorld")->AsMatrix();
     m_fxWorldInvTranspose = m_fx->GetVariableByName("gWorldInvTranspose")->AsMatrix();
@@ -43,12 +43,23 @@ bool NtSampleShader::InitializeFx(const ntWchar* fx)
     m_fxSpotLight = m_fx->GetVariableByName("gSpotLight");
     m_fxMaterial = m_fx->GetVariableByName("gMaterial");
 
+    NtAsserte(m_lightTech != nullptr);
+    NtAsserte(m_fxWorldViewProj != nullptr);
+    NtAsserte(m_fxWorld != nullptr);
+    NtAsserte(m_fxWorldInvTranspose != nullptr);
+    NtAsserte(m_fxEyePosW != nullptr);
+    NtAsserte(m_fxDirLight != nullptr);
+    NtAsserte(m_fxPointLight != nullptr);
+    NtAsserte(m_fxSpotLight != nullptr);
+    NtAsserte(m_fxMaterial != nullptr);
+
     return true;
 }
 
 void NtSampleShader::Release()
 {
     SAFE_RELEASE(m_lightTech);
+    SAFE_RELEASE(m_fxWorldViewProj);
     SAFE_RELEASE(m_fxWorld);
     SAFE_RELEASE(m_fxWorldInvTranspose);
     SAFE_RELEASE(m_fxEyePosW);
