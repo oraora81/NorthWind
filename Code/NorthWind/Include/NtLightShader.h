@@ -24,8 +24,6 @@ public:
 
 	void Release() override;
 
-	bool RenderFx(ntInt indexCount, const XMMATRIX& worldViewProj);
-
 public:
 	inline void SetWorld(CXMMATRIX m);
 	inline void SetWorldInvTranspose(CXMMATRIX m);

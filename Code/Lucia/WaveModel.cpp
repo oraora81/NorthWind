@@ -39,6 +39,7 @@ WaveModel::WaveModel()
     , m_fxPointLight(nullptr)
     , m_fxSpotLight(nullptr)
     , m_gridIndexCount(0)
+    , m_lightCount(1)
 {
 	XMMATRIX I = XMMatrixIdentity();
 	XMStoreFloat4x4(&m_gridWorld, I);
@@ -56,7 +57,7 @@ WaveModel::WaveModel()
     m_dirLight[1].Diffuse = XMFLOAT4(0.20f, 0.20f, 0.20f, 1.0f);
     m_dirLight[1].Specular = XMFLOAT4(0.25f, 0.25f, 0.25f, 1.0f);
     m_dirLight[1].Direction = XMFLOAT3(-0.57735f, -0.57735f, 0.57735f);
-
+    
     m_dirLight[2].Ambient = XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f);
     m_dirLight[2].Diffuse = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
     m_dirLight[2].Specular = XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f);
@@ -77,7 +78,7 @@ WaveModel::WaveModel()
     m_spotLight.Att = XMFLOAT3(1.0f, 0.0f, 0.0f);
     m_spotLight.Spot = 96.0f;
     m_spotLight.Range = 10000.0f;*/
-
+    
     m_landMaterial.Ambient = XMFLOAT4(0.48f, 0.77f, 0.46f, 1.0f);
     m_landMaterial.Diffuse = XMFLOAT4(0.48f, 0.77f, 0.46f, 1.0f);
     m_landMaterial.Specular = XMFLOAT4(0.2f, 0.2f, 0.2f, 16.0f);
@@ -134,6 +135,18 @@ void WaveModel::Update(float deltaTime)
     //m_spotLight.Position = m_eyePosW;
     //XMVECTOR pos = XMVectorSet(m_eyePosW.x, m_eyePosW.y, m_eyePosW.z, 1.0f);
     //XMStoreFloat3(&m_spotLight.Direction, XMVector3Normalize(XMVectorZero() - pos));
+
+    if (GetAsyncKeyState('0') & 0x8000)
+        m_lightCount = 0;
+
+    if (GetAsyncKeyState('1') & 0x8000)
+        m_lightCount = 1;
+
+    if (GetAsyncKeyState('2') & 0x8000)
+        m_lightCount = 2;
+
+    if (GetAsyncKeyState('3') & 0x8000)
+        m_lightCount = 3;
 }
 
 void WaveModel::Render(XMMATRIX& worldViewProj)
@@ -161,7 +174,20 @@ void WaveModel::Render(XMMATRIX& worldViewProj)
     //m_fxSpotLight->SetRawValue(&m_spotLight, 0, sizeof(m_spotLight));
     
     D3DX11_TECHNIQUE_DESC techDesc;
-    ID3DX11EffectTechnique* tech = LightShader->Light3Tech();
+    ID3DX11EffectTechnique* tech;
+    switch (m_lightCount)
+    {
+    case 1:
+        tech = LightShader->Light1Tech();
+        break;
+    case 2:
+        tech = LightShader->Light2Tech();
+        break;
+    case 3:
+        tech = LightShader->Light3Tech();
+        break;
+    }
+    
 
 	tech->GetDesc(&techDesc);
 

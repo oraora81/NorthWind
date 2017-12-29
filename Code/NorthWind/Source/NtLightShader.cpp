@@ -62,10 +62,5 @@ void NtLightShader::Release()
 	NtShader::Release();
 }
 
-bool NtLightShader::RenderFx(ntInt indexCount, const XMMATRIX& worldViewProj)
-{
-	return true;
-}
-
 }	// namespace renderer
 }	// namespace nt

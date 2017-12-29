@@ -28,9 +28,6 @@
     <ClInclude Include="Include\NtCamera.h">
       <Filter>render</Filter>
     </ClInclude>
-    <ClInclude Include="Include\NtColorShader.h">
-      <Filter>render</Filter>
-    </ClInclude>
     <ClInclude Include="Include\NtConsole.h">
       <Filter>system</Filter>
     </ClInclude>
@@ -68,9 +65,6 @@
       <Filter>render</Filter>
     </ClInclude>
     <ClInclude Include="Include\NtLight.h">
-      <Filter>render</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\NtLightShader.h">
       <Filter>render</Filter>
     </ClInclude>
     <ClInclude Include="Include\NtModelParser.h">
@@ -215,6 +209,15 @@
     <ClInclude Include="Include\NtShaderHandler.h">
       <Filter>render</Filter>
     </ClInclude>
+    <ClInclude Include="Include\NtLightShader.h">
+      <Filter>render\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\NtColorShader.h">
+      <Filter>render\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\NtSampleShader.h">
+      <Filter>render\shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\test_cube.ase" />
@@ -255,7 +258,7 @@
       <Filter>container</Filter>
     </None>
     <None Include="Include\NtLightShader.inl">
-      <Filter>render</Filter>
+      <Filter>render\shader</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -281,9 +284,6 @@
     <ClCompile Include="Source\NtCamera.cpp">
       <Filter>render</Filter>
     </ClCompile>
-    <ClCompile Include="Source\NtColorShader.cpp">
-      <Filter>render</Filter>
-    </ClCompile>
     <ClCompile Include="Source\NtConsole.cpp">
       <Filter>system</Filter>
     </ClCompile>
@@ -306,9 +306,6 @@
       <Filter>render</Filter>
     </ClCompile>
     <ClCompile Include="Source\NtLight.cpp">
-      <Filter>render</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\NtLightShader.cpp">
       <Filter>render</Filter>
     </ClCompile>
     <ClCompile Include="Source\NtModelParser.cpp">
@@ -413,6 +410,15 @@
     <ClCompile Include="Source\NtShaderHandler.cpp">
       <Filter>render</Filter>
     </ClCompile>
+    <ClCompile Include="Source\NtLightShader.cpp">
+      <Filter>render\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\NtColorShader.cpp">
+      <Filter>render\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\NtSampleShader.cpp">
+      <Filter>render\shader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="system">
@@ -432,6 +438,9 @@
     </Filter>
     <Filter Include="study">
       <UniqueIdentifier>{d9b54411-4fac-467b-9963-c58f6c64db57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="render\shader">
+      <UniqueIdentifier>{4589d89d-8fdf-4fef-8d84-ee6095fb61e8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -411,6 +411,7 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <ClInclude Include="Include\NtRenderType.h" />
     <ClInclude Include="Include\NtResourceManager.h" />
     <ClInclude Include="Include\NtRTTI.h" />
+    <ClInclude Include="Include\NtSampleShader.h" />
     <ClInclude Include="Include\NtSearch.h" />
     <ClInclude Include="Include\NtSetup.h" />
     <ClInclude Include="Include\NtShader.h" />
@@ -492,6 +493,7 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <ClCompile Include="Source\NtRenderType.cpp" />
     <ClCompile Include="Source\NtResourceManager.cpp" />
     <ClCompile Include="Source\NtRTTI.cpp" />
+    <ClCompile Include="Source\NtSampleShader.cpp" />
     <ClCompile Include="Source\NtSearch.cpp" />
     <ClCompile Include="Source\NtSetup.cpp" />
     <ClCompile Include="Source\NtShader.cpp" />
