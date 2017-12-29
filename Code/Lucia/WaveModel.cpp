@@ -48,36 +48,25 @@ WaveModel::WaveModel()
     XMMATRIX wavOffset = XMMatrixTranslation(0.0f, -3.0f, 0.0f);
     XMStoreFloat4x4(&m_wavesWorld, wavOffset);
 
-    m_dirLight[0].Ambient = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
-    m_dirLight[0].Diffuse = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
-    m_dirLight[0].Specular = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
-    m_dirLight[0].Direction = XMFLOAT3(0.57735f, -0.57735f, 0.57735f);
-
-    m_dirLight[1].Ambient = XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f);
-    m_dirLight[1].Diffuse = XMFLOAT4(0.20f, 0.20f, 0.20f, 1.0f);
-    m_dirLight[1].Specular = XMFLOAT4(0.25f, 0.25f, 0.25f, 1.0f);
-    m_dirLight[1].Direction = XMFLOAT3(-0.57735f, -0.57735f, 0.57735f);
-    
-    m_dirLight[2].Ambient = XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f);
-    m_dirLight[2].Diffuse = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
-    m_dirLight[2].Specular = XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f);
-    m_dirLight[2].Direction = XMFLOAT3(0.0f, -0.707f, -0.707f);
-
+    m_dirLight.Ambient = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
+    m_dirLight.Diffuse = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
+    m_dirLight.Specular = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
+    m_dirLight.Direction = XMFLOAT3(0.57735f, -0.57735f, 0.57735f);
 
     // 점광원 - 위치는 애니메이션을 위해 매 프레임 Update에서 갱신된다.
-    /*m_pointLight.Ambient = XMFLOAT4(0.3f, 0.3f, 0.3f, 1.0f);
+    m_pointLight.Ambient = XMFLOAT4(0.3f, 0.3f, 0.3f, 1.0f);
     m_pointLight.Diffuse = XMFLOAT4(0.7f, 0.7f, 0.7f, 1.0f);
     m_pointLight.Specular = XMFLOAT4(0.7f, 0.7f, 0.7f, 1.0f);
     m_pointLight.Att = XMFLOAT3(0.0f, 0.1f, 0.0f);
-    m_pointLight.Range = 25.0f;*/
+    m_pointLight.Range = 25.0f;
 
     // 점적광원 설정 - 위치는 애니메이션을 위해 매 프레임 갱신
-    /*m_spotLight.Ambient = XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f);
+    m_spotLight.Ambient = XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f);
     m_spotLight.Diffuse = XMFLOAT4(1.0f, 1.0f, 0.0f, 1.0f);
     m_spotLight.Specular = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
     m_spotLight.Att = XMFLOAT3(1.0f, 0.0f, 0.0f);
     m_spotLight.Spot = 96.0f;
-    m_spotLight.Range = 10000.0f;*/
+    m_spotLight.Range = 10000.0f;
     
     m_landMaterial.Ambient = XMFLOAT4(0.48f, 0.77f, 0.46f, 1.0f);
     m_landMaterial.Diffuse = XMFLOAT4(0.48f, 0.77f, 0.46f, 1.0f);
@@ -128,15 +117,15 @@ void WaveModel::Update(float deltaTime)
 
     // animate the lights
     // circle light over the land surface
-    //m_pointLight.Position.x = 70.0f * NtMathf::Cos(0.2f * g_app->Timer().TotalTime());
-    //m_pointLight.Position.z = 70.0f * NtMathf::Sin(0.2f * g_app->Timer().TotalTime());
-    //m_pointLight.Position.y = NtMathf::Max(GetHeight(m_pointLight.Position.x, m_pointLight.Position.z), -3.0f) + 10.0f;
+    m_pointLight.Position.x = 70.0f * NtMathf::Cos(0.2f * g_app->Timer().TotalTime());
+    m_pointLight.Position.z = 70.0f * NtMathf::Sin(0.2f * g_app->Timer().TotalTime());
+    m_pointLight.Position.y = NtMathf::Max(GetHeight(m_pointLight.Position.x, m_pointLight.Position.z), -3.0f) + 10.0f;
 
-    //m_spotLight.Position = m_eyePosW;
-    //XMVECTOR pos = XMVectorSet(m_eyePosW.x, m_eyePosW.y, m_eyePosW.z, 1.0f);
-    //XMStoreFloat3(&m_spotLight.Direction, XMVector3Normalize(XMVectorZero() - pos));
+    m_spotLight.Position = m_eyePosW;
+    XMVECTOR pos = XMVectorSet(m_eyePosW.x, m_eyePosW.y, m_eyePosW.z, 1.0f);
+    XMStoreFloat3(&m_spotLight.Direction, XMVector3Normalize(XMVectorZero() - pos));
 
-    if (GetAsyncKeyState('0') & 0x8000)
+    /*if (GetAsyncKeyState('0') & 0x8000)
         m_lightCount = 0;
 
     if (GetAsyncKeyState('1') & 0x8000)
@@ -146,7 +135,7 @@ void WaveModel::Update(float deltaTime)
         m_lightCount = 2;
 
     if (GetAsyncKeyState('3') & 0x8000)
-        m_lightCount = 3;
+        m_lightCount = 3;*/
 }
 
 void WaveModel::Render(XMMATRIX& worldViewProj)
@@ -165,7 +154,9 @@ void WaveModel::Render(XMMATRIX& worldViewProj)
 
 	XMMATRIX viewProj = view * proj;
 
-    auto& LightShader = NtShaderHandler::LightShader;
+    auto& LightShader = NtShaderHandler::SampleLightShader;
+
+    nt::SetMatrix(m_dirLight, NtShaderHandler::LightShader->FxWorld());
 
     LightShader->SetDirLights(m_dirLight);
     LightShader->SetEyePosW(m_eyePosW);

@@ -3,9 +3,6 @@
 
 namespace nt { namespace renderer {
 
-
-class NtTexture;
-
 class NtLightShader : public NtShader
 {
 	struct NtMatrixBuffer
@@ -30,6 +27,8 @@ public:
 	inline void SetEyePosW(XMFLOAT3 eyePosW);
 	inline void SetDirLights(const DirectionalLight* light);
 	inline void SetMaterial(const Material& mat);
+    inline const ID3DX11EffectMatrixVariable* FxWorld() const;
+    inline const ID3DX11EffectMatrixVariable* FxWorldInvTranspose() const;
 	inline ID3DX11EffectTechnique* Light1Tech() const;
 	inline ID3DX11EffectTechnique* Light2Tech() const;
 	inline ID3DX11EffectTechnique* Light3Tech() const;

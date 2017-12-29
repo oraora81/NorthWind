@@ -57,7 +57,11 @@ void NtLightShader::Release()
 	SAFE_RELEASE(m_light1);
 	SAFE_RELEASE(m_light2);
 	SAFE_RELEASE(m_light3);
-	SAFE_RELEASE(m_fxWorldViewProj);
+    SAFE_RELEASE(m_fxWorld);
+	SAFE_RELEASE(m_fxWorldInvTranspose);
+    SAFE_RELEASE(m_fxEyePosW);
+    SAFE_RELEASE(m_fxDirLight);
+    SAFE_RELEASE(m_fxMaterial);
 
 	NtShader::Release();
 }

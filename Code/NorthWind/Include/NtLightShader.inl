@@ -24,6 +24,16 @@ void NtLightShader::SetMaterial(const Material& mat)
     m_fxMaterial->SetRawValue(&mat, 0, sizeof(Material));
 }
 
+const ID3DX11EffectMatrixVariable* NtLightShader::FxWorld() const
+{
+    return m_fxWorld;
+}
+
+const ID3DX11EffectMatrixVariable* NtLightShader::FxWorldInvTranspose() const
+{
+    return m_fxWorldInvTranspose;
+}
+
 ID3DX11EffectTechnique* NtLightShader::Light1Tech() const
 {
     return m_light1;

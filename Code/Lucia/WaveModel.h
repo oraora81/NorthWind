@@ -26,9 +26,9 @@ private:
 	UINT m_gridIndexCount;
 	Waves m_waves;
     //nt::DirectionalLight m_dirLight[3];
-    DirectionalLight m_dirLight;
-    PointLight m_pointLight;
-    SpotLight m_spotLight;
+    nt::DirectionalLight m_dirLight;
+    nt::PointLight m_pointLight;
+    nt::SpotLight m_spotLight;
 
     nt::Material m_landMaterial;
     nt::Material m_wavMaterial;
