@@ -16,7 +16,7 @@ void NtLightShader::SetEyePosW(XMFLOAT3 eyePosW)
 
 void NtLightShader::SetDirLights(const DirectionalLight* light)
 {
-    m_fxDirLight->SetRawValue(m_fxDirLight, 0, sizeof(DirectionalLight) * 3);
+    m_fxDirLight->SetRawValue(light, 0, sizeof(DirectionalLight) * 3);
 }
 
 void NtLightShader::SetMaterial(const Material& mat)

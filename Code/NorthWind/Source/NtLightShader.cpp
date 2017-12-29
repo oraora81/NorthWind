@@ -25,7 +25,6 @@ NtLightShader::NtLightShader()
 
 }
 
-
 NtLightShader::~NtLightShader()
 {
 	Release();
@@ -34,6 +33,7 @@ NtLightShader::~NtLightShader()
 bool NtLightShader::InitializeFx(const ntWchar* fx)
 {
 	NtAsserte(fx != nullptr);
+
 	if (NtShader::InitializeFx(fx) == false)
 	{
 		return false;
@@ -49,6 +49,16 @@ bool NtLightShader::InitializeFx(const ntWchar* fx)
 	m_fxDirLight = m_fx->GetVariableByName("gDirLights");
 	m_fxMaterial = m_fx->GetVariableByName("gMaterial");
 
+    NtAsserte(m_light1 != nullptr);
+    NtAsserte(m_light2 != nullptr);
+    NtAsserte(m_light3 != nullptr);
+    NtAsserte(m_fxWorldViewProj != nullptr);
+    NtAsserte(m_fxWorld != nullptr);
+    NtAsserte(m_fxWorldInvTranspose != nullptr);
+    NtAsserte(m_fxEyePosW != nullptr);
+    NtAsserte(m_fxDirLight != nullptr);
+    NtAsserte(m_fxMaterial != nullptr);
+
 	return true;
 }
 
@@ -57,6 +67,7 @@ void NtLightShader::Release()
 	SAFE_RELEASE(m_light1);
 	SAFE_RELEASE(m_light2);
 	SAFE_RELEASE(m_light3);
+    SAFE_RELEASE(m_fxWorldViewProj);
     SAFE_RELEASE(m_fxWorld);
 	SAFE_RELEASE(m_fxWorldInvTranspose);
     SAFE_RELEASE(m_fxEyePosW);
