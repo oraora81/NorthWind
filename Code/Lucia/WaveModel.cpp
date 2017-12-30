@@ -12,6 +12,8 @@
 
 using namespace nt;
 
+//#define SAMPLE_LIGHT_SETTING 1
+
 namespace
 {
 	float GetHeight(float x, float z)
@@ -49,15 +51,25 @@ WaveModel::WaveModel()
     XMMATRIX wavOffset = XMMatrixTranslation(0.0f, -3.0f, 0.0f);
     XMStoreFloat4x4(&m_wavesWorld, wavOffset);
 
+#if SAMPLE_LIGHT_SETTING
+    m_dirLight.Ambient = XMFLOAT4(0.5f, .0f, .0f, 1.0f);
+#else
     m_dirLight.Ambient = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
+#endif
     m_dirLight.Diffuse = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
     m_dirLight.Specular = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
     m_dirLight.Direction = XMFLOAT3(0.57735f, -0.57735f, 0.57735f);
 
     // 점광원 - 위치는 애니메이션을 위해 매 프레임 Update에서 갱신된다.
+#if SAMPLE_LIGHT_SETTING
+    m_pointLight.Ambient = XMFLOAT4(.0f, 0.3f, .0f, 1.0f);
+    m_pointLight.Diffuse = XMFLOAT4(.0f, 0.7f, .0f, 1.0f);
+    m_pointLight.Specular = XMFLOAT4(.0f, 0.7f, .0f, 1.0f);
+#else
     m_pointLight.Ambient = XMFLOAT4(0.3f, 0.3f, 0.3f, 1.0f);
     m_pointLight.Diffuse = XMFLOAT4(0.7f, 0.7f, 0.7f, 1.0f);
     m_pointLight.Specular = XMFLOAT4(0.7f, 0.7f, 0.7f, 1.0f);
+#endif
     m_pointLight.Att = XMFLOAT3(0.0f, 0.1f, 0.0f);
     m_pointLight.Range = 25.0f;
 
