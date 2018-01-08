@@ -22,6 +22,13 @@ namespace Vertex
         XMFLOAT3 position;
         XMFLOAT3 normal;
     };
+
+    struct NtPNUVertex
+    {
+        XMFLOAT3 position;
+        XMFLOAT3 normal;
+        XMFLOAT2 uv;
+    };
 }
 
 

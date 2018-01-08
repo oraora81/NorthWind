@@ -332,6 +332,7 @@
   <ItemGroup>
     <ClInclude Include="BaseShape.h" />
     <ClInclude Include="Box.h" />
+    <ClInclude Include="Crate.h" />
     <ClInclude Include="Hills.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="Pyramid.h" />
@@ -350,6 +351,7 @@
     <ClCompile Include="Box.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DebugDx11|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Crate.cpp" />
     <ClCompile Include="Hills.cpp" />
     <ClCompile Include="Point.cpp" />
     <ClCompile Include="Pyramid.cpp" />

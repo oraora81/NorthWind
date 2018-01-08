@@ -57,6 +57,11 @@ void NtD3DRenderer::GetProjectionMatrix(XMMATRIX& proj)
 	proj = XMLoadFloat4x4(&m_proj);
 }
 
+void NtD3DRenderer::GetViewProjMatrix(XMMATRIX& viewProj)
+{
+    viewProj = XMLoadFloat4x4(&m_view) * XMLoadFloat4x4(&m_proj);
+}
+
 void NtD3DRenderer::Transform(XMMATRIX& tm)
 {
 	XMMATRIX world = XMLoadFloat4x4(&m_world);

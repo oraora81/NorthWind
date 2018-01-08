@@ -36,6 +36,8 @@ public:
 
 	void GetProjectionMatrix(XMMATRIX& proj);
 
+    void GetViewProjMatrix(XMMATRIX& viewProj);
+
 	void Transform(XMMATRIX& tm);
 
 	void GetOrthoMatrix(XMMATRIX& ortho);

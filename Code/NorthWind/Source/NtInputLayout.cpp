@@ -20,6 +20,14 @@ const D3D11_INPUT_ELEMENT_DESC NtInputLayout::PNLayout[2] =
     { "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 };
 
+const D3D11_INPUT_ELEMENT_DESC NtInputLayout::PNULayout[3] =
+{
+    { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+    { "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+    { "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 24, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+};
+
+
 // etc
 // 2 input slot
 const D3D11_INPUT_ELEMENT_DESC NtInputLayout::PCLayoutEachSlot[2] = 
@@ -35,8 +43,10 @@ const D3D11_INPUT_ELEMENT_DESC NtInputLayout::PCLayout32bitColor[2] =
 };
 
 
+// implement static variable
 ID3D11InputLayout* NtInputLayoutHandler::PCInputLayout;
 ID3D11InputLayout* NtInputLayoutHandler::PNInputLayout;
+ID3D11InputLayout* NtInputLayoutHandler::PNUInputLayout;
 ID3D11InputLayout* NtInputLayoutHandler::PCInputLayoutEachSlot;
 ID3D11InputLayout* NtInputLayoutHandler::PCInputLayout32bitColor;
 
@@ -47,26 +57,37 @@ bool NtInputLayoutHandler::Initialize()
 
     // pos + color
     NtShaderHandler::ColorShader->ColorTech->GetPassByIndex(0)->GetDesc(&passDesc);
-    HRF(g_renderer->Device()->CreateInputLayout(NtInputLayout::PCLayout
-        , 2
-        , passDesc.pIAInputSignature
-        , passDesc.IAInputSignatureSize
-        , &PCInputLayout));
+    HRF(g_renderer->Device()->CreateInputLayout(
+        NtInputLayout::PCLayout, 
+        2, 
+        passDesc.pIAInputSignature, 
+        passDesc.IAInputSignatureSize, 
+        &PCInputLayout));
 
     // pos + normal
+    //NtShaderHandler::LightShader->Light1Tech()->GetPassByIndex(0)->GetDesc(&passDesc);
+    //HRF(g_renderer->Device()->CreateInputLayout(
+    //    NtInputLayout::PNLayout, 
+    //    2, 
+    //    passDesc.pIAInputSignature, 
+    //    passDesc.IAInputSignatureSize, 
+    //    &PNInputLayout));
+
+    // pos + normal + uv
     NtShaderHandler::LightShader->Light1Tech()->GetPassByIndex(0)->GetDesc(&passDesc);
-    HRF(g_renderer->Device()->CreateInputLayout(NtInputLayout::PNLayout
-        , 2
-        , passDesc.pIAInputSignature
-        , passDesc.IAInputSignatureSize
-        , &PNInputLayout));
+    HRF(g_renderer->Device()->CreateInputLayout(NtInputLayout::PNULayout,
+        3,
+        passDesc.pIAInputSignature,
+        passDesc.IAInputSignatureSize,
+        &PNUInputLayout));
 
     return true;
 }
     
 void NtInputLayoutHandler::Release()
 {
-    Safe_Release(PNLayout);
+    SAFE_RELEASE(PCInputLayout);
+    SAFE_RELEASE(PNUInputLayout);
 }
 
 }

@@ -111,5 +111,11 @@ struct NtTypeList<T, NtNullType>
 	typedef typename NtNullType Tail;
 };
 
+//
+template <typename T, std::size_t N>
+constexpr std::size_t NtArraySize(T (&)[N]) noexcept
+{
+    return N;
+}
 
 }	// namespace nt

@@ -78,6 +78,8 @@
 #include <NtShader.h>
 #include <NtResourceManager.h>
 #include <NtApplication.h>
+#include <NtInputLayout.h>
+#include <NtShaderHandler.h>
 
 #pragma comment (lib, "dinput8.lib")
 #pragma comment (lib, "dxguid.lib")
