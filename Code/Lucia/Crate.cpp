@@ -105,7 +105,7 @@ void Crate::MakeGeometry()
 
     std::vector<Vertex::NtPNUVertex> vertices(totalVertexCount);
 
-    for (size_t i = 0; i < totalVertexCount; ++i, ++i)
+    for (size_t i = 0; i < totalVertexCount; ++i)
     {
         vertices[i].position = box.Vertices[i].Position;
         vertices[i].normal = box.Vertices[i].Normal;
