@@ -20,13 +20,21 @@ cbuffer cbPerObject
 };
 
 Texture2D gDiffuseMap;
+//Texture2D gBlendMap;
 
-//SamplerState samTriLinear
-//{
-//    Filter = MIN_MAG_MIP_LINEAR;
-//    AddressU = WRAP;
-//    AddressV = WRAP;
-//};
+SamplerState samPoint
+{
+    Filter = MIN_MAG_MIP_POINT;
+    AddressU = WRAP;
+    AddressV = WRAP;
+};
+
+SamplerState samTriLinear
+{
+    Filter = MIN_MAG_MIP_LINEAR;
+    AddressU = WRAP;
+    AddressV = WRAP;
+};
 
 //SamplerState samTriLinear
 //{
@@ -110,8 +118,10 @@ float4 PS(VertexOut pin, uniform int gLightCount, uniform bool gUseTexture) : SV
     if (gUseTexture)
     {
         // Sample texture
-        texColor = gDiffuseMap.Sample(samAnisotropic, pin.Tex);
-        //texColor = gDiffuseMap.Sample(samTriLinear, pin.Tex);
+        //texColor = gDiffuseMap.Sample(samAnisotropic, pin.Tex);
+        texColor = gDiffuseMap.Sample(samTriLinear, pin.Tex);
+        //texColor *= gBlendMap.Sample(samTriLinear, pin.Tex);
+        //texColor = gDiffuseMap.Sample(samPoint, pin.Tex);
     }
 
     //

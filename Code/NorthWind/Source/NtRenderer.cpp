@@ -64,11 +64,11 @@ bool NtRenderer::Initialize(HWND hwnd, ntInt width, ntInt height, bool fullScree
     }
 
 	// create the camera object
-	m_camera = new NtCamera;
-	NtAsserte(m_camera != nullptr);
+	//m_camera = new NtCamera;
+	//NtAsserte(m_camera != nullptr);
 
 	// set the initial position of the camera
-	m_camera->SetPosition(0.0f, 20.0f, -100.0f);
+	//m_camera->SetPosition(0.0f, 20.0f, -100.0f);
 
 	return true;
 }

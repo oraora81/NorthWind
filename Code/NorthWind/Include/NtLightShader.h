@@ -23,20 +23,37 @@ public:
 
 public:
 	inline void SetWorld(CXMMATRIX m);
+
 	inline void SetWorldInvTranspose(CXMMATRIX m);
+
     inline void SetTexTransform(CXMMATRIX m);
+
 	inline void SetEyePosW(XMFLOAT3 eyePosW);
+
 	inline void SetDirLights(const DirectionalLight* light);
+
 	inline void SetMaterial(const Material& mat);
+
     inline void SetDiffuseMap(ID3D11ShaderResourceView* tex);
+
+    inline void SetBlendMap(ID3D11ShaderResourceView* tex);
+
     inline const ID3DX11EffectMatrixVariable* FxWorld() const;
+
     inline const ID3DX11EffectMatrixVariable* FxWorldInvTranspose() const;
+
 	inline ID3DX11EffectTechnique* Light1Tech() const;
+
 	inline ID3DX11EffectTechnique* Light2Tech() const;
+
 	inline ID3DX11EffectTechnique* Light3Tech() const;
+
     inline ID3DX11EffectTechnique* Light0TexTech() const;
+
     inline ID3DX11EffectTechnique* Light1TexTech() const;
+
     inline ID3DX11EffectTechnique* Light2TexTech() const;
+
     inline ID3DX11EffectTechnique* Light3TexTech() const;
 
 private:
@@ -58,6 +75,7 @@ private:
 	ID3DX11EffectVectorVariable* m_fxEyePosW;
 
     ID3DX11EffectShaderResourceVariable* m_fxDiffuseMap;
+    //ID3DX11EffectShaderResourceVariable* m_fxBlendMap;
 
 	ID3D11SamplerState* m_sampleState;
 	ID3D11Buffer* m_matrixBuffer;

@@ -36,6 +36,13 @@ void NtLightShader::SetDiffuseMap(ID3D11ShaderResourceView* tex)
     m_fxDiffuseMap->SetResource(tex);
 }
 
+void NtLightShader::SetBlendMap(ID3D11ShaderResourceView* tex)
+{
+    NtAsserte(tex != nullptr);
+
+    //m_fxBlendMap->SetResource(tex);
+}
+
 const ID3DX11EffectMatrixVariable* NtLightShader::FxWorld() const
 {
     return m_fxWorld;

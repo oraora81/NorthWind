@@ -19,6 +19,7 @@ NtLightShader::NtLightShader()
 	, m_fxMaterial(nullptr)
 	, m_fxEyePosW(nullptr)
     , m_fxDiffuseMap(nullptr)
+    //, m_fxBlendMap(nullptr)
 	, m_sampleState(nullptr)
 	, m_matrixBuffer(nullptr)
 	, m_lightBuffer(nullptr)
@@ -57,6 +58,7 @@ bool NtLightShader::InitializeFx(const ntWchar* fx)
 	m_fxDirLight = m_fx->GetVariableByName("gDirLights");
 	m_fxMaterial = m_fx->GetVariableByName("gMaterial");
     m_fxDiffuseMap = m_fx->GetVariableByName("gDiffuseMap")->AsShaderResource();
+    //m_fxBlendMap = m_fx->GetVariableByName("gBlendMap")->AsShaderResource();
 
     NtAsserte(m_light1 != nullptr);
     NtAsserte(m_light2 != nullptr);
@@ -73,6 +75,7 @@ bool NtLightShader::InitializeFx(const ntWchar* fx)
     NtAsserte(m_fxDirLight != nullptr);
     NtAsserte(m_fxMaterial != nullptr);
     NtAsserte(m_fxDiffuseMap != nullptr);
+    //NtAsserte(m_fxBlendMap != nullptr);
 
 	return true;
 }

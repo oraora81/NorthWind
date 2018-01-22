@@ -18,6 +18,9 @@ Crate::Crate()
     XMStoreFloat4x4(&m_texTransform, I);
     XMStoreFloat4x4(&m_viewProj, I);
 
+    /*XMMATRIX boxOffset = XMMatrixTranslation(0.0f, 0.0f, -4.0f);
+    XMStoreFloat4x4(&m_boxWorld, boxOffset);*/
+
     m_dirLights[0].Ambient = XMFLOAT4(0.3f, 0.3f, 0.3f, 1.0f);
     m_dirLights[0].Diffuse = XMFLOAT4(0.8f, 0.8f, 0.8f, 1.0f);
     m_dirLights[0].Specular = XMFLOAT4(0.6f, 0.6f, 0.6f, 16.0f);
@@ -35,7 +38,27 @@ Crate::Crate()
 
 Crate::~Crate()
 {
+    //SAFE_RELEASE(m_AddSRV);
     SAFE_RELEASE(m_diffuseMapSRV);
+}
+
+void Crate::Update(float deltaTime)
+{
+    NtModel::Update(deltaTime);
+
+    static float angle = 0.0f;
+    static XMMATRIX texTransform;
+    // angle
+    //m_texTransform
+    angle += (deltaTime * 1.0f);
+    
+    texTransform = XMMatrixRotationZ(angle);
+    XMStoreFloat4x4(&m_texTransform, texTransform);
+
+    if (angle >= 360.f)
+    {
+        angle = 0.0f;
+    }
 }
 
 void Crate::Render(XMMATRIX& worldViewProj)
@@ -75,6 +98,7 @@ void Crate::Render(XMMATRIX& worldViewProj)
         lightShader->SetTexTransform(XMLoadFloat4x4(&m_texTransform));
         lightShader->SetMaterial(m_boxMat);
         lightShader->SetDiffuseMap(m_diffuseMapSRV);
+        //lightShader->SetBlendMap(m_AddSRV);
 
         activeTech->GetPassByIndex(p)->Apply(0, g_renderer->DeviceContext());
         g_renderer->DeviceContext()->DrawIndexed(m_indexCount, 0, 0);
@@ -83,7 +107,8 @@ void Crate::Render(XMMATRIX& worldViewProj)
 
 void Crate::MakeGeometry()
 {
-    const ntWchar* filePath = g_resMgr->GetPath(L"woodcrate01.dds");
+    //const ntWchar* filePath = g_resMgr->GetPath(L"woodcrate01.dds");
+    const ntWchar* filePath = g_resMgr->GetPath(L"flare.dds");
     NtAsserte(filePath != nullptr);
 
     HR(D3DX11CreateShaderResourceViewFromFile(
@@ -91,6 +116,33 @@ void Crate::MakeGeometry()
         filePath,
         0, 0,
         &m_diffuseMapSRV, 0));
+
+    /*filePath = g_resMgr->GetPath(L"flarealpha.dds");
+    HR(D3DX11CreateShaderResourceViewFromFile(
+        g_renderer->Device(),
+        filePath,
+        0, 0, &m_AddSRV, 0));*/
+
+    // 텍스쳐 압축
+    /*filePath = g_resMgr->GetPath(L"darkbrick.bmp");
+    D3DX11_IMAGE_LOAD_INFO loadInfo;
+    loadInfo.Format = DXGI_FORMAT_BC3_UNORM;
+
+    ID3D11ShaderResourceView* srv;
+    HR(D3DX11CreateShaderResourceViewFromFile(
+        g_renderer->Device(),
+        filePath,
+        &loadInfo,
+        0,
+        &srv, 0));
+
+    ID3D11Texture2D* tex;
+    srv->GetResource((ID3D11Resource**)&tex);
+
+    D3D11_TEXTURE2D_DESC texDesc;
+    tex->GetDesc(&texDesc);
+
+    SAFE_RELEASE(srv);*/
 
     NtGeometryGenerator::MeshData box;
 

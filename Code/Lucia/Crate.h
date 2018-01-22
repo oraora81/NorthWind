@@ -9,12 +9,15 @@ public:
 
     virtual ~Crate() override;
 
+    virtual void Update(float deltaTime) override;
+
     virtual void Render(XMMATRIX& worldViewProj) override;
 
     void MakeGeometry();
 
 private:
     ID3D11ShaderResourceView* m_diffuseMapSRV;
+    //ID3D11ShaderResourceView* m_AddSRV;
 
     nt::DirectionalLight m_dirLights[3];
     nt::Material m_boxMat;
