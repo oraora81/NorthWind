@@ -20,21 +20,22 @@ public:
 private:
 	XMFLOAT4X4 m_gridWorld;
 	XMFLOAT4X4 m_wavesWorld;
-	ID3D11Buffer* m_waveVB;
+    XMFLOAT4X4 m_grassTexTransform;
+    XMFLOAT4X4 m_waterTexTransform;
+
+    ID3D11Buffer* m_waveVB;
 	ID3D11Buffer* m_waveIB;
+
+    ID3D11ShaderResourceView* m_grassMapSRV;
+    ID3D11ShaderResourceView* m_waveMapSRV;
 
 	UINT m_gridIndexCount;
 	Waves m_waves;
-    //nt::DirectionalLight m_dirLight[3];
-    nt::DirectionalLight m_dirLight;
-    nt::PointLight m_pointLight;
-    nt::SpotLight m_spotLight;
 
+    nt::DirectionalLight m_dirLight[3];
     nt::Material m_landMaterial;
     nt::Material m_wavMaterial;
 
-    ID3DX11EffectVariable* m_fxPointLight;
-    ID3DX11EffectVariable* m_fxSpotLight;    
-
+    XMFLOAT2 m_waterTexOffset;
     int m_lightCount;
 };

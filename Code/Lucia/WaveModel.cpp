@@ -39,18 +39,45 @@ namespace
 WaveModel::WaveModel()
 	: m_waveVB(nullptr)
 	, m_waveIB(nullptr)
-    , m_fxPointLight(nullptr)
-    , m_fxSpotLight(nullptr)
+    , m_grassMapSRV(nullptr)
+    , m_waveMapSRV(nullptr)
     , m_gridIndexCount(0)
     , m_lightCount(1)
 {
 	XMMATRIX I = XMMatrixIdentity();
 	XMStoreFloat4x4(&m_gridWorld, I);
-
 	XMStoreFloat4x4(&m_wavesWorld, I);
+
+    XMMATRIX grassTexScale = XMMatrixScaling(5.0f, 5.0f, 0.0f);
+    XMStoreFloat4x4(&m_grassTexTransform, grassTexScale);
+
     XMMATRIX wavOffset = XMMatrixTranslation(0.0f, -3.0f, 0.0f);
     XMStoreFloat4x4(&m_wavesWorld, wavOffset);
 
+    m_dirLight[0].Ambient = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
+    m_dirLight[0].Diffuse = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
+    m_dirLight[0].Specular = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
+    m_dirLight[0].Direction = XMFLOAT3(0.57735f, -0.57735f, 0.57735f);
+
+    m_dirLight[1].Ambient = XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f);
+    m_dirLight[1].Diffuse = XMFLOAT4(0.20f, 0.20f, 0.20f, 1.0f);
+    m_dirLight[1].Specular = XMFLOAT4(0.25f, 0.25f, 0.25f, 1.0f);
+    m_dirLight[1].Direction = XMFLOAT3(-0.57735f, -0.57735f, 0.57735f);
+
+    m_dirLight[2].Ambient = XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f);
+    m_dirLight[2].Diffuse = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
+    m_dirLight[2].Specular = XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f);
+    m_dirLight[2].Direction = XMFLOAT3(0.0f, -0.707f, -0.707f);
+
+    m_landMaterial.Ambient = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
+    m_landMaterial.Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+    m_landMaterial.Specular = XMFLOAT4(0.2f, 0.2f, 0.2f, 16.0f);
+
+    m_wavMaterial.Ambient = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
+    m_wavMaterial.Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+    m_wavMaterial.Specular = XMFLOAT4(0.8f, 0.8f, 0.8f, 32.0f);
+
+#if 0
 #if SAMPLE_LIGHT_SETTING
     m_dirLight.Ambient = XMFLOAT4(0.5f, .0f, .0f, 1.0f);
 #else
@@ -80,7 +107,7 @@ WaveModel::WaveModel()
     m_spotLight.Att = XMFLOAT3(1.0f, 0.0f, 0.0f);
     m_spotLight.Spot = 96.0f;
     m_spotLight.Range = 10000.0f;
-    
+
     m_landMaterial.Ambient = XMFLOAT4(0.48f, 0.77f, 0.46f, 1.0f);
     m_landMaterial.Diffuse = XMFLOAT4(0.48f, 0.77f, 0.46f, 1.0f);
     m_landMaterial.Specular = XMFLOAT4(0.2f, 0.2f, 0.2f, 16.0f);
@@ -88,12 +115,15 @@ WaveModel::WaveModel()
     m_wavMaterial.Ambient = XMFLOAT4(0.137f, 0.42f, 0.556f, 1.0f);
     m_wavMaterial.Diffuse = XMFLOAT4(0.137f, 0.42f, 0.556f, 1.0f);
     m_wavMaterial.Specular = XMFLOAT4(0.8f, 0.8f, 0.8f, 96.0f);
+#endif
 }
 
 WaveModel::~WaveModel()
 {
 	SAFE_RELEASE(m_waveVB);
 	SAFE_RELEASE(m_waveIB);
+    SAFE_RELEASE(m_grassMapSRV);
+    SAFE_RELEASE(m_waveMapSRV);
 }
 
 void WaveModel::Update(float deltaTime)
@@ -119,25 +149,33 @@ void WaveModel::Update(float deltaTime)
 	D3D11_MAPPED_SUBRESOURCE mappedData;
 	HR(g_renderer->DeviceContext()->Map(m_waveVB, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedData));
 
-	Vertex::NtLVertex* vertices = reinterpret_cast<Vertex::NtLVertex*>(mappedData.pData);
+	Vertex::NtPNUVertex* vertices = reinterpret_cast<Vertex::NtPNUVertex*>(mappedData.pData);
 	for (UINT i = 0; i < m_waves.VertexCount(); i++)
 	{
 		vertices[i].position = m_waves[i];
 		//vertices[i].color = XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f);
         vertices[i].normal = m_waves.Normal(i);
+
+        // Derive tex-coords in [0,1] from position.
+        vertices[i].uv.x = 0.5f + m_waves[i].x / m_waves.Width();
+        vertices[i].uv.y = 0.5f - m_waves[i].z / m_waves.Depth();
 	}
 	g_renderer->DeviceContext()->Unmap(m_waveVB, 0);
 
+    // tile water texture
+    XMMATRIX wavesScale = XMMatrixScaling(5.0f, 5.0f, 0.0f);
+
+    // translate texture over time
+    m_waterTexOffset.y += 0.05f * deltaTime;
+    m_waterTexOffset.x += 0.1f * deltaTime;
+    XMMATRIX wavesOffset = XMMatrixTranslation(m_waterTexOffset.x, m_waterTexOffset.y, 0.0f);
+
+    // combine scale and translation
+    XMStoreFloat4x4(&m_waterTexTransform, wavesScale * wavesOffset);
+
     // animate the lights
     // circle light over the land surface
-    m_pointLight.Position.x = 70.0f * NtMathf::Cos(0.2f * g_app->Timer().TotalTime());
-    m_pointLight.Position.z = 70.0f * NtMathf::Sin(0.2f * g_app->Timer().TotalTime());
-    m_pointLight.Position.y = NtMathf::Max(GetHeight(m_pointLight.Position.x, m_pointLight.Position.z), -3.0f) + 10.0f;
-
-    m_spotLight.Position = m_eyePosW;
-    XMVECTOR pos = XMVectorSet(m_eyePosW.x, m_eyePosW.y, m_eyePosW.z, 1.0f);
-    XMStoreFloat3(&m_spotLight.Direction, XMVector3Normalize(XMVectorZero() - pos));
-
+    
     /*if (GetAsyncKeyState('0') & 0x8000)
         m_lightCount = 0;
 
@@ -153,12 +191,12 @@ void WaveModel::Update(float deltaTime)
 
 void WaveModel::Render(XMMATRIX& worldViewProj)
 {
-	ntUint stride = sizeof(Vertex::NtLVertex);
+    ntUint stride = sizeof(Vertex::NtPNUVertex);
 	ntUint offset = 0;
 
 	g_renderInterface->SetPrimitiveTopology(PrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-    g_renderer->DeviceContext()->IASetInputLayout(NtInputLayoutHandler::PNInputLayout);
+    g_renderer->DeviceContext()->IASetInputLayout(NtInputLayoutHandler::PNUInputLayout);
 
 	XMMATRIX view;
 	XMMATRIX proj;
@@ -167,15 +205,13 @@ void WaveModel::Render(XMMATRIX& worldViewProj)
 
 	XMMATRIX viewProj = view * proj;
 
-    auto& LightShader = NtShaderHandler::SampleLightShader;
+    auto& LightShader = NtShaderHandler::LightShader;
 
-    LightShader->SetDirLight(&m_dirLight);
-    LightShader->SetPointLight(&m_pointLight);
-    LightShader->SetSpotLight(&m_spotLight);
+    LightShader->SetDirLights(m_dirLight);
     LightShader->SetEyePosW(m_eyePosW);
-
+    
     D3DX11_TECHNIQUE_DESC techDesc;
-    ID3DX11EffectTechnique* tech = LightShader->LightTech();
+    ID3DX11EffectTechnique* tech = LightShader->Light3TexTech();
     /*switch (m_lightCount)
     {
     case 1:
@@ -206,7 +242,9 @@ void WaveModel::Render(XMMATRIX& worldViewProj)
         LightShader->SetWorld(world);
         LightShader->SetWorldInvTranspose(worldInvTranspose);
         LightShader->SetWorldViewProj(goWorldViewProj);
+        LightShader->SetTexTransform(XMLoadFloat4x4(&m_grassTexTransform));
         LightShader->SetMaterial(m_landMaterial);
+        LightShader->SetDiffuseMap(m_grassMapSRV);
 
 		tech->GetPassByIndex(p)->Apply(0, g_renderer->DeviceContext());
 		g_renderer->DeviceContext()->DrawIndexed(m_gridIndexCount, 0, 0);
@@ -222,7 +260,9 @@ void WaveModel::Render(XMMATRIX& worldViewProj)
         LightShader->SetWorld(world);
         LightShader->SetWorldInvTranspose(worldInvTranspose);
         LightShader->SetWorldViewProj(goWorldViewProj);
+        LightShader->SetTexTransform(XMLoadFloat4x4(&m_waterTexTransform));
         LightShader->SetMaterial(m_wavMaterial);
+        LightShader->SetDiffuseMap(m_waveMapSRV);
 
 		tech->GetPassByIndex(p)->Apply(0, g_renderer->DeviceContext());
 		g_renderer->DeviceContext()->DrawIndexed(3 * m_waves.TrisCount(), 0, 0);
@@ -237,7 +277,7 @@ void WaveModel::MakeGeometry()
 
 	gen.CreateGrid(160.0f, 160.0f, 50, 50, grid);
 
-	std::vector<Vertex::NtLVertex> vertices(grid.Vertices.size());
+    std::vector<Vertex::NtPNUVertex> vertices(grid.Vertices.size());
 	for (size_t i = 0; i < grid.Vertices.size(); i++)
 	{
 		XMFLOAT3 p = grid.Vertices[i].Position;
@@ -274,25 +314,34 @@ void WaveModel::MakeGeometry()
 		//}
 
         vertices[i].normal = GetHillNormal(p.x, p.z);
+        vertices[i].uv = grid.Vertices[i].TexC;
 	}
 
 	std::vector<UINT> indices;
 	indices.insert(indices.end(), grid.Indices.begin(), grid.Indices.end());
     m_gridIndexCount = (ntInt)grid.Indices.size();
 
-    Vertex::NtLVertex* vtxArray = &vertices[0];
+    Vertex::NtPNUVertex* vtxArray = &vertices[0];
 	UINT* idxArray = &indices[0];
 
-	InitializeModelData(vtxArray, sizeof(Vertex::NtLVertex), (ntInt)vertices.size(), idxArray, (ntInt)indices.size());
+	InitializeModelData(vtxArray, sizeof(Vertex::NtPNUVertex), (ntInt)vertices.size(), idxArray, (ntInt)indices.size());
 
 	MakeWave();
+
+    const ntWchar* filePath = g_resMgr->GetPath(L"grass.dds");
+    HR(D3DX11CreateShaderResourceViewFromFile(g_renderer->Device(),
+        filePath, 0, 0, &m_grassMapSRV, 0));
+
+    filePath = g_resMgr->GetPath(L"water2.dds");
+    HR(D3DX11CreateShaderResourceViewFromFile(g_renderer->Device(),
+        filePath, 0, 0, &m_waveMapSRV, 0));
 }
 
 void WaveModel::MakeWave()
 {
 	m_waves.Init(160, 160, 1.0f, 0.03f, 3.25f, 0.4f);
 
-	m_waveVB = MakeVertexBuffer(nullptr, sizeof(Vertex::NtLVertex), m_waves.VertexCount(), BufferUsage::USAGE_DYNAMIC, eCpuAccessFlag::CPU_ACCESS_WRITE);
+	m_waveVB = MakeVertexBuffer(nullptr, sizeof(Vertex::NtPNUVertex), m_waves.VertexCount(), BufferUsage::USAGE_DYNAMIC, eCpuAccessFlag::CPU_ACCESS_WRITE);
 
 	std::vector<UINT> indices(3 * m_waves.TrisCount());
 
