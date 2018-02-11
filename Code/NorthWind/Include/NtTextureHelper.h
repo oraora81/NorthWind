@@ -14,7 +14,7 @@ public:
 	static DXGI_FORMAT MakeSRGB(DXGI_FORMAT format);
 
 	// WIC (window imaging component)
-	static bool CreateWICTexture(const ntWchar* fileName, ntUint size, ID3D11Resource** texture, ID3D11ShaderResourceView** textureView);
+	static bool CreateWICTexture(const ntWchar* fileName, ntSize size, ID3D11Resource** texture, ID3D11ShaderResourceView** textureView);
 };
 
 

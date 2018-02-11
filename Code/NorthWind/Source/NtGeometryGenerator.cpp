@@ -184,7 +184,7 @@ void NtGeometryGenerator::CreateSphere(ntFloat radius, ntUint slideCount, ntUint
 void NtGeometryGenerator::CreateGeosphere(ntFloat radius, ntUint numSubdivision, MeshData& meshData)
 {
 	// put a cap on the number of subdivisions.
-	numSubdivision = NtMath<ntFloat>::Min(numSubdivision, 5u);
+    numSubdivision = NtMath<ntUint>::Min(numSubdivision, 5u);
 
 	// approximate a sphere by tessellating an icosahedron
 
@@ -279,7 +279,7 @@ void NtGeometryGenerator::SubDivide(MeshData& meshData)
 	// *-----*-----*
 	// v0    m2     v2
 
-	ntUint numTris = dup.Indices.size() / 3;
+	ntUint numTris = (ntUint)dup.Indices.size() / 3;
 	for (ntUint i = 0; i < numTris; ++i)
 	{
 		gVertex v0 = dup.Vertices[dup.Indices[i * 3 + 0]];

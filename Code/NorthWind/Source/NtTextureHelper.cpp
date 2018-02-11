@@ -827,7 +827,7 @@ static HRESULT CreateTextureFromWIC(IWICBitmapFrameDecode* frame, ntSize maxSize
 }
 
 
-/*static*/ bool NtTextureLoader::CreateWICTexture(const ntWchar* fileName, ntUint size, ID3D11Resource** texture,ID3D11ShaderResourceView** textureView)
+/*static*/ bool NtTextureLoader::CreateWICTexture(const ntWchar* fileName, ntSize size, ID3D11Resource** texture,ID3D11ShaderResourceView** textureView)
 {
 	if (texture)
 	{
