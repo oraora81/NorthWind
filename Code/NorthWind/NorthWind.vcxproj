@@ -408,6 +408,7 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <ClInclude Include="Include\NtModel.h" />
     <ClInclude Include="Include\NtRenderDefine.h" />
     <ClInclude Include="Include\NtRenderer.h" />
+    <ClInclude Include="Include\NtRenderStateHandler.h" />
     <ClInclude Include="Include\NtRenderType.h" />
     <ClInclude Include="Include\NtResourceManager.h" />
     <ClInclude Include="Include\NtRTTI.h" />
@@ -490,6 +491,7 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <ClCompile Include="Source\NtProfiler.cpp" />
     <ClCompile Include="Source\NtModel.cpp" />
     <ClCompile Include="Source\NtRenderer.cpp" />
+    <ClCompile Include="Source\NtRenderStateHandler.cpp" />
     <ClCompile Include="Source\NtRenderType.cpp" />
     <ClCompile Include="Source\NtResourceManager.cpp" />
     <ClCompile Include="Source\NtRTTI.cpp" />

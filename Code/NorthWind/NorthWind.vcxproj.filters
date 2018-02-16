@@ -206,9 +206,6 @@
     <ClInclude Include="Include\NtInputLayout.h">
       <Filter>render</Filter>
     </ClInclude>
-    <ClInclude Include="Include\NtShaderHandler.h">
-      <Filter>render</Filter>
-    </ClInclude>
     <ClInclude Include="Include\NtLightShader.h">
       <Filter>render\shader</Filter>
     </ClInclude>
@@ -217,6 +214,12 @@
     </ClInclude>
     <ClInclude Include="Include\NtSampleShader.h">
       <Filter>render\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\NtShaderHandler.h">
+      <Filter>render\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\NtRenderStateHandler.h">
+      <Filter>render\renderstate</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -407,9 +410,6 @@
     <ClCompile Include="Source\NtInputLayout.cpp">
       <Filter>render</Filter>
     </ClCompile>
-    <ClCompile Include="Source\NtShaderHandler.cpp">
-      <Filter>render</Filter>
-    </ClCompile>
     <ClCompile Include="Source\NtLightShader.cpp">
       <Filter>render\shader</Filter>
     </ClCompile>
@@ -418,6 +418,12 @@
     </ClCompile>
     <ClCompile Include="Source\NtSampleShader.cpp">
       <Filter>render\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\NtShaderHandler.cpp">
+      <Filter>render\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\NtRenderStateHandler.cpp">
+      <Filter>render\renderstate</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -441,6 +447,9 @@
     </Filter>
     <Filter Include="render\shader">
       <UniqueIdentifier>{4589d89d-8fdf-4fef-8d84-ee6095fb61e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="render\renderstate">
+      <UniqueIdentifier>{f2aa7243-ca6d-40dd-9b16-bb7113a1951c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

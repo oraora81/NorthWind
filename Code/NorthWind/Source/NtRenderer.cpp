@@ -170,10 +170,10 @@ void NtRenderer::SetRenderState(eRenderState state)
 	switch (state)
 	{
 	case eRenderState::NT_RS_SOLID:
-		m_renderEngine->SetRenderStateSolid();
+        m_renderEngine->DeviceContext()->RSSetState(NtRenderStateHandler::RSSolid);
 		break;
 	case eRenderState::NT_RS_WIRE_FRAME:
-		m_renderEngine->SetRenderStateWireframe();
+        m_renderEngine->DeviceContext()->RSSetState(NtRenderStateHandler::RSWireFrame);
 		break;
 	}
 }

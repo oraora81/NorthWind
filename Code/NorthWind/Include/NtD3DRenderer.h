@@ -20,10 +20,6 @@ public:
 
 	virtual bool Resize(ntInt width, ntInt height) = 0;
 
-	virtual void SetRenderStateSolid() const = 0;
-
-	virtual void SetRenderStateWireframe() const = 0;
-	
 	void SetWorldMatrix(XMMATRIX& world);
 
 	void SetViewMatrix(XMMATRIX& view);

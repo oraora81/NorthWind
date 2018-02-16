@@ -16,8 +16,6 @@ NtDx11Renderer::NtDx11Renderer()
 	m_depthStencilBuffer = nullptr;
 	m_depthStencilState  = nullptr;
 	m_depthStencilView   = nullptr;
-	m_solidRasterState   = nullptr;
-	m_wireRasterState    = nullptr;
 }
 
 
@@ -284,41 +282,13 @@ NtDx11Renderer::~NtDx11Renderer()
 	m_deviceContext->OMSetRenderTargets(1, &m_renderTargetView, m_depthStencilView);
 
 	// 어떻게 폴리곤을 그릴지 raster desc 설정
-	D3D11_RASTERIZER_DESC defRasterDesc;
-	Crt::MemSet(&defRasterDesc, sizeof(defRasterDesc));
-
-	defRasterDesc.AntialiasedLineEnable = false;
-	defRasterDesc.CullMode = D3D11_CULL_BACK;
-	defRasterDesc.DepthBias = 0;
-	defRasterDesc.DepthBiasClamp = 0.0f;
-	defRasterDesc.DepthClipEnable = true;
-	defRasterDesc.FillMode = D3D11_FILL_SOLID;
-	defRasterDesc.FrontCounterClockwise = false;
-	defRasterDesc.MultisampleEnable = false;
-	defRasterDesc.ScissorEnable = false;
-	defRasterDesc.SlopeScaledDepthBias = 0.0f;
-
-	//
-	HRF(m_device->CreateRasterizerState(&defRasterDesc, &m_solidRasterState));
-
-	// wireframe용 raster상태도 생성
-	defRasterDesc.FillMode = D3D11_FILL_WIREFRAME;
-
-	HRF(m_device->CreateRasterizerState(&defRasterDesc, &m_wireRasterState));
+	if (NtRenderStateHandler::Initialize(m_device) == false)
+	{
+        return false;
+	}
 
 	// rasterizer state 설정
-	m_deviceContext->RSSetState(m_solidRasterState);
-
-	// nocull raster desc설정
-	D3D11_RASTERIZER_DESC ncRasterDesc;
-	Crt::MemSet(&ncRasterDesc, sizeof(ncRasterDesc));
-
-	ncRasterDesc.FillMode = D3D11_FILL_SOLID;
-	ncRasterDesc.CullMode = D3D11_CULL_NONE;
-	ncRasterDesc.FrontCounterClockwise = false;
-	ncRasterDesc.DepthClipEnable = true;
-
-	HRF(m_device->CreateRasterizerState(&ncRasterDesc, &m_noCullRasterState));
+	m_deviceContext->RSSetState(NtRenderStateHandler::RSSolid);
 
 	// 렌더링 뷰포트 설정
 	D3D11_VIEWPORT viewport;
@@ -351,7 +321,6 @@ NtDx11Renderer::~NtDx11Renderer()
 	return true;
 }
 
-
 /*virtual*/ void NtDx11Renderer::Release()
 {
 	// 
@@ -360,8 +329,6 @@ NtDx11Renderer::~NtDx11Renderer()
 		m_swapchain->SetFullscreenState(FALSE, nullptr);
 	}
 
-	SAFE_RELEASE(m_noCullRasterState);
-	SAFE_RELEASE(m_solidRasterState);
 	SAFE_RELEASE(m_depthStencilView);
 	SAFE_RELEASE(m_depthStencilState);
 	SAFE_RELEASE(m_depthStencilBuffer);
@@ -459,16 +426,6 @@ NtDx11Renderer::~NtDx11Renderer()
 	return true;
 }
 
-void NtDx11Renderer::SetRenderStateSolid() const
-{
-	DeviceContext()->RSSetState(m_solidRasterState);
-}
-
-void NtDx11Renderer::SetRenderStateWireframe() const
-{
-	DeviceContext()->RSSetState(m_wireRasterState);
-}
-
 ID3D11Device* NtDx11Renderer::Device() const
 {
 	return m_device;
@@ -478,7 +435,6 @@ ID3D11DeviceContext* NtDx11Renderer::DeviceContext() const
 {
 	return m_deviceContext;
 }
-
 
 bool NtDx11Renderer::CreateShaderResourceView(ID3D11Texture1D* tex,D3D11_SHADER_RESOURCE_VIEW_DESC* SRVDesc,ID3D11ShaderResourceView** textureView)
 {
