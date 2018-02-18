@@ -36,7 +36,7 @@ NtModel::~NtModel()
 
 bool NtModel::InitializeModelData(void* vertices, ntInt vtxSize, ntInt vtxCount, ntUint* indices, ntInt indexCount)
 {
-	m_vertexBuffer = MakeVertexBuffer(vertices, vtxSize, vtxCount, BufferUsage::USAGE_DYNAMIC, eCpuAccessFlag::CPU_ACCESS_WRITE);
+	m_vertexBuffer = MakeVertexBuffer(vertices, vtxSize, vtxCount, BufferUsage::USAGE_IMMUTABLE, eCpuAccessFlag::CPU_ACCESS_NONE);
 
 	m_vertexCount = vtxCount;
 

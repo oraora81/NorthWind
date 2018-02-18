@@ -43,6 +43,21 @@ void NtLightShader::SetBlendMap(ID3D11ShaderResourceView* tex)
     //m_fxBlendMap->SetResource(tex);
 }
 
+void NtLightShader::SetFogColor(const FXMVECTOR v)
+{
+    m_fogColor->SetFloatVector(reinterpret_cast<const float*>(&v));
+}
+
+void NtLightShader::SetFogStart(float f)
+{
+    m_fogStart->SetFloat(f);
+}
+
+void NtLightShader::SetFogRange(float f)
+{
+    m_fogRange->SetFloat(f);
+}
+
 const ID3DX11EffectMatrixVariable* NtLightShader::FxWorld() const
 {
     return m_fxWorld;
@@ -86,4 +101,80 @@ ID3DX11EffectTechnique* NtLightShader::Light2TexTech() const
 ID3DX11EffectTechnique* NtLightShader::Light3TexTech() const
 {
     return m_light3Tex;
+}
+
+ID3DX11EffectTechnique* NtLightShader::Light0TexAlphaClipTech() const
+{
+    return m_light0TexAlphaClipTech;
+}
+
+ID3DX11EffectTechnique* NtLightShader::Light1TexAlphaClipTech() const
+{
+    return m_light1TexAlphaClipTech;
+}
+
+ID3DX11EffectTechnique* NtLightShader::Light2TexAlphaClipTech() const
+{
+    return m_light2TexAlphaClipTech;
+}
+
+ID3DX11EffectTechnique* NtLightShader::Light3TexAlphaClipTech() const
+{
+    return m_light3TexAlphaClipTech;
+}
+
+ID3DX11EffectTechnique* NtLightShader::Light1FogTech() const
+{
+    return m_light1FogTech;
+}
+
+ID3DX11EffectTechnique* NtLightShader::Light2FogTech() const
+{
+    return m_light2FogTech;
+}
+
+ID3DX11EffectTechnique* NtLightShader::Light3FogTech() const
+{
+    return m_light3FogTech;
+}
+
+ID3DX11EffectTechnique* NtLightShader::Light0TexFogTech() const
+{
+    return m_light0TexFogTech;
+}
+
+ID3DX11EffectTechnique* NtLightShader::Light1TexFogTech() const
+{
+    return m_light1TexFogTech;
+}
+
+ID3DX11EffectTechnique* NtLightShader::Light2TexFogTech() const
+{
+    return m_light2TexFogTech;
+}
+
+ID3DX11EffectTechnique* NtLightShader::Light3TexFogTech() const
+{
+    return m_light3TexFogTech;
+}
+
+
+ID3DX11EffectTechnique* NtLightShader::Light0TexAlphaClipFogTech() const
+{
+    return m_light0TexAlphaClipFogTech;
+}
+
+ID3DX11EffectTechnique* NtLightShader::Light1TexAlphaClipFogTech() const
+{
+    return m_light1TexAlphaClipFogTech;
+}
+
+ID3DX11EffectTechnique* NtLightShader::Light2TexAlphaClipFogTech() const
+{
+    return m_light2TexAlphaClipFogTech;
+}
+
+ID3DX11EffectTechnique* NtLightShader::Light3TexAlphaClipFogTech() const
+{
+    return m_light3TexAlphaClipFogTech;
 }

@@ -34,19 +34,37 @@ namespace
 
         return n;
     }
+
+    enum RenderOption
+    {
+        Lighting = 0,
+        Textures = 1,
+        TexturesAndFog = 2
+    };
+
+    RenderOption RENDER_OPTION = RenderOption::TexturesAndFog;
 }
 
 WaveModel::WaveModel()
 	: m_waveVB(nullptr)
 	, m_waveIB(nullptr)
+    , m_boxVB(nullptr)
+    , m_boxIB(nullptr)
     , m_grassMapSRV(nullptr)
     , m_waveMapSRV(nullptr)
+    , m_boxMapSRV(nullptr)
     , m_gridIndexCount(0)
+    , m_boxIndexCount(0)
     , m_lightCount(1)
 {
 	XMMATRIX I = XMMatrixIdentity();
 	XMStoreFloat4x4(&m_gridWorld, I);
 	XMStoreFloat4x4(&m_wavesWorld, I);
+    XMStoreFloat4x4(&m_boxWorld, I);
+
+    XMMATRIX boxScale = XMMatrixScaling(15.0f, 15.0f, 15.0f);
+    XMMATRIX boxOffset = XMMatrixTranslation(8.0f, 5.0f, -15.0f);
+    XMStoreFloat4x4(&m_boxWorld, boxScale*boxOffset);
 
     XMMATRIX grassTexScale = XMMatrixScaling(5.0f, 5.0f, 0.0f);
     XMStoreFloat4x4(&m_grassTexTransform, grassTexScale);
@@ -116,14 +134,21 @@ WaveModel::WaveModel()
     m_wavMaterial.Diffuse = XMFLOAT4(0.137f, 0.42f, 0.556f, 1.0f);
     m_wavMaterial.Specular = XMFLOAT4(0.8f, 0.8f, 0.8f, 96.0f);
 #endif
+
+    m_boxMaterial.Ambient = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
+    m_boxMaterial.Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+    m_boxMaterial.Specular = XMFLOAT4(0.4f, 0.4f, 0.4f, 16.0f);
 }
 
 WaveModel::~WaveModel()
 {
 	SAFE_RELEASE(m_waveVB);
 	SAFE_RELEASE(m_waveIB);
+    SAFE_RELEASE(m_boxVB);
+    SAFE_RELEASE(m_boxIB);
     SAFE_RELEASE(m_grassMapSRV);
     SAFE_RELEASE(m_waveMapSRV);
+    SAFE_RELEASE(m_boxMapSRV);
 }
 
 void WaveModel::Update(float deltaTime)
@@ -173,20 +198,21 @@ void WaveModel::Update(float deltaTime)
     // combine scale and translation
     XMStoreFloat4x4(&m_waterTexTransform, wavesScale * wavesOffset);
 
-    // animate the lights
-    // circle light over the land surface
-    
-    /*if (GetAsyncKeyState('0') & 0x8000)
-        m_lightCount = 0;
-
+    // switch render mode
     if (GetAsyncKeyState('1') & 0x8000)
-        m_lightCount = 1;
+    {
+        RENDER_OPTION = RenderOption::Lighting;
+    }
 
     if (GetAsyncKeyState('2') & 0x8000)
-        m_lightCount = 2;
+    {
+        RENDER_OPTION = RenderOption::Textures;
+    }
 
     if (GetAsyncKeyState('3') & 0x8000)
-        m_lightCount = 3;*/
+    {
+        RENDER_OPTION = RenderOption::TexturesAndFog;
+    }
 }
 
 void WaveModel::Render(XMMATRIX& worldViewProj)
@@ -197,6 +223,8 @@ void WaveModel::Render(XMMATRIX& worldViewProj)
 	g_renderInterface->SetPrimitiveTopology(PrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
     g_renderer->DeviceContext()->IASetInputLayout(NtInputLayoutHandler::PNUInputLayout);
+
+    float blendFactor[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
 	XMMATRIX view;
 	XMMATRIX proj;
@@ -209,25 +237,61 @@ void WaveModel::Render(XMMATRIX& worldViewProj)
 
     LightShader->SetDirLights(m_dirLight);
     LightShader->SetEyePosW(m_eyePosW);
+    LightShader->SetFogColor(Colors::Silver);
+    LightShader->SetFogStart(15.0f);
+    LightShader->SetFogRange(175.0f);
     
-    D3DX11_TECHNIQUE_DESC techDesc;
-    ID3DX11EffectTechnique* tech = LightShader->Light3TexTech();
-    /*switch (m_lightCount)
+    
+    ID3DX11EffectTechnique* tech;
+    ID3DX11EffectTechnique* boxTech;
+    
+    switch (RENDER_OPTION)
     {
-    case 1:
-        tech = LightShader->Light1Tech();
-        break;
-    case 2:
-        tech = LightShader->Light2Tech();
-        break;
-    case 3:
+    case RenderOption::Lighting:
+        boxTech = LightShader->Light3Tech();
         tech = LightShader->Light3Tech();
         break;
-    }*/
-    
+    case RenderOption::Textures:
+        boxTech = LightShader->Light3TexAlphaClipTech();
+        tech = LightShader->Light3TexAlphaClipTech();
+        break;
+    case RenderOption::TexturesAndFog:
+        boxTech = LightShader->Light3TexAlphaClipFogTech();
+        tech = LightShader->Light3TexAlphaClipFogTech();
+        break;
+    }
 
-	tech->GetDesc(&techDesc);
+    D3DX11_TECHNIQUE_DESC techDesc;
+	
 
+    // draw the box
+    boxTech->GetDesc(&techDesc);
+    for (UINT p = 0; p < techDesc.Passes; ++p)
+    {
+        g_renderInterface->SetVertexBuffers(0, 1, &m_boxVB, &stride, &offset);
+        g_renderInterface->SetIndexBuffers(m_boxIB, DXGI_FORMAT_R32_UINT, 0);
+
+        XMMATRIX world = XMLoadFloat4x4(&m_boxWorld);
+        XMMATRIX worldInvTranspose = NtD3dUtil::InverseTranspose(world);
+        XMMATRIX goWVP = world * viewProj;
+
+        LightShader->SetWorld(world);
+        LightShader->SetWorldInvTranspose(worldInvTranspose);
+        LightShader->SetWorldViewProj(goWVP);
+        LightShader->SetTexTransform(XMMatrixIdentity());
+        LightShader->SetMaterial(m_boxMaterial);
+        LightShader->SetDiffuseMap(m_boxMapSRV);
+
+        g_renderer->DeviceContext()->RSSetState(NtRenderStateHandler::RSNoCull);
+        boxTech->GetPassByIndex(p)->Apply(0, g_renderer->DeviceContext());
+        g_renderer->DeviceContext()->DrawIndexed(m_boxIndexCount, 0, 0);
+
+        // restore default render state
+        g_renderer->DeviceContext()->RSSetState(0);
+    }
+
+
+    tech->GetDesc(&techDesc);
 	for (UINT p = 0; p < techDesc.Passes; ++p)
 	{
 		g_renderInterface->SetVertexBuffers(0, 1, &m_vertexBuffer, &stride, &offset);
@@ -264,8 +328,12 @@ void WaveModel::Render(XMMATRIX& worldViewProj)
         LightShader->SetMaterial(m_wavMaterial);
         LightShader->SetDiffuseMap(m_waveMapSRV);
 
+        g_renderer->DeviceContext()->OMSetBlendState(NtRenderStateHandler::BSTransparent, blendFactor, 0xffffffff);
+
 		tech->GetPassByIndex(p)->Apply(0, g_renderer->DeviceContext());
 		g_renderer->DeviceContext()->DrawIndexed(3 * m_waves.TrisCount(), 0, 0);
+
+        g_renderer->DeviceContext()->OMSetBlendState(0, blendFactor, 0xffffffff);
 	}
 }
 
@@ -335,6 +403,12 @@ void WaveModel::MakeGeometry()
     filePath = g_resMgr->GetPath(L"water2.dds");
     HR(D3DX11CreateShaderResourceViewFromFile(g_renderer->Device(),
         filePath, 0, 0, &m_waveMapSRV, 0));
+
+    filePath = g_resMgr->GetPath(L"wirefence.dds");
+    HR(D3DX11CreateShaderResourceViewFromFile(g_renderer->Device(),
+        filePath, 0, 0, &m_boxMapSRV, 0));
+
+    MakeCrate();
 }
 
 void WaveModel::MakeWave()
@@ -371,3 +445,30 @@ void WaveModel::MakeWave()
 	m_waveIB = MakeIndexBuffer(idxArray, (ntInt)indices.size());
 }
 
+void WaveModel::MakeCrate()
+{
+    NtGeometryGenerator::MeshData box;
+
+    NtGeometryGenerator geoGen;
+    geoGen.CreateBox(1.0f, 1.0f, 1.0f, box);
+
+    std::vector<Vertex::NtPNUVertex> vertices(box.Vertices.size());
+
+    for (size_t i = 0; i < box.Vertices.size(); i++)
+    {
+        vertices[i].position = box.Vertices[i].Position;
+        vertices[i].normal = box.Vertices[i].Normal;
+        vertices[i].uv = box.Vertices[i].TexC;
+    }
+    
+    std::vector<UINT> indices;
+    indices.insert(std::end(indices), std::begin(box.Indices), std::end(box.Indices));
+    m_boxIndexCount = (ntInt)box.Indices.size();
+
+    Vertex::NtPNUVertex* vtxArray = &vertices[0];
+    UINT* idxArray = &indices[0];
+
+    m_boxVB = MakeVertexBuffer(vtxArray, sizeof(Vertex::NtPNUVertex), (ntInt)vertices.size(), BufferUsage::USAGE_IMMUTABLE, eCpuAccessFlag::CPU_ACCESS_NONE);
+
+    m_boxIB = MakeIndexBuffer(idxArray, (ntInt)indices.size());
+}
