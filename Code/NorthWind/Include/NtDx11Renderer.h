@@ -29,6 +29,8 @@ public:
 
 	bool CreateShaderResourceView(ID3D11Texture3D* tex, D3D11_SHADER_RESOURCE_VIEW_DESC* SRVDesc, ID3D11ShaderResourceView** textureView);
 
+    bool CreateShaderResourceView(ntWchar* fileName, ID3D11ShaderResourceView** SRVMap);
+
 	void* operator new(size_t s)
 	{
 		return _aligned_malloc(s, 16);

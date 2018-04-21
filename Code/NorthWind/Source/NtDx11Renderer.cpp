@@ -457,4 +457,20 @@ bool NtDx11Renderer::CreateShaderResourceView(ID3D11Texture3D* tex,D3D11_SHADER_
 	return FAILED(res) ? false : true;
 }
 
+bool NtDx11Renderer::CreateShaderResourceView(ntWchar* fileName, ID3D11ShaderResourceView** SRVMap)
+{
+    NtAsserte(fileName != nullptr);
+    NtAsserte(Crt::StrLen(fileName) > 0);
+
+    const ntWchar* filePath = g_resMgr->GetPath(fileName);
+    NtAsserte(filePath != nullptr);
+
+    HRF(D3DX11CreateShaderResourceViewFromFile(Device(),
+        filePath,
+        0,
+        0,
+        SRVMap,
+        0));
+}
+
 } }

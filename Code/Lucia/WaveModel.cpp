@@ -294,14 +294,36 @@ void WaveModel::Render(XMMATRIX& worldViewProj)
     tech->GetDesc(&techDesc);
 	for (UINT p = 0; p < techDesc.Passes; ++p)
 	{
-		g_renderInterface->SetVertexBuffers(0, 1, &m_vertexBuffer, &stride, &offset);
-		g_renderInterface->SetIndexBuffers(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
+		// draw the waves
+        g_renderInterface->SetVertexBuffers(0, 1, &m_waveVB, &stride, &offset);
+        g_renderInterface->SetIndexBuffers(m_waveIB, DXGI_FORMAT_R32_UINT, 0);
+
+        XMMATRIX world = XMLoadFloat4x4(&m_wavesWorld);
+        XMMATRIX worldInvTranspose = NtD3dUtil::InverseTranspose(world);
+        XMMATRIX goWorldViewProj = world * viewProj;
+
+        LightShader->SetWorld(world);
+        LightShader->SetWorldInvTranspose(worldInvTranspose);
+        LightShader->SetWorldViewProj(goWorldViewProj);
+        LightShader->SetTexTransform(XMLoadFloat4x4(&m_waterTexTransform));
+        LightShader->SetMaterial(m_wavMaterial);
+        LightShader->SetDiffuseMap(m_waveMapSRV);
+		
+        g_renderer->DeviceContext()->OMSetBlendState(NtRenderStateHandler::BSTransparent, blendFactor, 0xffffffff);
+
+		tech->GetPassByIndex(p)->Apply(0, g_renderer->DeviceContext());
+		g_renderer->DeviceContext()->DrawIndexed(3 * m_waves.TrisCount(), 0, 0);
+
+        g_renderer->DeviceContext()->OMSetBlendState(0, blendFactor, 0xffffffff);
 
         // set per object constant.
         // draw the grid
-        XMMATRIX world = XMLoadFloat4x4(&m_gridWorld);
-        XMMATRIX worldInvTranspose = NtD3dUtil::InverseTranspose(world);
-        XMMATRIX goWorldViewProj = world * viewProj;
+        g_renderInterface->SetVertexBuffers(0, 1, &m_vertexBuffer, &stride, &offset);
+        g_renderInterface->SetIndexBuffers(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
+
+        world = XMLoadFloat4x4(&m_gridWorld);
+        worldInvTranspose = NtD3dUtil::InverseTranspose(world);
+        goWorldViewProj = world * viewProj;
 
         LightShader->SetWorld(world);
         LightShader->SetWorldInvTranspose(worldInvTranspose);
@@ -310,30 +332,8 @@ void WaveModel::Render(XMMATRIX& worldViewProj)
         LightShader->SetMaterial(m_landMaterial);
         LightShader->SetDiffuseMap(m_grassMapSRV);
 
-		tech->GetPassByIndex(p)->Apply(0, g_renderer->DeviceContext());
-		g_renderer->DeviceContext()->DrawIndexed(m_gridIndexCount, 0, 0);
-
-		// draw the waves
-		g_renderInterface->SetVertexBuffers(0, 1, &m_waveVB, &stride, &offset);
-		g_renderInterface->SetIndexBuffers(m_waveIB, DXGI_FORMAT_R32_UINT, 0);
-
-		world = XMLoadFloat4x4(&m_wavesWorld);
-        worldInvTranspose = NtD3dUtil::InverseTranspose(world);
-        goWorldViewProj = world * viewProj;
-
-        LightShader->SetWorld(world);
-        LightShader->SetWorldInvTranspose(worldInvTranspose);
-        LightShader->SetWorldViewProj(goWorldViewProj);
-        LightShader->SetTexTransform(XMLoadFloat4x4(&m_waterTexTransform));
-        LightShader->SetMaterial(m_wavMaterial);
-        LightShader->SetDiffuseMap(m_waveMapSRV);
-
-        g_renderer->DeviceContext()->OMSetBlendState(NtRenderStateHandler::BSTransparent, blendFactor, 0xffffffff);
-
-		tech->GetPassByIndex(p)->Apply(0, g_renderer->DeviceContext());
-		g_renderer->DeviceContext()->DrawIndexed(3 * m_waves.TrisCount(), 0, 0);
-
-        g_renderer->DeviceContext()->OMSetBlendState(0, blendFactor, 0xffffffff);
+        tech->GetPassByIndex(p)->Apply(0, g_renderer->DeviceContext());
+        g_renderer->DeviceContext()->DrawIndexed(m_gridIndexCount, 0, 0);
 	}
 }
 
@@ -396,18 +396,12 @@ void WaveModel::MakeGeometry()
 
 	MakeWave();
 
-    const ntWchar* filePath = g_resMgr->GetPath(L"grass.dds");
-    HR(D3DX11CreateShaderResourceViewFromFile(g_renderer->Device(),
-        filePath, 0, 0, &m_grassMapSRV, 0));
+    g_renderer->CreateShaderResourceView(L"grass.dds", &m_grassMapSRV);
 
-    filePath = g_resMgr->GetPath(L"water2.dds");
-    HR(D3DX11CreateShaderResourceViewFromFile(g_renderer->Device(),
-        filePath, 0, 0, &m_waveMapSRV, 0));
+    g_renderer->CreateShaderResourceView(L"water2.dds", &m_waveMapSRV);
 
-    filePath = g_resMgr->GetPath(L"wirefence.dds");
-    HR(D3DX11CreateShaderResourceViewFromFile(g_renderer->Device(),
-        filePath, 0, 0, &m_boxMapSRV, 0));
-
+    g_renderer->CreateShaderResourceView(L"wirefence.dds", &m_boxMapSRV);
+    
     MakeCrate();
 }
 

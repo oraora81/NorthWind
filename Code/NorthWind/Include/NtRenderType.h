@@ -25,6 +25,23 @@ namespace Vertex
 
     struct NtPNUVertex
     {
+        NtPNUVertex()
+            : position(0.0f, 0.0f, 0.0f)
+            , normal(0.0f, 0.0f, 0.0f)
+            , uv(0.0f, 0.0f)
+        {
+
+        }
+
+        NtPNUVertex(float px, float py, float pz, float nx, float ny, float nz, float u, float v)
+            : position(px, py, pz)
+            , normal(nx, ny, nz)
+            , uv(u, v)
+        {
+
+        }
+
+
         XMFLOAT3 position;
         XMFLOAT3 normal;
         XMFLOAT2 uv;

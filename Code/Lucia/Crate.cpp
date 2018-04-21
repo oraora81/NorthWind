@@ -152,8 +152,8 @@ void Crate::MakeGeometry()
     m_boxVertexOffset = 0;
     m_boxIndexOffset = 0;
 
-    UINT totalVertexCount = box.Vertices.size();
-    UINT totalIndexCount = box.Indices.size();
+    UINT totalVertexCount = (UINT)box.Vertices.size();
+    UINT totalIndexCount = (UINT)box.Indices.size();
 
     std::vector<Vertex::NtPNUVertex> vertices(totalVertexCount);
 
