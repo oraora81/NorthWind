@@ -4,7 +4,6 @@
 
 #include "NtShader.h"
 #include "NtLightShader.h"
-#include "NtTexture.h"
 
 namespace nt { namespace renderer {
 

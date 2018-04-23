@@ -221,6 +221,9 @@
     <ClInclude Include="Include\NtRenderStateHandler.h">
       <Filter>render\renderstate</Filter>
     </ClInclude>
+    <ClInclude Include="Include\NtUIShader.h">
+      <Filter>render\shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\test_cube.ase" />
@@ -424,6 +427,9 @@
     </ClCompile>
     <ClCompile Include="Source\NtRenderStateHandler.cpp">
       <Filter>render\renderstate</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\NtUIShader.cpp">
+      <Filter>render\shader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -54,7 +54,9 @@ public:
 
 private:
 	std::shared_ptr<NtDx11Renderer> m_renderEngine;
+
 	NtCamera*			m_camera;
+
 	NtLight*			m_light;
 
 	std::vector<NtModel*> m_models;
