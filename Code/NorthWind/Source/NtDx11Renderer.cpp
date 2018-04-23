@@ -471,6 +471,7 @@ bool NtDx11Renderer::CreateShaderResourceView(ntWchar* fileName, ID3D11ShaderRes
         0,
         SRVMap,
         0));
+    return true;
 }
 
 } }
