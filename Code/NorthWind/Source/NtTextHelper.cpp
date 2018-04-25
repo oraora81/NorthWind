@@ -1,0 +1,195 @@
+#include "NtCoreLib.h"
+#pragma hdrstop
+
+#include "NtTextHelper.h"
+#include "NtInputLayout.h"
+
+namespace nt { namespace renderer {
+
+NtTextHelper::NtTextHelper()
+    : m_fontBuffer(nullptr)
+    , m_fontSRV11(nullptr)
+    , m_lineHeight(0)
+    , m_fontBufferBytes11(0)
+{
+    m_color = Colors::WhiteC;
+    m_pt.x = 0;
+    m_pt.y = 0;
+}
+
+bool NtTextHelper::Initialize()
+{
+    return true;
+}
+
+void NtTextHelper::Release()
+{
+
+}
+
+void NtTextHelper::Begin()
+{
+
+}
+
+void NtTextHelper::End()
+{
+
+}
+
+void NtTextHelper::RenderTextLine(const ntWchar* str)
+{
+    RECT rc;
+    SetRect(&rc, m_pt.x, m_pt.y, 0, 0);
+    
+    RenderText11(str, rc, m_color, 
+        (float)g_app->Width(), (float)g_app->Height(), false);
+
+    m_pt.y += m_lineHeight;
+}
+
+void NtTextHelper::RenderTextLine(RECT& rc, const ntWchar* str)
+{
+
+}
+
+void NtTextHelper::RenderText11(const ntWchar* strText, RECT rcScreen, XMCOLOR vFontColor,
+    float fBBWidth, float fBBHeight, bool bCenter)
+{
+    float fCharTexSizeX = 0.010526315f;
+    //float fGlyphSizeX = 14.0f / fBBWidth;
+    //float fGlyphSizeY = 32.0f / fBBHeight;
+    float fGlyphSizeX = 15.0f / fBBWidth;
+    float fGlyphSizeY = 42.0f / fBBHeight;
+
+
+    float fRectLeft = rcScreen.left / fBBWidth;
+    float fRectTop = 1.0f - rcScreen.top / fBBHeight;
+
+    fRectLeft = fRectLeft * 2.0f - 1.0f;
+    fRectTop = fRectTop * 2.0f - 1.0f;
+
+    int NumChars = (int)wcslen(strText);
+    if (bCenter) {
+        float fRectRight = rcScreen.right / fBBWidth;
+        fRectRight = fRectRight * 2.0f - 1.0f;
+        float fRectBottom = 1.0f - rcScreen.bottom / fBBHeight;
+        fRectBottom = fRectBottom * 2.0f - 1.0f;
+        float fcenterx = ((fRectRight - fRectLeft) - (float)NumChars*fGlyphSizeX) *0.5f;
+        float fcentery = ((fRectTop - fRectBottom) - (float)1 * fGlyphSizeY) *0.5f;
+        fRectLeft += fcenterx;
+        fRectTop -= fcentery;
+    }
+    float fOriginalLeft = fRectLeft;
+    float fTexTop = 0.0f;
+    float fTexBottom = 1.0f;
+
+    float fDepth = 0.5f;
+    for (int i = 0; i < NumChars; i++)
+    {
+        if (strText[i] == '\n')
+        {
+            fRectLeft = fOriginalLeft;
+            fRectTop -= fGlyphSizeY;
+
+            continue;
+        }
+        else if (strText[i] < 32 || strText[i] > 126)
+        {
+            continue;
+        }
+
+        // Add 6 sprite vertices
+        float fRectRight = fRectLeft + fGlyphSizeX;
+        float fRectBottom = fRectTop - fGlyphSizeY;
+        float fTexLeft = (strText[i] - 32) * fCharTexSizeX;
+        float fTexRight = fTexLeft + fCharTexSizeX;
+
+        // tri1
+        m_vertexArray.push_back(Vertex::SpriteVertex(fRectLeft, fRectTop, fDepth, 
+            vFontColor, fTexLeft, fTexTop));
+
+        m_vertexArray.push_back(Vertex::SpriteVertex(fRectRight, fRectTop, fDepth, 
+            vFontColor, fTexRight, fTexTop));
+
+        m_vertexArray.push_back(Vertex::SpriteVertex(fRectLeft, fRectBottom, fDepth,
+            vFontColor, fTexLeft, fTexBottom));
+
+        // tri2
+        m_vertexArray.push_back(Vertex::SpriteVertex(fRectRight, fRectTop, fDepth,
+            vFontColor, fTexRight, fTexTop));
+
+        m_vertexArray.push_back(Vertex::SpriteVertex(fRectRight, fRectBottom, fDepth,
+            vFontColor, fTexRight, fTexBottom));
+
+        m_vertexArray.push_back(Vertex::SpriteVertex(fRectLeft, fRectBottom, fDepth,
+            vFontColor, fTexLeft, fTexBottom));
+
+        fRectLeft += fGlyphSizeX;
+    }
+
+    // We have to end text after every line so that rendering order between sprites and fonts is preserved
+    EndText11();
+}
+
+void NtTextHelper::EndText11()
+{
+    // ensure our buffer size can hold our sprites
+    auto FontDataBytes = m_vertexArray.size() * sizeof(Vertex::SpriteVertex);
+
+    if (m_fontBufferBytes11 < FontDataBytes)
+    {
+        SAFE_RELEASE(m_fontBuffer);
+        m_fontBufferBytes11 = FontDataBytes;
+
+        D3D11_BUFFER_DESC BufferDesc;
+        BufferDesc.ByteWidth = m_fontBufferBytes11;
+        BufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+        BufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+        BufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+        BufferDesc.MiscFlags = 0;
+
+        NtRenderBufferParam param;
+        param.m_desc = &BufferDesc;
+        param.m_resData = nullptr;
+        param.m_buffer = &m_fontBuffer;
+
+        g_renderInterface->CreateBuffer(param);
+    }
+
+    // Copy the sprites over
+    D3D11_BOX destRegion;
+    destRegion.left = 0;
+    destRegion.right = FontDataBytes;
+    destRegion.top = 0;
+    destRegion.bottom = 1;
+    destRegion.front = 0;
+    destRegion.back = 1;
+    D3D11_MAPPED_SUBRESOURCE MappedResource;
+    
+    auto context = g_renderer->DeviceContext();
+
+    HR(context->Map(m_fontBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &MappedResource));
+
+    Crt::MemCpy(MappedResource.pData, (void*)&m_vertexArray[0], FontDataBytes);
+    context->Unmap(m_fontBuffer, 0);
+
+    ID3D11ShaderResourceView* oldSRV = NULL;
+    context->PSGetShaderResources(0, 1, &oldSRV);
+    context->PSSetShaderResources(0, 1, &m_fontSRV11);
+
+    // Draw
+    UINT Stride = sizeof(Vertex::SpriteVertex);
+    UINT Offset = 0;
+    context->IASetVertexBuffers(0, 1, &m_fontBuffer, &Stride, &Offset);
+    context->IASetInputLayout(NtInputLayoutHandler::SpriteInputLayout);
+    context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+    context->Draw(m_vertexArray.size(), 0);
+
+    context->PSSetShaderResources(0, 1, &oldSRV);
+    SAFE_RELEASE(oldSRV);
+
+    m_vertexArray.clear();
+}
+
+}}

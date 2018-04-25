@@ -169,8 +169,7 @@ bool NtApplication::Initialize(bool fullscreen, ntInt width, ntInt height)
 	{
 		return false;
 	}
-    
-	
+
 	return true;
 }
 
@@ -207,7 +206,16 @@ bool NtApplication::OnResize(ntInt width, ntInt height)
 		return false;
 	}
 
-	return m_renderer->Resize(width, height);
+    if (m_renderer->Resize(width, height) == false)
+    {
+        return false;
+    }
+
+    m_width = width;
+
+    m_height = height;
+
+	return true;
 }
 
 

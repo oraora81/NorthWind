@@ -18,7 +18,7 @@ Pyramid::~Pyramid()
 
 void Pyramid::MakeGeometry()
 {
-    Vertex::NtPCVertex vertices[] =
+    Vertex::PCVertex vertices[] =
     {
         { XMFLOAT3(-5.0f, -2.0f, -2.0f), (const float*)&Colors::Green },
         { XMFLOAT3(-5.0f, -2.0f, +2.0f), (const float*)&Colors::Green },
@@ -41,5 +41,5 @@ void Pyramid::MakeGeometry()
         1, 3, 2,
     };
     
-    InitializeModelData(vertices, sizeof(Vertex::NtPCVertex), _countof(vertices), indices, _countof(indices));
+    InitializeModelData(vertices, sizeof(Vertex::PCVertex), _countof(vertices), indices, _countof(indices));
 }

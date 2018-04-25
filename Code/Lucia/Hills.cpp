@@ -33,7 +33,7 @@ void Hills::MakeGeometry()
 
 	m_indexCount = grid.Indices.size();
 
-    Vertex::NtPCVertex* vertices = new Vertex::NtPCVertex[grid.Vertices.size()];
+    Vertex::PCVertex* vertices = new Vertex::PCVertex[grid.Vertices.size()];
 
 	for (int i = 0; i < (int)grid.Vertices.size(); ++i)
 	{
@@ -78,5 +78,5 @@ void Hills::MakeGeometry()
 		indices[i] = grid.Indices[i];
 	}
 	
-	InitializeModelData(vertices, sizeof(Vertex::NtPCVertex), grid.Vertices.size(), indices, grid.Indices.size());
+	InitializeModelData(vertices, sizeof(Vertex::PCVertex), grid.Vertices.size(), indices, grid.Indices.size());
 }

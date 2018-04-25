@@ -57,9 +57,9 @@ void Box::MakeGeometry()
 
 void Box::MakeNormal()
 {
-    std::vector<Vertex::NtPCVertex> vertices;
+    std::vector<Vertex::PCVertex> vertices;
 
-    Vertex::NtPCVertex box[] =
+    Vertex::PCVertex box[] =
     {
         { XMFLOAT3(-1.0f, -1.0f, -1.0f), (const float*)&Colors::White },
         { XMFLOAT3(-1.0f, +1.0f, -1.0f), (const float*)&Colors::Black },
@@ -75,7 +75,7 @@ void Box::MakeNormal()
     m_boxVertexCount = _countof(box);
     m_pyramidVertexOffset = (UINT)vertices.size();
 
-    Vertex::NtPCVertex pyramid[] =
+    Vertex::PCVertex pyramid[] =
     {
         { XMFLOAT3(-5.0f, -2.0f, -2.0f), (const float*)&Colors::Green },
         { XMFLOAT3(-5.0f, -2.0f, +2.0f), (const float*)&Colors::Green },
@@ -131,10 +131,10 @@ void Box::MakeNormal()
     indices.insert(indices.end(), std::begin(pyramid_indices), std::end(pyramid_indices));
     m_pyramidIndexCount = _countof(pyramid_indices);
 
-    Vertex::NtPCVertex* v = &vertices[0];
+    Vertex::PCVertex* v = &vertices[0];
     UINT* i = &indices[0];
 
-    InitializeModelData(v, sizeof(Vertex::NtPCVertex), (ntInt)vertices.size(), i, (ntInt)indices.size());
+    InitializeModelData(v, sizeof(Vertex::PCVertex), (ntInt)vertices.size(), i, (ntInt)indices.size());
 }
 
 void Box::MakeGeometryTwoVertexBuf()
@@ -353,7 +353,7 @@ void Box::RenderTwoVertexBuf(XMMATRIX& worldViewProj)
 
 void Box::RenderBoxPyramid(XMMATRIX& worldViewProj)
 {
-    UINT stride = sizeof(Vertex::NtPCVertex);
+    UINT stride = sizeof(Vertex::PCVertex);
     UINT offset = 0;
 
     g_renderInterface->SetPrimitiveTopology(PrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);

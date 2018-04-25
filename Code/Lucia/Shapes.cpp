@@ -45,7 +45,7 @@ Shapes::~Shapes()
 
 void Shapes::Render(XMMATRIX& worldViewProj)
 {
-	ntUint stride = sizeof(Vertex::NtPCVertex);
+	ntUint stride = sizeof(Vertex::PCVertex);
 	ntUint offset = 0;
 
 	g_renderInterface->SetPrimitiveTopology(PrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -160,7 +160,7 @@ void Shapes::MakeGeometry()
 	// extract the vertex elements we are interested in and pack the
 	// vertices of all the meshes into one vertex buffer
 
-	std::vector<Vertex::NtPCVertex> vertices(totalVertexCount);
+	std::vector<Vertex::PCVertex> vertices(totalVertexCount);
 
 	XMFLOAT4 black(0.0f, 0.0f, 0.0f, 1.0f);
 
@@ -197,8 +197,8 @@ void Shapes::MakeGeometry()
 	indices.insert(indices.end(), sphere.Indices.begin(), sphere.Indices.end());
 	indices.insert(indices.end(), cylinder.Indices.begin(), cylinder.Indices.end());
 
-    Vertex::NtPCVertex* vtxArray = &vertices[0];
+    Vertex::PCVertex* vtxArray = &vertices[0];
 	UINT* idxArray = &indices[0];
 
-	InitializeModelData(vtxArray, sizeof(Vertex::NtPCVertex), (ntInt)vertices.size(), idxArray, (ntInt)indices.size());
+	InitializeModelData(vtxArray, sizeof(Vertex::PCVertex), (ntInt)vertices.size(), idxArray, (ntInt)indices.size());
 }

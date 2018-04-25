@@ -64,6 +64,7 @@ NtDx11Renderer::~NtDx11Renderer()
 	NtAsserte(displayModeList != nullptr);
 
 	// displayModeList 다시 채우기
+    // D3D_FEATURE_LEVEL_11_1에서는 GetDisplayModeList1을 사용
 	HRF(adapterOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &numMode, displayModeList));
 
 	// 화면 너비, 높이에 맞는 해상도 찾기
@@ -197,11 +198,15 @@ NtDx11Renderer::~NtDx11Renderer()
 		nullptr,
 		D3D_DRIVER_TYPE_HARDWARE,
 		NULL,
-		NULL, 
+		NULL,
 		NULL, //&featureLevel,
 		NULL,
 		D3D11_SDK_VERSION, 
 		&swapChainDesc, &m_swapchain, &m_device, &featureLevel, &m_deviceContext));
+
+    DXGI_OUTPUT_DESC outputDesc;
+    Crt::MemSet(&outputDesc, sizeof(DXGI_OUTPUT_DESC));
+    HRF(adapterOutput->GetDesc(&outputDesc));
 
 	// release tools
 	SAFE_DELETE_ARRAY(displayModeList);
@@ -215,6 +220,9 @@ NtDx11Renderer::~NtDx11Renderer()
 
 	// backbuffer pointer로 렌더타겟뷰 생성
 	HRF(m_device->CreateRenderTargetView(backBuffer, nullptr, &m_renderTargetView));
+
+    D3D11_TEXTURE2D_DESC desc;
+    backBuffer->GetDesc(&desc);
 
 	// 얻어온 백버퍼 해제
 	SAFE_RELEASE(backBuffer);

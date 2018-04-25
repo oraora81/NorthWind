@@ -5,13 +5,6 @@ namespace nt { namespace renderer {
 
 class NtLightShader : public NtShader
 {
-	struct NtMatrixBuffer
-	{
-		XMMATRIX world;
-		XMMATRIX view;
-		XMMATRIX proj;
-	};
-
 public:
 	NtLightShader();
 

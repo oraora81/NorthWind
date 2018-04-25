@@ -174,7 +174,7 @@ void WaveModel::Update(float deltaTime)
 	D3D11_MAPPED_SUBRESOURCE mappedData;
 	HR(g_renderer->DeviceContext()->Map(m_waveVB, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedData));
 
-	Vertex::NtPNUVertex* vertices = reinterpret_cast<Vertex::NtPNUVertex*>(mappedData.pData);
+	Vertex::PNUVertex* vertices = reinterpret_cast<Vertex::PNUVertex*>(mappedData.pData);
 	for (UINT i = 0; i < m_waves.VertexCount(); i++)
 	{
 		vertices[i].position = m_waves[i];
@@ -217,7 +217,7 @@ void WaveModel::Update(float deltaTime)
 
 void WaveModel::Render(XMMATRIX& worldViewProj)
 {
-    ntUint stride = sizeof(Vertex::NtPNUVertex);
+    ntUint stride = sizeof(Vertex::PNUVertex);
 	ntUint offset = 0;
 
 	g_renderInterface->SetPrimitiveTopology(PrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -345,7 +345,7 @@ void WaveModel::MakeGeometry()
 
 	gen.CreateGrid(160.0f, 160.0f, 50, 50, grid);
 
-    std::vector<Vertex::NtPNUVertex> vertices(grid.Vertices.size());
+    std::vector<Vertex::PNUVertex> vertices(grid.Vertices.size());
 	for (size_t i = 0; i < grid.Vertices.size(); i++)
 	{
 		XMFLOAT3 p = grid.Vertices[i].Position;
@@ -389,10 +389,10 @@ void WaveModel::MakeGeometry()
 	indices.insert(indices.end(), grid.Indices.begin(), grid.Indices.end());
     m_gridIndexCount = (ntInt)grid.Indices.size();
 
-    Vertex::NtPNUVertex* vtxArray = &vertices[0];
+    Vertex::PNUVertex* vtxArray = &vertices[0];
 	UINT* idxArray = &indices[0];
 
-	InitializeModelData(vtxArray, sizeof(Vertex::NtPNUVertex), (ntInt)vertices.size(), idxArray, (ntInt)indices.size());
+	InitializeModelData(vtxArray, sizeof(Vertex::PNUVertex), (ntInt)vertices.size(), idxArray, (ntInt)indices.size());
 
 	MakeWave();
 
@@ -409,7 +409,7 @@ void WaveModel::MakeWave()
 {
 	m_waves.Init(160, 160, 1.0f, 0.03f, 3.25f, 0.4f);
 
-	m_waveVB = MakeVertexBuffer(nullptr, sizeof(Vertex::NtPNUVertex), m_waves.VertexCount(), BufferUsage::USAGE_DYNAMIC, eCpuAccessFlag::CPU_ACCESS_WRITE);
+	m_waveVB = MakeVertexBuffer(nullptr, sizeof(Vertex::PNUVertex), m_waves.VertexCount(), BufferUsage::USAGE_DYNAMIC, eCpuAccessFlag::CPU_ACCESS_WRITE);
 
 	std::vector<UINT> indices(3 * m_waves.TrisCount());
 
@@ -446,7 +446,7 @@ void WaveModel::MakeCrate()
     NtGeometryGenerator geoGen;
     geoGen.CreateBox(1.0f, 1.0f, 1.0f, box);
 
-    std::vector<Vertex::NtPNUVertex> vertices(box.Vertices.size());
+    std::vector<Vertex::PNUVertex> vertices(box.Vertices.size());
 
     for (size_t i = 0; i < box.Vertices.size(); i++)
     {
@@ -459,10 +459,10 @@ void WaveModel::MakeCrate()
     indices.insert(std::end(indices), std::begin(box.Indices), std::end(box.Indices));
     m_boxIndexCount = (ntInt)box.Indices.size();
 
-    Vertex::NtPNUVertex* vtxArray = &vertices[0];
+    Vertex::PNUVertex* vtxArray = &vertices[0];
     UINT* idxArray = &indices[0];
 
-    m_boxVB = MakeVertexBuffer(vtxArray, sizeof(Vertex::NtPNUVertex), (ntInt)vertices.size(), BufferUsage::USAGE_IMMUTABLE, eCpuAccessFlag::CPU_ACCESS_NONE);
+    m_boxVB = MakeVertexBuffer(vtxArray, sizeof(Vertex::PNUVertex), (ntInt)vertices.size(), BufferUsage::USAGE_IMMUTABLE, eCpuAccessFlag::CPU_ACCESS_NONE);
 
     m_boxIB = MakeIndexBuffer(idxArray, (ntInt)indices.size());
 }

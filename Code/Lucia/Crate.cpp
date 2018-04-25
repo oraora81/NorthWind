@@ -63,7 +63,7 @@ void Crate::Update(float deltaTime)
 
 void Crate::Render(XMMATRIX& worldViewProj)
 {
-    ntUint stride = sizeof(Vertex::NtPNUVertex);
+    ntUint stride = sizeof(Vertex::PNUVertex);
     ntUint offset = 0;
 
     g_renderInterface->SetPrimitiveTopology(PrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -155,7 +155,7 @@ void Crate::MakeGeometry()
     UINT totalVertexCount = (UINT)box.Vertices.size();
     UINT totalIndexCount = (UINT)box.Indices.size();
 
-    std::vector<Vertex::NtPNUVertex> vertices(totalVertexCount);
+    std::vector<Vertex::PNUVertex> vertices(totalVertexCount);
 
     for (size_t i = 0; i < totalVertexCount; ++i)
     {
@@ -166,7 +166,7 @@ void Crate::MakeGeometry()
 
     InitializeModelData(
         &vertices[0],
-        sizeof(nt::Vertex::NtPNUVertex),
+        sizeof(nt::Vertex::PNUVertex),
         (int)vertices.size(),
         &box.Indices[0],
         (int)totalIndexCount);

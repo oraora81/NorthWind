@@ -21,7 +21,7 @@ Points::~Points()
 
 void Points::Render(XMMATRIX& worldViewProj)
 {
-	ntUint stride = sizeof(Vertex::NtPCVertex);
+	ntUint stride = sizeof(Vertex::PCVertex);
 	ntUint offset = 0;
 
 	g_renderInterface->SetPrimitiveTopology(PrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
@@ -51,7 +51,7 @@ void Points::Render(XMMATRIX& worldViewProj)
 
 void Points::MakeGeometry()
 {
-    Vertex::NtPCVertex vertices[] =
+    Vertex::PCVertex vertices[] =
 	{
 		{ XMFLOAT3(-5.0f, -2.0f, +1.0f), (const float*)&Colors::White },
 		{ XMFLOAT3(-4.0f, +2.0f, +1.0f), (const float*)&Colors::Black },
@@ -84,5 +84,5 @@ void Points::MakeGeometry()
 		4, 3, 7
 	};
 
-	InitializeModelData(vertices, sizeof(Vertex::NtPCVertex), _countof(vertices), indices, _countof(indices));
+	InitializeModelData(vertices, sizeof(Vertex::PCVertex), _countof(vertices), indices, _countof(indices));
 }

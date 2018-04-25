@@ -109,7 +109,7 @@ void Mirror::BuildRoom()
     //  /   Floor      /
     // /--------------/
 
-    Vertex::NtPNUVertex v[30] = 
+    Vertex::PNUVertex v[30] = 
     {
         // Floor: Observe we tile texture coord
         {-3.5f, 0.0f, -10.0f, 0.0f, 1.0f, 0.0f, 0.0f, 4.0f},

@@ -71,7 +71,7 @@ void NtModel::Update(float deltaTime)
 
 void NtModel::Render(XMMATRIX& worldViewProj)
 {
-	ntUint stride = sizeof(Vertex::NtPCVertex);
+	ntUint stride = sizeof(Vertex::PCVertex);
 	ntUint offset = 0;
 
 	g_renderInterface->SetPrimitiveTopology(PrimitiveTopology::PRIMITIVE_TOPOLOGY_TRIANGLELIST);

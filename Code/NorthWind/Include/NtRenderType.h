@@ -11,21 +11,21 @@ const ntUint INVALID_TEXTURE_HANDLE = 0xffffffff;
 
 namespace Vertex 
 {
-    struct NtPCVertex
+    struct PCVertex
     {
         XMFLOAT3 position;
         XMFLOAT4 color;
     };
 
-    struct NtLVertex
+    struct LightVertex
     {
         XMFLOAT3 position;
         XMFLOAT3 normal;
     };
 
-    struct NtPNUVertex
+    struct PNUVertex
     {
-        NtPNUVertex()
+        PNUVertex()
             : position(0.0f, 0.0f, 0.0f)
             , normal(0.0f, 0.0f, 0.0f)
             , uv(0.0f, 0.0f)
@@ -33,7 +33,7 @@ namespace Vertex
 
         }
 
-        NtPNUVertex(float px, float py, float pz, float nx, float ny, float nz, float u, float v)
+        PNUVertex(float px, float py, float pz, float nx, float ny, float nz, float u, float v)
             : position(px, py, pz)
             , normal(nx, ny, nz)
             , uv(u, v)
@@ -44,6 +44,23 @@ namespace Vertex
 
         XMFLOAT3 position;
         XMFLOAT3 normal;
+        XMFLOAT2 uv;
+    };
+
+    struct SpriteVertex
+    {
+        SpriteVertex(float px, float py, float pz, XMCOLOR clr, float u, float v)
+            : position(px, py, pz)
+            , uv(u, v)
+        {
+            color.x = clr.r;
+            color.y = clr.g;
+            color.z = clr.b;
+            color.w = clr.a;
+        }
+
+        XMFLOAT3 position;
+        XMFLOAT4 color;
         XMFLOAT2 uv;
     };
 }

@@ -427,6 +427,7 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <ClInclude Include="Include\NtSingleton.h" />
     <ClInclude Include="Include\NtString.h" />
     <ClInclude Include="Include\NtSystem.h" />
+    <ClInclude Include="Include\NtTextHelper.h" />
     <ClInclude Include="Include\NtTexture.h" />
     <ClInclude Include="Include\NtTextureHelper.h" />
     <ClInclude Include="Include\NtTextureShader.h" />
@@ -510,6 +511,7 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <ClCompile Include="Source\NtShaderHandler.cpp" />
     <ClCompile Include="Source\NtString.cpp" />
     <ClCompile Include="Source\NtSystem.cpp" />
+    <ClCompile Include="Source\NtTextHelper.cpp" />
     <ClCompile Include="Source\NtTexture.cpp" />
     <ClCompile Include="Source\NtTextureHelper.cpp" />
     <ClCompile Include="Source\NtTextureShader.cpp" />

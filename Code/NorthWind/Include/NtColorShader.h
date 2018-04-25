@@ -16,8 +16,6 @@ public:
 
 	bool RenderFx(ntInt indexCount, const XMMATRIX& worldViewProj);
 
-private:
-
 public:
 	ID3DX11EffectTechnique* ColorTech;
 

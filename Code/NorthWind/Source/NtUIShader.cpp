@@ -8,6 +8,7 @@ namespace nt { namespace renderer {
 
 NtUIShader::NtUIShader()
     : NtShader()
+    , m_uiTech(nullptr)
 {
 }
 
@@ -24,6 +25,9 @@ bool NtUIShader::InitializeFx(const ntWchar* fx)
     {
         return false;
     }
+
+    m_uiTech = m_fx->GetTechniqueByName("RenderUI");
+    NtAsserte(m_uiTech != nullptr);
 
     return true;
 }

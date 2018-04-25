@@ -48,6 +48,16 @@ public:
 		return static_cast<float>(m_width / m_height);
 	}
 
+    inline ntUint Width() const
+    {
+        return m_width;
+    }
+
+    inline ntUint Height() const
+    {
+        return m_height;
+    }
+
 	const NtTimer& Timer() const;
 
 protected:

@@ -224,6 +224,9 @@
     <ClInclude Include="Include\NtUIShader.h">
       <Filter>render\shader</Filter>
     </ClInclude>
+    <ClInclude Include="Include\NtTextHelper.h">
+      <Filter>render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\test_cube.ase" />
@@ -430,6 +433,9 @@
     </ClCompile>
     <ClCompile Include="Source\NtUIShader.cpp">
       <Filter>render\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\NtTextHelper.cpp">
+      <Filter>render</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -61,7 +61,7 @@ void Skull::MakeGeometry()
     float nx, ny, nz;
     XMFLOAT4 black(0.0f, 0.0f, 0.0f, 1.0f);
 
-    std::vector<Vertex::NtPCVertex> vertices(vcount);
+    std::vector<Vertex::PCVertex> vertices(vcount);
     for (UINT i = 0; i < vcount; ++i)
     {
         fin >> vertices[i].position.x >> vertices[i].position.y >> vertices[i].position.z;
@@ -85,8 +85,8 @@ void Skull::MakeGeometry()
 
     fin.close();
 
-    Vertex::NtPCVertex* vtxArray = &vertices[0];
+    Vertex::PCVertex* vtxArray = &vertices[0];
 	UINT* idxArray = &indices[0];
 
-	InitializeModelData(vtxArray, sizeof(Vertex::NtPCVertex), (ntInt)vertices.size(), idxArray, m_skullIndexCount);
+	InitializeModelData(vtxArray, sizeof(Vertex::PCVertex), (ntInt)vertices.size(), idxArray, m_skullIndexCount);
 }
