@@ -69,8 +69,8 @@ WaveModel::WaveModel()
     XMMATRIX grassTexScale = XMMatrixScaling(5.0f, 5.0f, 0.0f);
     XMStoreFloat4x4(&m_grassTexTransform, grassTexScale);
 
-    XMMATRIX wavOffset = XMMatrixTranslation(0.0f, -3.0f, 0.0f);
-    XMStoreFloat4x4(&m_wavesWorld, wavOffset);
+    //XMMATRIX wavOffset = XMMatrixTranslation(0.0f, -3.0f, 0.0f);
+    //XMStoreFloat4x4(&m_wavesWorld, wavOffset);
 
     m_dirLight[0].Ambient = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
     m_dirLight[0].Diffuse = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
@@ -92,7 +92,7 @@ WaveModel::WaveModel()
     m_landMaterial.Specular = XMFLOAT4(0.2f, 0.2f, 0.2f, 16.0f);
 
     m_wavMaterial.Ambient = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
-    m_wavMaterial.Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+    m_wavMaterial.Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 0.5f);
     m_wavMaterial.Specular = XMFLOAT4(0.8f, 0.8f, 0.8f, 32.0f);
 
 #if 0
@@ -287,20 +287,39 @@ void WaveModel::Render(XMMATRIX& worldViewProj)
         g_renderer->DeviceContext()->DrawIndexed(m_boxIndexCount, 0, 0);
 
         // restore default render state
-        g_renderer->DeviceContext()->RSSetState(0);
+        g_renderer->DeviceContext()->RSSetState(nullptr);
     }
 
 
     tech->GetDesc(&techDesc);
 	for (UINT p = 0; p < techDesc.Passes; ++p)
 	{
+        // set per object constant.
+        // draw the grid
+        g_renderInterface->SetVertexBuffers(0, 1, &m_vertexBuffer, &stride, &offset);
+        g_renderInterface->SetIndexBuffers(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
+
+        XMMATRIX world = XMLoadFloat4x4(&m_gridWorld);
+        XMMATRIX worldInvTranspose = NtD3dUtil::InverseTranspose(world);
+        XMMATRIX goWorldViewProj = world * viewProj;
+
+        LightShader->SetWorld(world);
+        LightShader->SetWorldInvTranspose(worldInvTranspose);
+        LightShader->SetWorldViewProj(goWorldViewProj);
+        LightShader->SetTexTransform(XMLoadFloat4x4(&m_grassTexTransform));
+        LightShader->SetMaterial(m_landMaterial);
+        LightShader->SetDiffuseMap(m_grassMapSRV);
+
+        tech->GetPassByIndex(p)->Apply(0, g_renderer->DeviceContext());
+        g_renderer->DeviceContext()->DrawIndexed(m_gridIndexCount, 0, 0);
+
 		// draw the waves
         g_renderInterface->SetVertexBuffers(0, 1, &m_waveVB, &stride, &offset);
         g_renderInterface->SetIndexBuffers(m_waveIB, DXGI_FORMAT_R32_UINT, 0);
 
-        XMMATRIX world = XMLoadFloat4x4(&m_wavesWorld);
-        XMMATRIX worldInvTranspose = NtD3dUtil::InverseTranspose(world);
-        XMMATRIX goWorldViewProj = world * viewProj;
+        world = XMLoadFloat4x4(&m_wavesWorld);
+        worldInvTranspose = NtD3dUtil::InverseTranspose(world);
+        goWorldViewProj = world * viewProj;
 
         LightShader->SetWorld(world);
         LightShader->SetWorldInvTranspose(worldInvTranspose);
@@ -314,26 +333,7 @@ void WaveModel::Render(XMMATRIX& worldViewProj)
 		tech->GetPassByIndex(p)->Apply(0, g_renderer->DeviceContext());
 		g_renderer->DeviceContext()->DrawIndexed(3 * m_waves.TrisCount(), 0, 0);
 
-        g_renderer->DeviceContext()->OMSetBlendState(0, blendFactor, 0xffffffff);
-
-        // set per object constant.
-        // draw the grid
-        g_renderInterface->SetVertexBuffers(0, 1, &m_vertexBuffer, &stride, &offset);
-        g_renderInterface->SetIndexBuffers(m_indexBuffer, DXGI_FORMAT_R32_UINT, 0);
-
-        world = XMLoadFloat4x4(&m_gridWorld);
-        worldInvTranspose = NtD3dUtil::InverseTranspose(world);
-        goWorldViewProj = world * viewProj;
-
-        LightShader->SetWorld(world);
-        LightShader->SetWorldInvTranspose(worldInvTranspose);
-        LightShader->SetWorldViewProj(goWorldViewProj);
-        LightShader->SetTexTransform(XMLoadFloat4x4(&m_grassTexTransform));
-        LightShader->SetMaterial(m_landMaterial);
-        LightShader->SetDiffuseMap(m_grassMapSRV);
-
-        tech->GetPassByIndex(p)->Apply(0, g_renderer->DeviceContext());
-        g_renderer->DeviceContext()->DrawIndexed(m_gridIndexCount, 0, 0);
+        g_renderer->DeviceContext()->OMSetBlendState(nullptr, blendFactor, 0xffffffff);
 	}
 }
 

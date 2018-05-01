@@ -163,9 +163,6 @@ float4 PS(VertexOut pin,
         litColor = texColor * (ambient + diffuse) + spec;
     }
 
-    // Common to take alpha from diffuse material and texture
-    litColor.a = gMaterial.Diffuse.a * texColor.a;
-
     //
     // Fogging
     //
