@@ -5,13 +5,39 @@
 
 namespace nt { namespace renderer {
 
+
 ID3D11RasterizerState* NtRenderStateHandler::RSSolid;
 ID3D11RasterizerState* NtRenderStateHandler::RSWireFrame;
 ID3D11RasterizerState* NtRenderStateHandler::RSNoCull;
+ID3D11RasterizerState* NtRenderStateHandler::RSUI;
+
 ID3D11BlendState* NtRenderStateHandler::BSAlpha2Coverage;
 ID3D11BlendState* NtRenderStateHandler::BSTransparent;
+ID3D11BlendState* NtRenderStateHandler::BSUI;
+
+ID3D11DepthStencilState* NtRenderStateHandler::DSUI;
+
+ID3D11SamplerState* NtRenderStateHandler::SSUI;
+
 
 bool NtRenderStateHandler::Initialize(ID3D11Device* device)
+{
+    InitRS(device);
+
+    InitBS(device);
+
+    return true;
+}
+
+void NtRenderStateHandler::Release()
+{
+    SAFE_RELEASE(RSWireFrame);
+    SAFE_RELEASE(RSNoCull);
+    SAFE_RELEASE(BSAlpha2Coverage);
+    SAFE_RELEASE(BSTransparent);
+}
+
+bool NtRenderStateHandler::InitRS(ID3D11Device* device)
 {
     NtAsserte(device != nullptr);
 
@@ -42,7 +68,7 @@ bool NtRenderStateHandler::Initialize(ID3D11Device* device)
     wireframeDesc.DepthClipEnable = TRUE;
 
     HRF(device->CreateRasterizerState(&wireframeDesc, &RSWireFrame));
-    
+
 
     // no cull
     D3D11_RASTERIZER_DESC noCullDesc;
@@ -54,6 +80,21 @@ bool NtRenderStateHandler::Initialize(ID3D11Device* device)
 
     HRF(device->CreateRasterizerState(&noCullDesc, &RSNoCull));
 
+    D3D11_RASTERIZER_DESC uiDesc;
+    Crt::MemSet(&uiDesc, sizeof(D3D11_RASTERIZER_DESC));
+    uiDesc.AntialiasedLineEnable = FALSE;
+    uiDesc.CullMode = D3D11_CULL_BACK;
+    uiDesc.DepthClipEnable = TRUE;
+    uiDesc.FillMode = D3D11_FILL_SOLID;
+    uiDesc.MultisampleEnable = TRUE;
+    
+    HRF(device->CreateRasterizerState(&uiDesc, &RSUI));
+
+    return true;
+}
+
+bool NtRenderStateHandler::InitBS(ID3D11Device* device)
+{
     // alpha2coverage
     D3D11_BLEND_DESC alpha2CoverageDesc = { 0, };
     alpha2CoverageDesc.AlphaToCoverageEnable = TRUE;
@@ -80,15 +121,45 @@ bool NtRenderStateHandler::Initialize(ID3D11Device* device)
 
     HRF(device->CreateBlendState(&transparentDesc, &BSTransparent));
 
+    // ui
+    D3D11_BLEND_DESC uiDesc;
+    Crt::MemSet(&uiDesc, sizeof(D3D11_BLEND_DESC));
+
+    uiDesc.RenderTarget[0].BlendEnable = TRUE;
+    uiDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+    uiDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+    uiDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+    uiDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+    uiDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+    uiDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+    uiDesc.RenderTarget[0].RenderTargetWriteMask = 0x0F;
+
+    HRF(device->CreateBlendState(&uiDesc, &BSUI));
+
     return true;
 }
 
-void NtRenderStateHandler::Release()
+bool NtRenderStateHandler::InitDS(ID3D11Device* device)
 {
-    SAFE_RELEASE(RSWireFrame);
-    SAFE_RELEASE(RSNoCull);
-    SAFE_RELEASE(BSAlpha2Coverage);
-    SAFE_RELEASE(BSTransparent);
+    D3D11_DEPTH_STENCIL_DESC dsDesc;
+    Crt::MemSet(&dsDesc, sizeof(D3D11_DEPTH_STENCIL_DESC));
+
+    dsDesc.DepthEnable = FALSE;
+    dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+    dsDesc.DepthFunc = D3D11_COMPARISON_LESS;
+    dsDesc.StencilEnable = FALSE;
+
+    HRF(device->CreateDepthStencilState(&dsDesc, &DSUI));
+
+    return true;
+}
+
+bool NtRenderStateHandler::Etc(ID3D11Device* device)
+{
+    D3D11_SAMPLER_DESC sDesc;
+    Crt::MemSet(&sDesc, sizeof(D3D11_SAMPLER_DESC));
+
+    return true;
 }
 
 } }

@@ -3,12 +3,19 @@
 
 #include "NtTextHelper.h"
 #include "NtInputLayout.h"
+#include "NtUIShader.h"
+#include "NtShaderHandler.h"
 
 namespace nt { namespace renderer {
 
 NtTextHelper::NtTextHelper()
     : m_fontBuffer(nullptr)
+    , m_screenQuadBuffer(nullptr)
     , m_fontSRV11(nullptr)
+    , m_storeDepthStencilState(nullptr)
+    , m_storeRasterizeState(nullptr)
+    , m_storeBlendState(nullptr)
+    , m_storeSamplerState(nullptr)
     , m_lineHeight(0)
     , m_fontBufferBytes11(0)
 {
@@ -19,17 +26,31 @@ NtTextHelper::NtTextHelper()
 
 bool NtTextHelper::Initialize()
 {
+    D3D11_BUFFER_DESC bufDesc;
+    Crt::MemSet(&bufDesc, sizeof(D3D11_BUFFER_DESC));
+
+    bufDesc.ByteWidth = sizeof(Vertex::SpriteVertex) * 4;
+    bufDesc.Usage = D3D11_USAGE_DYNAMIC;
+    bufDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+    bufDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+
+    HRF(g_renderer->Device()->CreateBuffer(&bufDesc, nullptr, &m_screenQuadBuffer));
+
+    HRF(g_renderer->CreateShaderResourceView(L"Font.dds", &m_fontSRV11));
+
     return true;
 }
 
 void NtTextHelper::Release()
 {
-
+    SAFE_RELEASE(m_fontBuffer);
+    SAFE_RELEASE(m_screenQuadBuffer);
+    SAFE_RELEASE(m_fontSRV11);
 }
 
 void NtTextHelper::Begin()
 {
-
+    
 }
 
 void NtTextHelper::End()

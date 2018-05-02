@@ -5,7 +5,6 @@
 #include "NtModel.h"
 
 #include "NtRenderer.h"
-#include "NtTexture.h"
 #include "NtAse.h"
 #include "NtColorShader.h"
 #include "NtTextureShader.h"

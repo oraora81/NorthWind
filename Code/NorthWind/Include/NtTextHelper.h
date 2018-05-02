@@ -35,7 +35,14 @@ public:
 
 private:
     ID3D11Buffer* m_fontBuffer;
-    ID3D11ShaderResourceView* m_fontSRV11 = NULL;
+    ID3D11Buffer* m_screenQuadBuffer;
+    ID3D11ShaderResourceView* m_fontSRV11;
+
+    ID3D11DepthStencilState* m_storeDepthStencilState;
+    ID3D11RasterizerState* m_storeRasterizeState;
+    ID3D11BlendState* m_storeBlendState;
+    ID3D11SamplerState* m_storeSamplerState;
+    
     XMCOLOR m_color;
     POINT m_pt;
     ntUint m_lineHeight;

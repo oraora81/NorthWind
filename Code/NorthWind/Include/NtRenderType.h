@@ -271,7 +271,7 @@ struct NtMeshObj
 #pragma endregion
 
 
-struct sDDSInitHeader
+struct DDSInitHeader
 {
 	ntUint m_width;
 	ntUint m_height;

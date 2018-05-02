@@ -9,6 +9,14 @@ SamplerState Sampler
 	AddressV = Wrap;
 };
 
+SamplerState samAnisotropic
+{
+    Filter = ANISOTROPIC;
+    MaxAnisotropy = 4;
+    AddressU = WRAP;
+    AddressV = WRAP;
+};
+
 BlendState UIBlend
 {
 	AlphaToCoverageEnable = FALSE;

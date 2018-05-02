@@ -18,8 +18,16 @@ public:
         return m_uiTech;
     }
 
+    inline void SetShaderResourceMap(ID3D11ShaderResourceView* view)
+    {
+        NtAsserte(view != nullptr);
+
+        m_srMap->SetResource(view);
+    }
+
 private:
     ID3DX11EffectTechnique* m_uiTech;
+    ID3DX11EffectShaderResourceVariable* m_srMap;
 };
 
 }

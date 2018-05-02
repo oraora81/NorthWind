@@ -10,7 +10,6 @@ class NtModelParser;
 namespace renderer {
 
 class NtRenderer;
-class NtTexture;
 class NtColorShader;
 class NtLightShader;
 class NtTextureShader;

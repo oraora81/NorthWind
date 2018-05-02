@@ -150,8 +150,22 @@ namespace nt {
  *	@brief		NtTextureLoader :
  */
 
-bool NtTextureLoader::CreateD3DResources(ntUint resDim, ntUint width, ntUint height, ntUint depth, ntUint mipCount, ntUint arraySize, DXGI_FORMAT format, D3D11_USAGE usage,
-	ntUint bindFlags, ntUint cpuAccessFlags, ntUint miscFlags, bool forceSRGB, bool isCubeMap, D3D11_SUBRESOURCE_DATA* initData, ID3D11Resource** texture, ID3D11ShaderResourceView** textureView)
+bool NtTextureLoader::CreateD3DResources(ntUint resDim, 
+    ntUint width, 
+    ntUint height, 
+    ntUint depth, 
+    ntUint mipCount, 
+    ntUint arraySize, 
+    DXGI_FORMAT format, 
+    D3D11_USAGE usage,
+	ntUint bindFlags, 
+    ntUint cpuAccessFlags, 
+    ntUint miscFlags, 
+    bool forceSRGB, 
+    bool isCubeMap, 
+    D3D11_SUBRESOURCE_DATA* initData, 
+    ID3D11Resource** texture, 
+    ID3D11ShaderResourceView** textureView)
 {
 	if (forceSRGB)
 	{
@@ -1096,7 +1110,7 @@ void NtDDSLoader::GetSurfaceInfo( ntUint width, ntUint height, DXGI_FORMAT fmt, 
 //--------------------------------------------------------------------------------------
 #define ISBITMASK( r,g,b,a ) ( ddpf.RBitMask == r && ddpf.GBitMask == g && ddpf.BBitMask == b && ddpf.ABitMask == a )
 
-bool NtDDSLoader::FillInitData(const sDDSInitHeader& initHeader, ntUint& width, ntUint& height, ntUint& depth, ntUint& skipMip, D3D11_SUBRESOURCE_DATA* initData)
+bool NtDDSLoader::FillInitData(const DDSInitHeader& initHeader, ntUint& width, ntUint& height, ntUint& depth, ntUint& skipMip, D3D11_SUBRESOURCE_DATA* initData)
 {
 	if (!initHeader.m_bitData || !initData)
 	{
@@ -1487,8 +1501,17 @@ bool NtDDSLoader::LoadTextureDataFromFile(const ntWchar* fileName, std::unique_p
 	return true;
 }
 
-bool NtDDSLoader::CreateTextureFromDDS(const DirectX::DDS_HEADER* header, const ntUchar* bitData, ntUint bitSize, ntUint maxSize, 
-	D3D11_USAGE usage, ntUint bindFlags, ntUint cpuAccessFlags, ntUint miscFlags, bool forceSRGB, ID3D11Resource** texture, ID3D11ShaderResourceView** textureView)
+bool NtDDSLoader::CreateTextureFromDDS(const DirectX::DDS_HEADER* header, 
+    const ntUchar* bitData, 
+    ntUint bitSize, 
+    ntUint maxSize, 
+	D3D11_USAGE usage, 
+    ntUint bindFlags, 
+    ntUint cpuAccessFlags, 
+    ntUint miscFlags, 
+    bool forceSRGB, 
+    ID3D11Resource** texture, 
+    ID3D11ShaderResourceView** textureView)
 {
 	ntUint width = header->width;
 	ntUint height = header->height;
@@ -1664,7 +1687,7 @@ bool NtDDSLoader::CreateTextureFromDDS(const DirectX::DDS_HEADER* header, const 
 	ntUint theight = 0;
 	ntUint tdepth = 0;
 
-	sDDSInitHeader initHeader;
+	DDSInitHeader initHeader;
 	initHeader.m_width = width;
 	initHeader.m_height = height;
 	initHeader.m_depth = depth;
@@ -1726,10 +1749,6 @@ bool NtDDSLoader::CreateTextureFromDDS(const DirectX::DDS_HEADER* header, const 
 	
 	return true;
 }
-
-
-
-
 
 
 /*static*/ bool NtJPGLoader::LoadTextureDataFromFile(const ntWchar* fileName, std::unique_ptr<ntUchar[]>& outBuffer, ntUchar** bitData, ntUint& maxSize, ntUint& width, ntUint& height, ntSize& textureSize, ntUint& bpp)

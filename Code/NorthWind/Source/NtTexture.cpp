@@ -53,6 +53,7 @@ void NtTexture::Release()
 	if (m_useCount == 0)
 	{
 		SAFE_RELEASE(m_textureView);
+        SAFE_RELEASE(m_texResource);
 	}
 }
 
@@ -119,7 +120,6 @@ bool NtTexHandle::operator ==(ntUint handle)
 {
 	return GetHandle() == handle ? true : false;
 }
-
 
 }
 }
