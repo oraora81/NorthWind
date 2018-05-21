@@ -132,9 +132,9 @@ ntInt NtFile::ReadInt()
 	return target;
 }
 
-ntFloat NtFile::ReadFloat()
+float NtFile::ReadFloat()
 {
-	ntFloat target = 0.0f;
+	float target = 0.0f;
 	ntInt res = fwscanf_s(m_fp, L"%f", &target);
 	if (res == EOF)
 	{

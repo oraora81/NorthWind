@@ -38,4 +38,6 @@ private:
 
     XMFLOAT4X4 m_roomWorld;
     XMFLOAT4X4 m_skullWorld;
+    XMFLOAT3 m_skullTranslation;
+    int m_skullIndexCount;
 };

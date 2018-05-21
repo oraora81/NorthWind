@@ -23,7 +23,7 @@ public:
 
 	void Release();
 
-	bool Process(const ntFloat deltaTime);
+	bool Process(const float deltaTime);
 
 	bool Draw();
 

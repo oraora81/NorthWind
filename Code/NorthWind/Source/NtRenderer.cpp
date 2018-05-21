@@ -90,7 +90,7 @@ void NtRenderer::Release()
 
 }
 
-bool NtRenderer::Process(const ntFloat deltaTime)
+bool NtRenderer::Process(const float deltaTime)
 {
 	auto itor = m_models.begin();
 	for (; itor != m_models.end(); ++itor)

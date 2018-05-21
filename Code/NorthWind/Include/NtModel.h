@@ -35,7 +35,7 @@ public:
 
 	ntInt GetSumOffset();
 
-	void SetVertexInfo(ntFloat* vtxInfo);
+	void SetVertexInfo(float* vtxInfo);
 
     float& Theta()
     {
@@ -80,7 +80,7 @@ protected:
 	ntInt		m_indexCount;
 
 	NtVertexFormat m_vertexFormat;
-	ntFloat*	m_puppetRawData;
+	float*	m_puppetRawData;
 
 	typedef std::vector<NtMeshObj>	MESH_VECTOR;
 	MESH_VECTOR m_meshVector;

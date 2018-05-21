@@ -17,6 +17,7 @@
 #include "Point.h"
 #include "Pyramid.h"
 #include "Crate.h"
+#include "Mirror.h"
 
 using namespace nt;
 using namespace nt::log;
@@ -82,10 +83,11 @@ bool TheApp::Initialize(bool fullscreen, ntInt width, ntInt height)
 	//m_model = new Hills();
 	//m_model = new Shapes();
 	//model = new Skull();
-	m_model = new WaveModel();
+	//m_model = new WaveModel();
     //m_model = new Points();
 	//m_model = new Pyramid();
     //m_model = new Crate();
+    m_model = new Mirror();
 	m_model->MakeGeometry();
 
 

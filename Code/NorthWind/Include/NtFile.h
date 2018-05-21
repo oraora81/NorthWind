@@ -41,7 +41,7 @@ public:
 
 	ntInt ReadInt();
 
-	ntFloat ReadFloat();
+	float ReadFloat();
 
 	bool IsEOF() const;
 

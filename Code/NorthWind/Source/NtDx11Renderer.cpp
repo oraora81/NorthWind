@@ -302,8 +302,8 @@ NtDx11Renderer::~NtDx11Renderer()
 	D3D11_VIEWPORT viewport;
 	Crt::MemSet(&viewport, sizeof(viewport));
 
-	viewport.Width = static_cast<ntFloat>(width);
-	viewport.Height = static_cast<ntFloat>(height);
+	viewport.Width = static_cast<float>(width);
+	viewport.Height = static_cast<float>(height);
 	viewport.MinDepth = 0.0f;
 	viewport.MaxDepth = 1.0f;
 	viewport.TopLeftX = 0.0f;
@@ -313,7 +313,7 @@ NtDx11Renderer::~NtDx11Renderer()
 	m_deviceContext->RSSetViewports(1, &viewport);
 
 	// 프로젝션 행렬 생성
-	float fov = (ntFloat)NtMathf::PI * 0.25f;
+	float fov = (float)NtMathf::PI * 0.25f;
 	
 	// 
 	XMMATRIX p = XMMatrixPerspectiveFovLH(fov, g_app->AspectRatio(), screenNear, screenDepth);
@@ -324,7 +324,7 @@ NtDx11Renderer::~NtDx11Renderer()
 	
 	// 2d 렌더링에 사용할 정사영 행렬 생성
 	// create an orthogonal graphic projection matrix for 2D rendering
-	m_ortho = XMMatrixOrthographicLH((ntFloat)width, (ntFloat)height, screenNear, screenDepth);
+	m_ortho = XMMatrixOrthographicLH((float)width, (float)height, screenNear, screenDepth);
 
 	return true;
 }
@@ -346,7 +346,7 @@ NtDx11Renderer::~NtDx11Renderer()
 	SAFE_RELEASE(m_swapchain);
 }
 
-/*virtual*/ void NtDx11Renderer::BeginScene(const ntFloat* color)
+/*virtual*/ void NtDx11Renderer::BeginScene(const float* color)
 {
 	// back buffer 클리어
 	m_deviceContext->ClearRenderTargetView(m_renderTargetView, color);
@@ -427,7 +427,7 @@ NtDx11Renderer::~NtDx11Renderer()
 
 	m_deviceContext->RSSetViewports(1, &viewport);
 
-	float fov = (ntFloat)NtMathf::PI * 0.25f;
+	float fov = (float)NtMathf::PI * 0.25f;
 	XMMATRIX p = XMMatrixPerspectiveFovLH(fov, g_app->AspectRatio(), 1.0f, 1000.0f);
 	XMStoreFloat4x4(&m_proj, p);
 

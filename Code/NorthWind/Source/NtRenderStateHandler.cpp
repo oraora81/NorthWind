@@ -148,6 +148,8 @@ bool NtRenderStateHandler::InitDS(ID3D11Device* device)
     dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
     dsDesc.DepthFunc = D3D11_COMPARISON_LESS;
     dsDesc.StencilEnable = FALSE;
+    dsDesc.StencilReadMask = 0xff;
+    dsDesc.StencilWriteMask = 0xff;
 
     HRF(device->CreateDepthStencilState(&dsDesc, &DSUI));
 

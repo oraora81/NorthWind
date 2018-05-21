@@ -157,15 +157,15 @@ bool IsNullOrEmpty(const ntWchar* src)
 	return Crt::StrLen(src) == 0 ? true : false;
 }
 
-ntFloat Atof(const ntChar* src)
+float Atof(const ntChar* src)
 {
-	return static_cast<ntFloat>(atof(src));
+	return static_cast<float>(atof(src));
 }
 
 
-ntFloat Atof(const ntWchar* src)
+float Atof(const ntWchar* src)
 {
-	return static_cast<ntFloat>(_wtof(src));
+	return static_cast<float>(_wtof(src));
 }
 
 

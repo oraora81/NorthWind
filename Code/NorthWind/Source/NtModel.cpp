@@ -370,7 +370,7 @@ ntInt NtModel::GetSumOffset()
 	return m_vertexFormat.GetSumOffset();
 }
 
-void NtModel::SetVertexInfo( ntFloat* vtxInfo )
+void NtModel::SetVertexInfo( float* vtxInfo )
 {
 	NtAsserte(vtxInfo != NULL);
 

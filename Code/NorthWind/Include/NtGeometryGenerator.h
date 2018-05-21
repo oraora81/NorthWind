@@ -12,10 +12,10 @@ public:
 			: Position(p), Normal(n), TangentU(t), TexC(uv)
 		{
 		}
-		gVertex(ntFloat px, ntFloat py, ntFloat pz,
-			ntFloat nx, ntFloat ny, ntFloat nz,
-			ntFloat tx, ntFloat ty, ntFloat tz,
-			ntFloat u, ntFloat v)
+		gVertex(float px, float py, float pz,
+			float nx, float ny, float nz,
+			float tx, float ty, float tz,
+			float u, float v)
 			: Position(px, py, pz)
 			, Normal(nx, ny, nz)
 			, TangentU(tx, ty, tz)
@@ -38,22 +38,22 @@ public:
 
 public:
 
-	void CreateBox(ntFloat width, ntFloat height, ntFloat depth, MeshData& meshData);
+	void CreateBox(float width, float height, float depth, MeshData& meshData);
 
-	void CreateSphere(ntFloat radius, ntUint slideCount, ntUint stackCount, MeshData& meshData);
+	void CreateSphere(float radius, ntUint slideCount, ntUint stackCount, MeshData& meshData);
 
-	void CreateGeosphere(ntFloat radius, ntUint numSubdivision, MeshData& meshData);
+	void CreateGeosphere(float radius, ntUint numSubdivision, MeshData& meshData);
 
-	void CreateCylinder(ntFloat bottomRadius, ntFloat topRadius, ntFloat height, ntUint sliceCount, ntUint stackCount, MeshData& meshData);
+	void CreateCylinder(float bottomRadius, float topRadius, float height, ntUint sliceCount, ntUint stackCount, MeshData& meshData);
 
-	void CreateGrid(ntFloat width, ntFloat depth, ntUint m, ntUint n, MeshData& meshData);
+	void CreateGrid(float width, float depth, ntUint m, ntUint n, MeshData& meshData);
 
 	void CreateFullScreenQuad(MeshData& meshData);
 
 private:
-	void BuildCylinderTopCap(ntFloat bottomRaius, ntFloat topRadius, ntFloat height, ntUint sliceCount, ntUint stackCount, MeshData& meshData);
+	void BuildCylinderTopCap(float bottomRaius, float topRadius, float height, ntUint sliceCount, ntUint stackCount, MeshData& meshData);
 	
-	void BuildCylinderBottomCap(ntFloat bottomRaius, ntFloat topRadius, ntFloat height, ntUint sliceCount, ntUint stackCount, MeshData& meshData);
+	void BuildCylinderBottomCap(float bottomRaius, float topRadius, float height, ntUint sliceCount, ntUint stackCount, MeshData& meshData);
 
 	void SubDivide(MeshData& meshData);
 };

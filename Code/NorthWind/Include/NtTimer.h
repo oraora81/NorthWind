@@ -26,8 +26,8 @@ public:
 	}
 
 private:
-	ntDouble m_secondsPerCount;
-	ntDouble m_deltaTime;
+	double m_secondsPerCount;
+	double m_deltaTime;
 	ntInt64 m_baseTime;
 	ntInt64 m_pausedTime;
 	ntInt64 m_stopTime;

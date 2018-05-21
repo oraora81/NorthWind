@@ -16,7 +16,7 @@ class NtProfiler
 	{
 		NtString		funcName;
 		LARGE_INTEGER	startTime;
-		ntDouble		doration;
+		double		doration;
 
 		sProfileItem()
 			: funcName()

@@ -5,15 +5,15 @@
 
 namespace nt {	namespace renderer {
 
-void NtGeometryGenerator::CreateBox(ntFloat width, ntFloat height, ntFloat depth, MeshData& meshData)
+void NtGeometryGenerator::CreateBox(float width, float height, float depth, MeshData& meshData)
 {
 	// create the vertices
 
 	gVertex v[24];
 
-	ntFloat w2 = 0.5f * width;
-	ntFloat h2 = 0.5f * height;
-	ntFloat d2 = 0.5f * depth;
+	float w2 = 0.5f * width;
+	float h2 = 0.5f * height;
+	float d2 = 0.5f * depth;
 	
 	// Fill in the front face vertex data.
 	v[0] = gVertex(-w2, -h2, -d2, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f);
@@ -84,7 +84,7 @@ void NtGeometryGenerator::CreateBox(ntFloat width, ntFloat height, ntFloat depth
 	meshData.Indices.assign(&i[0], &i[36]);
 }
 
-void NtGeometryGenerator::CreateSphere(ntFloat radius, ntUint slideCount, ntUint stackCount, MeshData& meshData)
+void NtGeometryGenerator::CreateSphere(float radius, ntUint slideCount, ntUint stackCount, MeshData& meshData)
 {
 	meshData.Vertices.clear();
 	meshData.Indices.clear();
@@ -97,12 +97,12 @@ void NtGeometryGenerator::CreateSphere(ntFloat radius, ntUint slideCount, ntUint
 
 	meshData.Vertices.push_back(topVertex);
 
-	ntFloat phiStep = NtMath<ntFloat>::PI / stackCount;
-	ntFloat thetaStep = 2.0f * NtMath<ntFloat>::PI / slideCount;
+	float phiStep = NtMath<float>::PI / stackCount;
+	float thetaStep = 2.0f * NtMath<float>::PI / slideCount;
 
 	for (ntUint i = 1; i <= stackCount - 1; ++i)
 	{
-		ntFloat phi = i * phiStep;
+		float phi = i * phiStep;
 
 		for (ntUint j = 0; j <= slideCount; ++j)
 		{
@@ -111,14 +111,14 @@ void NtGeometryGenerator::CreateSphere(ntFloat radius, ntUint slideCount, ntUint
 			gVertex v;
 
 			// spherical to cartesian
-			v.Position.x = radius * NtMathf::Sin(phi) * NtMath<ntFloat>::Cos(theta);
+			v.Position.x = radius * NtMathf::Sin(phi) * NtMath<float>::Cos(theta);
 			v.Position.y = radius * NtMathf::Cos(phi);
-			v.Position.z = radius * NtMathf::Sin(phi) * NtMath<ntFloat>::Sin(theta);
+			v.Position.z = radius * NtMathf::Sin(phi) * NtMath<float>::Sin(theta);
 
 			// Partial derivative of P with respect to theta
-			v.TangentU.x = -radius * NtMath<ntFloat>::Sin(phi) * NtMath<ntFloat>::Sin(theta);
+			v.TangentU.x = -radius * NtMath<float>::Sin(phi) * NtMath<float>::Sin(theta);
 			v.TangentU.y = 0.0f;
-			v.TangentU.z = radius * NtMath<ntFloat>::Sin(phi) * NtMath<ntFloat>::Cos(theta);
+			v.TangentU.z = radius * NtMath<float>::Sin(phi) * NtMath<float>::Cos(theta);
 
 			XMVECTOR T = XMLoadFloat3(&v.TangentU);
 			XMStoreFloat3(&v.TangentU, XMVector4Normalize(T));
@@ -181,15 +181,15 @@ void NtGeometryGenerator::CreateSphere(ntFloat radius, ntUint slideCount, ntUint
 
 }
 
-void NtGeometryGenerator::CreateGeosphere(ntFloat radius, ntUint numSubdivision, MeshData& meshData)
+void NtGeometryGenerator::CreateGeosphere(float radius, ntUint numSubdivision, MeshData& meshData)
 {
 	// put a cap on the number of subdivisions.
     numSubdivision = NtMath<ntUint>::Min(numSubdivision, 5u);
 
 	// approximate a sphere by tessellating an icosahedron
 
-	const ntFloat X = 0.525731f;
-	const ntFloat Z = 0.850651f;
+	const float X = 0.525731f;
+	const float Z = 0.850651f;
 
 	XMFLOAT3 pos[12] = 
 	{
@@ -241,11 +241,11 @@ void NtGeometryGenerator::CreateGeosphere(ntFloat radius, ntUint numSubdivision,
 		XMStoreFloat3(&meshData.Vertices[i].Normal, n);
 
 		// Derive texture coordinates from spherical coordinates.
-		ntFloat theta = NtMathf::Angle(
+		float theta = NtMathf::Angle(
 			meshData.Vertices[i].Position.x,
 			meshData.Vertices[i].Position.z);
 
-		ntFloat phi = NtMathf::ACos(meshData.Vertices[i].Position.y / radius);
+		float phi = NtMathf::ACos(meshData.Vertices[i].Position.y / radius);
 
 		meshData.Vertices[i].TexC.x = theta / XM_2PI;
 		meshData.Vertices[i].TexC.y = phi / XM_PI;
@@ -333,7 +333,7 @@ void NtGeometryGenerator::SubDivide(MeshData& meshData)
 }
 
 
-void NtGeometryGenerator::CreateCylinder(ntFloat bottomRadius, ntFloat topRadius, ntFloat height, ntUint sliceCount, ntUint stackCount, MeshData& meshData)
+void NtGeometryGenerator::CreateCylinder(float bottomRadius, float topRadius, float height, ntUint sliceCount, ntUint stackCount, MeshData& meshData)
 {
 	meshData.Vertices.clear();
 	meshData.Indices.clear();
@@ -349,22 +349,22 @@ void NtGeometryGenerator::CreateCylinder(ntFloat bottomRadius, ntFloat topRadius
 	// 최하단 고리에서 최상단 고리까지 훑어가며 각 고리의 정점을 계산
 	for (ntUint i = 0; i < ringCount; ++i)
 	{
-		ntFloat y = -0.5f * height + i * stackHeight;
-		ntFloat r = bottomRadius + i * radiusStep;
+		float y = -0.5f * height + i * stackHeight;
+		float r = bottomRadius + i * radiusStep;
 
 		// 현재 고리의 정점들
-		ntFloat dTheta = 2.0f * NtMath<ntFloat>::PI / sliceCount;
+		float dTheta = 2.0f * NtMath<float>::PI / sliceCount;
 		for (ntUint j = 0; j <= sliceCount; ++j)
 		{
 			gVertex vertex;
 
-			ntFloat c = NtMath<ntFloat>::Cos(j * dTheta);
-			ntFloat s = NtMath<ntFloat>::Sin(j * dTheta);
+			float c = NtMath<float>::Cos(j * dTheta);
+			float s = NtMath<float>::Sin(j * dTheta);
 
 			vertex.Position = XMFLOAT3(r * c, y, r * s);
 
-			vertex.TexC.x = (ntFloat)j / sliceCount;
-			vertex.TexC.y = 1.0f - (ntFloat)i / stackCount;
+			vertex.TexC.x = (float)j / sliceCount;
+			vertex.TexC.y = 1.0f - (float)i / stackCount;
 
 			// 원기둥을 다음과 같이 매개변수화 할 수 있다.
 			// 매개변수 v가 새로 도입되었는데, 이 매개변수는 정점 좌표 v와 
@@ -388,7 +388,7 @@ void NtGeometryGenerator::CreateCylinder(ntFloat bottomRadius, ntFloat topRadius
 			// TangentU는 단위 길이이다.
 			vertex.TangentU = XMFLOAT3(-s, 0.0f, c);
 
-			ntFloat dr = bottomRadius - topRadius;
+			float dr = bottomRadius - topRadius;
 			XMFLOAT3 bitangent(dr * c, -height, dr * s);
 
 			XMVECTOR T = XMLoadFloat3(&vertex.TangentU);
@@ -423,24 +423,24 @@ void NtGeometryGenerator::CreateCylinder(ntFloat bottomRadius, ntFloat topRadius
 	BuildCylinderBottomCap(bottomRadius, topRadius, height, sliceCount, stackCount, meshData);
 }
 
-void NtGeometryGenerator::BuildCylinderTopCap(ntFloat bottomRaius, ntFloat topRadius, ntFloat height, ntUint sliceCount, ntUint stackCount, MeshData& meshData)
+void NtGeometryGenerator::BuildCylinderTopCap(float bottomRaius, float topRadius, float height, ntUint sliceCount, ntUint stackCount, MeshData& meshData)
 {
 	ntUint baseIndex = (ntUint)meshData.Vertices.size();
 
-	ntFloat y = 0.5f * height;
-	ntFloat dTheta = 2.0f * NtMath<ntFloat>::PI / sliceCount;
+	float y = 0.5f * height;
+	float dTheta = 2.0f * NtMath<float>::PI / sliceCount;
 
 	// 고리 정점들을 복제해서 마개 정점들을 만든다.
 	// 텍스쳐 좌표와 법선이 다르므로 중복이 필요하다.
 	for (ntUint i = 0; i <= sliceCount; ++i)
 	{
-		ntFloat x = topRadius * NtMath<ntFloat>::Cos(i * dTheta);
-		ntFloat z = topRadius * NtMath<ntFloat>::Sin(i * dTheta);
+		float x = topRadius * NtMath<float>::Cos(i * dTheta);
+		float z = topRadius * NtMath<float>::Sin(i * dTheta);
 
 		// 윗면 마개의 텍스쳐 좌표 면적이 밑면에 비례하도록
 		// 텍스쳐 좌표를 높이에 따라 적절히 축소한다.
-		ntFloat u = x / height + 0.5f;
-		ntFloat v = z / height + 0.5f;
+		float u = x / height + 0.5f;
+		float v = z / height + 0.5f;
 
 		meshData.Vertices.push_back(gVertex(x, y, z, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, u, v));
 	}
@@ -458,21 +458,21 @@ void NtGeometryGenerator::BuildCylinderTopCap(ntFloat bottomRaius, ntFloat topRa
 	}
 }
 
-void NtGeometryGenerator::BuildCylinderBottomCap(ntFloat bottomRaius, ntFloat topRadius, ntFloat height, ntUint sliceCount, ntUint stackCount, MeshData& meshData)
+void NtGeometryGenerator::BuildCylinderBottomCap(float bottomRaius, float topRadius, float height, ntUint sliceCount, ntUint stackCount, MeshData& meshData)
 {
 	// 하단 마개 만들기
 	ntUint baseIndex = (ntUint)meshData.Vertices.size();
-	ntFloat y = -0.5f * height;
+	float y = -0.5f * height;
 
 	// 고리 정점 만들기
-	ntFloat dTheta = 2.0f * NtMath<ntFloat>::PI / sliceCount;
+	float dTheta = 2.0f * NtMath<float>::PI / sliceCount;
 	for (ntUint i = 0; i <= sliceCount; ++i)
 	{
-		ntFloat x = bottomRaius * NtMath<ntFloat>::Cos(i * dTheta);
-		ntFloat z = bottomRaius * NtMath<ntFloat>::Sin(i * dTheta);
+		float x = bottomRaius * NtMath<float>::Cos(i * dTheta);
+		float z = bottomRaius * NtMath<float>::Sin(i * dTheta);
 
-		ntFloat u = x / height + 0.5f;
-		ntFloat v = z / height + 0.5f;
+		float u = x / height + 0.5f;
+		float v = z / height + 0.5f;
 
 		meshData.Vertices.push_back(gVertex(x, y, z, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f, 0.0f, u, v));
 	}
@@ -490,7 +490,7 @@ void NtGeometryGenerator::BuildCylinderBottomCap(ntFloat bottomRaius, ntFloat to
 	}
 }
 
-void NtGeometryGenerator::CreateGrid(ntFloat width, ntFloat depth, ntUint m, ntUint n, MeshData& meshData)
+void NtGeometryGenerator::CreateGrid(float width, float depth, ntUint m, ntUint n, MeshData& meshData)
 {
 	ntUint vertexCount = m * n;
 	ntUint faceCount = (m - 1) * (n - 1) * 2;
@@ -499,19 +499,19 @@ void NtGeometryGenerator::CreateGrid(ntFloat width, ntFloat depth, ntUint m, ntU
 	float halfWidth = 0.5f * width;
 	float halfDepth = 0.5f * depth;
 
-	ntFloat dx = width / (n - 1);
-	ntFloat dz = depth / (m - 1);
+	float dx = width / (n - 1);
+	float dz = depth / (m - 1);
 
-	ntFloat du = 1.0f / (n - 1);
-	ntFloat dv = 1.0f / (m - 1);
+	float du = 1.0f / (n - 1);
+	float dv = 1.0f / (m - 1);
 
 	meshData.Vertices.resize(vertexCount);
 	for (ntUint i = 0; i < m; ++i)
 	{
-		ntFloat z = halfDepth - (i * dz);
+		float z = halfDepth - (i * dz);
 		for (ntUint j = 0; j < n; ++j)
 		{
-			ntFloat x = -halfWidth + (j * dx);
+			float x = -halfWidth + (j * dx);
 
 			gVertex& v = meshData.Vertices[i * n + j];
 			v.Position = XMFLOAT3(x, 0.0f, z);

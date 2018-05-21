@@ -75,9 +75,9 @@ struct NtTexVertex
 
 struct NtPos
 {
-    ntFloat x;
-    ntFloat y;
-    ntFloat z;
+    float x;
+    float y;
+    float z;
 };
 
 struct NtTris
@@ -98,15 +98,15 @@ struct NtFace : public NtTris
 
 struct NtNormal
 {
-    ntFloat x;
-    ntFloat y;
-    ntFloat z;
+    float x;
+    float y;
+    float z;
 };
 
 struct NtUV
 {
-    ntFloat tu;
-    ntFloat tv;
+    float tu;
+    float tv;
 };
 
 
@@ -114,7 +114,7 @@ struct NtMesh;
 struct NtRigid
 {
     NtString m_objName;
-    ntFloat m_blendWeight;
+    float m_blendWeight;
     ntSize	m_rigidSize;
     NtMesh*	m_meshObj;
 
@@ -148,7 +148,7 @@ struct NtVertex
     NtNormal	m_n;
     ntSize		m_rigidNum;
     NtRigid*	m_rigid;
-    ntFloat		m_weight;
+    float		m_weight;
     NtString	m_objName;
 
     ~NtVertex()
@@ -174,9 +174,9 @@ struct NtMesh
     NtMesh*	m_linkParent;
     NtMesh* m_linkChild;
 
-    ntFloat rot[9];
-    ntFloat pos[3];
-    ntFloat scl[3];
+    float rot[9];
+    float pos[3];
+    float scl[3];
 
     NtMesh()
     {
@@ -224,11 +224,11 @@ struct NtMaterial
     NtString m_bitmapName;
     eMaterialClass m_materialClass;
     ntUlong m_diffuse;
-    ntFloat	m_specular[3];
+    float	m_specular[3];
     ntUint m_texHandle;
     ntInt m_texType;
-    ntFloat m_scaleU;
-    ntFloat m_scaleV;
+    float m_scaleU;
+    float m_scaleV;
     ntUint	m_drawFlag;
     ntInt m_subMaterialNum;
     NtMaterial* m_subMaterial;
@@ -289,7 +289,7 @@ struct DDSInitHeader
 struct NtPoint
 {
 	NtPoint();
-	NtPoint(ntFloat pX, ntFloat pY);
+	NtPoint(float pX, float pY);
 	NtPoint(const NtPoint& point);
 
 	NtPoint& operator=(const NtPoint& point);
@@ -297,7 +297,7 @@ struct NtPoint
 	NtPoint& operator -= (const NtPoint& point);
 	NtPoint& operator *= (const NtPoint& point);
 	NtPoint& operator /= (const NtPoint& point);
-	NtPoint& operator *= (ntFloat s);
+	NtPoint& operator *= (float s);
 
 	const NtPoint operator+(const NtPoint& point);
 	const NtPoint operator-(const NtPoint& point);
@@ -308,7 +308,7 @@ struct NtPoint
 	bool operator==(const NtPoint& point);
 	bool operator!=(const NtPoint& point);
 
-	ntFloat x, y;
+	float x, y;
 };
 
 

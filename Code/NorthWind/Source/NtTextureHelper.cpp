@@ -543,16 +543,16 @@ static HRESULT CreateTextureFromWIC(IWICBitmapFrameDecode* frame, ntSize maxSize
 	ntUint tempHeight = 0;
 	if (width > maxSize || height > maxSize)
 	{
-		ntFloat ar = static_cast<ntFloat>(height) / static_cast<ntFloat>(width);
+		float ar = static_cast<float>(height) / static_cast<float>(width);
 		if (width > height)
 		{
 			tempWidth = static_cast<ntUint>(maxSize);
-			tempHeight = static_cast<ntUint>(static_cast<ntFloat>(maxSize) * ar);
+			tempHeight = static_cast<ntUint>(static_cast<float>(maxSize) * ar);
 		}
 		else
 		{
 			tempHeight = static_cast<ntUint>(maxSize);
-			tempWidth = static_cast<ntUint>(static_cast<ntFloat>(maxSize) * ar);
+			tempWidth = static_cast<ntUint>(static_cast<float>(maxSize) * ar);
 		}
 
 		NtAsserte((ntSize)tempWidth <= maxSize && (ntSize)tempHeight <= maxSize);

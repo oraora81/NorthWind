@@ -429,7 +429,7 @@ void NtAse::ParseVertex()
 {
 	ntWchar name[32] = {0, };
 	ntUint index;
-	ntFloat a, b, c;
+	float a, b, c;
 	do 
 	{
 		ReadLine();
@@ -512,7 +512,7 @@ void NtAse::ParseNormal()
 {
 	ntWchar temp[32] = {0, };
 	ntInt index;
-	ntFloat a, b, c;
+	float a, b, c;
 	do 
 	{
 		ReadLine();
@@ -540,7 +540,7 @@ void NtAse::ParseTexVertex()
 {
 	ntWchar temp[32] = {0, };
 	ntInt index;
-	ntFloat a, b;
+	float a, b;
 
 	do 
 	{
@@ -595,7 +595,7 @@ void NtAse::ParsePhysiqueVertex()
 {
 	ntWchar temp[32] = {0, };
 	ntInt index;
-	ntFloat a, b, c;
+	float a, b, c;
 
 	do 
 	{
@@ -636,7 +636,7 @@ void NtAse::ParsePhysiqueVertex()
 			const ntWchar* weightPtr = Crt::StrStr(GetData(), L"*WEIGHT");
 			if (weightPtr != nullptr)
 			{
-				ntFloat weightVal = 0.0f;
+				float weightVal = 0.0f;
 				ntInt resl = swscanf_s(weightPtr, L"%s %f", temp, (unsigned)_countof(temp), &weightVal);
 				if (resl != 2)	return;
 
@@ -668,7 +668,7 @@ void NtAse::ParseBlendWeight(ntInt index)
 
 	const ntWchar* s = GetData();
 	const ntWchar* e = nullptr;
-	ntFloat t = 0.0f;
+	float t = 0.0f;
 	ntSize i = 0;
 	for (; i < bufferSize && t < 1.0f; ++i)
 	{
@@ -714,7 +714,7 @@ void NtAse::ParseBlendWeight(ntInt index)
 	for (ntUint r1 = 0; r1 < i; ++r1)
 	{
 		t += rigidBuffer[r1].m_blendWeight;
-		if (NtMath<ntFloat>::IsZero(rigidBuffer[r1].m_blendWeight))
+		if (NtMath<float>::IsZero(rigidBuffer[r1].m_blendWeight))
 		{
 			if (i - r1 - 1 > 0)
 			{
@@ -795,7 +795,7 @@ void NtAse::ParseMaterialElement(NtMaterial* material)
 		}
 		else if (CompareKeyword(L"*MATERIAL_AMBIENT") || CompareKeyword(L"*MATERIAL_DIFFUSE"))
 		{
-			ntFloat r, g, b;
+			float r, g, b;
 			ntWchar temp[32] = {0, };
 			ntInt res = swscanf_s(GetData(), L"%s %f %f %f", temp, (unsigned)_countof(temp), &b, &g, &r);
 			if (res != 4)	return;
@@ -804,7 +804,7 @@ void NtAse::ParseMaterialElement(NtMaterial* material)
 		}
 		else if (CompareKeyword(L"MATERIAL_SPECULAR"))
 		{
-			ntFloat r, g, b;
+			float r, g, b;
 			ntWchar temp[32] = {0, };
 			ntInt res = swscanf_s(GetData(), L"%s %f %f %f", temp, (unsigned)_countof(temp), &b, &g, &r);
 			if (res != 4)	return;
@@ -815,7 +815,7 @@ void NtAse::ParseMaterialElement(NtMaterial* material)
 		}
 		else if (CompareKeyword(L"*MATERIAL_TRANSPARENCY"))
 		{
-			ntFloat a;
+			float a;
 			ntWchar temp[32] = {0, };
 			ntInt res = swscanf_s(GetData(), L"%s %f", temp, (unsigned)_countof(temp), &a);
 			if (res != 2)	return;
@@ -824,7 +824,7 @@ void NtAse::ParseMaterialElement(NtMaterial* material)
 		}
 		else if (CompareKeyword(L"*MATERIAL_SHINE"))
 		{
-			ntFloat shine;
+			float shine;
 			ntWchar temp[32];
 			ntInt res = swscanf_s(GetData(), L"%s %f", temp, (unsigned)_countof(temp), &shine);
 			if (res != 2)	return;
@@ -833,7 +833,7 @@ void NtAse::ParseMaterialElement(NtMaterial* material)
 		}
 		else if (CompareKeyword(L"*MATERIAL_SHINESTRENGTH"))
 		{
-			ntFloat shinestrength;
+			float shinestrength;
 			ntWchar temp[32];
 			ntInt res = swscanf_s(GetData(), L"%s %f", temp, (unsigned)_countof(temp), &shinestrength);
 			if (res != 2)	return;

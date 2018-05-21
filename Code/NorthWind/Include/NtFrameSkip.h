@@ -21,7 +21,7 @@ public:
 		m_timer = 0.0f;
 	}
 
-	void SetFramePerSec(ntFloat fps)
+	void SetFramePerSec(float fps)
 	{
 		m_secPerFrame = 1.0f / fps;
 	}

@@ -36,8 +36,8 @@ const ntWchar* StrChr(const ntWchar* src, ntWchar c);
 bool IsNullOrEmpty(const ntChar* src);
 bool IsNullOrEmpty(const ntWchar* src);
 
-ntFloat	Atof(const ntChar* src);
-ntFloat Atof(const ntWchar* src);
+float	Atof(const ntChar* src);
+float Atof(const ntWchar* src);
 
 ntInt ToLower(ntWchar* src, ntSize length);
 

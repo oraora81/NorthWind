@@ -70,9 +70,9 @@ real NtMath<real>::ATan2(real yValue, real xValue)
 }
 
 template <typename real>
-real NtMath<real>::Angle(ntFloat x, ntFloat y)
+real NtMath<real>::Angle(float x, float y)
 {
-	ntFloat theta = 0.0f;
+	float theta = 0.0f;
 
 	// Quadrant I or IV
 	if (x >= 0.0f)

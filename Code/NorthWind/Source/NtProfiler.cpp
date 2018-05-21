@@ -75,7 +75,7 @@ void NtProfiler::FlushProfile()
 
 	//PROFILE_INFO_ITOR itor = infoMap.begin();
 
-	//ntDouble sumDoration = 0.0;
+	//double sumDoration = 0.0;
 	//for (; itor != infoMap.end(); ++itor)
 	//{
 	//	sProfileItem& item = (*itor).second;

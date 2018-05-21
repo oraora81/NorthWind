@@ -13,10 +13,6 @@ typedef long			ntLong;
 typedef unsigned long	ntUlong;
 typedef __int64			ntInt64;
 
-// Floating
-typedef float			ntFloat;
-typedef double			ntDouble;
-
 
 // Custom Type
 typedef long			ntIndex;

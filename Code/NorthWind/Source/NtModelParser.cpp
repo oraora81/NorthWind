@@ -286,7 +286,7 @@ bool NtModelParser::ReadVertexInfo()
 	ntInt vtxCount = m_linkPuppet->GetVertexCount();
 	ntInt loopCounter = 0;
 
-	ntFloat* vtxBuf = new ntFloat[elemNum * vtxCount];
+	float* vtxBuf = new float[elemNum * vtxCount];
 
 	float a, b, c, d, e, f, g, i;
 	while(!m_file.IsEOF() && (loopCounter < vtxCount))

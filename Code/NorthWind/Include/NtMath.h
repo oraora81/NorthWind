@@ -26,7 +26,7 @@ public:
 	static real ATan2(real yValue, real xValue);
 
 	//
-	static real Angle(ntFloat x, ntFloat y);
+	static real Angle(float x, float y);
 
 	// 정수화 함수
 	static real Floor(real value);
