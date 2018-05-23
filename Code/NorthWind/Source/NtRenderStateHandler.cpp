@@ -9,12 +9,17 @@ namespace nt { namespace renderer {
 ID3D11RasterizerState* NtRenderStateHandler::RSSolid;
 ID3D11RasterizerState* NtRenderStateHandler::RSWireFrame;
 ID3D11RasterizerState* NtRenderStateHandler::RSNoCull;
+ID3D11RasterizerState* NtRenderStateHandler::RSCullClickwise;
 ID3D11RasterizerState* NtRenderStateHandler::RSUI;
 
 ID3D11BlendState* NtRenderStateHandler::BSAlpha2Coverage;
 ID3D11BlendState* NtRenderStateHandler::BSTransparent;
+ID3D11BlendState* NtRenderStateHandler::BSNoRenderTargetWrite;
 ID3D11BlendState* NtRenderStateHandler::BSUI;
 
+ID3D11DepthStencilState* NtRenderStateHandler::DSMarkMirror;
+ID3D11DepthStencilState* NtRenderStateHandler::DSDrawReflection;
+ID3D11DepthStencilState* NtRenderStateHandler::DSDoubleBlend;
 ID3D11DepthStencilState* NtRenderStateHandler::DSUI;
 
 ID3D11SamplerState* NtRenderStateHandler::SSUI;
@@ -80,6 +85,21 @@ bool NtRenderStateHandler::InitRS(ID3D11Device* device)
 
     HRF(device->CreateRasterizerState(&noCullDesc, &RSNoCull));
 
+
+	// cullclockwise
+	// note : define such that we still cull backfaces by making front faces CCW.
+	// If we did not cull backfaces, then we have to worry about the Backface
+	// property in the D3D11_DEPTH_STENCIL_DESC.
+	D3D11_RASTERIZER_DESC cullClockwiseDesc;
+	Crt::MemSet(&cullClockwiseDesc, sizeof(D3D11_RASTERIZER_DESC));
+	cullClockwiseDesc.FillMode = D3D11_FILL_SOLID;
+	cullClockwiseDesc.CullMode = D3D11_CULL_BACK;
+	cullClockwiseDesc.FrontCounterClockwise = TRUE;
+	cullClockwiseDesc.DepthClipEnable = TRUE;
+
+	HRF(device->CreateRasterizerState(&cullClockwiseDesc, &RSCullClickwise));
+
+	// ui
     D3D11_RASTERIZER_DESC uiDesc;
     Crt::MemSet(&uiDesc, sizeof(D3D11_RASTERIZER_DESC));
     uiDesc.AntialiasedLineEnable = FALSE;
@@ -121,7 +141,23 @@ bool NtRenderStateHandler::InitBS(ID3D11Device* device)
 
     HRF(device->CreateBlendState(&transparentDesc, &BSTransparent));
 
-    // ui
+	// NoRenderTargetWrite
+	D3D11_BLEND_DESC noRenderTargetWriteDesc = { 0, };
+	noRenderTargetWriteDesc.AlphaToCoverageEnable = FALSE;
+	noRenderTargetWriteDesc.IndependentBlendEnable = FALSE;
+
+	noRenderTargetWriteDesc.RenderTarget[0].BlendEnable = FALSE;
+	noRenderTargetWriteDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;
+	noRenderTargetWriteDesc.RenderTarget[0].DestBlend = D3D11_BLEND_ZERO;
+	noRenderTargetWriteDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	noRenderTargetWriteDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+	noRenderTargetWriteDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+	noRenderTargetWriteDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	noRenderTargetWriteDesc.RenderTarget[0].RenderTargetWriteMask = 0;
+
+	HRF(device->CreateBlendState(&noRenderTargetWriteDesc, &BSNoRenderTargetWrite));
+
+	// ui
     D3D11_BLEND_DESC uiDesc;
     Crt::MemSet(&uiDesc, sizeof(D3D11_BLEND_DESC));
 
@@ -141,6 +177,70 @@ bool NtRenderStateHandler::InitBS(ID3D11Device* device)
 
 bool NtRenderStateHandler::InitDS(ID3D11Device* device)
 {
+	D3D11_DEPTH_STENCIL_DESC dsMarkMirror;
+	dsMarkMirror.DepthEnable = TRUE;
+	dsMarkMirror.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+	dsMarkMirror.DepthFunc = D3D11_COMPARISON_LESS;
+	dsMarkMirror.StencilEnable = TRUE;
+	dsMarkMirror.StencilReadMask = 0xff;
+	dsMarkMirror.StencilWriteMask = 0xff;
+
+	dsMarkMirror.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+	dsMarkMirror.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+	dsMarkMirror.FrontFace.StencilPassOp = D3D11_STENCIL_OP_REPLACE;
+	dsMarkMirror.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+
+	// we are not rendering backfacing polygons, so these settings do not matter
+	dsMarkMirror.BackFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+	dsMarkMirror.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+	dsMarkMirror.BackFace.StencilPassOp = D3D11_STENCIL_OP_REPLACE;
+	dsMarkMirror.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+
+	HRF(device->CreateDepthStencilState(&dsMarkMirror, &DSMarkMirror));
+
+	D3D11_DEPTH_STENCIL_DESC drawReflectionDesc;
+	drawReflectionDesc.DepthEnable = TRUE;
+	drawReflectionDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+	drawReflectionDesc.DepthFunc = D3D11_COMPARISON_LESS;
+	drawReflectionDesc.StencilEnable = TRUE;
+	drawReflectionDesc.StencilReadMask = 0xff;
+	drawReflectionDesc.StencilWriteMask = 0xff;
+
+	drawReflectionDesc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+	drawReflectionDesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+	drawReflectionDesc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
+	drawReflectionDesc.FrontFace.StencilFunc = D3D11_COMPARISON_EQUAL;
+
+	// We are not rendering backfacing polygons, so these settins do not matter
+	drawReflectionDesc.BackFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+	drawReflectionDesc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+	drawReflectionDesc.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
+	drawReflectionDesc.BackFace.StencilFunc = D3D11_COMPARISON_EQUAL;
+
+	HRF(device->CreateDepthStencilState(&drawReflectionDesc, &DSDrawReflection));
+
+	D3D11_DEPTH_STENCIL_DESC noDoubleBlendDesc;
+	noDoubleBlendDesc.DepthEnable = TRUE;
+	noDoubleBlendDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+	noDoubleBlendDesc.DepthFunc = D3D11_COMPARISON_LESS;
+	noDoubleBlendDesc.StencilEnable = TRUE;
+	noDoubleBlendDesc.StencilReadMask = 0xff;
+	noDoubleBlendDesc.StencilWriteMask = 0xff;
+
+	noDoubleBlendDesc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+	noDoubleBlendDesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+	noDoubleBlendDesc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_INCR;
+	noDoubleBlendDesc.FrontFace.StencilFunc = D3D11_COMPARISON_EQUAL;
+
+	// dont care
+	noDoubleBlendDesc.BackFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+	noDoubleBlendDesc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+	noDoubleBlendDesc.BackFace.StencilPassOp = D3D11_STENCIL_OP_INCR;
+	noDoubleBlendDesc.BackFace.StencilFunc = D3D11_COMPARISON_EQUAL;
+
+	HRF(device->CreateDepthStencilState(&noDoubleBlendDesc, &DSDoubleBlend));
+
+
     D3D11_DEPTH_STENCIL_DESC dsDesc;
     Crt::MemSet(&dsDesc, sizeof(D3D11_DEPTH_STENCIL_DESC));
 

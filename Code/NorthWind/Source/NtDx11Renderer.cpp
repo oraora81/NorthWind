@@ -352,7 +352,7 @@ NtDx11Renderer::~NtDx11Renderer()
 	m_deviceContext->ClearRenderTargetView(m_renderTargetView, color);
 
 	// depth buffer Å¬¸®¾î
-	m_deviceContext->ClearDepthStencilView(m_depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
+	m_deviceContext->ClearDepthStencilView(m_depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 }
 
 

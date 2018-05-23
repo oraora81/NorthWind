@@ -20,13 +20,18 @@ namespace
 }
 
 Mirror::Mirror()
-    : m_skullVB(nullptr)
+    : NtModel()
+	, m_skullVB(nullptr)
     , m_skullIB(nullptr)
     , m_floorDiffuseMapSRV(nullptr)
     , m_wallDiffuseMapSRV(nullptr)
     , m_mirrorDiffuseMapSRV(nullptr)
+	, m_skullTranslation(0.0f, 1.0f, -5.0f)
     , m_skullIndexCount(0)
 {
+	m_phi = 0.42f * NtMathf::PI;
+	m_radius = 12.0f;
+
     XMMATRIX I = XMMatrixIdentity();
     XMStoreFloat4x4(&m_roomWorld, I);
     XMStoreFloat4x4(&m_skullWorld, I);
@@ -89,6 +94,26 @@ void Mirror::Update(float deltaTime)
         RENDER_OPTION = RenderOption::TexturesAndFog;
     }
 
+	if (GetAsyncKeyState('A') & 0x8000)
+	{
+		m_skullTranslation.x -= 1.0f*deltaTime;
+	}
+
+	if (GetAsyncKeyState('D') & 0x8000)
+	{
+		m_skullTranslation.x += 1.0f*deltaTime;
+	}
+
+	if (GetAsyncKeyState('W') & 0x8000)
+	{
+		m_skullTranslation.y += 1.0f*deltaTime;
+	}
+
+	if (GetAsyncKeyState('S') & 0x8000)
+	{
+		m_skullTranslation.y -= 1.0f*deltaTime;
+	}
+
     m_skullTranslation.y = NtMathf::Max(m_skullTranslation.y, 0.0f);
 
     XMMATRIX skullRot = XMMatrixRotationY(0.5f * NtMathf::PI);
@@ -124,9 +149,6 @@ void Mirror::Render(XMMATRIX& worldViewProj)
     LightShader->SetFogRange(40.0f);
 
 
-
-    // draw skull
-
     ID3DX11EffectTechnique* tech;
     ID3DX11EffectTechnique* skullTech;
 
@@ -141,8 +163,8 @@ void Mirror::Render(XMMATRIX& worldViewProj)
          skullTech = LightShader->Light3Tech();
         break;
     case RenderOption::TexturesAndFog:
-        skullTech = LightShader->Light3TexFogTech();
         tech = LightShader->Light3TexFogTech();
+		skullTech = LightShader->Light3FogTech();
         break;
     }
 
@@ -199,6 +221,155 @@ void Mirror::Render(XMMATRIX& worldViewProj)
         pass->Apply(0, g_renderer->DeviceContext());
         g_renderer->DeviceContext()->DrawIndexed(m_skullIndexCount, 0, 0);
     }
+
+	// draw the mirror to stencil buffer only
+	tech->GetDesc(&techDesc);
+	for (ntUint i = 0; i < techDesc.Passes; i++)
+	{
+		ID3DX11EffectPass* pass = tech->GetPassByIndex(i);
+
+		g_renderer->DeviceContext()->IASetVertexBuffers(0, 1, &m_vertexBuffer, &stride, &offset);
+
+		// set per object constants
+		XMMATRIX world = XMLoadFloat4x4(&m_roomWorld);
+		XMMATRIX worldInvTranspose = NtD3dUtil::InverseTranspose(world);
+		XMMATRIX goWVP = world * viewProj;
+
+		LightShader->SetWorld(world);
+		LightShader->SetWorldInvTranspose(worldInvTranspose);
+		LightShader->SetWorldViewProj(goWVP);
+		LightShader->SetTexTransform(XMMatrixIdentity());
+
+		// do not write to render target
+		g_renderer->DeviceContext()->OMSetBlendState(NtRenderStateHandler::BSNoRenderTargetWrite, blendFactor, 0xffffffff);
+
+		// render visible mirror pixels to stencil buffer
+		// do not write mirror depth to depth buffer at this point, otherwise it will occlude the reflection
+		g_renderer->DeviceContext()->OMSetDepthStencilState(NtRenderStateHandler::DSMarkMirror, 1);
+
+		pass->Apply(0, g_renderer->DeviceContext());
+		g_renderer->DeviceContext()->Draw(6, 24);
+
+		// restore states
+		g_renderer->DeviceContext()->OMSetDepthStencilState(nullptr, 0);
+		g_renderer->DeviceContext()->OMSetBlendState(nullptr, blendFactor, 0xffffffff);
+	}
+
+	// draw the skull reflection.
+	skullTech->GetDesc(&techDesc);
+	for (ntUint i = 0; i < techDesc.Passes; i++)
+	{
+		ID3DX11EffectPass* pass = skullTech->GetPassByIndex(i);
+
+		g_renderer->DeviceContext()->IASetVertexBuffers(0, 1, &m_skullVB, &stride, &offset);
+		g_renderer->DeviceContext()->IASetIndexBuffer(m_skullIB, DXGI_FORMAT_R32_UINT, 0);
+
+		// xy plane
+		XMVECTOR mirrorPlane = XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f);
+		XMMATRIX R = XMMatrixReflect(mirrorPlane);
+
+		XMMATRIX world = XMLoadFloat4x4(&m_skullWorld) * R;
+		XMMATRIX worldInvTranspose = NtD3dUtil::InverseTranspose(world);
+		XMMATRIX goWVP = world * viewProj;
+
+		LightShader->SetWorld(world);
+		LightShader->SetWorldInvTranspose(worldInvTranspose);
+		LightShader->SetWorldViewProj(goWVP);
+		LightShader->SetMaterial(m_skullMat);
+		
+		// cache the old light directions, and reflect the light directions
+		XMFLOAT3 oldLightDirections[3];
+		for (size_t i = 0; i < 3; i++)
+		{
+			oldLightDirections[i] = m_dirLights[i].Direction;
+
+			XMVECTOR lightDir = XMLoadFloat3(&m_dirLights[i].Direction);
+			XMVECTOR reflectedLightDir = XMVector3TransformNormal(lightDir, R);
+			XMStoreFloat3(&m_dirLights[i].Direction, reflectedLightDir);
+		}
+
+		LightShader->SetDirLights(m_dirLights);
+
+		// cull clockwise triangles for reflections
+		g_renderer->DeviceContext()->RSSetState(NtRenderStateHandler::RSCullClickwise);
+
+		// only draw reflection into visible mirrow pixels as marked by the stencil buffer.
+		g_renderer->DeviceContext()->OMSetDepthStencilState(NtRenderStateHandler::DSDrawReflection, 1);
+		pass->Apply(0, g_renderer->DeviceContext());
+		g_renderer->DeviceContext()->DrawIndexed(m_skullIndexCount, 0, 0);
+
+		// restore default state
+		g_renderer->DeviceContext()->RSSetState(nullptr);
+		g_renderer->DeviceContext()->OMSetDepthStencilState(nullptr, 0);
+
+		for (size_t i = 0; i < 3; i++)
+		{
+			m_dirLights[i].Direction = oldLightDirections[i];
+		}
+
+		LightShader->SetDirLights(m_dirLights);
+	}
+
+	// draw the mirror to the back buffer as usual but with transparency
+	// blending so the reflection shows through
+	tech->GetDesc(&techDesc);
+	for (ntUint i = 0; i < techDesc.Passes; i++)
+	{
+		ID3DX11EffectPass* pass = tech->GetPassByIndex(i);
+
+		g_renderer->DeviceContext()->IASetVertexBuffers(0, 1, &m_vertexBuffer, &stride, &offset);
+
+		// 
+		XMMATRIX world = XMLoadFloat4x4(&m_roomWorld);
+		XMMATRIX worldInvTranspose = NtD3dUtil::InverseTranspose(world);
+		XMMATRIX goWVP = world * viewProj;
+
+		LightShader->SetWorld(world);
+		LightShader->SetWorldInvTranspose(worldInvTranspose);
+		LightShader->SetWorldViewProj(goWVP);
+		LightShader->SetTexTransform(XMMatrixIdentity());
+		LightShader->SetMaterial(m_mirrorMat);
+		LightShader->SetDiffuseMap(m_mirrorDiffuseMapSRV);
+
+		// mirror
+		g_renderer->DeviceContext()->OMSetBlendState(NtRenderStateHandler::BSTransparent, blendFactor, 0xffffffff);
+		pass->Apply(0, g_renderer->DeviceContext());
+		g_renderer->DeviceContext()->Draw(6, 24);
+	}
+
+	// draw the skull shadow
+	skullTech->GetDesc(&techDesc);
+	for (ntUint i = 0; i < techDesc.Passes; i++)
+	{
+		ID3DX11EffectPass* pass = skullTech->GetPassByIndex(i);
+
+		g_renderer->DeviceContext()->IASetVertexBuffers(0, 1, &m_skullVB, &stride, &offset);
+		g_renderer->DeviceContext()->IASetIndexBuffer(m_skullIB, DXGI_FORMAT_R32_UINT, 0);
+
+		// xz plane
+		XMVECTOR shadowPlane = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+		XMVECTOR toMainLight = -XMLoadFloat3(&m_dirLights[0].Direction);
+		XMMATRIX S = XMMatrixShadow(shadowPlane, toMainLight);
+		XMMATRIX shadowOffsetY = XMMatrixTranslation(0.0f, 0.001f, 0.0f);
+
+		// set per object constants
+		XMMATRIX world = XMLoadFloat4x4(&m_skullWorld) * S * shadowOffsetY;
+		XMMATRIX worldInvTranspose = NtD3dUtil::InverseTranspose(world);
+		XMMATRIX goWVP = world * viewProj;
+
+		LightShader->SetWorld(world);
+		LightShader->SetWorldInvTranspose(worldInvTranspose);
+		LightShader->SetWorldViewProj(goWVP);
+		LightShader->SetMaterial(m_skullMat);
+
+		g_renderer->DeviceContext()->OMSetDepthStencilState(NtRenderStateHandler::DSDoubleBlend, 0);
+		pass->Apply(0, g_renderer->DeviceContext());
+		g_renderer->DeviceContext()->DrawIndexed(m_skullIndexCount, 0, 0);
+
+		// restore
+		g_renderer->DeviceContext()->OMSetBlendState(nullptr, blendFactor, 0xffffffff);
+		g_renderer->DeviceContext()->OMSetDepthStencilState(nullptr, 0);
+	}
 }
 
 
@@ -209,7 +380,7 @@ void Mirror::MakeGeometry()
 
     g_renderer->CreateShaderResourceView(L"brick01.dds", &m_wallDiffuseMapSRV);
 
-    g_renderer->CreateShaderResourceView(L"ice.dds", &m_floorDiffuseMapSRV);
+    g_renderer->CreateShaderResourceView(L"ice.dds", &m_mirrorDiffuseMapSRV);
 
     BuildRoom();
 
