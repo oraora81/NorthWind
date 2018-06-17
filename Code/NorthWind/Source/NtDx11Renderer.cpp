@@ -8,14 +8,16 @@ namespace nt { namespace renderer {
 
 NtDx11Renderer::NtDx11Renderer()
 : NtD3DRenderer()
+, m_swapchain(nullptr)
+, m_device(nullptr)
+, m_deviceContext(nullptr)
+, m_renderTargetView(nullptr)
+, m_depthStencilBuffer(nullptr)
+, m_depthStencilState(nullptr)
+, m_depthStencilView(nullptr)
+, m_4xMassQuality(0)
 {
-	m_swapchain          = nullptr;
-	m_device             = nullptr;
-	m_deviceContext      = nullptr;
-	m_renderTargetView   = nullptr;
-	m_depthStencilBuffer = nullptr;
-	m_depthStencilState  = nullptr;
-	m_depthStencilView   = nullptr;
+	
 }
 
 
@@ -121,17 +123,7 @@ NtDx11Renderer::~NtDx11Renderer()
 		return false;
 	}*/
 
-	/*ntUint m4xMsaaQuality = 0;
-	res = m_device->CheckMultisampleQualityLevels(
-		DXGI_FORMAT_R8G8B8A8_UNORM,
-		4,
-		&m4xMsaaQuality);
-	if (FAILED(res))
-	{
-		return false;
-	}
-	NtAsserte(m4xMsaaQuality > 0);*/
-
+	
 	// swap chain desc ÃÊ±âÈ­
 	DXGI_SWAP_CHAIN_DESC swapChainDesc;
 	Crt::MemSet(&swapChainDesc, sizeof(swapChainDesc));
@@ -168,8 +160,8 @@ NtDx11Renderer::~NtDx11Renderer()
 	if (enable4xMsaa)
 	{
 		// 4X MSAA¸¦ »ç¿ë
-		//swapChainDesc.SampleDesc.Count = 4;
-		//swapChainDesc.SampleDesc.Quality = m4xMsaaQuality - 1;
+		swapChainDesc.SampleDesc.Count = 4;
+		swapChainDesc.SampleDesc.Quality = m_4xMassQuality - 1;
 	}
 	else
 	{
@@ -204,6 +196,13 @@ NtDx11Renderer::~NtDx11Renderer()
 		D3D11_SDK_VERSION, 
 		&swapChainDesc, &m_swapchain, &m_device, &featureLevel, &m_deviceContext));
 
+    HRF(m_device->CheckMultisampleQualityLevels(
+        DXGI_FORMAT_R8G8B8A8_UNORM,
+        4,
+        &m_4xMassQuality));
+
+    NtAsserte(m_4xMassQuality > 0);
+
     DXGI_OUTPUT_DESC outputDesc;
     Crt::MemSet(&outputDesc, sizeof(DXGI_OUTPUT_DESC));
     HRF(adapterOutput->GetDesc(&outputDesc));
@@ -236,8 +235,18 @@ NtDx11Renderer::~NtDx11Renderer()
 	depthBufferDesc.MipLevels = 1;
 	depthBufferDesc.ArraySize = 1;
 	depthBufferDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-	depthBufferDesc.SampleDesc.Count = 1;
-	depthBufferDesc.SampleDesc.Quality = 0;
+
+    if (enable4xMsaa)
+    {
+        depthBufferDesc.SampleDesc.Count = 4;
+        depthBufferDesc.SampleDesc.Quality = m_4xMassQuality - 1;
+    }
+    else
+    {
+        depthBufferDesc.SampleDesc.Count = 1;
+        depthBufferDesc.SampleDesc.Quality = 0;
+    }
+
 	depthBufferDesc.Usage = D3D11_USAGE_DEFAULT;
 	depthBufferDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
 	depthBufferDesc.CPUAccessFlags = 0;
@@ -245,47 +254,8 @@ NtDx11Renderer::~NtDx11Renderer()
 
 	// ±íÀÌ ¹öÆÛ¸¦ À§ÇÑ ÅØ½ºÃÄ »ý¼º
 	HRF(m_device->CreateTexture2D(&depthBufferDesc, NULL, &m_depthStencilBuffer));
+    HRF(m_device->CreateDepthStencilView(m_depthStencilBuffer, NULL, &m_depthStencilView));
 
-	// ½ºÅÙ½Ç desc ¼³Á¤
-	D3D11_DEPTH_STENCIL_DESC depthStencilDesc;
-	Crt::MemSet(&depthStencilDesc, sizeof(depthStencilDesc));
-
-	depthStencilDesc.DepthEnable = true;
-	depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
-	depthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS;
-	depthStencilDesc.StencilEnable = true;
-	depthStencilDesc.StencilReadMask = 0xff;
-	depthStencilDesc.StencilWriteMask = 0xff;
-
-	// ½ºÅÙ½Ç op - frontface
-	depthStencilDesc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
-	depthStencilDesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_INCR;
-	depthStencilDesc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
-	depthStencilDesc.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
-
-	// backface
-	depthStencilDesc.BackFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
-	depthStencilDesc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_DECR;
-	depthStencilDesc.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
-	depthStencilDesc.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
-
-	// 
-	HRF(m_device->CreateDepthStencilState(&depthStencilDesc, &m_depthStencilState));
-
-	// ½ºÅÙ½Ç»óÅÂ ¼³Á¤
-	m_deviceContext->OMSetDepthStencilState(m_depthStencilState, 1);
-
-	// 
-	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
-	Crt::MemSet(&depthStencilViewDesc, sizeof(depthStencilViewDesc));
-
-	depthStencilViewDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-	depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
-	depthStencilViewDesc.Texture2D.MipSlice = 0;
-
-	// ±íÀÌ ½ºÅÙ½Ç ºä »ý¼º
-	HRF(m_device->CreateDepthStencilView(m_depthStencilBuffer, &depthStencilViewDesc, &m_depthStencilView));
-	
 	// ·»´õÅ¸°Ùºä¶û ±íÀÌ ½ºÅÙ½Ç ¹öÆÛ¸¦ ·»´õÆÄÀÌÇÁ¶óÀÎ(output merger)¿¡ ¹ÙÀÎµù
 	m_deviceContext->OMSetRenderTargets(1, &m_renderTargetView, m_depthStencilView);
 

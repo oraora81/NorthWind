@@ -156,7 +156,7 @@ void NtTextHelper::RenderText11(const ntWchar* strText, RECT rcScreen, XMCOLOR v
 void NtTextHelper::EndText11()
 {
     // ensure our buffer size can hold our sprites
-    auto FontDataBytes = m_vertexArray.size() * sizeof(Vertex::SpriteVertex);
+    ntUint FontDataBytes = m_vertexArray.size() * sizeof(Vertex::SpriteVertex);
 
     if (m_fontBufferBytes11 < FontDataBytes)
     {
@@ -205,7 +205,7 @@ void NtTextHelper::EndText11()
     context->IASetVertexBuffers(0, 1, &m_fontBuffer, &Stride, &Offset);
     context->IASetInputLayout(NtInputLayoutHandler::SpriteInputLayout);
     context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-    context->Draw(m_vertexArray.size(), 0);
+    context->Draw((ntUint)m_vertexArray.size(), 0);
 
     context->PSSetShaderResources(0, 1, &oldSRV);
     SAFE_RELEASE(oldSRV);

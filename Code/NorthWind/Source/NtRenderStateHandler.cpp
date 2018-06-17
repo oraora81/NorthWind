@@ -9,7 +9,7 @@ namespace nt { namespace renderer {
 ID3D11RasterizerState* NtRenderStateHandler::RSSolid;
 ID3D11RasterizerState* NtRenderStateHandler::RSWireFrame;
 ID3D11RasterizerState* NtRenderStateHandler::RSNoCull;
-ID3D11RasterizerState* NtRenderStateHandler::RSCullClickwise;
+ID3D11RasterizerState* NtRenderStateHandler::RSCullClockwise;
 ID3D11RasterizerState* NtRenderStateHandler::RSUI;
 
 ID3D11BlendState* NtRenderStateHandler::BSAlpha2Coverage;
@@ -19,7 +19,7 @@ ID3D11BlendState* NtRenderStateHandler::BSUI;
 
 ID3D11DepthStencilState* NtRenderStateHandler::DSMarkMirror;
 ID3D11DepthStencilState* NtRenderStateHandler::DSDrawReflection;
-ID3D11DepthStencilState* NtRenderStateHandler::DSDoubleBlend;
+ID3D11DepthStencilState* NtRenderStateHandler::DSNoDoubleBlend;
 ID3D11DepthStencilState* NtRenderStateHandler::DSUI;
 
 ID3D11SamplerState* NtRenderStateHandler::SSUI;
@@ -30,6 +30,8 @@ bool NtRenderStateHandler::Initialize(ID3D11Device* device)
     InitRS(device);
 
     InitBS(device);
+
+    InitDS(device);
 
     return true;
 }
@@ -97,7 +99,7 @@ bool NtRenderStateHandler::InitRS(ID3D11Device* device)
 	cullClockwiseDesc.FrontCounterClockwise = TRUE;
 	cullClockwiseDesc.DepthClipEnable = TRUE;
 
-	HRF(device->CreateRasterizerState(&cullClockwiseDesc, &RSCullClickwise));
+	HRF(device->CreateRasterizerState(&cullClockwiseDesc, &RSCullClockwise));
 
 	// ui
     D3D11_RASTERIZER_DESC uiDesc;
@@ -238,7 +240,7 @@ bool NtRenderStateHandler::InitDS(ID3D11Device* device)
 	noDoubleBlendDesc.BackFace.StencilPassOp = D3D11_STENCIL_OP_INCR;
 	noDoubleBlendDesc.BackFace.StencilFunc = D3D11_COMPARISON_EQUAL;
 
-	HRF(device->CreateDepthStencilState(&noDoubleBlendDesc, &DSDoubleBlend));
+	HRF(device->CreateDepthStencilState(&noDoubleBlendDesc, &DSNoDoubleBlend));
 
 
     D3D11_DEPTH_STENCIL_DESC dsDesc;

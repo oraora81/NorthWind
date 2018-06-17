@@ -16,7 +16,7 @@ namespace
         TexturesAndFog = 2
     };
 
-    RenderOption RENDER_OPTION = RenderOption::TexturesAndFog;
+    RenderOption RENDER_OPTION = RenderOption::Textures;
 }
 
 Mirror::Mirror()
@@ -144,7 +144,7 @@ void Mirror::Render(XMMATRIX& worldViewProj)
 
     LightShader->SetDirLights(m_dirLights);
     LightShader->SetEyePosW(m_eyePosW);
-    LightShader->SetFogColor(Colors::Black);
+    LightShader->SetFogColor(Colors::LightSteelBlue);
     LightShader->SetFogStart(2.0f);
     LightShader->SetFogRange(40.0f);
 
@@ -207,7 +207,7 @@ void Mirror::Render(XMMATRIX& worldViewProj)
         ID3DX11EffectPass* pass = skullTech->GetPassByIndex(i);
 
         g_renderer->DeviceContext()->IASetVertexBuffers(0, 1, &m_skullVB, &stride, &offset);
-        g_renderer->DeviceContext()->IASetIndexBuffer(m_skullIB, DXGI_FORMAT_R32_FLOAT, 0);
+        g_renderer->DeviceContext()->IASetIndexBuffer(m_skullIB, DXGI_FORMAT_R32_UINT, 0);
 
         XMMATRIX world = XMLoadFloat4x4(&m_skullWorld);
         XMMATRIX worldInvTranspose = NtD3dUtil::InverseTranspose(world);
@@ -248,11 +248,13 @@ void Mirror::Render(XMMATRIX& worldViewProj)
 		g_renderer->DeviceContext()->OMSetDepthStencilState(NtRenderStateHandler::DSMarkMirror, 1);
 
 		pass->Apply(0, g_renderer->DeviceContext());
+
+        // draw mirror
 		g_renderer->DeviceContext()->Draw(6, 24);
 
 		// restore states
-		g_renderer->DeviceContext()->OMSetDepthStencilState(nullptr, 0);
-		g_renderer->DeviceContext()->OMSetBlendState(nullptr, blendFactor, 0xffffffff);
+		g_renderer->DeviceContext()->OMSetDepthStencilState(0, 0);
+		g_renderer->DeviceContext()->OMSetBlendState(0, blendFactor, 0xffffffff);
 	}
 
 	// draw the skull reflection.
@@ -290,8 +292,13 @@ void Mirror::Render(XMMATRIX& worldViewProj)
 
 		LightShader->SetDirLights(m_dirLights);
 
+        ID3D11RasterizerState* tempState;
+        ID3D11DepthStencilState* tempDS;
+        g_renderer->DeviceContext()->OMGetDepthStencilState(&tempDS, 0);
+        g_renderer->DeviceContext()->RSGetState(&tempState);
+
 		// cull clockwise triangles for reflections
-		g_renderer->DeviceContext()->RSSetState(NtRenderStateHandler::RSCullClickwise);
+		g_renderer->DeviceContext()->RSSetState(NtRenderStateHandler::RSCullClockwise);
 
 		// only draw reflection into visible mirrow pixels as marked by the stencil buffer.
 		g_renderer->DeviceContext()->OMSetDepthStencilState(NtRenderStateHandler::DSDrawReflection, 1);
@@ -299,8 +306,8 @@ void Mirror::Render(XMMATRIX& worldViewProj)
 		g_renderer->DeviceContext()->DrawIndexed(m_skullIndexCount, 0, 0);
 
 		// restore default state
-		g_renderer->DeviceContext()->RSSetState(nullptr);
-		g_renderer->DeviceContext()->OMSetDepthStencilState(nullptr, 0);
+		g_renderer->DeviceContext()->RSSetState(tempState);
+		g_renderer->DeviceContext()->OMSetDepthStencilState(tempDS, 0);
 
 		for (size_t i = 0; i < 3; i++)
 		{
@@ -362,13 +369,13 @@ void Mirror::Render(XMMATRIX& worldViewProj)
 		LightShader->SetWorldViewProj(goWVP);
 		LightShader->SetMaterial(m_skullMat);
 
-		g_renderer->DeviceContext()->OMSetDepthStencilState(NtRenderStateHandler::DSDoubleBlend, 0);
+		g_renderer->DeviceContext()->OMSetDepthStencilState(NtRenderStateHandler::DSNoDoubleBlend, 0);
 		pass->Apply(0, g_renderer->DeviceContext());
 		g_renderer->DeviceContext()->DrawIndexed(m_skullIndexCount, 0, 0);
 
 		// restore
-		g_renderer->DeviceContext()->OMSetBlendState(nullptr, blendFactor, 0xffffffff);
-		g_renderer->DeviceContext()->OMSetDepthStencilState(nullptr, 0);
+		g_renderer->DeviceContext()->OMSetBlendState(0, blendFactor, 0xffffffff);
+		g_renderer->DeviceContext()->OMSetDepthStencilState(0, 0);
 	}
 }
 

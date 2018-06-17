@@ -46,7 +46,7 @@ private:
     XMCOLOR m_color;
     POINT m_pt;
     ntUint m_lineHeight;
-    int m_fontBufferBytes11;
+    ntUint m_fontBufferBytes11;
 
     std::vector<Vertex::SpriteVertex> m_vertexArray;
 };
