@@ -56,7 +56,7 @@ Mirror::Mirror()
     m_roomMat.Specular = XMFLOAT4(0.4f, 0.4f, 0.4f, 16.0f);
 
     m_skullMat.Ambient = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
-    m_skullMat.Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+    m_skullMat.Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 0.5f);
     m_skullMat.Specular = XMFLOAT4(0.4f, 0.4f, 0.4f, 16.0f);
 
     // Reflected material is transparent so it blends into mirror.
@@ -368,6 +368,8 @@ void Mirror::Render(XMMATRIX& worldViewProj)
 		LightShader->SetWorldInvTranspose(worldInvTranspose);
 		LightShader->SetWorldViewProj(goWVP);
 		LightShader->SetMaterial(m_skullMat);
+
+        g_renderer->DeviceContext()->OMSetBlendState(NtRenderStateHandler::BSTransparent, blendFactor, 0xffffffff);
 
 		g_renderer->DeviceContext()->OMSetDepthStencilState(NtRenderStateHandler::DSNoDoubleBlend, 0);
 		pass->Apply(0, g_renderer->DeviceContext());
