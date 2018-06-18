@@ -34,6 +34,11 @@ public:
     }
 
 private:
+    void StoreRenderState();
+
+    void RestoreRenderState();
+
+private:
     ID3D11Buffer* m_fontBuffer;
     ID3D11Buffer* m_screenQuadBuffer;
     ID3D11ShaderResourceView* m_fontSRV11;
@@ -42,6 +47,10 @@ private:
     ID3D11RasterizerState* m_storeRasterizeState;
     ID3D11BlendState* m_storeBlendState;
     ID3D11SamplerState* m_storeSamplerState;
+    ntUint m_stencilRefStored;
+    ntUint m_sampleMaskStored;
+    ntUint m_samplerStateStored;
+    ntFloat m_blendFactorStored[4]
     
     XMCOLOR m_color;
     POINT m_pt;

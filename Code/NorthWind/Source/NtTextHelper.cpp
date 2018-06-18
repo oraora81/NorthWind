@@ -16,6 +16,10 @@ NtTextHelper::NtTextHelper()
     , m_storeRasterizeState(nullptr)
     , m_storeBlendState(nullptr)
     , m_storeSamplerState(nullptr)
+    , m_stencilRefStored(0)
+    , m_blendFactorStored(0)
+    , m_sampleMaskStored(0)
+    , m_samplerStateStored(0)
     , m_lineHeight(0)
     , m_fontBufferBytes11(0)
 {
@@ -211,6 +215,31 @@ void NtTextHelper::EndText11()
     SAFE_RELEASE(oldSRV);
 
     m_vertexArray.clear();
+}
+
+void NtTextHelper::StoreRenderState()
+{
+    const ID3D11DeviceContext* context = g_renderer->DeviceContext();
+
+    context->OMGetDepthStencilState(&m_storeDepthStencilState, &m_stencilRefStored);
+    context->RSGetState(&m_storeRasterizeState);
+    context->OMGetBlendState(&m_storeBlendState, m_blendFactorStored, &m_sampleMaskStored);
+    context->PSGetSamplers(0, 1, &m_storeSamplerState);
+}
+
+void NtTextHelper::RestoreRenderState()
+{
+    const ID3D11DeviceContext* context = g_renderer->DeviceContext();
+
+    context.OMSetDepthStencilState(m_storeDepthStencilState, m_stencilRefStored);
+    context->RSSetScissorRects(m_storeRasterizeState);
+    context->OMSetBlendState(m_storeBlendState, m_blendFactorStored, m_sampleMaskStored);
+    context->PSSetSamplers(0, 1, &m_storeSamplerState);
+
+    SAFE_RELEASE(m_storeDepthStencilState);
+    SAFE_RELEASE(m_storeRasterizeState);
+    SAFE_RELEASE(m_storeBlendState);
+    SAFE_RELEASE(m_storeSamplerState);
 }
 
 }}
