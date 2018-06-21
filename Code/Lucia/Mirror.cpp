@@ -518,7 +518,7 @@ void Mirror::BuildSkull()
                     sizeof(Vertex::PNUVertex), 
                     vertices.size(), 
                     BufferUsage::USAGE_IMMUTABLE, 
-                    eCpuAccessFlag::CPU_ACCESS_NONE);
+                    CpuAccessFlag::CPU_ACCESS_NONE);
 
     m_skullIB = MakeIndexBuffer(idxArray, indices.size());
 }

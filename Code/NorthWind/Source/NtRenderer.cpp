@@ -104,7 +104,7 @@ bool NtRenderer::Process(const float deltaTime)
 
 bool NtRenderer::Draw()
 {
-	m_renderEngine->BeginScene(reinterpret_cast<const float*>(&Colors::Black));
+	m_renderEngine->BeginScene(reinterpret_cast<const float*>(&Colors::LightSteelBlue));
 
 	XMMATRIX tm;
 	m_renderEngine->Transform(tm);

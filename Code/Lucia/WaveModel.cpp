@@ -61,10 +61,14 @@ WaveModel::WaveModel()
 	XMStoreFloat4x4(&m_gridWorld, I);
 	XMStoreFloat4x4(&m_wavesWorld, I);
     XMStoreFloat4x4(&m_boxWorld, I);
+    XMStoreFloat4x4(&m_cylinderWorld, I);
 
     XMMATRIX boxScale = XMMatrixScaling(15.0f, 15.0f, 15.0f);
     XMMATRIX boxOffset = XMMatrixTranslation(8.0f, 5.0f, -15.0f);
     XMStoreFloat4x4(&m_boxWorld, boxScale*boxOffset);
+
+    XMMATRIX cylinderOffset = XMMatrixTranslation(8.0f, 5.0f, 15.0f);
+    XMStoreFloat4x4(&m_cylinderWorld, boxScale * cylinderOffset);
 
     XMMATRIX grassTexScale = XMMatrixScaling(5.0f, 5.0f, 0.0f);
     XMStoreFloat4x4(&m_grassTexTransform, grassTexScale);
@@ -271,7 +275,7 @@ void WaveModel::Render(XMMATRIX& worldViewProj)
         g_renderInterface->SetVertexBuffers(0, 1, &m_boxVB, &stride, &offset);
         g_renderInterface->SetIndexBuffers(m_boxIB, DXGI_FORMAT_R32_UINT, 0);
 
-        XMMATRIX world = XMLoadFloat4x4(&m_boxWorld);
+        XMMATRIX world = XMLoadFloat4x4(&m_cylinderWorld);
         XMMATRIX worldInvTranspose = NtD3dUtil::InverseTranspose(world);
         XMMATRIX goWVP = world * viewProj;
 
@@ -346,6 +350,7 @@ void WaveModel::MakeGeometry()
 	gen.CreateGrid(160.0f, 160.0f, 50, 50, grid);
 
     std::vector<Vertex::PNUVertex> vertices(grid.Vertices.size());
+
 	for (size_t i = 0; i < grid.Vertices.size(); i++)
 	{
 		XMFLOAT3 p = grid.Vertices[i].Position;
@@ -387,6 +392,7 @@ void WaveModel::MakeGeometry()
 
 	std::vector<UINT> indices;
 	indices.insert(indices.end(), grid.Indices.begin(), grid.Indices.end());
+
     m_gridIndexCount = (ntInt)grid.Indices.size();
 
     Vertex::PNUVertex* vtxArray = &vertices[0];
@@ -403,13 +409,15 @@ void WaveModel::MakeGeometry()
     g_renderer->CreateShaderResourceView(L"wirefence.dds", &m_boxMapSRV);
     
     MakeCrate();
+
+    //MakeCylinder();
 }
 
 void WaveModel::MakeWave()
 {
 	m_waves.Init(160, 160, 1.0f, 0.03f, 3.25f, 0.4f);
 
-	m_waveVB = MakeVertexBuffer(nullptr, sizeof(Vertex::PNUVertex), m_waves.VertexCount(), BufferUsage::USAGE_DYNAMIC, eCpuAccessFlag::CPU_ACCESS_WRITE);
+	m_waveVB = MakeVertexBuffer(nullptr, sizeof(Vertex::PNUVertex), m_waves.VertexCount(), BufferUsage::USAGE_DYNAMIC, CpuAccessFlag::CPU_ACCESS_WRITE);
 
 	std::vector<UINT> indices(3 * m_waves.TrisCount());
 
@@ -462,7 +470,35 @@ void WaveModel::MakeCrate()
     Vertex::PNUVertex* vtxArray = &vertices[0];
     UINT* idxArray = &indices[0];
 
-    m_boxVB = MakeVertexBuffer(vtxArray, sizeof(Vertex::PNUVertex), (ntInt)vertices.size(), BufferUsage::USAGE_IMMUTABLE, eCpuAccessFlag::CPU_ACCESS_NONE);
+    m_boxVB = MakeVertexBuffer(vtxArray, sizeof(Vertex::PNUVertex), (ntInt)vertices.size(), BufferUsage::USAGE_IMMUTABLE, CpuAccessFlag::CPU_ACCESS_NONE);
 
     m_boxIB = MakeIndexBuffer(idxArray, (ntInt)indices.size());
+}
+
+void WaveModel::MakeCylinder()
+{
+    renderer::NtGeometryGenerator::MeshData cylinder;
+    NtGeometryGenerator gen;
+
+    gen.CreateCylinder(0.5f, 0.3f, 3.0f, 20, 20, cylinder);
+
+    std::vector<Vertex::PNUVertex> vertices(cylinder.Vertices.size());
+
+    for (size_t i = 0; i < vertices.size(); i++)
+    {
+        vertices[i].position = cylinder.Vertices[i].Position;
+        vertices[i].normal = cylinder.Vertices[i].Normal;
+        vertices[i].uv = cylinder.Vertices[i].TexC;
+    }
+
+    std::vector<ntUint> indices;
+    indices.insert(std::end(indices), std::begin(cylinder.Indices), std::end(cylinder.Indices));
+    m_cylinderIndexCount = cylinder.Indices.size();
+
+    Vertex::PNUVertex* vtxArray = &vertices[0];
+    ntUint* idxArray = &indices[0];
+
+    m_cylinderVB = MakeVertexBuffer(vtxArray, sizeof(Vertex::PNUVertex), (ntInt)vertices.size(), BufferUsage::USAGE_IMMUTABLE, CpuAccessFlag::CPU_ACCESS_NONE);
+
+    m_cylinderIB = MakeIndexBuffer(idxArray, (ntInt)indices.size());
 }

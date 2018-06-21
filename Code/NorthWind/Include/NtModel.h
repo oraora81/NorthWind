@@ -63,7 +63,7 @@ public:
     }
 
 protected:
-	ID3D11Buffer* MakeVertexBuffer(void* vertices, ntInt vtxSize, ntIndex vtxCount, BufferUsage usage, eCpuAccessFlag cpuFlag);
+	ID3D11Buffer* MakeVertexBuffer(void* vertices, ntInt vtxSize, ntIndex vtxCount, BufferUsage usage, CpuAccessFlag cpuFlag);
 
 	ID3D11Buffer* MakeIndexBuffer(ntUint* indices, ntInt indexCount);
 

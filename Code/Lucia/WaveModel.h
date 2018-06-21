@@ -21,19 +21,27 @@ public:
 
     void MakeCrate();
 
+    void MakeCylinder();
+
 private:
 	XMFLOAT4X4 m_gridWorld;
 	XMFLOAT4X4 m_wavesWorld;
     XMFLOAT4X4 m_boxWorld;
+    XMFLOAT4X4 m_cylinderWorld;
+
     XMFLOAT4X4 m_grassTexTransform;
     XMFLOAT4X4 m_waterTexTransform;
     XMFLOAT4X4 m_boxTexTransform;
+    XMFLOAT4X4 m_cylinderTexTransform;
 
     ID3D11Buffer* m_waveVB;
 	ID3D11Buffer* m_waveIB;
 
     ID3D11Buffer* m_boxVB;
     ID3D11Buffer* m_boxIB;
+
+    ID3D11Buffer* m_cylinderVB;
+    ID3D11Buffer* m_cylinderIB;
 
     ID3D11ShaderResourceView* m_grassMapSRV;
     ID3D11ShaderResourceView* m_waveMapSRV;
@@ -50,4 +58,5 @@ private:
 
     XMFLOAT2 m_waterTexOffset;
     int m_lightCount;
+    ntUint m_cylinderIndexCount;
 };

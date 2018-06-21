@@ -35,7 +35,7 @@ NtModel::~NtModel()
 
 bool NtModel::InitializeModelData(void* vertices, ntInt vtxSize, ntInt vtxCount, ntUint* indices, ntInt indexCount)
 {
-	m_vertexBuffer = MakeVertexBuffer(vertices, vtxSize, vtxCount, BufferUsage::USAGE_IMMUTABLE, eCpuAccessFlag::CPU_ACCESS_NONE);
+	m_vertexBuffer = MakeVertexBuffer(vertices, vtxSize, vtxCount, BufferUsage::USAGE_IMMUTABLE, CpuAccessFlag::CPU_ACCESS_NONE);
 
 	m_vertexCount = vtxCount;
 
@@ -300,7 +300,7 @@ bool NtModel::InitializeAse(const ntWchar* puppetName)
 	return true;
 }
 
-ID3D11Buffer* NtModel::MakeVertexBuffer(void* vertices, ntInt vtxSize, ntIndex vtxCount, BufferUsage usage, eCpuAccessFlag cpuFlag)
+ID3D11Buffer* NtModel::MakeVertexBuffer(void* vertices, ntInt vtxSize, ntIndex vtxCount, BufferUsage usage, CpuAccessFlag cpuFlag)
 {
 	// vb
 	D3D11_BUFFER_DESC vd;

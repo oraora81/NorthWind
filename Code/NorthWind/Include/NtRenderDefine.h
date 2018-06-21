@@ -80,7 +80,7 @@
 		USAGE_DYNAMIC = D3D11_USAGE_DYNAMIC,
 	};
 
-	enum eCpuAccessFlag
+	enum CpuAccessFlag
 	{
         CPU_ACCESS_NONE = 0,
 		CPU_ACCESS_WRITE = D3D11_CPU_ACCESS_WRITE,
