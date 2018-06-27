@@ -65,9 +65,13 @@ private:
 	typedef std::vector<NtTexHandle*>			TEXTURE_REFERENCE_ARRAY;
 
 	RESOURCE_MAPPING_TABLE	m_resourceTable;
+
 	TEXTURE_TABLE			m_texTable;
+
 	TEXTURE_REFERENCE_ARRAY	m_texReferenceArray;
+
 	TEXTURE_REFERENCE_ARRAY	m_texHandleSource;
+
 	NtString				m_env;
 };
 

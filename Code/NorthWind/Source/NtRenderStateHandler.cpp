@@ -16,10 +16,12 @@ ID3D11BlendState* NtRenderStateHandler::BSAlpha2Coverage;
 ID3D11BlendState* NtRenderStateHandler::BSTransparent;
 ID3D11BlendState* NtRenderStateHandler::BSNoRenderTargetWrite;
 ID3D11BlendState* NtRenderStateHandler::BSUI;
+ID3D11BlendState* NtRenderStateHandler::BSAdd;
 
 ID3D11DepthStencilState* NtRenderStateHandler::DSMarkMirror;
 ID3D11DepthStencilState* NtRenderStateHandler::DSDrawReflection;
 ID3D11DepthStencilState* NtRenderStateHandler::DSNoDoubleBlend;
+ID3D11DepthStencilState* NtRenderStateHandler::DSNoneDepth;
 ID3D11DepthStencilState* NtRenderStateHandler::DSUI;
 
 ID3D11SamplerState* NtRenderStateHandler::SSUI;
@@ -38,10 +40,21 @@ bool NtRenderStateHandler::Initialize(ID3D11Device* device)
 
 void NtRenderStateHandler::Release()
 {
+    SAFE_RELEASE(RSSolid);
     SAFE_RELEASE(RSWireFrame);
     SAFE_RELEASE(RSNoCull);
+    SAFE_RELEASE(RSCullClockwise);
+    SAFE_RELEASE(RSUI);
+
     SAFE_RELEASE(BSAlpha2Coverage);
     SAFE_RELEASE(BSTransparent);
+    SAFE_RELEASE(BSNoRenderTargetWrite);
+
+    SAFE_RELEASE(DSMarkMirror);
+    SAFE_RELEASE(DSDrawReflection);
+    SAFE_RELEASE(DSNoDoubleBlend);
+    SAFE_RELEASE(DSNoneDepth);
+    SAFE_RELEASE(DSUI);
 }
 
 bool NtRenderStateHandler::InitRS(ID3D11Device* device)
@@ -174,6 +187,22 @@ bool NtRenderStateHandler::InitBS(ID3D11Device* device)
 
     HRF(device->CreateBlendState(&uiDesc, &BSUI));
 
+    // add
+    D3D11_BLEND_DESC addDesc;
+    Crt::MemSet(&addDesc, sizeof(D3D11_BLEND));
+    addDesc.AlphaToCoverageEnable = FALSE;
+    addDesc.IndependentBlendEnable = FALSE;
+    addDesc.RenderTarget[0].BlendEnable = TRUE;
+    addDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;
+    addDesc.RenderTarget[0].DestBlend = D3D11_BLEND_ONE;
+    addDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+    addDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+    addDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE;
+    addDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+    addDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+    HRF(device->CreateBlendState(&addDesc, &BSAdd));
+
     return true;
 }
 
@@ -242,6 +271,14 @@ bool NtRenderStateHandler::InitDS(ID3D11Device* device)
 
 	HRF(device->CreateDepthStencilState(&noDoubleBlendDesc, &DSNoDoubleBlend));
 
+
+    D3D11_DEPTH_STENCIL_DESC noneDepthDesc;
+    noneDepthDesc.DepthEnable = TRUE;
+    noneDepthDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+    noneDepthDesc.DepthFunc = D3D11_COMPARISON_LESS;
+    noneDepthDesc.StencilEnable = FALSE;
+
+    HRF(device->CreateDepthStencilState(&noneDepthDesc, &DSNoneDepth));
 
     D3D11_DEPTH_STENCIL_DESC dsDesc;
     Crt::MemSet(&dsDesc, sizeof(D3D11_DEPTH_STENCIL_DESC));

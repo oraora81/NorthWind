@@ -9,6 +9,7 @@
 #include "NtShaderHandler.h"
 #include "NtInputLayout.h"
 #include "NtSampleShader.h"
+#include "NtTexture.h"
 
 using namespace nt;
 
@@ -142,6 +143,10 @@ WaveModel::WaveModel()
     m_boxMaterial.Ambient = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
     m_boxMaterial.Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
     m_boxMaterial.Specular = XMFLOAT4(0.4f, 0.4f, 0.4f, 16.0f);
+
+    m_cylinderMaterial.Ambient = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
+    m_cylinderMaterial.Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+    m_cylinderMaterial.Specular = XMFLOAT4(0.4f, 0.4f, 0.4f, 16.0f);
 }
 
 WaveModel::~WaveModel()
@@ -150,6 +155,8 @@ WaveModel::~WaveModel()
 	SAFE_RELEASE(m_waveIB);
     SAFE_RELEASE(m_boxVB);
     SAFE_RELEASE(m_boxIB);
+    SAFE_RELEASE(m_cylinderVB);
+    SAFE_RELEASE(m_cylinderIB);
     SAFE_RELEASE(m_grassMapSRV);
     SAFE_RELEASE(m_waveMapSRV);
     SAFE_RELEASE(m_boxMapSRV);
@@ -161,6 +168,8 @@ void WaveModel::Update(float deltaTime)
 
 	static float timeBase = 0.0f;
 
+    static int k = 0;
+
 	if (g_app->Timer().TotalTime() - timeBase >= 0.25f)
 	{
 		timeBase += 0.25f;
@@ -171,6 +180,13 @@ void WaveModel::Update(float deltaTime)
 		float r = NtMathf::Rand(1.0f, 2.0f);
 
 		m_waves.Disturb(i, j, r);
+
+        m_currBolt = m_bolts[k++];
+
+        if (k >= m_bolts.size())
+        {
+            k = 0;
+        }
 	}
 
 	m_waves.Update(deltaTime);
@@ -269,32 +285,32 @@ void WaveModel::Render(XMMATRIX& worldViewProj)
 	
 
     // draw the box
-    boxTech->GetDesc(&techDesc);
-    for (UINT p = 0; p < techDesc.Passes; ++p)
-    {
-        g_renderInterface->SetVertexBuffers(0, 1, &m_boxVB, &stride, &offset);
-        g_renderInterface->SetIndexBuffers(m_boxIB, DXGI_FORMAT_R32_UINT, 0);
+    //boxTech->GetDesc(&techDesc);
+    //for (UINT p = 0; p < techDesc.Passes; ++p)
+    //{
+    //    g_renderInterface->SetVertexBuffers(0, 1, &m_boxVB, &stride, &offset);
+    //    g_renderInterface->SetIndexBuffers(m_boxIB, DXGI_FORMAT_R32_UINT, 0);
 
-        XMMATRIX world = XMLoadFloat4x4(&m_cylinderWorld);
-        XMMATRIX worldInvTranspose = NtD3dUtil::InverseTranspose(world);
-        XMMATRIX goWVP = world * viewProj;
+    //    XMMATRIX world = XMLoadFloat4x4(&m_boxWorld);
+    //    XMMATRIX worldInvTranspose = NtD3dUtil::InverseTranspose(world);
+    //    XMMATRIX goWVP = world * viewProj;
 
-        LightShader->SetWorld(world);
-        LightShader->SetWorldInvTranspose(worldInvTranspose);
-        LightShader->SetWorldViewProj(goWVP);
-        LightShader->SetTexTransform(XMMatrixIdentity());
-        LightShader->SetMaterial(m_boxMaterial);
-        LightShader->SetDiffuseMap(m_boxMapSRV);
+    //    LightShader->SetWorld(world);
+    //    LightShader->SetWorldInvTranspose(worldInvTranspose);
+    //    LightShader->SetWorldViewProj(goWVP);
+    //    LightShader->SetTexTransform(XMMatrixIdentity());
+    //    LightShader->SetMaterial(m_boxMaterial);
+    //    LightShader->SetDiffuseMap(m_boxMapSRV);
 
-        g_renderer->DeviceContext()->RSSetState(NtRenderStateHandler::RSNoCull);
-        boxTech->GetPassByIndex(p)->Apply(0, g_renderer->DeviceContext());
-        g_renderer->DeviceContext()->DrawIndexed(m_boxIndexCount, 0, 0);
+    //    g_renderer->DeviceContext()->RSSetState(NtRenderStateHandler::RSNoCull);
+    //    boxTech->GetPassByIndex(p)->Apply(0, g_renderer->DeviceContext());
+    //    g_renderer->DeviceContext()->DrawIndexed(m_boxIndexCount, 0, 0);
 
-        // restore default render state
-        g_renderer->DeviceContext()->RSSetState(nullptr);
-    }
+    //    // restore default render state
+    //    g_renderer->DeviceContext()->RSSetState(nullptr);
+    //}
 
-
+    
     tech->GetDesc(&techDesc);
 	for (UINT p = 0; p < techDesc.Passes; ++p)
 	{
@@ -339,6 +355,36 @@ void WaveModel::Render(XMMATRIX& worldViewProj)
 
         g_renderer->DeviceContext()->OMSetBlendState(nullptr, blendFactor, 0xffffffff);
 	}
+
+    // draw the cylinder
+    boxTech->GetDesc(&techDesc);
+    for (size_t i = 0; i < techDesc.Passes; i++)
+    {
+        g_renderInterface->SetVertexBuffers(0, 1, &m_cylinderVB, &stride, &offset);
+        g_renderInterface->SetIndexBuffers(m_cylinderIB, DXGI_FORMAT_R32_UINT, 0);
+
+        XMMATRIX world = XMLoadFloat4x4(&m_cylinderWorld);
+        XMMATRIX worlInvTranspose = NtD3dUtil::InverseTranspose(world);
+        XMMATRIX goWVP = world * viewProj;
+
+        LightShader->SetWorld(world);
+        LightShader->SetWorldInvTranspose(worlInvTranspose);
+        LightShader->SetWorldViewProj(goWVP);
+        LightShader->SetTexTransform(XMMatrixIdentity());
+        LightShader->SetMaterial(m_cylinderMaterial);
+        LightShader->SetDiffuseMap(m_currBolt);
+
+        //g_renderer->DeviceContext()->RSSetState(NtRenderStateHandler::RSNoCull);
+        g_renderer->DeviceContext()->OMSetBlendState(NtRenderStateHandler::BSAdd, blendFactor, 0xff);
+        g_renderer->DeviceContext()->OMSetDepthStencilState(NtRenderStateHandler::DSNoneDepth, 0);
+
+        boxTech->GetPassByIndex(i)->Apply(0, g_renderer->DeviceContext());
+        g_renderer->DeviceContext()->DrawIndexed(m_cylinderIndexCount, 0, 0);
+
+        //g_renderer->DeviceContext()->RSSetState(nullptr);
+        g_renderer->DeviceContext()->OMSetDepthStencilState(nullptr, 0);
+        g_renderer->DeviceContext()->OMSetBlendState(nullptr, blendFactor, 0xff);
+    }
 }
 
 void WaveModel::MakeGeometry()
@@ -410,7 +456,31 @@ void WaveModel::MakeGeometry()
     
     MakeCrate();
 
-    //MakeCylinder();
+    MakeCylinder();
+
+    std::vector<ntUint> texHandles;
+    for (size_t i = 1; i <= 60; i++)
+    {
+        const ntWchar* file = nt::Crt::MakeString(L"bolt0%02d.bmp", i);
+
+        ntUint handle = g_resMgr->LoadTexture(file);
+        if (handle == INVALID_TEXTURE_HANDLE)
+        {
+            continue;
+        }
+
+        texHandles.push_back(handle);
+    }
+
+    auto& bolts = m_bolts;
+    std::for_each(std::begin(texHandles), std::end(texHandles), [&bolts](const ntUint handle) 
+    {
+        auto texture = g_resMgr->AcquireTexture(handle);
+
+        bolts.push_back(texture->GetTexture());
+    });
+
+    m_currBolt = bolts[0];
 }
 
 void WaveModel::MakeWave()

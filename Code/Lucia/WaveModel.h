@@ -46,6 +46,8 @@ private:
     ID3D11ShaderResourceView* m_grassMapSRV;
     ID3D11ShaderResourceView* m_waveMapSRV;
     ID3D11ShaderResourceView* m_boxMapSRV;
+    std::vector<ID3D11ShaderResourceView*> m_bolts;
+    ID3D11ShaderResourceView* m_currBolt;
 
 	UINT m_gridIndexCount;
     UINT m_boxIndexCount;
@@ -55,6 +57,7 @@ private:
     Material m_landMaterial;
     Material m_wavMaterial;
     Material m_boxMaterial;
+    Material m_cylinderMaterial;
 
     XMFLOAT2 m_waterTexOffset;
     int m_lightCount;

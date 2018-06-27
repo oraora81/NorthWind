@@ -42,8 +42,12 @@ bool NtTexture::Initialize(const ntWchar* fileName)
 	{
 		return CreateTextureFromResourceFile(fileName);
 	}
+    else if (Crt::StrCmp(ext, L".bmp") == 0)
+    {
+        return CreateTextureFromResourceFile(fileName);
+    }
 
-	return true;
+	return false;
 }
 
 

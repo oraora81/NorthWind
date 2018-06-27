@@ -149,6 +149,7 @@ ntUint NtResourceManager::LoadTexture(const ntWchar* fileName)
 	NtTexHandle* texHandle = FindUsableHandle();
 
 	tex->IncreaseUseCount();
+
 	tex->SetTexHandle(texHandle->GetHandle());
 
 	texHandle->SetTexture(tex);

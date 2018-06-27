@@ -25,10 +25,12 @@ public:
     static ID3D11BlendState* BSTransparent;
 	static ID3D11BlendState* BSNoRenderTargetWrite;
     static ID3D11BlendState* BSUI;
+    static ID3D11BlendState* BSAdd;
 
 	static ID3D11DepthStencilState* DSMarkMirror;
 	static ID3D11DepthStencilState* DSDrawReflection;
 	static ID3D11DepthStencilState* DSNoDoubleBlend;
+    static ID3D11DepthStencilState* DSNoneDepth;
     static ID3D11DepthStencilState* DSUI;
 
     static ID3D11SamplerState* SSUI;
