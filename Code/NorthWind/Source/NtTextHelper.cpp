@@ -17,7 +17,6 @@ NtTextHelper::NtTextHelper()
     , m_storeBlendState(nullptr)
     , m_storeSamplerState(nullptr)
     , m_stencilRefStored(0)
-    , m_blendFactorStored(0)
     , m_sampleMaskStored(0)
     , m_samplerStateStored(0)
     , m_lineHeight(0)
@@ -26,6 +25,7 @@ NtTextHelper::NtTextHelper()
     m_color = Colors::WhiteC;
     m_pt.x = 0;
     m_pt.y = 0;
+    Crt::MemSet(m_blendFactorStored, sizeof(m_blendFactorStored));
 }
 
 bool NtTextHelper::Initialize()
@@ -219,7 +219,7 @@ void NtTextHelper::EndText11()
 
 void NtTextHelper::StoreRenderState()
 {
-    const ID3D11DeviceContext* context = g_renderer->DeviceContext();
+    ID3D11DeviceContext* context = g_renderer->DeviceContext();
 
     context->OMGetDepthStencilState(&m_storeDepthStencilState, &m_stencilRefStored);
     context->RSGetState(&m_storeRasterizeState);
@@ -229,10 +229,10 @@ void NtTextHelper::StoreRenderState()
 
 void NtTextHelper::RestoreRenderState()
 {
-    const ID3D11DeviceContext* context = g_renderer->DeviceContext();
+    ID3D11DeviceContext* context = g_renderer->DeviceContext();
 
-    context.OMSetDepthStencilState(m_storeDepthStencilState, m_stencilRefStored);
-    context->RSSetScissorRects(m_storeRasterizeState);
+    context->OMSetDepthStencilState(m_storeDepthStencilState, m_stencilRefStored);
+    //context->RSSetScissorRects(m_storeRasterizeState);
     context->OMSetBlendState(m_storeBlendState, m_blendFactorStored, m_sampleMaskStored);
     context->PSSetSamplers(0, 1, &m_storeSamplerState);
 

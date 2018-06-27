@@ -50,7 +50,7 @@ private:
     ntUint m_stencilRefStored;
     ntUint m_sampleMaskStored;
     ntUint m_samplerStateStored;
-    ntFloat m_blendFactorStored[4]
+    float m_blendFactorStored[4];
     
     XMCOLOR m_color;
     POINT m_pt;
