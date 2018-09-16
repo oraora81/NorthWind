@@ -179,6 +179,12 @@ real NtMath<real>::Clamp(real current, real min, real max)
 }
 
 template <typename real>
+bool NtMath<real>::Approximately(real a, real b)
+{
+    return (a - b) < NtMath<real>::EPSILON;
+}
+
+template <typename real>
 real NtMath<real>::Rand()
 {
 	return (real)(rand()) / (real)RAND_MAX;

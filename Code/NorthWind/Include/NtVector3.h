@@ -1,6 +1,4 @@
-
-#ifndef __NTVECTOR3_H
-#define __NTVECTOR3_H
+#pragma once
 
 #include "NtMath.h"
 
@@ -63,6 +61,7 @@ public:
     static void Orthonormalize(NtVector3* v);
 
     static const NtVector3 ZERO;
+    static const NtVector3 ONE;
     static const NtVector3 UNIT_X;
     static const NtVector3 UNIT_Y;
     static const NtVector3 UNIT_Z;
@@ -71,7 +70,9 @@ private:
     int CompareTuple(const NtVector3& vec) const;
 
 private:
-    T m_tuple[3];
+    enum Constant { MAX_TUPLE = 3 };
+
+    T m_tuple[MAX_TUPLE];
 };
 
 template <typename T>
@@ -82,5 +83,3 @@ NtVector3<T> operator*(T scalar, const NtVector3<T>& vec);
 typedef NtVector3<float> NtVector3f;
 typedef NtVector3<double> NtVector3d;
 }
-
-#endif

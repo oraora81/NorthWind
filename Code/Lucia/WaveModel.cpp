@@ -374,7 +374,6 @@ void WaveModel::Render(XMMATRIX& worldViewProj)
         LightShader->SetMaterial(m_cylinderMaterial);
         LightShader->SetDiffuseMap(m_currBolt);
 
-        //g_renderer->DeviceContext()->RSSetState(NtRenderStateHandler::RSNoCull);
         g_renderer->DeviceContext()->OMSetBlendState(NtRenderStateHandler::BSAdd, blendFactor, 0xff);
         g_renderer->DeviceContext()->OMSetDepthStencilState(NtRenderStateHandler::DSNoneDepth, 0);
 

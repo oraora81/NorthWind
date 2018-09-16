@@ -59,6 +59,8 @@ public:
 
 	static real Clamp(real current, real min, real max);
 
+    static bool Approximately(real a, real b);
+
 	// return random [0 ~ 1)
 	static real Rand();
 

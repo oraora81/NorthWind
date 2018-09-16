@@ -11,6 +11,8 @@ NtVector3<T>::NtVector3(const NtVector3& vec)
     m_tuple[0] = vec.m_tuple[0];
     m_tuple[1] = vec.m_tuple[1];
     m_tuple[2] = vec.m_tuple[2];
+
+    Crt::MemCpy(m_tuple, vec.m_tuple, sizeof(T) * MAX_TUPLE);
 }
 
 template <typename T>
@@ -95,17 +97,15 @@ T& NtVector3<T>::Z()
 template <typename T>
 NtVector3<T>& NtVector3<T>::operator=(const NtVector3& vec)
 {
-    m_tuple[0] = vec.m_tuple[0];
-    m_tuple[1] = vec.m_tuple[1];
-    m_tuple[2] = vec.m_tuple[2];
-
+    Crt::MemCpy(m_tuple, vec.m_tuple, sizeof(T) * MAX_TUPLE);
+    
     return *this;
 }
 
 template <typename T>
 int NtVector3<T>::CompareTuple(const NtVector3& vec) const
 {
-    return memcmp(m_tuple, vec.m_tuple, sizeof(T)*3);
+    return memcmp(m_tuple, vec.m_tuple, sizeof(T) * MAX_TUPLE);
 }
 
 template <typename T>
@@ -296,8 +296,8 @@ template <typename T>
 NtVector3<T> NtVector3<T>::CrossProduct(const NtVector3& vec) const
 {
     return NtVector3( m_tuple[1] * vec.m_tuple[2] - m_tuple[2] * vec.m_tuple[1],
-        m_tuple[2] * m_tuple[0] - m_tuple[0] * m_tuple[2],
-        m_tuple[0] * m_tuple[1] - m_tuple[1] * m_tuple[0]);
+        m_tuple[2] * vec.m_tuple[0] - m_tuple[0] * vec.m_tuple[2],
+        m_tuple[0] * vec.m_tuple[1] - m_tuple[1] * vec.m_tuple[0]);
 }
 
 template <typename T>
@@ -305,8 +305,8 @@ NtVector3<T> NtVector3<T>::UnitCrossProduct(const NtVector3& vec) const
 {
     NtVector3 cross(
         m_tuple[1] * vec.m_tuple[2] - m_tuple[2] * vec.m_tuple[1],
-        m_tuple[2] * m_tuple[0] - m_tuple[0] * m_tuple[2],
-        m_tuple[0] * m_tuple[1] - m_tuple[1] * m_tuple[0]);
+        m_tuple[2] * vec.m_tuple[0] - m_tuple[0] * vec.m_tuple[2],
+        m_tuple[0] * vec.m_tuple[1] - m_tuple[1] * vec.m_tuple[0]);
 
     cross.Normalize();
     return cross;

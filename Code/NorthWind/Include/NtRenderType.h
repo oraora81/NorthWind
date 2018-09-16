@@ -53,10 +53,10 @@ namespace Vertex
             : position(px, py, pz)
             , uv(u, v)
         {
-            color.x = clr.r;
-            color.y = clr.g;
-            color.z = clr.b;
-            color.w = clr.a;
+            color.x = static_cast<float>(clr.r);
+            color.y = static_cast<float>(clr.g);
+            color.z = static_cast<float>(clr.b);
+            color.w = static_cast<float>(clr.a);
         }
 
         XMFLOAT3 position;
