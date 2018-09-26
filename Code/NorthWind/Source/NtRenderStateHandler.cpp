@@ -23,9 +23,16 @@ ID3D11DepthStencilState* NtRenderStateHandler::DSDrawReflection;
 ID3D11DepthStencilState* NtRenderStateHandler::DSNoDoubleBlend;
 ID3D11DepthStencilState* NtRenderStateHandler::DSNoneDepth;
 ID3D11DepthStencilState* NtRenderStateHandler::DSUI;
+ID3D11DepthStencilState* NtRenderStateHandler::DSOverdrawTest;
 
 ID3D11SamplerState* NtRenderStateHandler::SSUI;
 
+std::tuple<ntUchar, XMVECTORF32> NtRenderStateHandler::RANGE0;
+std::tuple<ntUchar, XMVECTORF32> NtRenderStateHandler::RANGE1;
+std::tuple<ntUchar, XMVECTORF32> NtRenderStateHandler::RANGE2;
+std::tuple<ntUchar, XMVECTORF32> NtRenderStateHandler::RANGE3;
+std::tuple<ntUchar, XMVECTORF32> NtRenderStateHandler::RANGE4;
+std::tuple<ntUchar, XMVECTORF32> NtRenderStateHandler::RANGE5;
 
 bool NtRenderStateHandler::Initialize(ID3D11Device* device)
 {
@@ -34,6 +41,8 @@ bool NtRenderStateHandler::Initialize(ID3D11Device* device)
     InitBS(device);
 
     InitDS(device);
+
+    InitOverdrawColors();
 
     return true;
 }
@@ -55,6 +64,7 @@ void NtRenderStateHandler::Release()
     SAFE_RELEASE(DSNoDoubleBlend);
     SAFE_RELEASE(DSNoneDepth);
     SAFE_RELEASE(DSUI);
+    SAFE_RELEASE(DSOverdrawTest);
 }
 
 bool NtRenderStateHandler::InitRS(ID3D11Device* device)
@@ -208,89 +218,118 @@ bool NtRenderStateHandler::InitBS(ID3D11Device* device)
 
 bool NtRenderStateHandler::InitDS(ID3D11Device* device)
 {
-	D3D11_DEPTH_STENCIL_DESC dsMarkMirror;
-	dsMarkMirror.DepthEnable = TRUE;
-	dsMarkMirror.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
-	dsMarkMirror.DepthFunc = D3D11_COMPARISON_LESS;
-	dsMarkMirror.StencilEnable = TRUE;
-	dsMarkMirror.StencilReadMask = 0xff;
-	dsMarkMirror.StencilWriteMask = 0xff;
+    {
+        D3D11_DEPTH_STENCIL_DESC dsMarkMirror;
+        dsMarkMirror.DepthEnable = TRUE;
+        dsMarkMirror.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+        dsMarkMirror.DepthFunc = D3D11_COMPARISON_LESS;
+        dsMarkMirror.StencilEnable = TRUE;
+        dsMarkMirror.StencilReadMask = 0xff;
+        dsMarkMirror.StencilWriteMask = 0xff;
 
-	dsMarkMirror.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
-	dsMarkMirror.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
-	dsMarkMirror.FrontFace.StencilPassOp = D3D11_STENCIL_OP_REPLACE;
-	dsMarkMirror.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+        dsMarkMirror.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+        dsMarkMirror.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+        dsMarkMirror.FrontFace.StencilPassOp = D3D11_STENCIL_OP_REPLACE;
+        dsMarkMirror.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
 
-	// we are not rendering backfacing polygons, so these settings do not matter
-	dsMarkMirror.BackFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
-	dsMarkMirror.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
-	dsMarkMirror.BackFace.StencilPassOp = D3D11_STENCIL_OP_REPLACE;
-	dsMarkMirror.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+        // we are not rendering backfacing polygons, so these settings do not matter
+        dsMarkMirror.BackFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+        dsMarkMirror.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+        dsMarkMirror.BackFace.StencilPassOp = D3D11_STENCIL_OP_REPLACE;
+        dsMarkMirror.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
 
-	HRF(device->CreateDepthStencilState(&dsMarkMirror, &DSMarkMirror));
+        HRF(device->CreateDepthStencilState(&dsMarkMirror, &DSMarkMirror));
+    }
 
-	D3D11_DEPTH_STENCIL_DESC drawReflectionDesc;
-	drawReflectionDesc.DepthEnable = TRUE;
-	drawReflectionDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
-	drawReflectionDesc.DepthFunc = D3D11_COMPARISON_LESS;
-	drawReflectionDesc.StencilEnable = TRUE;
-	drawReflectionDesc.StencilReadMask = 0xff;
-	drawReflectionDesc.StencilWriteMask = 0xff;
+    {
+        D3D11_DEPTH_STENCIL_DESC drawReflectionDesc;
+        drawReflectionDesc.DepthEnable = TRUE;
+        drawReflectionDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+        drawReflectionDesc.DepthFunc = D3D11_COMPARISON_LESS;
+        drawReflectionDesc.StencilEnable = TRUE;
+        drawReflectionDesc.StencilReadMask = 0xff;
+        drawReflectionDesc.StencilWriteMask = 0xff;
 
-	drawReflectionDesc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
-	drawReflectionDesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
-	drawReflectionDesc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
-	drawReflectionDesc.FrontFace.StencilFunc = D3D11_COMPARISON_EQUAL;
+        drawReflectionDesc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+        drawReflectionDesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+        drawReflectionDesc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
+        drawReflectionDesc.FrontFace.StencilFunc = D3D11_COMPARISON_EQUAL;
 
-	// We are not rendering backfacing polygons, so these settins do not matter
-	drawReflectionDesc.BackFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
-	drawReflectionDesc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
-	drawReflectionDesc.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
-	drawReflectionDesc.BackFace.StencilFunc = D3D11_COMPARISON_EQUAL;
+        // We are not rendering backfacing polygons, so these settins do not matter
+        drawReflectionDesc.BackFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+        drawReflectionDesc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+        drawReflectionDesc.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
+        drawReflectionDesc.BackFace.StencilFunc = D3D11_COMPARISON_EQUAL;
 
-	HRF(device->CreateDepthStencilState(&drawReflectionDesc, &DSDrawReflection));
+        HRF(device->CreateDepthStencilState(&drawReflectionDesc, &DSDrawReflection));
+    }
+	
+    {
+        D3D11_DEPTH_STENCIL_DESC noDoubleBlendDesc;
+        noDoubleBlendDesc.DepthEnable = TRUE;
+        noDoubleBlendDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+        noDoubleBlendDesc.DepthFunc = D3D11_COMPARISON_LESS;
+        noDoubleBlendDesc.StencilEnable = TRUE;
+        noDoubleBlendDesc.StencilReadMask = 0xff;
+        noDoubleBlendDesc.StencilWriteMask = 0xff;
 
-	D3D11_DEPTH_STENCIL_DESC noDoubleBlendDesc;
-	noDoubleBlendDesc.DepthEnable = TRUE;
-	noDoubleBlendDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
-	noDoubleBlendDesc.DepthFunc = D3D11_COMPARISON_LESS;
-	noDoubleBlendDesc.StencilEnable = TRUE;
-	noDoubleBlendDesc.StencilReadMask = 0xff;
-	noDoubleBlendDesc.StencilWriteMask = 0xff;
+        noDoubleBlendDesc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+        noDoubleBlendDesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+        noDoubleBlendDesc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_INCR;
+        noDoubleBlendDesc.FrontFace.StencilFunc = D3D11_COMPARISON_EQUAL;
 
-	noDoubleBlendDesc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
-	noDoubleBlendDesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
-	noDoubleBlendDesc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_INCR;
-	noDoubleBlendDesc.FrontFace.StencilFunc = D3D11_COMPARISON_EQUAL;
+        // dont care
+        noDoubleBlendDesc.BackFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+        noDoubleBlendDesc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+        noDoubleBlendDesc.BackFace.StencilPassOp = D3D11_STENCIL_OP_INCR;
+        noDoubleBlendDesc.BackFace.StencilFunc = D3D11_COMPARISON_EQUAL;
 
-	// dont care
-	noDoubleBlendDesc.BackFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
-	noDoubleBlendDesc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
-	noDoubleBlendDesc.BackFace.StencilPassOp = D3D11_STENCIL_OP_INCR;
-	noDoubleBlendDesc.BackFace.StencilFunc = D3D11_COMPARISON_EQUAL;
+        HRF(device->CreateDepthStencilState(&noDoubleBlendDesc, &DSNoDoubleBlend));
+    }
 
-	HRF(device->CreateDepthStencilState(&noDoubleBlendDesc, &DSNoDoubleBlend));
+    {
+        D3D11_DEPTH_STENCIL_DESC noneDepthDesc;
+        noneDepthDesc.DepthEnable = TRUE;
+        noneDepthDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+        noneDepthDesc.DepthFunc = D3D11_COMPARISON_LESS;
+        noneDepthDesc.StencilEnable = FALSE;
 
+        HRF(device->CreateDepthStencilState(&noneDepthDesc, &DSNoneDepth));
 
-    D3D11_DEPTH_STENCIL_DESC noneDepthDesc;
-    noneDepthDesc.DepthEnable = TRUE;
-    noneDepthDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
-    noneDepthDesc.DepthFunc = D3D11_COMPARISON_LESS;
-    noneDepthDesc.StencilEnable = FALSE;
+        D3D11_DEPTH_STENCIL_DESC dsDesc;
+        Crt::MemSet(&dsDesc, sizeof(D3D11_DEPTH_STENCIL_DESC));
 
-    HRF(device->CreateDepthStencilState(&noneDepthDesc, &DSNoneDepth));
+        dsDesc.DepthEnable = FALSE;
+        dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+        dsDesc.DepthFunc = D3D11_COMPARISON_LESS;
+        dsDesc.StencilEnable = FALSE;
+        dsDesc.StencilReadMask = 0xff;
+        dsDesc.StencilWriteMask = 0xff;
 
-    D3D11_DEPTH_STENCIL_DESC dsDesc;
-    Crt::MemSet(&dsDesc, sizeof(D3D11_DEPTH_STENCIL_DESC));
+        HRF(device->CreateDepthStencilState(&dsDesc, &DSUI));
+    }
 
-    dsDesc.DepthEnable = FALSE;
-    dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
-    dsDesc.DepthFunc = D3D11_COMPARISON_LESS;
-    dsDesc.StencilEnable = FALSE;
-    dsDesc.StencilReadMask = 0xff;
-    dsDesc.StencilWriteMask = 0xff;
+    {
+        D3D11_DEPTH_STENCIL_DESC overdrawDesc;
+        overdrawDesc.DepthEnable = TRUE;
+        overdrawDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+        overdrawDesc.DepthFunc = D3D11_COMPARISON_ALWAYS;
+        overdrawDesc.StencilEnable = TRUE;
+        overdrawDesc.StencilReadMask = 0xff;
+        overdrawDesc.StencilWriteMask = 0xff;
 
-    HRF(device->CreateDepthStencilState(&dsDesc, &DSUI));
+        overdrawDesc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+        overdrawDesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+        overdrawDesc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_INCR;
+        overdrawDesc.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+        
+        overdrawDesc.BackFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+        overdrawDesc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+        overdrawDesc.BackFace.StencilPassOp = D3D11_STENCIL_OP_INCR;
+        overdrawDesc.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+
+        HRF(device->CreateDepthStencilState(&overdrawDesc, &DSOverdrawTest));
+    }
 
     return true;
 }
@@ -301,6 +340,23 @@ bool NtRenderStateHandler::Etc(ID3D11Device* device)
     Crt::MemSet(&sDesc, sizeof(D3D11_SAMPLER_DESC));
 
     return true;
+}
+
+void NtRenderStateHandler::InitOverdrawColors()
+{
+    std::get<0>(RANGE0) = 0;
+    std::get<0>(RANGE1) = 1;
+    std::get<0>(RANGE2) = 2;
+    std::get<0>(RANGE3) = 3;
+    std::get<0>(RANGE4) = 4;
+    std::get<0>(RANGE5) = 5;
+
+    std::get<1>(RANGE0) = Colors::Red;
+    std::get<1>(RANGE1) = Colors::Green;
+    std::get<1>(RANGE2) = Colors::Blue;
+    std::get<1>(RANGE3) = Colors::Cyan;
+    std::get<1>(RANGE4) = Colors::Magenta;
+    std::get<1>(RANGE5) = Colors::Yellow;
 }
 
 } }

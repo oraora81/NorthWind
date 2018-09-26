@@ -56,14 +56,14 @@ namespace Colors
     XMGLOBALCONST XMVECTORF32 Silver = { 0.75f, 0.75f , 0.75f, 1.0f };
     XMGLOBALCONST XMVECTORF32 LightSteelBlue = { 0.69f, 0.77f, 0.87f, 1.0f };
 
-    XMGLOBALCONST XMCOLOR WhiteC = { 1.0f, 1.0f, 1.0f, 1.0f };
-    XMGLOBALCONST XMCOLOR BlackC = { 0.0f, 0.0f, 0.0f, 0.0f };
-    XMGLOBALCONST XMCOLOR RedC = { 1.0f, 0.0f, 0.0f, 1.0f };
-    XMGLOBALCONST XMCOLOR GreenC = { 0.0f, 1.0f, 0.0f, 1.0f };
-    XMGLOBALCONST XMCOLOR BlueC = { 0.0f, 0.0f, 1.0f, 1.0f };
-    XMGLOBALCONST XMCOLOR YellowC = { 1.0f, 1.0f, 0.0f, 1.0f };
-    XMGLOBALCONST XMCOLOR CyanC = { 0.0f, 1.0f, 1.0f, 1.0f };
-    XMGLOBALCONST XMCOLOR MagentaC = { 1.0f, 0.0f, 1.0f, 1.0f };
+    XMGLOBALCONST XMCOLOR _White = { 1.0f, 1.0f, 1.0f, 1.0f };
+    XMGLOBALCONST XMCOLOR _Black = { 0.0f, 0.0f, 0.0f, 0.0f };
+    XMGLOBALCONST XMCOLOR _Red = { 1.0f, 0.0f, 0.0f, 1.0f };
+    XMGLOBALCONST XMCOLOR _Green = { 0.0f, 1.0f, 0.0f, 1.0f };
+    XMGLOBALCONST XMCOLOR _Blue = { 0.0f, 0.0f, 1.0f, 1.0f };
+    XMGLOBALCONST XMCOLOR _Yellow = { 1.0f, 1.0f, 0.0f, 1.0f };
+    XMGLOBALCONST XMCOLOR _Cyan = { 0.0f, 1.0f, 1.0f, 1.0f };
+    XMGLOBALCONST XMCOLOR _Magenta = { 1.0f, 0.0f, 1.0f, 1.0f };
 
     static UINT ArgbToAbgr(UINT argb)
     {

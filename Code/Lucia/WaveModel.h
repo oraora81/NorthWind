@@ -23,6 +23,8 @@ public:
 
     void MakeCylinder();
 
+    void MakeQuad4Complex();
+
 private:
 	XMFLOAT4X4 m_gridWorld;
 	XMFLOAT4X4 m_wavesWorld;
@@ -62,4 +64,7 @@ private:
     XMFLOAT2 m_waterTexOffset;
     int m_lightCount;
     ntUint m_cylinderIndexCount;
+
+    ID3D11Buffer* m_quadVB;
+    ID3D11Buffer* m_quadIB;
 };

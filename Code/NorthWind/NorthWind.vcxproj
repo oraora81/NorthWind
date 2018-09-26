@@ -434,6 +434,7 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <ClInclude Include="Include\NtThreadObject.h" />
     <ClInclude Include="Include\NtTimer.h" />
     <ClInclude Include="Include\NtTree.h" />
+    <ClInclude Include="Include\NtTreeSpriteShader.h" />
     <ClInclude Include="Include\NtType.h" />
     <ClInclude Include="Include\NtTypeManip.h" />
     <ClInclude Include="Include\NtTypeTrait.h" />
@@ -517,6 +518,7 @@ copy /y ..\..\bin ..\..\SDK\Lib</Command>
     <ClCompile Include="Source\NtTextureShader.cpp" />
     <ClCompile Include="Source\NtThreadObject.cpp" />
     <ClCompile Include="Source\NtTimer.cpp" />
+    <ClCompile Include="Source\NtTreeSpriteShader.cpp" />
     <ClCompile Include="Source\NtUIShader.cpp" />
     <ClCompile Include="Source\NtVector2.cpp" />
     <ClCompile Include="Source\NtVector3.cpp" />

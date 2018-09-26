@@ -13,6 +13,7 @@ public:
     // ETC
     static const D3D11_INPUT_ELEMENT_DESC PCLayoutEachSlot[2];
     static const D3D11_INPUT_ELEMENT_DESC PCLayout32bitColor[2];
+    static const D3D11_INPUT_ELEMENT_DESC PSLayout[2];
 };
 
 
@@ -29,6 +30,7 @@ public:
 
     static ID3D11InputLayout* PCInputLayoutEachSlot;
     static ID3D11InputLayout* PCInputLayout32bitColor;
+    static ID3D11InputLayout* PSInputLayout;
 };
 
 }

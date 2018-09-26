@@ -545,7 +545,29 @@ void NtGeometryGenerator::CreateGrid(float width, float depth, ntUint m, ntUint 
 	}
 }
 
-	//void CreateFullScreenQuad(MeshData& meshData);
+// creates a quad covering whole screen in NDC coordinates.
+// NDCS : Normalized Device Coordinate System. (정규화 장치 좌표계)
+// 
+void NtGeometryGenerator::CreateFullScreenQuad(MeshDataClr& meshData, const XMCOLOR& clr)
+{
+    meshData.Vertices.resize(4);
+    meshData.Indices.resize(6);
 
+    meshData.Vertices[0] = gVertexClr(-1.0f, -1.0f, 0.0f, clr);
+
+    meshData.Vertices[1] = gVertexClr(-1.0f, +1.0f, 0.0f, clr);
+
+    meshData.Vertices[2] = gVertexClr(+1.0f, +1.0f, 0.0f, clr);
+
+    meshData.Vertices[3] = gVertexClr(+1.0f, -1.0f, 0.0f, clr);
+
+    meshData.Indices[0] = 0;
+    meshData.Indices[1] = 1;
+    meshData.Indices[2] = 2;
+
+    meshData.Indices[3] = 0;
+    meshData.Indices[4] = 2;
+    meshData.Indices[5] = 3;
+}
 
 }}

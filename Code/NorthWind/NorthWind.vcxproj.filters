@@ -227,6 +227,9 @@
     <ClInclude Include="Include\NtTextHelper.h">
       <Filter>render</Filter>
     </ClInclude>
+    <ClInclude Include="Include\NtTreeSpriteShader.h">
+      <Filter>render\shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\test_cube.ase" />
@@ -436,6 +439,9 @@
     </ClCompile>
     <ClCompile Include="Source\NtTextHelper.cpp">
       <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\NtTreeSpriteShader.cpp">
+      <Filter>render\shader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -151,6 +151,8 @@ WaveModel::WaveModel()
 
 WaveModel::~WaveModel()
 {
+    SAFE_RELEASE(m_quadVB);
+    SAFE_RELEASE(m_quadIB);
 	SAFE_RELEASE(m_waveVB);
 	SAFE_RELEASE(m_waveIB);
     SAFE_RELEASE(m_boxVB);
@@ -364,11 +366,11 @@ void WaveModel::Render(XMMATRIX& worldViewProj)
         g_renderInterface->SetIndexBuffers(m_cylinderIB, DXGI_FORMAT_R32_UINT, 0);
 
         XMMATRIX world = XMLoadFloat4x4(&m_cylinderWorld);
-        XMMATRIX worlInvTranspose = NtD3dUtil::InverseTranspose(world);
+        XMMATRIX worldInvTranspose = NtD3dUtil::InverseTranspose(world);
         XMMATRIX goWVP = world * viewProj;
 
         LightShader->SetWorld(world);
-        LightShader->SetWorldInvTranspose(worlInvTranspose);
+        LightShader->SetWorldInvTranspose(worldInvTranspose);
         LightShader->SetWorldViewProj(goWVP);
         LightShader->SetTexTransform(XMMatrixIdentity());
         LightShader->SetMaterial(m_cylinderMaterial);
@@ -456,6 +458,8 @@ void WaveModel::MakeGeometry()
     MakeCrate();
 
     MakeCylinder();
+
+    MakeQuad4Complex();
 
     std::vector<ntUint> texHandles;
     for (size_t i = 1; i <= 60; i++)
@@ -553,7 +557,7 @@ void WaveModel::MakeCylinder()
 
     std::vector<Vertex::PNUVertex> vertices(cylinder.Vertices.size());
 
-    for (size_t i = 0; i < vertices.size(); i++)
+    for (size_t i = 0; i < vertices.size(); ++i)
     {
         vertices[i].position = cylinder.Vertices[i].Position;
         vertices[i].normal = cylinder.Vertices[i].Normal;
@@ -570,4 +574,29 @@ void WaveModel::MakeCylinder()
     m_cylinderVB = MakeVertexBuffer(vtxArray, sizeof(Vertex::PNUVertex), (ntInt)vertices.size(), BufferUsage::USAGE_IMMUTABLE, CpuAccessFlag::CPU_ACCESS_NONE);
 
     m_cylinderIB = MakeIndexBuffer(idxArray, (ntInt)indices.size());
+}
+
+void WaveModel::MakeQuad4Complex()
+{
+    renderer::NtGeometryGenerator::MeshDataClr quad;
+    NtGeometryGenerator gen;
+
+    gen.CreateFullScreenQuad(quad, Colors::_Green);
+
+    std::vector<Vertex::PCVertex> vertices(quad.Vertices.size());
+
+    for (size_t i = 0; i < vertices.size(); ++i)
+    {
+        vertices[i].position = quad.Vertices[i].Position;
+        Crt::MemCpy(&vertices[i].color, &quad.Vertices[i].Color, sizeof(quad.Vertices[i].Color));
+    }
+
+    std::vector<ntUint> indices;
+    indices.insert(std::end(indices), std::begin(quad.Indices), std::end(quad.Indices));
+
+    Vertex::PCVertex* vtxArray = &vertices[0];
+    ntUint* idxArray = &indices[0];
+
+    m_quadVB = MakeVertexBuffer(vtxArray, sizeof(Vertex::PCVertex), (ntInt)vertices.size(), BufferUsage::USAGE_IMMUTABLE, CpuAccessFlag::CPU_ACCESS_NONE);
+    m_quadIB = MakeIndexBuffer(idxArray, (ntInt)indices.size());
 }

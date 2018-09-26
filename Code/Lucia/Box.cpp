@@ -246,14 +246,14 @@ void Box::MakeColor()
 
     sVertexColor box[] =
     {
-        { XMFLOAT3(-1.0f, -1.0f, -1.0f), Colors::YellowC },
-        { XMFLOAT3(-1.0f, +1.0f, -1.0f), Colors::YellowC },
-        { XMFLOAT3(+1.0f, +1.0f, -1.0f), Colors::RedC },
-        { XMFLOAT3(+1.0f, -1.0f, -1.0f), Colors::GreenC },
-        { XMFLOAT3(-1.0f, -1.0f, +1.0f), Colors::BlueC },
-        { XMFLOAT3(-1.0f, +1.0f, +1.0f), Colors::YellowC },
-        { XMFLOAT3(+1.0f, +1.0f, +1.0f), Colors::MagentaC },
-        { XMFLOAT3(+1.0f, -1.0f, +1.0f), Colors::MagentaC },
+        { XMFLOAT3(-1.0f, -1.0f, -1.0f), Colors::_Yellow },
+        { XMFLOAT3(-1.0f, +1.0f, -1.0f), Colors::_Yellow },
+        { XMFLOAT3(+1.0f, +1.0f, -1.0f), Colors::_Red },
+        { XMFLOAT3(+1.0f, -1.0f, -1.0f), Colors::_Green },
+        { XMFLOAT3(-1.0f, -1.0f, +1.0f), Colors::_Blue },
+        { XMFLOAT3(-1.0f, +1.0f, +1.0f), Colors::_Yellow },
+        { XMFLOAT3(+1.0f, +1.0f, +1.0f), Colors::_Magenta },
+        { XMFLOAT3(+1.0f, -1.0f, +1.0f), Colors::_Magenta },
     };
 
     vertices.assign(std::begin(box), std::end(box));

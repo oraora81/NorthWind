@@ -22,7 +22,7 @@ NtTextHelper::NtTextHelper()
     , m_lineHeight(0)
     , m_fontBufferBytes11(0)
 {
-    m_color = Colors::WhiteC;
+    m_color = Colors::_White;
     m_pt.x = 0;
     m_pt.y = 0;
     Crt::MemSet(m_blendFactorStored, sizeof(m_blendFactorStored));
@@ -160,7 +160,7 @@ void NtTextHelper::RenderText11(const ntWchar* strText, RECT rcScreen, XMCOLOR v
 void NtTextHelper::EndText11()
 {
     // ensure our buffer size can hold our sprites
-    ntUint FontDataBytes = m_vertexArray.size() * sizeof(Vertex::SpriteVertex);
+    ntUint FontDataBytes = static_cast<ntUint>(m_vertexArray.size()) * sizeof(Vertex::SpriteVertex);
 
     if (m_fontBufferBytes11 < FontDataBytes)
     {

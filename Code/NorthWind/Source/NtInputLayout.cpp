@@ -9,47 +9,52 @@
 
 namespace nt {
 
-const D3D11_INPUT_ELEMENT_DESC NtInputLayout::PCLayout[2] = 
-{
-    {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
-    {"COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0}
-};
+    const D3D11_INPUT_ELEMENT_DESC NtInputLayout::PCLayout[2] =
+    {
+        {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
+        {"COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0}
+    };
 
-const D3D11_INPUT_ELEMENT_DESC NtInputLayout::PNLayout[2] =
-{
-    {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
-    { "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 }
-};
+    const D3D11_INPUT_ELEMENT_DESC NtInputLayout::PNLayout[2] =
+    {
+        {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
+        { "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+    };
 
-const D3D11_INPUT_ELEMENT_DESC NtInputLayout::PNULayout[3] =
-{
-    { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-    { "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-    { "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 24, D3D11_INPUT_PER_VERTEX_DATA, 0 }
-};
+    const D3D11_INPUT_ELEMENT_DESC NtInputLayout::PNULayout[3] =
+    {
+        { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+        { "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+        { "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 24, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+    };
 
-const D3D11_INPUT_ELEMENT_DESC NtInputLayout::SpriteLayout[3] = 
-{
-    { "POSITION",  0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,  D3D11_INPUT_PER_VERTEX_DATA, 0 },
-    { "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-    { "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 28, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-};
+    const D3D11_INPUT_ELEMENT_DESC NtInputLayout::SpriteLayout[3] =
+    {
+        { "POSITION",  0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,  D3D11_INPUT_PER_VERTEX_DATA, 0 },
+        { "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+        { "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 28, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+    };
 
 
-// etc
-// 2 input slot
-const D3D11_INPUT_ELEMENT_DESC NtInputLayout::PCLayoutEachSlot[2] = 
-{
-    { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-    { "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 1, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 }
-};
+    // etc
+    // 2 input slot
+    const D3D11_INPUT_ELEMENT_DESC NtInputLayout::PCLayoutEachSlot[2] =
+    {
+        { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+        { "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 1, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+    };
 
-const D3D11_INPUT_ELEMENT_DESC NtInputLayout::PCLayout32bitColor[2] =
-{
-    { "COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-    { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-};
+    const D3D11_INPUT_ELEMENT_DESC NtInputLayout::PCLayout32bitColor[2] =
+    {
+        { "COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+        { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+    };
 
+    const D3D11_INPUT_ELEMENT_DESC NtInputLayout::PSLayout[2] =
+    {
+        {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
+        {"SIZE", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0}
+    };
 
 // implement static variable
 ID3D11InputLayout* NtInputLayoutHandler::PCInputLayout;
@@ -58,6 +63,7 @@ ID3D11InputLayout* NtInputLayoutHandler::PNUInputLayout;
 ID3D11InputLayout* NtInputLayoutHandler::SpriteInputLayout;
 ID3D11InputLayout* NtInputLayoutHandler::PCInputLayoutEachSlot;
 ID3D11InputLayout* NtInputLayoutHandler::PCInputLayout32bitColor;
+ID3D11InputLayout* NtInputLayoutHandler::PSInputLayout;
 
 bool NtInputLayoutHandler::Initialize()
 {
@@ -99,6 +105,8 @@ bool NtInputLayoutHandler::Initialize()
         passDesc.pIAInputSignature,
         passDesc.IAInputSignatureSize,
         &SpriteInputLayout));
+
+    //NtShaderHandler::LightShader->
     
     return true;
 }

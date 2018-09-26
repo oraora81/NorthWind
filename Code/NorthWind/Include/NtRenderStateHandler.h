@@ -12,6 +12,7 @@ public:
     static bool InitBS(ID3D11Device* device);
     static bool InitDS(ID3D11Device* device);
     static bool Etc(ID3D11Device* device);
+    static void InitOverdrawColors();
 
 public:
 
@@ -32,8 +33,16 @@ public:
 	static ID3D11DepthStencilState* DSNoDoubleBlend;
     static ID3D11DepthStencilState* DSNoneDepth;
     static ID3D11DepthStencilState* DSUI;
+    static ID3D11DepthStencilState* DSOverdrawTest;
 
     static ID3D11SamplerState* SSUI;
+
+    static std::tuple<ntUchar, XMVECTORF32> RANGE0;
+    static std::tuple<ntUchar, XMVECTORF32> RANGE1;
+    static std::tuple<ntUchar, XMVECTORF32> RANGE2;
+    static std::tuple<ntUchar, XMVECTORF32> RANGE3;
+    static std::tuple<ntUchar, XMVECTORF32> RANGE4;
+    static std::tuple<ntUchar, XMVECTORF32> RANGE5;
 };
 
 }
